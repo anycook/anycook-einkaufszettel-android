@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AnycookTheme" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/ActionBarAnycook</item>
+        <item name="android:textAppearance">@style/TextAppearanceAnycook</item>
+        <item name="android:textAppearanceLarge">@style/TextAppearanceAnycook.Large</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearanceAnycook.Medium</item>
+        <item name="android:textAppearanceSmall">@style/TextAppearanceAnycook.Small</item>
+    </style>
+
+    <style name="TextAppearanceAnycook" parent="@android:style/TextAppearance">
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="TextAppearanceAnycook.Large">
+        <item name="android:textSize">44dp</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="TextAppearanceAnycook.Medium">
+        <item name="android:textSize">33sp</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="TextAppearanceAnycook.Small">
+        <item name="android:textSize">22sp</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="ActionBarAnycook" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@drawable/bg_texture</item>
+        <item name="android:textColor">@color/any_gray</item>
+        <item name="android:titleTextStyle">@style/ActionBarTitleTextAnycook</item>
+
+    </style>
+
+    <style name="ActionBarTitleTextAnycook"
+           parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/any_gray</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>

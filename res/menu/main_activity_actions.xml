@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_search"
+          android:icon="@drawable/lupe"
+          android:title="@string/button_search"/>
+    <item android:id="@+id/action_compose"
+          android:icon="@drawable/anmelden_off"
+          android:title="@string/search_hint" />
+</menu>

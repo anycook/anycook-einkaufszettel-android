@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:paddingLeft="16dp"
+              android:paddingRight="16dp">
+
+    <ImageView
+            android:id="@+id/test_image"
+            android:src="@drawable/doodle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="goToList"
+            android:clickable="true"
+            />
+
+    <EditText
+            android:id="@+id/search"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/search"
+            android:inputType="text"
+            android:imeOptions="actionSearch"/>
+
+    <TextView
+            android:id="@+id/output"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/ingredient1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ingredient1"
+            android:onClick="strikeTrough"
+            android:clickable="true"/>
+
+    <TextView
+            android:id="@+id/ingredient2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ingredient2"
+            android:onClick="strikeTrough"
+            android:clickable="true"/>
+
+    <TextView
+            android:id="@+id/ingredient3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ingredient2"
+            android:onClick="strikeTrough"
+            android:clickable="true"/>
+
+    <TextView
+            android:id="@+id/ingredient4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ingredient2"
+            android:onClick="strikeTrough"
+            android:clickable="true"/>
+
+</LinearLayout>
+

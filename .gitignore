@@ -1,0 +1,10 @@
+assets/
+bin/
+gen/
+out/
+libs/
+.idea/
+*.properties
+*.iml
+*.ipr
+*.iws

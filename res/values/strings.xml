@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Einkaufszettel</string>
+    <string name="results">Leider keine passenden Rezepte gefunden!</string>
+    <string name="recipe_name">Bananenbrot</string>
+    <string name="ingredient1">Bananen</string>
+    <string name="ingredient2">Brot</string>
+    <string name="edit_message">edit me</string>
+    <string name="postal_address_hint">e-mail</string>
+    <string name="search_hint">search</string>
+    <string name="button_send">suchen</string>
+    <string name="search">"Gerichte, Zutaten, Tags, ..."</string>
+    <string name="button_search">suchen</string>
+    <string name="hello_world">Willkommen zur anycook Einkaufs App!</string>
+    <string name="action_settings">Settings</string>
+    <string name="all_categories">alle Kategorien</string>
+    <string name="basic_recipe">Grundrezepte2</string>
+    <string name="pre_recipe">Vorspeisen und Häppchen</string>
+    <string name="evrything_else">Sonstiges</string>
+    <string name="time">Dauer</string>
+    <string name="difficulty">Schwierigkeit</string>
+    <string name="calories">Kalorien</string>
+    <string name="ingredience">Zutaten</string>
+    <string name="tags">Tags</string>
+
+</resources>
+
