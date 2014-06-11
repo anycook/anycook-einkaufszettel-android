@@ -1,5 +1,4 @@
-# anycook-einkaufszettel-android
-
+anycook-einkaufszettel-android
 ===========
 
 mobile grocery list for anycook
