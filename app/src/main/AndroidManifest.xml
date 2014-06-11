@@ -8,14 +8,20 @@
             android:label="@string/app_name"
             android:icon="@drawable/ic_launcher"
             android:theme="@style/AnycookTheme">
-        <activity android:name="MyActivity"
+        <activity android:name="de.anycook.app.MyActivity"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".GroceryListActivity" ></activity>
+        <activity android:name="de.anycook.app.GroceryListActivity"
+                  android:parentActivityName="de.anycook.app.MyActivity">
+            <!-- Parent activity meta-data to support API level 7+ -->
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="de.anycook.app.MyActivity"/>
+        </activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 </manifest>

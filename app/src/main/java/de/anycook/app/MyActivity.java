@@ -1,47 +1,43 @@
 package de.anycook.app;
 
-import android.app.*;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.lang.Override;
-
 public class MyActivity extends Activity {
-    /**
-     * Called when the activity is first created.
-     */
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        EditText editText = (EditText) findViewById(R.id.search);
+        EditText editText = (EditText) findViewById(R.id.edittext_main);
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    sendMessage(findViewById(R.id.search));
+                    sendMessage(findViewById(R.id.edittext_main));
                     handled = true;
                 }
                 return handled;
             }
         });
 
-
-
     }
 
     private void sendMessage(View view) {
         EditText query = (EditText) findViewById(view.getId());
-        TextView result = (TextView) findViewById(R.id.output);
+        TextView result = (TextView) findViewById(R.id.textview_main_output);
         result.setText(query.getText());
     }
+
 
     public void strikeTrough(View view) {
         TextView ingredient = (TextView) findViewById(view.getId());
@@ -61,10 +57,28 @@ public class MyActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
+        Log.v("MyActivity", "at least it's in the oncreateoptions");
+        // Inflate the options menu from XML
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_actions, menu);
+
+
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.menu_item_main_search:
+                sendMessage(findViewById(R.id.edittext_main));
+                return true;
+            case R.id.menu_item_main_edit:
+                goToList(findViewById(R.id.imageview_main));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /*@Override
@@ -81,8 +95,6 @@ public class MyActivity extends Activity {
                 return super.onOptionsItemSelected(item);
         }
     }*/
-
-
 
 
 }

@@ -7,7 +7,7 @@
               android:paddingRight="16dp">
 
     <ImageView
-            android:id="@+id/test_image"
+            android:id="@+id/imageview_main"
             android:src="@drawable/doodle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
             />
 
     <EditText
-            android:id="@+id/search"
+            android:id="@+id/edittext_main"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="@string/search"
@@ -24,14 +24,14 @@
             android:imeOptions="actionSearch"/>
 
     <TextView
-            android:id="@+id/output"
+            android:id="@+id/textview_main_output"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:typeface="serif"
             android:textStyle="bold"/>
 
     <TextView
-            android:id="@+id/ingredient1"
+            android:id="@+id/textview_main_ingredient1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/ingredient1"
@@ -40,7 +40,7 @@
             android:clickable="true"/>
 
     <TextView
-            android:id="@+id/ingredient2"
+            android:id="@+id/textview_main_ingredient2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/ingredient2"
@@ -49,7 +49,7 @@
             android:clickable="true"/>
 
     <TextView
-            android:id="@+id/ingredient3"
+            android:id="@+id/textview_main_ingredient3"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/ingredient2"
@@ -58,7 +58,7 @@
             android:clickable="true"/>
 
     <TextView
-            android:id="@+id/ingredient4"
+            android:id="@+id/textview_main_ingredient4"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/ingredient2"

@@ -8,20 +8,20 @@
               android:paddingRight="16dp">
 
     <TextView
-            android:id="@+id/ingredient"
+            android:id="@+id/textview_rowlayout_ingredient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tomate"/>
 
     <TextView
-            android:id="@+id/amount"
+            android:id="@+id/textview_rowlayout_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="2 Stück"/>
 
     <View
-            android:id="@+id/stroke"
+            android:id="@+id/view_rowlayout_stroke"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:background="@android:color/black"
