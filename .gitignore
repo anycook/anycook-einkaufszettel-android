@@ -1,10 +1,7 @@
-assets/
-bin/
-gen/
-out/
-libs/
-.idea/
-*.properties
-*.iml
-*.ipr
-*.iws
+.gradle
+/local.properties
+/.idea/workspace.xml
+.DS_Store
+/gradle
+gradlew
+gradlew.bat
