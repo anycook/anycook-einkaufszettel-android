@@ -1,7 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- colors -->
 <resources>
     <color name="any_gray">#F7F4F1</color>
-    <color name="any_green">#A3D358</color>
     <color name="any_black">#000000</color>
-    <color name="any_transparent">#00000000</color>
+
+    <!-- colors -->
+    <!-- <color name="any_background:blue</color>  -->
+    <color name="any_background">#f7f4f1</color>
+    <color name="any_background_right">#ece9e3</color>
+    <color name="any_headergreen">#96c832</color>
+    <color name="any_headergreenbright">#accc5a</color>
+    <color name="any_darkgrey">#5A5A5A</color>
+    <color name="any_darkgreencontour">#5F7624</color>
+    <color name="any_innerborder">#9C8D8D</color>
+    <color name="any_darkergrey">#d1cac5</color>
+    <color name="any_input_background">@color/any_background_right</color>
+    <color name="any_input_background_active">#f0ede6</color>
+    <color name="any_searchbarborder">#577052</color>
+    <color name="any_linkcolor">#859F5E</color>
+    <color name="any_darkfontcolor">#404040</color>
+    <color name="any_imginnerbordercolor">#F9F8F6</color>
+    <color name="any_lightgrey">#dad9d7</color>
+    <color name="any_shadowbeige">#b5b5b5</color>
+    <color name="any_stepcolor">#ece9e3</color>
+    <color name="any_lightbrown">#bfbab0</color>
+
+    <color name="any_smalllightfontcolor">#878787</color>
+    <color name="any_facebookbg">#c7c7c7</color>
+    <color name="any_activeoptions">#fdfaf3</color>
+    <color name="any_dogear">#888888</color>
+    <color name="any_discussionyellow">#f8eea4</color>
+    <color name="any_discussionyellowborder">#cfc36d</color>
+    <color name="any_discussionyellowfont">#b1a867</color>
+    <color name="any_filterinputbackground">#fcfcfa</color>
+
+    <!-- new color  -->
+    <color name="any_green">#a3d358</color>
+
+    <!-- tags  -->
+    <color name="any_tags">#ddd9d2</color>
+    <color name="any_tagborder">#c2c0be</color>
+    <color name="any_tagnumber">#9b9996</color>
+    <color name="any_tagshadow">#e6e3dd</color>
+
+    <!-- buttons  -->
+    <color name="any_inactivebuttonoutline">#9c9c9c</color>
+    <color name="any_inactivebuttondepth">#bab4a8</color>
+    <color name="any_buttonfontcolor">#09909090</color>
+    <color name="any_activebuttonbackground">#d7e8b5</color>
+    <color name="any_activebuttonoutline">#859f5e</color>
+    <color name="any_activebuttondepth">#b0baa8</color>
+    <color name="any_activebuttonfontcolor">#7d9757</color>
+    <color name="any_kategoriehead">#e6e2dc</color>
+    <color name="any_kategorieborder">#cccbca</color>
+    <color name="any_pushedbuttonbackground">#dedbd5</color>
+
+    <!-- error  -->
+    <color name="any_error">#d04040</color>
+    <color name="any_success">#859f5e</color>
+
+
 </resources>

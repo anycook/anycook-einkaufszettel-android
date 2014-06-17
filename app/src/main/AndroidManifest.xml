@@ -8,15 +8,25 @@
             android:label="@string/app_name"
             android:icon="@drawable/ic_launcher"
             android:theme="@style/AnycookTheme">
-        <activity android:name="de.anycook.app.MyActivity"
-                  android:label="@string/app_name">
+        <activity android:name=".MyActivity" android:label="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <meta-data android:name="android.app.default_searchable"
+                       android:value=".RecipeSearch"/>
         </activity>
-        <activity android:name="de.anycook.app.GroceryListActivity"
-                  android:parentActivityName="de.anycook.app.MyActivity">
+        <activity android:name=".RecipeSearch"
+                  android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                       android:resource="@xml/searchable"/>
+        </activity>
+        <activity android:name=".EditGroceryListActivity"
+                  android:parentActivityName="de.anycook.app.GroceryListActivity">
             <!-- Parent activity meta-data to support API level 7+ -->
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"

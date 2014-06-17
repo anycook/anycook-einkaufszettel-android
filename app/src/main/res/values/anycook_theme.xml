@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AnycookTheme" parent="@android:style/Theme.Holo.Light">
+    <style name="AnycookTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/ActionBarAnycook</item>
         <item name="android:textAppearance">@style/TextAppearanceAnycook</item>
         <item name="android:textAppearanceLarge">@style/TextAppearanceAnycook.Large</item>

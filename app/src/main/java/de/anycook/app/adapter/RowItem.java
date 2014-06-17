@@ -27,7 +27,6 @@ public class RowItem {
         this.ingredient = ingredient;
     }
 
-
     @Override
     public String toString() {
         return ingredient + "\n" + amount;

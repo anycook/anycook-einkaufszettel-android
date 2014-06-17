@@ -1,12 +1,10 @@
 package de.anycook.app;
 
-import android.app.ActionBar;
 import android.app.ListActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 import de.anycook.app.adapter.ListActivityAdapter;
 import de.anycook.app.adapter.RowItem;
 
@@ -23,15 +21,18 @@ public class GroceryListActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
         super.onCreate(savedInstanceState);
+
         setListAdapter(new ListActivityAdapter(this, Ingredients));
+
+
+        //Intent intent = new Intent(this, MyActivity.class);
+        //startActivity(intent);
     }
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
+        Toast.makeText(this, "strike trough", Toast.LENGTH_SHORT);
         View rowView = getListAdapter().getView(position, v, l);
         View strokeView = rowView.findViewById(R.id.view_rowlayout_stroke);
         if (strokeView.getVisibility() == View.INVISIBLE) {
@@ -39,14 +40,6 @@ public class GroceryListActivity extends ListActivity {
         } else {
             strokeView.setVisibility(View.INVISIBLE);
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the options menu from XML
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.edit_activity_actions, menu);
-        return super.onCreateOptionsMenu(menu);
     }
 
 }

@@ -1,70 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:paddingLeft="16dp"
-              android:paddingRight="16dp">
-
-    <ImageView
-            android:id="@+id/imageview_main"
-            android:src="@drawable/doodle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="goToList"
-            android:clickable="true"
-            />
-
-    <EditText
-            android:id="@+id/edittext_main"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/search"
-            android:inputType="text"
-            android:imeOptions="actionSearch"/>
-
+              android:paddingRight="16dp"
+              tools:context="de.anycook.app.MyActivity">
     <TextView
-            android:id="@+id/textview_main_output"
+            android:id="@+id/textview_main_display"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:typeface="serif"
-            android:textStyle="bold"/>
-
-    <TextView
-            android:id="@+id/textview_main_ingredient1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/ingredient1"
-            android:typeface="serif"
-            android:onClick="strikeTrough"
-            android:clickable="true"/>
-
-    <TextView
-            android:id="@+id/textview_main_ingredient2"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/ingredient2"
-            android:typeface="serif"
-            android:onClick="strikeTrough"
-            android:clickable="true"/>
-
-    <TextView
-            android:id="@+id/textview_main_ingredient3"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/ingredient2"
-            android:typeface="serif"
-            android:onClick="strikeTrough"
-            android:clickable="true"/>
-
-    <TextView
-            android:id="@+id/textview_main_ingredient4"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/ingredient2"
-            android:typeface="serif"
-            android:onClick="strikeTrough"
-            android:clickable="true"/>
+            android:layout_height="fill_parent"
+            android:text="@string/hello_world"
+            android:textSize="18dp"/>
 
 </LinearLayout>
 

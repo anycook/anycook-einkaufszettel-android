@@ -3,9 +3,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:anycook="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/menu_item_main_search"
-          android:icon="@drawable/ic_action_search"
           android:title="@string/search"
-          anycook:showAsAction="always"/>
+          android:icon="@drawable/ic_action_search"
+          anycook:showAsAction="ifRoom"
+          anycook:actionViewClass="android.support.v7.widget.SearchView"/>
+
     <item android:id="@+id/menu_item_main_edit"
           android:icon="@drawable/ic_action_edit"
           android:title="@string/edit"

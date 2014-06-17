@@ -10,7 +10,7 @@ import de.anycook.app.R;
 
 /**
  * Custom ArrayAdapter to fill EditMode with amount and ingredients
- *
+ * <p/>
  * Created by cipo7741 on 07.06.14.
  */
 public class ListActivityAdapter extends ArrayAdapter<RowItem> {
@@ -19,7 +19,7 @@ public class ListActivityAdapter extends ArrayAdapter<RowItem> {
     private final RowItem[] values;
 
     public ListActivityAdapter(Context context, RowItem[] values) {
-        super(context, R.layout.rowlayout, R.id.textview_rowlayout_ingredient, values);
+        super(context, R.layout.main, R.id.textview_rowlayout_ingredient, values);
         this.context = context;
         this.values = values;
     }
@@ -31,7 +31,7 @@ public class ListActivityAdapter extends ArrayAdapter<RowItem> {
         if (v == null) {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inflater.inflate(R.layout.rowlayout, null);
+            v = inflater.inflate(R.layout.main, null);
             holder = new ViewHolder();
             holder.ingredientText = (TextView) v.findViewById(R.id.textview_rowlayout_ingredient);
             holder.ingredientText.setText(values[position].getIngredient());
