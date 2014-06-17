@@ -5,7 +5,9 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
+import android.widget.ListView;
+import de.anycook.app.adapter.RecipeRow;
+import de.anycook.app.adapter.RecipeRowAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,26 +18,31 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 /**
  * Created by cipo7741 on 13.06.14.
  */
 public class RecipeSearch extends Activity {
     static String url = "https://api.anycook.de/autocomplete?query=";
-    TextView tv1;
+    private ArrayList<RecipeRow> recipeRowData;
+    ListView recipeListView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.recipe_list);
+        this.recipeListView = (ListView) this.findViewById(R.id.recipe_list_listview);
+        recipeRowData = new ArrayList<>();
+        this.recipeListView.setAdapter(new RecipeRowAdapter(this, R.layout.recipe_row, recipeRowData));
 
-        this.tv1 = (TextView) findViewById(R.id.textview_main_display);
-        // Get the intent, verify the action and get the query
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            doMySearch(query);
+            doRecipeSearch(query);
         }
+
+
     }
 
     @Override
@@ -47,21 +54,27 @@ public class RecipeSearch extends Activity {
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            doMySearch(query);
+            doRecipeSearch(query);
         }
     }
 
-    private void doMySearch(String query) {
+    private void doRecipeSearch(String query) {
+
         final String what = query;
         new Thread(new Runnable() {
+            @Override
             public void run() {
                 if (what != null) {
                     try {
-                        final String ingredients = ProcessResponse(SearchRequest(what));
-                        tv1.post(new Runnable() {
+                        final ArrayList<RecipeRow> recipes = ProcessResponse(SearchRequest(what));
+                        recipeListView.post(new Runnable() {
                             @Override
                             public void run() {
-                                tv1.setText(ingredients);
+                                RecipeRowAdapter tmpRowAdapter = (RecipeRowAdapter) recipeListView.getAdapter();
+                                for (RecipeRow recipe : recipes) {
+                                    tmpRowAdapter.add(recipe);
+                                }
+                                recipeListView.setAdapter(tmpRowAdapter);
                             }
                         });
                     } catch (Exception e) {
@@ -70,14 +83,12 @@ public class RecipeSearch extends Activity {
                 }
             }
         }).start();
-
-        //tv1.setText(ingredients);
     }
 
     private String SearchRequest(String searchString) throws IOException {
         String newFeed = url + searchString;
         StringBuilder response = new StringBuilder();
-        Log.v("auto-complete", "anycook url: " + newFeed);
+        Log.v("SearchRequest", "anycook url: " + newFeed);
         URL url = new URL(newFeed);
 
         HttpURLConnection httpconn = (HttpURLConnection) url.openConnection();
@@ -94,23 +105,19 @@ public class RecipeSearch extends Activity {
         return response.toString();
     }
 
-    private String ProcessResponse(String resp) throws IllegalStateException, IOException, JSONException, NoSuchAlgorithmException {
-        StringBuilder sb = new StringBuilder();
-        Log.v("auto-complete", "anycook result: " + resp);
-
+    private ArrayList<RecipeRow> ProcessResponse(String resp) throws IllegalStateException, IOException, JSONException, NoSuchAlgorithmException {
+        Log.v("ProcessResponse", "anycook result: " + resp);
         JSONObject mResponseObject = new JSONObject(resp);
         JSONArray mResponseArray = mResponseObject.getJSONArray("recipes");
-
-        Log.v("auto-complete", "number of results: " + mResponseArray.length());
+        Log.v("ProcessResponse", "number of results: " + mResponseArray.length());
+        ArrayList<RecipeRow> recipeRowData = new ArrayList<>();
         for (int i = 0; i < mResponseArray.length(); i++) {
             Log.v("result [", i + "] " + mResponseArray.get(i).toString());
             String recipe = mResponseArray.get(i).toString();
-
-            sb.append(recipe);
-            sb.append("\n");
-
+            RecipeRow dataOfRecipe = new RecipeRow(null, recipe, "keine Rezeptbeschreibung :(");
+            recipeRowData.add(dataOfRecipe);
         }
-        return sb.toString();
+        return recipeRowData;
     }
 
 }

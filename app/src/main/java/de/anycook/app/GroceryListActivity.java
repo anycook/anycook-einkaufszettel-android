@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
-import de.anycook.app.adapter.ListActivityAdapter;
-import de.anycook.app.adapter.RowItem;
+import de.anycook.app.adapter.IngredientRow;
+import de.anycook.app.adapter.IngredientRowAdapter;
 
 /**
  * gracery list, will be changed to main view
@@ -15,15 +15,15 @@ import de.anycook.app.adapter.RowItem;
 
 public class GroceryListActivity extends ListActivity {
 
-    static final RowItem[] Ingredients =
-            new RowItem[]{new RowItem("Bananen", "1"), new RowItem("Brot", "3")};
+    static final IngredientRow[] Ingredients =
+            new IngredientRow[]{new IngredientRow("Bananen", "1"), new IngredientRow("Brot", "3")};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
-        setListAdapter(new ListActivityAdapter(this, Ingredients));
+        setListAdapter(new IngredientRowAdapter(this, Ingredients));
 
 
         //Intent intent = new Intent(this, MyActivity.class);
@@ -34,7 +34,7 @@ public class GroceryListActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         Toast.makeText(this, "strike trough", Toast.LENGTH_SHORT);
         View rowView = getListAdapter().getView(position, v, l);
-        View strokeView = rowView.findViewById(R.id.view_rowlayout_stroke);
+        View strokeView = rowView.findViewById(R.id.ingredient_list_view_stroke);
         if (strokeView.getVisibility() == View.INVISIBLE) {
             strokeView.setVisibility(View.VISIBLE);
         } else {

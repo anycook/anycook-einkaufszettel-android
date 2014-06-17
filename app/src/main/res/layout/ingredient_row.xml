@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:paddingLeft="16dp"
-              android:paddingRight="16dp">
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
 
     <TextView
-            android:id="@+id/textview_rowlayout_ingredient"
+            android:id="@+id/ingredient_list_textview_ingredient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tomate"/>
 
     <TextView
-            android:id="@+id/textview_rowlayout_amount"
+            android:id="@+id/ingredient_list_textview_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="2 Stück"/>
 
     <View
-            android:id="@+id/view_rowlayout_stroke"
+            android:id="@+id/ingredient_list_view_stroke"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:background="@android:color/black"

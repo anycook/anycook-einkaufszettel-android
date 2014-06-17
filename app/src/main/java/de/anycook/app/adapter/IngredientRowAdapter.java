@@ -13,13 +13,13 @@ import de.anycook.app.R;
  * <p/>
  * Created by cipo7741 on 07.06.14.
  */
-public class ListActivityAdapter extends ArrayAdapter<RowItem> {
+public class IngredientRowAdapter extends ArrayAdapter<IngredientRow> {
 
     private final Context context;
-    private final RowItem[] values;
+    private final IngredientRow[] values;
 
-    public ListActivityAdapter(Context context, RowItem[] values) {
-        super(context, R.layout.main, R.id.textview_rowlayout_ingredient, values);
+    public IngredientRowAdapter(Context context, IngredientRow[] values) {
+        super(context, R.layout.main, R.id.ingredient_list_listview, values);
         this.context = context;
         this.values = values;
     }
@@ -33,11 +33,11 @@ public class ListActivityAdapter extends ArrayAdapter<RowItem> {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = inflater.inflate(R.layout.main, null);
             holder = new ViewHolder();
-            holder.ingredientText = (TextView) v.findViewById(R.id.textview_rowlayout_ingredient);
+            holder.ingredientText = (TextView) v.findViewById(R.id.ingredient_list_textview_ingredient);
             holder.ingredientText.setText(values[position].getIngredient());
-            holder.amountText = (TextView) v.findViewById(R.id.textview_rowlayout_amount);
+            holder.amountText = (TextView) v.findViewById(R.id.ingredient_list_textview_amount);
             holder.amountText.setText(values[position].getAmount());
-            holder.strokeView = v.findViewById(R.id.view_rowlayout_stroke);
+            holder.strokeView = v.findViewById(R.id.ingredient_list_view_stroke);
             holder.strokeView.setVisibility(View.INVISIBLE);
             v.setTag(holder);
         } else {

@@ -1,11 +1,11 @@
 package de.anycook.app.adapter;
 
-public class RowItem {
+public class IngredientRow {
 
     private String ingredient;
     private String amount;
 
-    public RowItem(String ingredient, String amount) {
+    public IngredientRow(String ingredient, String amount) {
 
         this.ingredient = ingredient;
         this.amount = amount;
