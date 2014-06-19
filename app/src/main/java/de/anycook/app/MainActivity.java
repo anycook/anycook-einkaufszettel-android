@@ -2,6 +2,7 @@ package de.anycook.app;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
@@ -45,8 +46,8 @@ public class MainActivity extends ActionBarActivity {
 
     public void actionEdit(View view) {
         //todo: implement edit activity to add custom ingredients
-        //Intent myIntent = new Intent(view.getContext(), GroceryListActivity.class); /** Class name here */
-        //startActivityForResult(myIntent, 0);
+        Intent myIntent = new Intent(view.getContext(), GroceryListActivity.class); /** Class name here */
+        startActivityForResult(myIntent, 0);
     }
 
 }

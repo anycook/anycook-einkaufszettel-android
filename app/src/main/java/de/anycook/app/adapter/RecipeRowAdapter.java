@@ -2,6 +2,10 @@ package de.anycook.app.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import de.anycook.app.R;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 /**
@@ -19,8 +28,11 @@ import java.util.ArrayList;
  */
 public class RecipeRowAdapter extends ArrayAdapter<RecipeRow> {
 
+    private static final String TAG = "RecipeRowAdapter";
     private Activity myContext;
     private ArrayList<RecipeRow> recipeValues;
+    ViewHolder viewHolder;
+    Bitmap bm;
 
     public RecipeRowAdapter(Context context, int recipeRowResourceId,
                             ArrayList<RecipeRow> objects) {
@@ -28,12 +40,6 @@ public class RecipeRowAdapter extends ArrayAdapter<RecipeRow> {
         // TODO Auto-generated constructor stub
         myContext = (Activity) context;
         recipeValues = objects;
-    }
-
-    static class ViewHolder {
-        TextView recipeNameText;
-        TextView recipeDescriptionText;
-        ImageView recipeImage;
     }
 
     /**
@@ -45,32 +51,78 @@ public class RecipeRowAdapter extends ArrayAdapter<RecipeRow> {
      * @return
      */
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
-
         if (convertView == null) {
             LayoutInflater inflater = myContext.getLayoutInflater();
             convertView = inflater.inflate(R.layout.recipe_row, null);
 
-            viewHolder = new ViewHolder();
-            viewHolder.recipeImage = (ImageView) convertView
+            this.viewHolder = new ViewHolder();
+            this.viewHolder.recipeImage = (ImageView) convertView
                     .findViewById(R.id.recipe_row_imageview);
-            viewHolder.recipeNameText = (TextView) convertView
+            this.viewHolder.recipeNameText = (TextView) convertView
                     .findViewById(R.id.recipe_row_textview_recipe_name);
-            viewHolder.recipeDescriptionText = (TextView) convertView
+            this.viewHolder.recipeDescriptionText = (TextView) convertView
                     .findViewById(R.id.recipe_row_textview_recipe_description);
-            convertView.setTag(viewHolder);
+            convertView.setTag(this.viewHolder);
         } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            this.viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        if (recipeValues.get(position).getRecipeImage() == null) {
-            viewHolder.recipeImage
+        if (recipeValues.get(position).getRecipeImageUrl() == null) {
+            this.viewHolder.recipeImage
                     .setImageResource(R.drawable.ic_launcher);
+            Log.w(TAG + " getView: ", "imageUrl: " + recipeValues.get(position).getRecipeImageUrl() + " = null");
+        } else {
+            final int pos = position;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        final String imageUrl = Uri.decode(recipeValues.get(pos).getRecipeImageUrl());
+                        viewHolder.recipeImage.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                viewHolder.recipeImage.setImageBitmap(getImageBitmap(imageUrl));
+                            }
+                        });
+                    } catch (Exception e) {
+                        Log.e(TAG, "getView: " + e.toString() + " " + e.getMessage(), e.getCause());
+                    }
+                }
+            }).start();
         }
 
-        viewHolder.recipeNameText.setText(recipeValues.get(position).getRecipeName());
-        viewHolder.recipeDescriptionText.setText(recipeValues.get(position).getRecipeDescription());
+        this.viewHolder.recipeNameText.setText(recipeValues.get(position).getRecipeName());
+        this.viewHolder.recipeDescriptionText.setText(recipeValues.get(position).getRecipeDescription());
 
         return convertView;
+    }
+
+    private Bitmap getImageBitmap(String url) {
+
+        final String tmpUrl = url;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL aURL = new URL(tmpUrl);
+                    URLConnection conn = aURL.openConnection();
+                    conn.connect();
+                    InputStream is = conn.getInputStream();
+                    BufferedInputStream bis = new BufferedInputStream(is);
+                    bm = BitmapFactory.decodeStream(bis);
+                    bis.close();
+                    is.close();
+                } catch (IOException e) {
+                    Log.e(TAG + " getImageBitmap", "Error getting bitmap", e);
+                }
+            }
+        }).start();
+        return bm;
+    }
+
+    static class ViewHolder {
+        TextView recipeNameText;
+        TextView recipeDescriptionText;
+        ImageView recipeImage;
     }
 }
