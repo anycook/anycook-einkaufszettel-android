@@ -28,18 +28,17 @@ import java.util.ArrayList;
  */
 public class RecipeRowAdapter extends ArrayAdapter<RecipeRow> {
 
-    private static final String TAG = "RecipeRowAdapter";
-    private Activity myContext;
+    private static final String TAG = RecipeRowAdapter.class.getSimpleName();
+    private Activity context;
     private ArrayList<RecipeRow> recipeValues;
     ViewHolder viewHolder;
     Bitmap bm;
 
     public RecipeRowAdapter(Context context, int recipeRowResourceId,
-                            ArrayList<RecipeRow> objects) {
-        super(context, recipeRowResourceId, objects);
-        // TODO Auto-generated constructor stub
-        myContext = (Activity) context;
-        recipeValues = objects;
+                            ArrayList<RecipeRow> values) {
+        super(context, recipeRowResourceId, values);
+        this.context = (Activity) context;
+        recipeValues = values;
     }
 
     /**
@@ -52,7 +51,7 @@ public class RecipeRowAdapter extends ArrayAdapter<RecipeRow> {
      */
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            LayoutInflater inflater = myContext.getLayoutInflater();
+            LayoutInflater inflater = context.getLayoutInflater();
             convertView = inflater.inflate(R.layout.recipe_row, null);
 
             this.viewHolder = new ViewHolder();

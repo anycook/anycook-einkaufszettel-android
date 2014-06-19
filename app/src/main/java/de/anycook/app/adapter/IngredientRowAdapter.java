@@ -1,5 +1,6 @@
 package de.anycook.app.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import de.anycook.app.R;
 
+import java.util.ArrayList;
+
 /**
  * Custom ArrayAdapter to fill EditMode with amount and ingredients
  * <p/>
@@ -15,36 +18,38 @@ import de.anycook.app.R;
  */
 public class IngredientRowAdapter extends ArrayAdapter<IngredientRow> {
 
-    private final Context context;
-    private final IngredientRow[] values;
+    private Activity context;
+    private final ArrayList<IngredientRow> ingredientValues;
+    ViewHolder viewHolder;
 
-    public IngredientRowAdapter(Context context, IngredientRow[] values) {
-        super(context, R.layout.main, R.id.ingredient_list_listview, values);
-        this.context = context;
-        this.values = values;
+    public IngredientRowAdapter(Context context, ArrayList<IngredientRow> values) {
+        super(context, R.layout.ingredient_list, R.id.ingredient_list_listview, values);
+        this.context = (Activity) context;
+        this.ingredientValues = values;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
-        ViewHolder holder;
-        if (v == null) {
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inflater.inflate(R.layout.main, null);
-            holder = new ViewHolder();
-            holder.ingredientText = (TextView) v.findViewById(R.id.ingredient_list_textview_ingredient);
-            holder.ingredientText.setText(values[position].getIngredient());
-            holder.amountText = (TextView) v.findViewById(R.id.ingredient_list_textview_amount);
-            holder.amountText.setText(values[position].getAmount());
-            holder.strokeView = v.findViewById(R.id.ingredient_list_view_stroke);
-            holder.strokeView.setVisibility(View.INVISIBLE);
-            v.setTag(holder);
+        if (convertView == null) {
+            LayoutInflater inflater = context.getLayoutInflater();
+            convertView = inflater.inflate(R.layout.recipe_row, null);
+
+            this.viewHolder.ingredientText = (TextView) convertView
+                    .findViewById(R.id.ingredient_list_textview_ingredient);
+            this.viewHolder.amountText = (TextView) convertView
+                    .findViewById(R.id.ingredient_list_textview_amount);
+
+            this.viewHolder = new ViewHolder();
         } else {
-            holder = (ViewHolder) v.getTag();
-            v.setTag(holder);
+            this.viewHolder = (ViewHolder) convertView.getTag();
         }
-        return v;
+
+        this.viewHolder.ingredientText.setText(ingredientValues.get(position).getIngredient());
+        this.viewHolder.amountText.setText(ingredientValues.get(position).getAmount());
+        this.viewHolder.strokeView.setVisibility(View.VISIBLE);
+        this.viewHolder.strokeView.setClickable(false);
+
+        return convertView;
     }
 
     static class ViewHolder {

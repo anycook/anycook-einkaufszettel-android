@@ -29,6 +29,6 @@ public class IngredientRow {
 
     @Override
     public String toString() {
-        return ingredient + "\n" + amount;
+        return ingredient + "\t" + amount;
     }
 }

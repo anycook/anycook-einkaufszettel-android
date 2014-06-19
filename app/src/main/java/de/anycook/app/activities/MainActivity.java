@@ -1,4 +1,4 @@
-package de.anycook.app;
+package de.anycook.app.activities;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -9,13 +9,15 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import de.anycook.app.R;
 
 public class MainActivity extends ActionBarActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ingredient_row);
+        setContentView(R.layout.ingredient_list);
     }
 
     @Override
@@ -29,10 +31,12 @@ public class MainActivity extends ActionBarActivity {
         //TextView tw = (TextView) findViewById(R.id.textview_main_display);
         //tw.setText(searchView.getQuery());
         // Assumes current activity is the searchable activity
+
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         //searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
 
-        return true;
+        return super.onCreateOptionsMenu(menu);
+
     }
 
     @Override
@@ -46,7 +50,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void actionEdit(View view) {
         //todo: implement edit activity to add custom ingredients
-        Intent myIntent = new Intent(view.getContext(), GroceryListActivity.class); /** Class name here */
+        Intent myIntent = new Intent(view.getContext(), EditGroceryListActivity.class); /** Class name here */
         startActivityForResult(myIntent, 0);
     }
 

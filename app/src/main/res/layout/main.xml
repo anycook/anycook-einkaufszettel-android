@@ -6,7 +6,7 @@
               android:layout_height="fill_parent"
               android:paddingLeft="16dp"
               android:paddingRight="16dp"
-              tools:context="de.anycook.app.MainActivity">
+              tools:context="de.anycook.app.activities.MainActivity">
     <TextView
             android:id="@+id/textview_main_display"
             android:layout_width="fill_parent"

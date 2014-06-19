@@ -1,12 +1,15 @@
-package de.anycook.app;
+package de.anycook.app.activities;
 
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
+import de.anycook.app.R;
 import de.anycook.app.adapter.IngredientRow;
 import de.anycook.app.adapter.IngredientRowAdapter;
+
+import java.util.ArrayList;
 
 /**
  * gracery list, will be changed to main view
@@ -15,8 +18,8 @@ import de.anycook.app.adapter.IngredientRowAdapter;
 
 public class GroceryListActivity extends ListActivity {
 
-    static final IngredientRow[] Ingredients =
-            new IngredientRow[]{new IngredientRow("Soysauce", "1"), new IngredientRow("Majo", "1"), new IngredientRow("grüne Zwiebeln", "1"), new IngredientRow("Mehl", "1"), new IngredientRow("Eier", "3"), new IngredientRow("Fischpaste", "3"), new IngredientRow("Schrimps", "3"), new IngredientRow("Käse", "3"), new IngredientRow("Dashi", "3"), new IngredientRow("Katsuboshi", "3")};
+    static final ArrayList<IngredientRow> Ingredients =
+            new ArrayList<IngredientRow>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -1,4 +1,4 @@
-package de.anycook.app;
+package de.anycook.app.controller;
 
 import android.net.Uri;
 import android.util.Log;
@@ -23,7 +23,7 @@ import java.util.List;
  * Created by cipo7741 on 19.06.14.
  */
 public class RecipeSearcher implements Runnable {
-    private static final String TAG = "RecipeSearch";
+    private static final String TAG = RecipeSearcher.class.getSimpleName();
     private static String url = "https://api.anycook.de/autocomplete?query=";
     private static String recipeUrl = "https://api.anycook.de/recipe/";
 
