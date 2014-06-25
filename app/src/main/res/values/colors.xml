@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- colors -->
 <resources>
+    <!-- basic -->
     <color name="any_gray">#F7F4F1</color>
     <color name="any_black">#000000</color>
+    <color name="any_green">#a3d358</color>
+    <color name="any_green_light">@color/any_activebuttonbackground</color>
+    <color name="any_grey_dark">@color/any_darkgrey</color>
 
-    <!-- colors -->
-    <!-- <color name="any_background:blue</color>  -->
+    <!-- text  -->
     <color name="any_background">#f7f4f1</color>
     <color name="any_background_right">#ece9e3</color>
     <color name="any_headergreen">#96c832</color>
@@ -33,9 +36,6 @@
     <color name="any_discussionyellowborder">#cfc36d</color>
     <color name="any_discussionyellowfont">#b1a867</color>
     <color name="any_filterinputbackground">#fcfcfa</color>
-
-    <!-- new color  -->
-    <color name="any_green">#a3d358</color>
 
     <!-- tags  -->
     <color name="any_tags">#ddd9d2</color>

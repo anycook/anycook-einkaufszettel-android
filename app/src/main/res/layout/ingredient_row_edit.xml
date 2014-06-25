@@ -7,28 +7,30 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp">
 
-    <TextView
-            android:id="@+id/ingredient_row_textview_amount"
+    <EditText
+            android:id="@+id/ingredient_row_edit_textview_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:maxLines="1"
-            android:gravity="right"
-            android:text="2 Stück"/>
+            android:text=""
+            android:gravity="right"/>
 
-    <TextView
-            android:id="@+id/ingredient_row_textview_ingredient"
+    <EditText
+            android:id="@+id/ingredient_row_edit_textview_ingredient"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/ingredient_row_textview_amount"
-            android:text="Tomate"
-            android:gravity="left"/>
+            android:layout_toLeftOf="@id/ingredient_row_edit_textview_amount"
+            android:text=""
+            android:maxLines="1"
+            android:gravity="left"
+            android:inputType="text"/>
 
     <View
-            android:id="@+id/ingredient_row_view_stroke"
+            android:id="@+id/ingredient_row_edit_view_stroke"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
+            android:background="@android:color/transparent"
             android:layout_marginTop="16dp"/>
 
 </RelativeLayout>

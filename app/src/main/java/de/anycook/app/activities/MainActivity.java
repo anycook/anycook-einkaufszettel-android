@@ -17,23 +17,27 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ingredient_list);
+        setContentView(R.layout.main);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the options menu from XML
         getMenuInflater().inflate(R.menu.main_activity_actions, menu);
+        /*LayoutInflater inflator = (LayoutInflater) this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inflator.inflate(R.layout.action_bar, null);
 
-        // Get the SearchView and set the searchable configuration
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, recipes);
+        AutoCompleteTextView textView = (AutoCompleteTextView) v
+                .findViewById(R.id.action_bar_autocompletetextview);
+        textView.setAdapter(adapter);*/
+
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_item_main_search).getActionView();
-        //TextView tw = (TextView) findViewById(R.id.textview_main_display);
-        //tw.setText(searchView.getQuery());
-        // Assumes current activity is the searchable activity
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        //searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
 
         return super.onCreateOptionsMenu(menu);
 
@@ -43,7 +47,7 @@ public class MainActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.menu_item_main_edit) {
-            actionEdit(findViewById(R.id.menu_item_main_edit));
+            actionEdit(findViewById(id));
         }
         return super.onOptionsItemSelected(item);
     }

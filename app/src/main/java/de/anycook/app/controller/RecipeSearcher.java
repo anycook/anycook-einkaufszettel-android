@@ -24,8 +24,6 @@ import java.util.List;
  */
 public class RecipeSearcher implements Runnable {
     private static final String TAG = RecipeSearcher.class.getSimpleName();
-    private static String url = "https://api.anycook.de/autocomplete?query=";
-    private static String recipeUrl = "https://api.anycook.de/recipe/";
 
     private final String query;
     private final ListView listView;
@@ -57,6 +55,7 @@ public class RecipeSearcher implements Runnable {
     }
 
     private List<String> searchRequest(String searchString) throws IOException {
+        String url = "https://api.anycook.de/autocomplete?query=";
         URL autocompleteUrl = new URL(url + searchString);
 
         HttpURLConnection httpURLConnection = (HttpURLConnection) autocompleteUrl.openConnection();
@@ -82,6 +81,7 @@ public class RecipeSearcher implements Runnable {
     }
 
     private String recipeRequest(String recipeName) throws IOException {
+        String recipeUrl = "https://api.anycook.de/recipe/";
         String newFeed = recipeUrl + Uri.encode(recipeName);
         StringBuilder response = new StringBuilder();
         Log.v("recipeRequest", "anycook url: " + newFeed);
@@ -108,10 +108,7 @@ public class RecipeSearcher implements Runnable {
         String imageUri = rawResponseObject.getJSONObject("image").getString("small");
         String description = rawResponseObject.getString("description");
 
-        RecipeRow dataOfRecipe = new RecipeRow(Uri.encode(imageUri), name, description);
-        //RecipeRow dataOfRecipe = new RecipeRow(null, name, description);
-
-        return dataOfRecipe;
+        return new RecipeRow(Uri.encode(imageUri), name, description);
     }
 
 

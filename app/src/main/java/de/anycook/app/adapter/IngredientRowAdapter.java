@@ -18,36 +18,44 @@ import java.util.ArrayList;
  */
 public class IngredientRowAdapter extends ArrayAdapter<IngredientRow> {
 
+    private static final String TAG = IngredientRowAdapter.class.getSimpleName();
     private Activity context;
+    int layoutResourceId;
     private final ArrayList<IngredientRow> ingredientValues;
-    ViewHolder viewHolder;
 
-    public IngredientRowAdapter(Context context, ArrayList<IngredientRow> values) {
-        super(context, R.layout.ingredient_list, R.id.ingredient_list_listview, values);
+
+    public IngredientRowAdapter(Context context, int ingredientRowResourceId, ArrayList<IngredientRow> values) {
+        super(context, ingredientRowResourceId, values);
+        this.layoutResourceId = ingredientRowResourceId;
         this.context = (Activity) context;
         this.ingredientValues = values;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder = null;
         if (convertView == null) {
+
             LayoutInflater inflater = context.getLayoutInflater();
-            convertView = inflater.inflate(R.layout.recipe_row, null);
+            convertView = inflater.inflate(layoutResourceId, parent, false);
 
-            this.viewHolder.ingredientText = (TextView) convertView
-                    .findViewById(R.id.ingredient_list_textview_ingredient);
-            this.viewHolder.amountText = (TextView) convertView
-                    .findViewById(R.id.ingredient_list_textview_amount);
+            viewHolder = new ViewHolder();
 
-            this.viewHolder = new ViewHolder();
+            viewHolder.ingredientText = (TextView) convertView
+                    .findViewById(R.id.ingredient_row_textview_ingredient);
+            viewHolder.amountText = (TextView) convertView
+                    .findViewById(R.id.ingredient_row_textview_amount);
+            viewHolder.strokeView = convertView
+                    .findViewById(R.id.ingredient_row_view_stroke);
         } else {
-            this.viewHolder = (ViewHolder) convertView.getTag();
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        this.viewHolder.ingredientText.setText(ingredientValues.get(position).getIngredient());
-        this.viewHolder.amountText.setText(ingredientValues.get(position).getAmount());
-        this.viewHolder.strokeView.setVisibility(View.VISIBLE);
-        this.viewHolder.strokeView.setClickable(false);
+        //IngredientRow ingredientValue = ingredientValues.get(position);
+        //viewHolder.ingredientText.setText(ingredientValue.getIngredient(), TextView.BufferType.NORMAL);
+        //viewHolder.amountText.setText(ingredientValue.getAmount(), TextView.BufferType.NORMAL);
+        //viewHolder.strokeView.setVisibility(View.VISIBLE);
+        //viewHolder.strokeView.setClickable(false);
 
         return convertView;
     }

@@ -7,7 +7,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 import de.anycook.app.R;
 import de.anycook.app.adapter.IngredientRow;
-import de.anycook.app.adapter.IngredientRowAdapter;
 
 import java.util.ArrayList;
 
@@ -26,7 +25,7 @@ public class GroceryListActivity extends ListActivity {
 
         super.onCreate(savedInstanceState);
 
-        setListAdapter(new IngredientRowAdapter(this, Ingredients));
+        //setListAdapter(new IngredientRowAdapter(this, Ingredients));
 
 
         //Intent intent = new Intent(this, MyActivity.class);
@@ -37,7 +36,7 @@ public class GroceryListActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         Toast.makeText(this, "strike trough", Toast.LENGTH_SHORT);
         View rowView = getListAdapter().getView(position, v, l);
-        View strokeView = rowView.findViewById(R.id.ingredient_list_view_stroke);
+        View strokeView = rowView.findViewById(R.id.ingredient_row_view_stroke);
         if (strokeView.getVisibility() == View.INVISIBLE) {
             strokeView.setVisibility(View.VISIBLE);
         } else {

@@ -9,7 +9,8 @@
     <string name="cancel">abbrechen</string>
     <string name="accept">speichern</string>
     <string name="recipe_name">Bananenbrot</string>
-    <string name="ingredient1">Bananen</string>
+    <string name="ingredient_hint">Was brauchst du?</string>
+    <string name="amount_hint">Wieviel?</string>
     <string name="ingredient2">Brot</string>
     <string name="search_hint">"Suche Gerichte"</string>
 

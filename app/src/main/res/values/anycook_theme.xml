@@ -2,34 +2,33 @@
 <resources>
     <style name="AnycookTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/ActionBarAnycook</item>
+        <item name="android:actionBarWidgetTheme">@style/AnycookActionBarWidgetTheme</item>
         <item name="android:textAppearance">@style/TextAppearanceAnycook</item>
-        <item name="android:textAppearanceLarge">@style/TextAppearanceAnycook.Large</item>
-        <item name="android:textAppearanceMedium">@style/TextAppearanceAnycook.Medium</item>
-        <item name="android:textAppearanceSmall">@style/TextAppearanceAnycook.Small</item>
+        <item name="android:textAppearanceLarge">@style/TextAppearanceAnycook</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearanceAnycook</item>
+        <item name="android:textAppearanceSmall">@style/TextAppearanceAnycook</item>
+        <item name="android:editTextStyle">@style/TextAppearanceAnycook.EditText</item>
+    </style>
+
+    <style name="AnycookActionBarWidgetTheme">
+        <item name="android:textColor">@color/any_gray</item>
+        <item name="android:editTextColor">@color/any_gray</item>
+        <item name="android:textColorHint">@color/any_green_light</item>
     </style>
 
     <style name="TextAppearanceAnycook" parent="@android:style/TextAppearance">
         <item name="android:typeface">serif</item>
+        <item name="android:textColor">@color/any_grey_dark</item>
     </style>
 
-    <style name="TextAppearanceAnycook.Large">
-        <item name="android:textSize">44dp</item>
-        <item name="android:typeface">serif</item>
-    </style>
-
-    <style name="TextAppearanceAnycook.Medium">
-        <item name="android:textSize">33sp</item>
-        <item name="android:typeface">serif</item>
-    </style>
-
-    <style name="TextAppearanceAnycook.Small">
-        <item name="android:textSize">22sp</item>
-        <item name="android:typeface">serif</item>
+    <style name="TextAppearanceAnycook.EditText" parent="@android:style/Widget.EditText">
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="ActionBarAnycook" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:background">@drawable/bg_texture</item>
         <item name="android:textColor">@color/any_gray</item>
+        <item name="android:textColorHint">@color/any_gray</item>
         <item name="android:titleTextStyle">@style/ActionBarTitleTextAnycook</item>
 
     </style>

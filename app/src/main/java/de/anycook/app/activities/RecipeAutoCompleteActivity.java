@@ -5,10 +5,10 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.View;
+import android.widget.*;
 import de.anycook.app.R;
-import de.anycook.app.controller.RecipeSearcher;
+import de.anycook.app.controller.RecipeAutoCompleter;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -22,7 +22,7 @@ import java.util.concurrent.Executors;
  * <p/>
  * Created by cipo7741 on 13.06.14.
  */
-public class RecipeSearchActivity extends Activity {
+public class RecipeAutoCompleteActivity extends Activity {
     private static final String TAG = RecipeAutoCompleteActivity.class.getSimpleName();
     private ListView recipeListView;
     private static ExecutorService threadPool;
@@ -40,7 +40,17 @@ public class RecipeSearchActivity extends Activity {
         this.recipeListView = (ListView) this.findViewById(R.id.recipe_list_listview);
         ArrayList<String> recipeRowData = new ArrayList<>();
         this.recipeListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, recipeRowData));
+
         threadPool = Executors.newSingleThreadExecutor();
+
+        this.recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = ((TextView) view).getText().toString();
+
+                Toast.makeText(getBaseContext(), item, Toast.LENGTH_LONG).show();
+            }
+        });
 
         Intent intent = getIntent();
         handleIntent(intent);
@@ -55,7 +65,7 @@ public class RecipeSearchActivity extends Activity {
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            threadPool.submit(new RecipeSearcher(query, recipeListView));
+            threadPool.submit(new RecipeAutoCompleter(query, recipeListView));
         }
     }
 }
