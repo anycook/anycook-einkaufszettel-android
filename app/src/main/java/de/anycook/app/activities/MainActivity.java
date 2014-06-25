@@ -22,25 +22,11 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the options menu from XML
         getMenuInflater().inflate(R.menu.main_activity_actions, menu);
-        /*LayoutInflater inflator = (LayoutInflater) this
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = inflator.inflate(R.layout.action_bar, null);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, recipes);
-        AutoCompleteTextView textView = (AutoCompleteTextView) v
-                .findViewById(R.id.action_bar_autocompletetextview);
-        textView.setAdapter(adapter);*/
-
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_item_main_search).getActionView();
-
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
         return super.onCreateOptionsMenu(menu);
-
     }
 
     @Override
@@ -53,7 +39,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void actionEdit(View view) {
-        //todo: implement edit activity to add custom ingredients
         Intent myIntent = new Intent(view.getContext(), EditGroceryListActivity.class); /** Class name here */
         startActivityForResult(myIntent, 0);
     }

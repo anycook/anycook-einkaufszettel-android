@@ -16,14 +16,11 @@ import java.util.concurrent.Executors;
 
 /**
  * this searchable activity is responsible for returning recipe search results
- * new layout: recipe list
- * <p/>
- * todo: add images and description
- * <p/>
+ *
  * Created by cipo7741 on 13.06.14.
  */
 public class RecipeAutoCompleteActivity extends Activity {
-    private static final String TAG = RecipeAutoCompleteActivity.class.getSimpleName();
+    //private static final String TAG = RecipeAutoCompleteActivity.class.getSimpleName();
     private ListView recipeListView;
     private static ExecutorService threadPool;
 

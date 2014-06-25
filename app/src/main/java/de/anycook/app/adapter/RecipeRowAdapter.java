@@ -44,15 +44,16 @@ public class RecipeRowAdapter extends ArrayAdapter<RecipeRow> {
     /**
      * Improved getView thanks to ViewHolder (findViewById is and expensive function)
      *
-     * @param position
-     * @param convertView
-     * @param parent
-     * @return
+     * @param position where is the view
+     * @param convertView what is visible
+     * @param parent which is the parent view
+     * @return the view
      */
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = context.getLayoutInflater();
-            convertView = inflater.inflate(R.layout.recipe_row, null);
+            convertView = inflater.inflate(R.layout.recipe_row, parent);
 
             this.viewHolder = new ViewHolder();
             this.viewHolder.recipeImage = (ImageView) convertView

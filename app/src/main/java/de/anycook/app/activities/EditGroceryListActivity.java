@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -33,14 +32,16 @@ public class EditGroceryListActivity extends Activity {
         ListView ingredientListView = (ListView) this.findViewById(R.id.ingredient_list_listview);
         ingredientListView.setAdapter(new IngredientRowAdapter(this, R.layout.ingredient_row, Ingredients));
 
-        final EditText editText;
-        editText = (EditText) findViewById(R.id.ingredient_list_textview_amount);
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        final EditText editTextAmount;
+        editTextAmount = (EditText) findViewById(R.id.ingredient_list_textview_amount);
+        final EditText editTextIngredient;
+        editTextIngredient = (EditText) findViewById(R.id.ingredient_list_textview_ingredient);
+        editTextAmount.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    sendMessage(editText);
+                    sendMessage(editTextAmount, editTextIngredient);
                     handled = true;
                 }
                 return handled;
@@ -48,7 +49,11 @@ public class EditGroceryListActivity extends Activity {
         });
     }
 
-    private void sendMessage(View view) {
+    private void sendMessage(EditText editTextAmount, EditText editTextIngredient) {
+
+        ListView ingredientListView = (ListView) this.findViewById(R.id.ingredient_list_listview);
+        IngredientRowAdapter ingredientRowAdapter = (IngredientRowAdapter) ingredientListView.getAdapter();
+        ingredientRowAdapter.add(new IngredientRow(editTextIngredient.getText().toString(), editTextAmount.getText().toString()));
         Log.v(TAG, "starting sendMessage");
     }
 
