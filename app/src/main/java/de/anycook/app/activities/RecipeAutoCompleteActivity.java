@@ -16,7 +16,7 @@ import java.util.concurrent.Executors;
 
 /**
  * this searchable activity is responsible for returning recipe search results
- *
+ * <p/>
  * Created by cipo7741 on 13.06.14.
  */
 public class RecipeAutoCompleteActivity extends Activity {
@@ -28,27 +28,21 @@ public class RecipeAutoCompleteActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_list);
-
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
         this.recipeListView = (ListView) this.findViewById(R.id.recipe_list_listview);
         ArrayList<String> recipeRowData = new ArrayList<>();
         this.recipeListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, recipeRowData));
-
         threadPool = Executors.newSingleThreadExecutor();
-
         this.recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String item = ((TextView) view).getText().toString();
-
                 Toast.makeText(getBaseContext(), item, Toast.LENGTH_LONG).show();
             }
         });
-
         Intent intent = getIntent();
         handleIntent(intent);
     }

@@ -54,7 +54,7 @@ public class IngredientRowAdapter extends ArrayAdapter<IngredientRow> {
         IngredientRow ingredientValue = ingredientValues.get(position);
         viewHolder.ingredientText.setText(ingredientValue.getIngredient(), TextView.BufferType.NORMAL);
         viewHolder.amountText.setText(ingredientValue.getAmount(), TextView.BufferType.NORMAL);
-        //viewHolder.strokeView.setVisibility(View.VISIBLE);
+        viewHolder.strokeView.setVisibility(View.INVISIBLE);
         viewHolder.strokeView.setClickable(false);
 
         return convertView;

@@ -5,14 +5,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/ingredient_list_listview"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"/>
 
     <EditText
             android:id="@+id/ingredient_list_textview_ingredient"
-            android:layout_below="@id/ingredient_list_listview"
             android:layout_toLeftOf="@+id/ingredient_list_textview_amount"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -24,7 +19,6 @@
 
     <EditText
             android:id="@id/ingredient_list_textview_amount"
-            android:layout_below="@id/ingredient_list_listview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -34,5 +28,10 @@
             android:inputType="number|textPostalAddress"
             android:imeOptions="actionDone"/>
 
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/ingredient_list_listview"
+              android:layout_below="@id/ingredient_list_textview_ingredient"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"/>
 
 </RelativeLayout>

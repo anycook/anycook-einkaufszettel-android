@@ -4,9 +4,9 @@
         <item name="android:actionBarStyle">@style/ActionBarAnycook</item>
         <item name="android:actionBarWidgetTheme">@style/AnycookActionBarWidgetTheme</item>
         <item name="android:textAppearance">@style/TextAppearanceAnycook</item>
-        <item name="android:textAppearanceLarge">@style/TextAppearanceAnycook</item>
-        <item name="android:textAppearanceMedium">@style/TextAppearanceAnycook</item>
-        <item name="android:textAppearanceSmall">@style/TextAppearanceAnycook</item>
+        <item name="android:textAppearanceSmall">@style/TextAppearanceAnycook.Small</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearanceAnycook.Medium</item>
+        <item name="android:textAppearanceLarge">@style/TextAppearanceAnycook.Large</item>
         <item name="android:editTextStyle">@style/TextAppearanceAnycook.EditText</item>
     </style>
 
@@ -19,6 +19,18 @@
     <style name="TextAppearanceAnycook" parent="@android:style/TextAppearance">
         <item name="android:typeface">serif</item>
         <item name="android:textColor">@color/any_grey_dark</item>
+    </style>
+
+    <style name="TextAppearanceAnycook.Small" parent="@style/TextAppearanceAnycook">
+        <item name="android:textSize">20dp</item>
+    </style>
+
+    <style name="TextAppearanceAnycook.Medium" parent="@style/TextAppearanceAnycook">
+        <item name="android:textSize">25dp</item>
+    </style>
+
+    <style name="TextAppearanceAnycook.Large" parent="@style/TextAppearanceAnycook">
+        <item name="android:textSize">30dp</item>
     </style>
 
     <style name="TextAppearanceAnycook.EditText" parent="@android:style/Widget.EditText">
