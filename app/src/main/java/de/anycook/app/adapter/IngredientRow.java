@@ -4,11 +4,18 @@ public class IngredientRow {
 
     private String ingredient;
     private String amount;
+    private boolean struckOut;
 
     public IngredientRow(String ingredient, String amount) {
+        this.setIngredient(ingredient);
+        this.setAmount(amount);
+        this.setStruckOut(false);
+    }
 
-        this.ingredient = ingredient;
-        this.amount = amount;
+    public IngredientRow(String ingredient) {
+        this.setIngredient(ingredient);
+        this.setAmount("");
+        this.setStruckOut(false);
     }
 
     public String getAmount() {
@@ -25,6 +32,14 @@ public class IngredientRow {
 
     public void setIngredient(String ingredient) {
         this.ingredient = ingredient;
+    }
+
+    public boolean getStruckOut() {
+        return this.struckOut;
+    }
+
+    public void setStruckOut(boolean struckOut) {
+        this.struckOut = struckOut;
     }
 
     @Override

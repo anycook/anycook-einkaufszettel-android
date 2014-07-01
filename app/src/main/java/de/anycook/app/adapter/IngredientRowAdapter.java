@@ -2,7 +2,6 @@ package de.anycook.app.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
  */
 public class IngredientRowAdapter extends ArrayAdapter<IngredientRow> {
 
-    private static final String TAG = IngredientRowAdapter.class.getSimpleName();
+    //private static final String TAG = IngredientRowAdapter.class.getSimpleName();
     private Activity context;
     private final ArrayList<IngredientRow> ingredientValues;
 
@@ -34,7 +33,6 @@ public class IngredientRowAdapter extends ArrayAdapter<IngredientRow> {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
-            Log.v(TAG, String.format("getView convertView == null, pos: %s, parent: %s", position, parent.toString()));
             LayoutInflater inflater = context.getLayoutInflater();
             convertView = inflater.inflate(R.layout.ingredient_row, parent, false);
 
@@ -54,8 +52,12 @@ public class IngredientRowAdapter extends ArrayAdapter<IngredientRow> {
         IngredientRow ingredientValue = ingredientValues.get(position);
         viewHolder.ingredientText.setText(ingredientValue.getIngredient(), TextView.BufferType.NORMAL);
         viewHolder.amountText.setText(ingredientValue.getAmount(), TextView.BufferType.NORMAL);
-        viewHolder.strokeView.setVisibility(View.INVISIBLE);
-        viewHolder.strokeView.setClickable(false);
+        if (!ingredientValue.getStruckOut()) {
+            viewHolder.strokeView.setVisibility(View.INVISIBLE);
+        } else {
+            viewHolder.strokeView.setVisibility(View.VISIBLE);
+        }
+
 
         return convertView;
     }

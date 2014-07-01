@@ -13,6 +13,6 @@
     <string name="amount_hint">Wieviel?</string>
     <string name="ingredient2">Brot</string>
     <string name="search_hint">"Suche Gerichte"</string>
-
+    <string name="delete">Löschen</string>
 </resources>
 
