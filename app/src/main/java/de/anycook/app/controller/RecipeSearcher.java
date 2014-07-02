@@ -1,3 +1,4 @@
+/*
 package de.anycook.app.controller;
 
 import android.net.Uri;
@@ -19,9 +20,11 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+*/
 /**
  * Created by cipo7741 on 19.06.14.
- */
+ *//*
+
 public class RecipeSearcher implements Runnable {
     private static final String TAG = RecipeSearcher.class.getSimpleName();
 
@@ -124,3 +127,4 @@ public class RecipeSearcher implements Runnable {
         }
     }
 }
+*/

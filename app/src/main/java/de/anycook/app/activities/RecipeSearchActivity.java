@@ -1,3 +1,4 @@
+/*
 package de.anycook.app.activities;
 
 import android.app.ActionBar;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+*/
 /**
  * this searchable activity is responsible for returning recipe search results
  * new layout: recipe list
@@ -21,7 +23,8 @@ import java.util.concurrent.Executors;
  * todo: add images and description
  * <p/>
  * Created by cipo7741 on 13.06.14.
- */
+ *//*
+
 public class RecipeSearchActivity extends Activity {
     private static final String TAG = RecipeAutoCompleteActivity.class.getSimpleName();
     private ListView recipeListView;
@@ -35,6 +38,7 @@ public class RecipeSearchActivity extends Activity {
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Rezepte mit " + SearchManager.QUERY);
         }
 
         this.recipeListView = (ListView) this.findViewById(R.id.recipe_list_listview);
@@ -58,4 +62,4 @@ public class RecipeSearchActivity extends Activity {
             threadPool.submit(new RecipeSearcher(query, recipeListView));
         }
     }
-}
+}*/

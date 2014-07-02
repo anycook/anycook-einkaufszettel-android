@@ -1,17 +1,12 @@
 package de.anycook.app.adapter;
 
-public class RecipeRow {
+public class Recipe {
 
     private String recipeImageUrl;
     private String recipeName;
     private String recipeDescription;
+    private long id;
 
-
-    public RecipeRow(String imageUrl, String recipeName, String recipeDescription) {
-        this.recipeImageUrl = imageUrl;
-        this.recipeName = recipeName;
-        this.recipeDescription = recipeDescription;
-    }
 
     public String getRecipeName() {
         return recipeName;
@@ -35,6 +30,14 @@ public class RecipeRow {
 
     public void setRecipeImageUrl(String recipeImage) {
         this.recipeImageUrl = recipeImage;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Override

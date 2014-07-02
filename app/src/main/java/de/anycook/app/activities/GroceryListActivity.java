@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 import de.anycook.app.R;
-import de.anycook.app.adapter.IngredientRow;
+import de.anycook.app.adapter.Ingredient;
 
 import java.util.ArrayList;
 
@@ -17,8 +17,8 @@ import java.util.ArrayList;
 
 public class GroceryListActivity extends ListActivity {
 
-    static final ArrayList<IngredientRow> Ingredients =
-            new ArrayList<IngredientRow>();
+    static final ArrayList<Ingredient> Ingredients =
+            new ArrayList<Ingredient>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

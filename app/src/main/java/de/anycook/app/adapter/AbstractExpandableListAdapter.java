@@ -12,6 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
+
+/**
+ * http://stackoverflow.com/questions/5188196/how-to-write-custom-expandablelistadapter
+ * answered by Naftuli Tzvi Kay on Mar 4 '11 at 22:05
+ *
+ * @param <A>
+ * @param <B>
+ */
 public abstract class AbstractExpandableListAdapter<A, B> implements ExpandableListAdapter {
 
     private final List<Entry<A, List<B>>> objects;

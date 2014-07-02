@@ -6,8 +6,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="5dp"
                 android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-        >
+                android:paddingBottom="5dp">
 
     <ImageView
             android:id="@+id/recipe_row_imageview"
@@ -15,19 +14,17 @@
             android:layout_height="60dp"
             android:src="@drawable/ic_launcher"
             android:scaleType="centerCrop"
-            android:layout_marginRight="5dp"/>
+            android:layout_marginRight="5dp"
+            android:contentDescription="@string/image_descriptiong"/>
 
     <TextView
             android:id="@+id/recipe_row_textview_recipe_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@id/recipe_row_imageview"
             android:layout_toRightOf="@id/recipe_row_imageview"
             android:maxLines="1"
-            android:text="Recipe Title"
-            android:textIsSelectable="false"
-            android:textSize="16sp"
+            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
             android:ellipsize="end"/>
 
     <TextView
@@ -35,12 +32,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/recipe_row_textview_recipe_name"
             android:layout_toRightOf="@id/recipe_row_imageview"
+            android:layout_below="@id/recipe_row_textview_recipe_name"
             android:maxLines="2"
             android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-            android:textSize="12sp"
-            android:ellipsize="end"
-            />
+            android:textSize="11sp"
+            android:ellipsize="end"/>
 
 </RelativeLayout>

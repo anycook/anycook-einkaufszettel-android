@@ -35,9 +35,7 @@ public class RecipeAutoCompleter implements Runnable {
                 @Override
                 public void run() {
                     ArrayAdapter<String> tmpRowAdapter = (ArrayAdapter<String>) listView.getAdapter();
-
                     for (String recipe : recipeNames) {
-
                         tmpRowAdapter.add(recipe);
                     }
                     listView.setAdapter(tmpRowAdapter);
@@ -51,15 +49,12 @@ public class RecipeAutoCompleter implements Runnable {
     private ArrayList<String> searchRequest(String searchString) throws IOException {
         String url = "https://api.anycook.de/autocomplete?query=";
         URL autocompleteUrl = new URL(url + searchString);
-
         HttpURLConnection httpURLConnection = (HttpURLConnection) autocompleteUrl.openConnection();
-
         if (httpURLConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
             throw new IOException(httpURLConnection.getResponseMessage());
         }
-
+        Log.v(TAG, autocompleteUrl.toString());
         Reader reader = new InputStreamReader(httpURLConnection.getInputStream());
-
         Gson gson = new Gson();
         AutoCompleteResponse autoCompleteResponse = gson.fromJson(reader, AutoCompleteResponse.class);
         ArrayList<String> recipeNames = autoCompleteResponse.getRecipes();

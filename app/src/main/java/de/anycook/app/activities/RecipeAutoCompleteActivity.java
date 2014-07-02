@@ -28,10 +28,7 @@ public class RecipeAutoCompleteActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_list);
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+
         this.recipeListView = (ListView) this.findViewById(R.id.recipe_list_listview);
         ArrayList<String> recipeRowData = new ArrayList<>();
         this.recipeListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, recipeRowData));
@@ -44,6 +41,11 @@ public class RecipeAutoCompleteActivity extends Activity {
             }
         });
         Intent intent = getIntent();
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Rezepte mit " + intent.getStringExtra(SearchManager.QUERY));
+        }
         handleIntent(intent);
     }
 

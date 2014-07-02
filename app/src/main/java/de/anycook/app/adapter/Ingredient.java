@@ -1,19 +1,20 @@
 package de.anycook.app.adapter;
 
-public class IngredientRow {
+public class Ingredient {
 
-    private String ingredient;
+    private String name;
     private String amount;
     private boolean struckOut;
+    private long id;
 
-    public IngredientRow(String ingredient, String amount) {
-        this.setIngredient(ingredient);
+    public Ingredient(String name, String amount) {
+        this.setName(name);
         this.setAmount(amount);
         this.setStruckOut(false);
     }
 
-    public IngredientRow(String ingredient) {
-        this.setIngredient(ingredient);
+    public Ingredient() {
+        this.setName("");
         this.setAmount("");
         this.setStruckOut(false);
     }
@@ -26,12 +27,12 @@ public class IngredientRow {
         this.amount = desc;
     }
 
-    public String getIngredient() {
-        return ingredient;
+    public String getName() {
+        return name;
     }
 
-    public void setIngredient(String ingredient) {
-        this.ingredient = ingredient;
+    public void setName(String ingredient) {
+        this.name = ingredient;
     }
 
     public boolean getStruckOut() {
@@ -42,8 +43,16 @@ public class IngredientRow {
         this.struckOut = struckOut;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
-        return ingredient + "\t" + amount;
+        return name + "\t" + amount;
     }
 }

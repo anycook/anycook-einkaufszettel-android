@@ -2,21 +2,20 @@ package de.anycook.app.activities;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.View;
+import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import de.anycook.app.R;
 import de.anycook.app.activities.util.SwipeDetector;
-import de.anycook.app.adapter.IngredientRow;
+import de.anycook.app.adapter.Ingredient;
 import de.anycook.app.adapter.IngredientRowAdapter;
+import de.anycook.app.controller.util.IngredientsDataSource;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Implement the ActionMode.Callback interface for enabling the contextual action mode for the ingredient view
@@ -25,7 +24,7 @@ import java.util.ArrayList;
  */
 public class EditGroceryListActivity extends ActionBarActivity {
 
-    static final ArrayList<IngredientRow> Ingredients = new ArrayList<>();
+    private IngredientsDataSource dataSource;
     //private static final String TAG = EditGroceryListActivity.class.getSimpleName();
 
     @Override
@@ -33,8 +32,13 @@ public class EditGroceryListActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ingredient_list);
 
+        dataSource = new IngredientsDataSource(this);
+        dataSource.open();
+
+        List<Ingredient> values = dataSource.getAllIngredients();
+
         final ListView ingredientListView = (ListView) this.findViewById(R.id.ingredient_list_listview);
-        ingredientListView.setAdapter(new IngredientRowAdapter(this, R.layout.ingredient_row, Ingredients));
+        ingredientListView.setAdapter(new IngredientRowAdapter(this, R.layout.ingredient_row, values));
         View footerView = getLayoutInflater().inflate(R.layout.footer_layout, ingredientListView, false);
         ingredientListView.addFooterView(footerView);
 
@@ -43,13 +47,10 @@ public class EditGroceryListActivity extends ActionBarActivity {
         editTextAmount.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    addItem(editTextIngredient, editTextAmount);
-                    handled = true;
-                    ((IngredientRowAdapter) ingredientListView.getAdapter()).notifyDataSetChanged();
-                }
-                return handled;
+                    addItem(ingredientListView, editTextIngredient, editTextAmount);
+                    return true;
+                } else return false;
             }
         });
         final SwipeDetector swipeDetector = new SwipeDetector();
@@ -57,11 +58,13 @@ public class EditGroceryListActivity extends ActionBarActivity {
         ingredientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Ingredient ingredient = ((IngredientRowAdapter) ingredientListView.getAdapter()).getItem(i);
                 if (swipeDetector.swipeDetected() && view.findViewById(R.id.ingredient_row_view_stroke).getVisibility() == View.VISIBLE) {
-                    String removedIngredient = Ingredients.remove(i).getIngredient();
-                    showTopMessage(String.format("%s wurde gelöscht", removedIngredient));
+                    dataSource.deleteIngredient(ingredient);
+                    ((IngredientRowAdapter) ingredientListView.getAdapter()).remove(ingredient);
+                    showTopMessage(String.format("%s wurde gelöscht", ingredient.getName()));
                 } else {
-                    changeItemStrokeVisibility(i);
+                    changeItemStrokeVisibility(ingredient);
                 }
                 ((IngredientRowAdapter) ingredientListView.getAdapter()).notifyDataSetChanged();
             }
@@ -74,6 +77,18 @@ public class EditGroceryListActivity extends ActionBarActivity {
         });
     }
 
+    private void addItem(ListView ingredientListView, EditText editTextIngredient, EditText editTextAmount) {
+        if (editTextIngredient.getText().toString().isEmpty()) {
+            showTopMessage("Wunschlos glücklich! ;-)");
+        } else {
+            Ingredient ingredient = new Ingredient(editTextIngredient.getText().toString(), editTextAmount.getText().toString());
+            ingredient = dataSource.createIngredient(ingredient);
+            ((IngredientRowAdapter) ingredientListView.getAdapter()).add(ingredient);
+            editTextIngredient.setText("");
+            editTextAmount.setText("");
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_activity_actions, menu);
@@ -83,28 +98,35 @@ public class EditGroceryListActivity extends ActionBarActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.menu_item_main_locate:
+                openLoctionView();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void openLoctionView() {
+        Intent intent = new Intent(this, LocationActivity.class);
+        startActivity(intent);
+    }
+
     private void showTopMessage(String message) {
         Toast toast = Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP, 0, 0);
         toast.show();
     }
 
-    private void addItem(EditText editTextIngredient, EditText editTextAmount) {
-        if (editTextIngredient.getText().toString().isEmpty()) {
-            showTopMessage("Wunschlos glücklich! ;-)");
-        } else {
-            IngredientRow ingredientRow = new IngredientRow(editTextIngredient.getText().toString(), editTextAmount.getText().toString());
-            Ingredients.add(0, ingredientRow);
-            editTextIngredient.setText("");
-            editTextAmount.setText("");
-        }
-    }
 
-    private void changeItemStrokeVisibility(int position) {
-        if (Ingredients.get(position).getStruckOut()) {
-            Ingredients.get(position).setStruckOut(false);
+    private void changeItemStrokeVisibility(Ingredient ingredient) {
+        if (ingredient.getStruckOut()) {
+            ingredient.setStruckOut(false);
         } else {
-            Ingredients.get(position).setStruckOut(true);
+            ingredient.setStruckOut(true);
         }
     }
 }

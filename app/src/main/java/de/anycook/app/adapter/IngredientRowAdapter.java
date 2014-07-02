@@ -9,21 +9,21 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import de.anycook.app.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Custom ArrayAdapter to fill EditMode with amount and ingredients
  * <p/>
  * Created by cipo7741 on 07.06.14.
  */
-public class IngredientRowAdapter extends ArrayAdapter<IngredientRow> {
+public class IngredientRowAdapter extends ArrayAdapter<Ingredient> {
 
+    private final List<Ingredient> ingredientValues;
     //private static final String TAG = IngredientRowAdapter.class.getSimpleName();
     private Activity context;
-    private final ArrayList<IngredientRow> ingredientValues;
 
 
-    public IngredientRowAdapter(Context context, int ingredientRowResourceId, ArrayList<IngredientRow> values) {
+    public IngredientRowAdapter(Context context, int ingredientRowResourceId, List<Ingredient> values) {
         super(context, ingredientRowResourceId, values);
         this.context = (Activity) context;
         ingredientValues = values;
@@ -49,8 +49,8 @@ public class IngredientRowAdapter extends ArrayAdapter<IngredientRow> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        IngredientRow ingredientValue = ingredientValues.get(position);
-        viewHolder.ingredientText.setText(ingredientValue.getIngredient(), TextView.BufferType.NORMAL);
+        Ingredient ingredientValue = ingredientValues.get(position);
+        viewHolder.ingredientText.setText(ingredientValue.getName(), TextView.BufferType.NORMAL);
         viewHolder.amountText.setText(ingredientValue.getAmount(), TextView.BufferType.NORMAL);
         if (!ingredientValue.getStruckOut()) {
             viewHolder.strokeView.setVisibility(View.INVISIBLE);
