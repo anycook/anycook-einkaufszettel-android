@@ -2,9 +2,6 @@ package de.anycook.app.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import de.anycook.app.R;
 import de.anycook.app.controller.RecipeResponse;
+import de.anycook.app.tasks.DownloadImageTask;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 
 /**
@@ -29,7 +22,6 @@ import java.util.ArrayList;
 public class RecipeRowAdapter extends ArrayAdapter<RecipeResponse> {
 
     private static final String TAG = RecipeRowAdapter.class.getSimpleName();
-    private Bitmap bm;
     private Activity context;
     private ArrayList<RecipeResponse> recipeValues;
 
@@ -67,32 +59,11 @@ public class RecipeRowAdapter extends ArrayAdapter<RecipeResponse> {
         viewHolder.textViewName.setText(recipeValues.get(position).getName());
         viewHolder.textViewDescription.setText(recipeValues.get(position).getDescription());
 
-        viewHolder.imageView.setImageResource(R.drawable.ic_launcher);
+        new DownloadImageTask(viewHolder.imageView).execute(recipeValues.get(position).getImage());
+        //viewHolder.imageView.setImageResource(R.drawable.ic_launcher);
 
         return rowView;
 
-    }
-
-    private Bitmap getImageBitmap(String url) {
-        final String tmpUrl = url;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL aURL = new URL(tmpUrl);
-                    URLConnection conn = aURL.openConnection();
-                    conn.connect();
-                    InputStream is = conn.getInputStream();
-                    BufferedInputStream bis = new BufferedInputStream(is);
-                    bm = BitmapFactory.decodeStream(bis);
-                    bis.close();
-                    is.close();
-                } catch (IOException e) {
-                    Log.e(TAG + " getImageBitmap", "Error getting bitmap", e);
-                }
-            }
-        }).start();
-        return bm;
     }
 
     static class ViewHolder {

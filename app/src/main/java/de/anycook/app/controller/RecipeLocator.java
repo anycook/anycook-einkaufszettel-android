@@ -42,20 +42,26 @@ public class RecipeLocator implements Runnable {
         if (location == null) return;
         try {
             final ArrayList<RecipeResponse> recipeData = searchRequest(location);
-            listView.post(new Runnable() {
-                @Override
-                public void run() {
-                    RecipeRowAdapter recipeRowAdapter = (RecipeRowAdapter) listView.getAdapter();
-                    for (RecipeResponse recipeResponse : recipeData) {
-                        Log.v(TAG, recipeResponse.getName());
-                        recipeRowAdapter.add(recipeResponse);
+
+            if(recipeData.size() == 0) {
+                Log.v(TAG, "Didn't find any nearby recipes");
+                //TODO show it in the UI
+            } else {
+                listView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        RecipeRowAdapter recipeRowAdapter = (RecipeRowAdapter) listView.getAdapter();
+                        for (RecipeResponse recipeResponse : recipeData) {
+                            Log.v(TAG, recipeResponse.getName());
+                            recipeRowAdapter.add(recipeResponse);
+                        }
+                        listView.setAdapter(recipeRowAdapter);
+                        //recipeRowAdapter.notifyDataSetChanged();
                     }
-                    listView.setAdapter(recipeRowAdapter);
-                    //recipeRowAdapter.notifyDataSetChanged();
-                }
-            });
+                });
+            }
         } catch (Exception e) {
-            Log.e(TAG, String.format("doRecipeSearch: %s %s", e.toString(), e.getMessage()));
+            Log.e(TAG, String.format("doRecipeSearch: %s", e.toString()), e);
         }
     }
 

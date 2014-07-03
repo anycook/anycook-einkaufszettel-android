@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -48,6 +49,10 @@ public class LocationActivity extends Activity {
         }
         gps.stopUsingGPS();
 
+        Log.d("Location", location == null ? "location was null" : location.toString());
+
+
+        // TODO don't initiate RecipeLocator if location is null! Load standard location or throw an error
         ExecutorService threadPool = Executors.newSingleThreadExecutor();
         threadPool.submit(new RecipeLocator(location, recipeListView));
 
