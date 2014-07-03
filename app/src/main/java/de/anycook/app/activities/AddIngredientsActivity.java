@@ -59,12 +59,15 @@ public class AddIngredientsActivity extends Activity {
         final Button button = (Button) findViewById(R.id.ingredient_list_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //List<GroceryItem> neededIngredientList = new ArrayList<GroceryItem>();
+                List<GroceryItem> groceryItems = dataSource.getAllGroceryItems();
                 for (GroceryItem ingredient : ingredientList) {
                     if (!ingredient.isStroked()) {
-                        //neededIngredientList.add(ingredient);
                         dataSource.createGroceryItem(ingredient);
                     }
+                }
+                for (GroceryItem groceryItem : groceryItems) {
+                    dataSource.deleteGroceryItem(groceryItem);
+                    dataSource.createGroceryItem(groceryItem);
                 }
                 finish();
             }

@@ -18,5 +18,7 @@
     <string name="image_descriptiong"/>
     <string name="grocery_item_hint">Was brauchst du?</string>
     <string name="add_ingredients">Zutaten hinzufügen</string>
+
+    <string name="list_end">Zettelende</string>
 </resources>
 

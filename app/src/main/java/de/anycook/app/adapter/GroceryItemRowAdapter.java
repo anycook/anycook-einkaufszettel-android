@@ -55,10 +55,11 @@ public class GroceryItemRowAdapter extends ArrayAdapter<GroceryItem> {
 
         viewHolder.itemText.setText(groceryValue.getName(), TextView.BufferType.NORMAL);
         viewHolder.amountText.setText(groceryValue.getAmount(), TextView.BufferType.NORMAL);
-        if (!groceryValue.isStroked()) {
-            viewHolder.strokeView.setVisibility(View.INVISIBLE);
-        } else {
+        int defaultTextColor = viewHolder.itemText.getCurrentTextColor();
+        if (groceryValue.isStroked()) {
             viewHolder.strokeView.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.strokeView.setVisibility(View.INVISIBLE);
         }
 
         return convertView;

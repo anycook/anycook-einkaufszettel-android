@@ -42,8 +42,6 @@ public class EditGroceryListActivity extends ActionBarActivity {
 
         final ListView groceryItemListView = (ListView) this.findViewById(R.id.grocery_item_list_listview);
         groceryItemListView.setAdapter(new GroceryItemRowAdapter(this, R.layout.grocery_item_row, groceryItemList));
-        View footerView = getLayoutInflater().inflate(R.layout.footer_layout, groceryItemListView, false);
-        groceryItemListView.addFooterView(footerView);
 
         final EditText editTextAmount = (EditText) findViewById(R.id.grocery_item_list_textview_amount);
         final EditText editTextGroceryItem = (EditText) findViewById(R.id.grocery_item_list_textview_grocery_item);
@@ -148,7 +146,7 @@ public class EditGroceryListActivity extends ActionBarActivity {
         dataSource.open();
         this.groceryItemList = dataSource.getAllGroceryItems();
         final ListView groceryItemListView = (ListView) this.findViewById(R.id.grocery_item_list_listview);
-        groceryItemListView.setAdapter(new GroceryItemRowAdapter(this, R.layout.grocery_item_row, groceryItemList));
+        groceryItemListView.setAdapter(new GroceryItemRowAdapter(this, R.layout.grocery_item_row, this.groceryItemList));
         super.onResume();
     }
 

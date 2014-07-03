@@ -2,7 +2,7 @@
 <!-- colors -->
 <resources>
     <!-- basic -->
-    <color name="any_gray">#F7F4F1</color>
+    <color name="any_gray">@color/any_background</color>
     <color name="any_black">#000000</color>
     <color name="any_green">#a3d358</color>
     <color name="any_green_light">@color/any_activebuttonbackground</color>
