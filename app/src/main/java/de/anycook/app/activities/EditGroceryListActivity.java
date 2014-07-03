@@ -6,70 +6,78 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import de.anycook.app.R;
 import de.anycook.app.activities.util.SwipeDetector;
-import de.anycook.app.adapter.Ingredient;
-import de.anycook.app.adapter.IngredientRowAdapter;
-import de.anycook.app.controller.util.IngredientsDataSource;
+import de.anycook.app.adapter.GroceryItemRowAdapter;
+import de.anycook.app.data.GroceryDataSource;
+import de.anycook.app.data.GroceryItem;
 
 import java.util.List;
 
 /**
- * Implement the ActionMode.Callback interface for enabling the contextual action mode for the ingredient view
+ * Implement the ActionMode.Callback interface for enabling the contextual action mode for the groceryItem view
  * <p/>
  * Created by cipo7741 on 13.06.14.
  */
 public class EditGroceryListActivity extends ActionBarActivity {
 
-    private IngredientsDataSource dataSource;
-    //private static final String TAG = EditGroceryListActivity.class.getSimpleName();
+    private GroceryDataSource dataSource;
+    private List<GroceryItem> groceryItemList;
+    private static final String TAG = EditGroceryListActivity.class.getSimpleName();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.v(TAG, " onCreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ingredient_list);
+        setContentView(R.layout.grocery_item_list);
 
-        dataSource = new IngredientsDataSource(this);
+        dataSource = new GroceryDataSource(this);
         dataSource.open();
 
-        List<Ingredient> values = dataSource.getAllIngredients();
+        this.groceryItemList = dataSource.getAllGroceryItems();
 
-        final ListView ingredientListView = (ListView) this.findViewById(R.id.ingredient_list_listview);
-        ingredientListView.setAdapter(new IngredientRowAdapter(this, R.layout.ingredient_row, values));
-        View footerView = getLayoutInflater().inflate(R.layout.footer_layout, ingredientListView, false);
-        ingredientListView.addFooterView(footerView);
+        final ListView groceryItemListView = (ListView) this.findViewById(R.id.grocery_item_list_listview);
+        groceryItemListView.setAdapter(new GroceryItemRowAdapter(this, R.layout.grocery_item_row, groceryItemList));
+        View footerView = getLayoutInflater().inflate(R.layout.footer_layout, groceryItemListView, false);
+        groceryItemListView.addFooterView(footerView);
 
-        final EditText editTextAmount = (EditText) findViewById(R.id.ingredient_list_textview_amount);
-        final EditText editTextIngredient = (EditText) findViewById(R.id.ingredient_list_textview_ingredient);
+        final EditText editTextAmount = (EditText) findViewById(R.id.grocery_item_list_textview_amount);
+        final EditText editTextGroceryItem = (EditText) findViewById(R.id.grocery_item_list_textview_grocery_item);
+
         editTextAmount.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    addItem(ingredientListView, editTextIngredient, editTextAmount);
+                    addItem(editTextGroceryItem.getText().toString(), editTextAmount.getText().toString());
+                    editTextGroceryItem.setText("");
+                    editTextAmount.setText("");
+                    ((GroceryItemRowAdapter) groceryItemListView.getAdapter()).notifyDataSetChanged();
                     return true;
                 } else return false;
             }
         });
         final SwipeDetector swipeDetector = new SwipeDetector();
-        ingredientListView.setOnTouchListener(swipeDetector);
-        ingredientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        groceryItemListView.setOnTouchListener(swipeDetector);
+        groceryItemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Ingredient ingredient = ((IngredientRowAdapter) ingredientListView.getAdapter()).getItem(i);
-                if (swipeDetector.swipeDetected() && view.findViewById(R.id.ingredient_row_view_stroke).getVisibility() == View.VISIBLE) {
-                    dataSource.deleteIngredient(ingredient);
-                    ((IngredientRowAdapter) ingredientListView.getAdapter()).remove(ingredient);
-                    showTopMessage(String.format("%s wurde gelöscht", ingredient.getName()));
+                GroceryItem groceryItem = groceryItemList.get(i);
+                if (swipeDetector.swipeDetected() && view.findViewById(R.id.grocery_item_row_view_stroke).getVisibility() == View.VISIBLE) {
+                    groceryItemList.remove(i);
+                    dataSource.deleteGroceryItem(groceryItem);
+                    showTopMessage(String.format("%s wurde gelöscht", groceryItem.getName()));
                 } else {
-                    changeItemStrokeVisibility(ingredient);
+                    dataSource.strokeGroceryItem(groceryItem);
+                    changeItemStrokeVisibility(groceryItem);
                 }
-                ((IngredientRowAdapter) ingredientListView.getAdapter()).notifyDataSetChanged();
+                ((GroceryItemRowAdapter) groceryItemListView.getAdapter()).notifyDataSetChanged();
             }
         });
-        ingredientListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        groceryItemListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 return false;
@@ -77,15 +85,13 @@ public class EditGroceryListActivity extends ActionBarActivity {
         });
     }
 
-    private void addItem(ListView ingredientListView, EditText editTextIngredient, EditText editTextAmount) {
-        if (editTextIngredient.getText().toString().isEmpty()) {
+    private void addItem(String name, String amount) {
+        if (name.equals("")) {
             showTopMessage("Wunschlos glücklich! ;-)");
         } else {
-            Ingredient ingredient = new Ingredient(editTextIngredient.getText().toString(), editTextAmount.getText().toString());
-            ingredient = dataSource.createIngredient(ingredient);
-            ((IngredientRowAdapter) ingredientListView.getAdapter()).add(ingredient);
-            editTextIngredient.setText("");
-            editTextAmount.setText("");
+            GroceryItem groceryItem = new GroceryItem(name, amount, false);
+            groceryItem = dataSource.createGroceryItem(groceryItem);
+            groceryItemList.add(0, groceryItem);
         }
     }
 
@@ -100,7 +106,6 @@ public class EditGroceryListActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.menu_item_main_locate:
                 openLoctionView();
@@ -122,11 +127,35 @@ public class EditGroceryListActivity extends ActionBarActivity {
     }
 
 
-    private void changeItemStrokeVisibility(Ingredient ingredient) {
-        if (ingredient.getStruckOut()) {
-            ingredient.setStruckOut(false);
+    private void changeItemStrokeVisibility(GroceryItem groceryItem) {
+        if (groceryItem.isStroked()) {
+            groceryItem.setStroked(false);
         } else {
-            ingredient.setStruckOut(true);
+            groceryItem.setStroked(true);
         }
+    }
+
+    @Override
+    protected void onStop() {
+        Log.v(TAG, " onStop");
+        dataSource.close();
+        super.onStop();
+    }
+
+    @Override
+    protected void onResume() {
+        Log.v(TAG, " onResume");
+        dataSource.open();
+        this.groceryItemList = dataSource.getAllGroceryItems();
+        final ListView groceryItemListView = (ListView) this.findViewById(R.id.grocery_item_list_listview);
+        groceryItemListView.setAdapter(new GroceryItemRowAdapter(this, R.layout.grocery_item_row, groceryItemList));
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.v(TAG, " onPause");
+        dataSource.close();
+        super.onPause();
     }
 }

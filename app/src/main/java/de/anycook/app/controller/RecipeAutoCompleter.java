@@ -13,6 +13,12 @@ import java.net.URL;
 import java.util.ArrayList;
 
 /**
+ * The auto completion request to the anycook api.
+ * https://api.anycook.de/autocomplete?query=
+ * <p/>
+ * Runs in its own thread Thread.
+ * Gets json with Gson. (https://code.google.com/p/google-gson/)
+ * <p/>
  * Created by cipo7741 on 19.06.14.
  */
 public class RecipeAutoCompleter implements Runnable {
@@ -65,7 +71,12 @@ public class RecipeAutoCompleter implements Runnable {
     }
 
     private static class AutoCompleteResponse {
+
         private ArrayList<String> recipes;
+
+        public AutoCompleteResponse(ArrayList<String> recipes) {
+            setRecipes(recipes);
+        }
 
         public ArrayList<String> getRecipes() {
             return recipes;

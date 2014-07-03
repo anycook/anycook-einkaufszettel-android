@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/ingredient_row_relativelayout_front"
+                android:id="@+id/grocery_item_row_relativelayout_front"
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp">
     <TextView
-            android:id="@+id/ingredient_row_textview_amount"
+            android:id="@+id/grocery_item_row_textview_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -16,16 +16,16 @@
             android:singleLine="true"
             android:text="2 Stück"/>
     <TextView
-            android:id="@+id/ingredient_row_textview_ingredient"
+            android:id="@+id/grocery_item_row_textview_grocery_item"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:layout_toLeftOf="@id/ingredient_row_textview_amount"
+            android:layout_toLeftOf="@id/grocery_item_row_textview_amount"
             android:maxLines="1"
             android:singleLine="true"
             android:text="Tomate"/>
     <View
-            android:id="@+id/ingredient_row_view_stroke"
+            android:id="@+id/grocery_item_row_view_stroke"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:background="@color/any_darkgrey"

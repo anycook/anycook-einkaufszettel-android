@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Einkaufszettel</string>
     <string name="app_label">anycook</string>
+    <string name="app_name">Einkaufszettel</string>
     <string name="hello_world">Willkommen zur anycook Einkaufs App!</string>
-    <string name="results">Leider keine passenden Rezepte gefunden!</string>
+
     <string name="search">suchen</string>
+    <string name="search_hint">"Suche Gerichte"</string>
+    <string name="results">Leider keine passenden Rezepte gefunden!</string>
+    <string name="locate">finden</string>
+    <string name="amount_hint">Wieviel?</string>
+
     <string name="edit">bearbeiten</string>
     <string name="cancel">abbrechen</string>
     <string name="accept">speichern</string>
-    <string name="recipe_name">Bananenbrot</string>
-    <string name="ingredient_hint">Was brauchst du?</string>
-    <string name="amount_hint">Wieviel?</string>
-    <string name="ingredient2">Brot</string>
-    <string name="search_hint">"Suche Gerichte"</string>
-    <string name="delete">Löschen</string>
-    <string name="locate">finden</string>
+    <string name="delete">löschen</string>
+
     <string name="image_descriptiong"/>
+    <string name="grocery_item_hint">Was brauchst du?</string>
+    <string name="add_ingredients">Zutaten hinzufügen</string>
 </resources>
 

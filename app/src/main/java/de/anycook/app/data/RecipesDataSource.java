@@ -1,11 +1,10 @@
-package de.anycook.app.controller.util;
+package de.anycook.app.data;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import de.anycook.app.adapter.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +41,7 @@ public class RecipesDataSource {
                 allColumns, RecipeSQLiteHelper.COLUMN_ID + " = " + insertId, null,
                 null, null, null);
         cursor.moveToFirst();
-        de.anycook.app.adapter.Recipe newRecipe = cursorToRecipe(cursor);
+        de.anycook.app.data.Recipe newRecipe = cursorToRecipe(cursor);
         cursor.close();
         return newRecipe;
     }

@@ -6,8 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import de.anycook.app.R;
-import de.anycook.app.adapter.Recipe;
-import de.anycook.app.controller.util.RecipesDataSource;
+import de.anycook.app.data.Recipe;
+import de.anycook.app.data.RecipesDataSource;
 
 import java.util.List;
 import java.util.Random;

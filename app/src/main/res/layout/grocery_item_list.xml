@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:tag="front">
+    <EditText
+            android:id="@+id/grocery_item_list_textview_grocery_item"
+            android:layout_toLeftOf="@+id/grocery_item_list_textview_amount"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/grocery_item_hint"
+            android:singleLine="true"
+            android:gravity="left"
+            android:inputType="textAutoCorrect"
+            android:imeOptions="actionNext"/>
+    <EditText
+            android:id="@id/grocery_item_list_textview_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:singleLine="true"
+            android:hint="@string/amount_hint"
+            android:gravity="right"
+            android:imeOptions="actionDone"/>
+
+
+    <!-- xmlns:swipe="http://schemas.android.com/apk/res-auto" -->
+    <ListView
+            android:id="@+id/grocery_item_list_listview"
+            android:listSelector="#00000000"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/grocery_item_list_textview_grocery_item"/>
+    <!--   swipe:swipeFrontView="@+id/grocery_item_row_relativelayout_front"
+       swipe:swipeBackView="@+id/grocery_item_row_relativelayout_back"
+       swipe:swipeCloseAllItemsWhenMoveList="true"
+       swipe:swipeMode="right"-->
+
+</RelativeLayout>

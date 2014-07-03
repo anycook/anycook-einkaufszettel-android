@@ -1,4 +1,4 @@
-/*package de.anycook.app.adapter;
+package de.anycook.app.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,27 +9,25 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import de.anycook.app.R;
 import de.anycook.app.data.GroceryItem;
-import de.anycook.app.data.Ingredient;
 
 import java.util.List;
 
 /**
- * Custom ArrayAdapter to fill EditMode with amount and ingredients
+ * Custom ArrayAdapter to fill EditMode with grocery item and amount
  * <p/>
  * Created by cipo7741 on 07.06.14.
  */
-/*
-public class IngredientRowAdapter extends ArrayAdapter<Ingredient> {
+public class GroceryItemRowAdapter extends ArrayAdapter<GroceryItem> {
 
-    private final List<Ingredient> ingredientValues;
+    private final List<GroceryItem> groceryValues;
     //private static final String TAG = GroceryItemRowAdapter.class.getSimpleName();
     private Activity context;
 
 
-    public IngredientRowAdapter(Context context, int ingredientRowResourceId, List<Ingredient> values) {
-        super(context, ingredientRowResourceId, values);
+    public GroceryItemRowAdapter(Context context, int groceryRowResourceId, List<GroceryItem> values) {
+        super(context, groceryRowResourceId, values);
         this.context = (Activity) context;
-        ingredientValues = values;
+        groceryValues = values;
     }
 
     @Override
@@ -41,34 +39,34 @@ public class IngredientRowAdapter extends ArrayAdapter<Ingredient> {
 
             viewHolder = new ViewHolder();
 
-            viewHolder.ingredientText = (TextView) convertView
+            viewHolder.itemText = (TextView) convertView
                     .findViewById(R.id.grocery_item_row_textview_grocery_item);
             viewHolder.amountText = (TextView) convertView
                     .findViewById(R.id.grocery_item_row_textview_amount);
             viewHolder.strokeView = convertView
                     .findViewById(R.id.grocery_item_row_view_stroke);
+
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Ingredient ingredientValue = ingredientValues.get(position);
-        viewHolder.ingredientText.setText(ingredientValue.getName(), TextView.BufferType.NORMAL);
-        viewHolder.amountText.setText(ingredientValue.getAmount(), TextView.BufferType.NORMAL);
-        if(ingredientValue.isStroked()){
-            viewHolder.strokeView.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.strokeView.setVisibility(View.INVISIBLE);
-        }
+        GroceryItem groceryValue = groceryValues.get(position);
 
+        viewHolder.itemText.setText(groceryValue.getName(), TextView.BufferType.NORMAL);
+        viewHolder.amountText.setText(groceryValue.getAmount(), TextView.BufferType.NORMAL);
+        if (!groceryValue.isStroked()) {
+            viewHolder.strokeView.setVisibility(View.INVISIBLE);
+        } else {
+            viewHolder.strokeView.setVisibility(View.VISIBLE);
+        }
 
         return convertView;
     }
 
     static class ViewHolder {
-        TextView ingredientText;
+        TextView itemText;
         TextView amountText;
         View strokeView;
     }
 }
-*/

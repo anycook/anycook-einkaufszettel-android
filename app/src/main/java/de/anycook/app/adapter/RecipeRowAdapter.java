@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import de.anycook.app.R;
-import de.anycook.app.controller.util.RecipeResponse;
+import de.anycook.app.controller.RecipeResponse;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -50,7 +50,6 @@ public class RecipeRowAdapter extends ArrayAdapter<RecipeResponse> {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Log.v(TAG, "hi");
         View rowView = convertView;
         if (rowView == null) {
             LayoutInflater inflater = (LayoutInflater) context

@@ -6,7 +6,10 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import de.anycook.app.R;
 import de.anycook.app.controller.RecipeAutoCompleter;
 
@@ -16,11 +19,11 @@ import java.util.concurrent.Executors;
 
 /**
  * this searchable activity is responsible for returning recipe search results
- * <p/>
+ *
  * Created by cipo7741 on 13.06.14.
  */
 public class RecipeAutoCompleteActivity extends Activity {
-    //private static final String TAG = RecipeAutoCompleteActivity.class.getSimpleName();
+
     private ListView recipeListView;
     private static ExecutorService threadPool;
 
@@ -36,8 +39,15 @@ public class RecipeAutoCompleteActivity extends Activity {
         this.recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Intent intent = new Intent(RecipeAutoCompleteActivity.this, AddIngredientsActivity.class);
+                Bundle b = new Bundle();
                 String item = ((TextView) view).getText().toString();
-                Toast.makeText(getBaseContext(), item, Toast.LENGTH_LONG).show();
+                b.putString("item", item); //Your id
+                intent.putExtras(b); //Put your id to your next Intent
+                startActivityForResult(intent, 1234);
+                finish();
+
             }
         });
         Intent intent = getIntent();
@@ -47,6 +57,7 @@ public class RecipeAutoCompleteActivity extends Activity {
             actionBar.setTitle("Rezepte mit " + intent.getStringExtra(SearchManager.QUERY));
         }
         handleIntent(intent);
+
     }
 
     @Override

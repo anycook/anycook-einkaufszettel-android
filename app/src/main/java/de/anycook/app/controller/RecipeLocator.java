@@ -6,7 +6,6 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import de.anycook.app.adapter.RecipeRowAdapter;
-import de.anycook.app.controller.util.RecipeResponse;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,7 +16,11 @@ import java.net.URL;
 import java.util.ArrayList;
 
 /**
- * recipe locator
+ * The near recipe request to the anycook api.
+ * https://api.anycook.de/discover/near?latitude=%s&longitude=%s&maxRadius=50&recipeNumber=20
+ * <p/>
+ * Runs in its own thread Thread.
+ * Gets json with Gson. (https://code.google.com/p/google-gson/)
  * <p/>
  * Created by cipo7741 on 01.07.14.
  */
@@ -57,8 +60,9 @@ public class RecipeLocator implements Runnable {
     }
 
     private ArrayList<RecipeResponse> searchRequest(Location location) throws IOException {
-        String urlPattern = "https://api.anycook.de/discover/near?latitude=%d&longitude=%d&maxRadius=50&recipeNumber=20";
+        String urlPattern = "https://api.anycook.de/discover/near?latitude=%s&longitude=%s&maxRadius=50&recipeNumber=20";
         urlPattern = String.format(urlPattern, location.getLatitude(), location.getLongitude());
+
 
         URL nearRecipesUrl = new URL(urlPattern);
         Log.v(TAG, urlPattern);

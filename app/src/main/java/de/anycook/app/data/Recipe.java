@@ -1,4 +1,4 @@
-package de.anycook.app.adapter;
+package de.anycook.app.data;
 
 public class Recipe {
 

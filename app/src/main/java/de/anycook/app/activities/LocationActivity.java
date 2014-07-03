@@ -11,7 +11,7 @@ import de.anycook.app.R;
 import de.anycook.app.activities.util.GPSTracker;
 import de.anycook.app.adapter.RecipeRowAdapter;
 import de.anycook.app.controller.RecipeLocator;
-import de.anycook.app.controller.util.RecipeResponse;
+import de.anycook.app.controller.RecipeResponse;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;

@@ -12,7 +12,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import de.anycook.app.R;
-import de.anycook.app.controller.util.RecipeResponse;
+import de.anycook.app.controller.RecipeResponse;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;

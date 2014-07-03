@@ -1,4 +1,4 @@
-package de.anycook.app.controller.util;
+package de.anycook.app.controller;
 
 /**
  * Created by cipo7741 on 01.07.14.

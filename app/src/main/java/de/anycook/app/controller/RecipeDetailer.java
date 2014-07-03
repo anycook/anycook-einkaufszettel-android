@@ -4,7 +4,6 @@ package de.anycook.app.controller;
 import android.util.Log;
 import android.widget.TextView;
 import com.google.gson.Gson;
-import de.anycook.app.controller.util.RecipeResponse;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
