@@ -70,13 +70,8 @@ public class LocationActivity extends Activity {
         LoadRecipesTask loadRecipesTask = new LoadRecipesTask(recipeListView);
         try {
             List<RecipeResponse> recipeResponses = loadRecipesTask.execute(url).get(10, TimeUnit.SECONDS);
-            if(recipeResponses.isEmpty()){
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Entschldigung");
-                builder.setMessage("Leider wurden keine Rezepte in deiner Nähe gefunden!");
-                builder.setIcon(android.R.drawable.ic_dialog_alert);
-                builder.show();
-            }
+
+
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             e.printStackTrace();
         }
