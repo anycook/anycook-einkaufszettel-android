@@ -2,7 +2,6 @@ package de.anycook.app.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,27 +11,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import de.anycook.app.R;
 import de.anycook.app.adapter.RecipeRowAdapter;
+import de.anycook.app.controller.RecipeAutoCompleter;
 import de.anycook.app.controller.RecipeResponse;
-import de.anycook.app.tasks.LoadRecipesTask;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 /**
  * this searchable activity is responsible for returning recipe search results
  *
  * Created by cipo7741 on 13.06.14.
  */
-public class RecipeSearchActivity extends Activity {
-
-    private final static String urlPattern;
-
-    static {
-        urlPattern = "https://api.anycook.de/recipe?startsWith=%s";
-    }
+public class RecipeAutoCompleteActivity extends Activity {
 
     private ListView recipeListView;
 
@@ -48,7 +38,7 @@ public class RecipeSearchActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                Intent intent = new Intent(RecipeSearchActivity.this, AddIngredientsActivity.class);
+                Intent intent = new Intent(RecipeAutoCompleteActivity.this, AddIngredientsActivity.class);
                 Bundle b = new Bundle();
                 String item = ((TextView) view).getText().toString();
                 b.putString("item", item); //Your id
@@ -62,7 +52,7 @@ public class RecipeSearchActivity extends Activity {
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Rezepte mit \"" + intent.getStringExtra(SearchManager.QUERY) + "\"");
+            actionBar.setTitle("Rezepte mit " + intent.getStringExtra(SearchManager.QUERY));
         }
         handleIntent(intent);
     }
@@ -70,21 +60,8 @@ public class RecipeSearchActivity extends Activity {
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            if (query == null) return;
-            String url = String.format(urlPattern, query);
-            LoadRecipesTask loadRecipesTask = new LoadRecipesTask(recipeListView);
-            try {
-                List<RecipeResponse> recipeResponses = loadRecipesTask.execute(url).get(10, TimeUnit.SECONDS);
-                if(recipeResponses.isEmpty()){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setTitle("Entschldigung");
-                    builder.setMessage("Leider wurden keine Rezepte mit \"" + "\" gefunden!");
-                    builder.setIcon(android.R.drawable.ic_dialog_alert);
-                    builder.show();
-                }
-            } catch (InterruptedException | ExecutionException | TimeoutException e) {
-                e.printStackTrace();
-            }
+            RecipeAutoCompleter autoCompleter = new RecipeAutoCompleter(query, recipeListView);
+            autoCompleter.build();
         }
     }
 }

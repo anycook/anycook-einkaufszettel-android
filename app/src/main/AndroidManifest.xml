@@ -16,7 +16,7 @@
             <meta-data android:name="android.app.default_searchable"
                        android:value=".activities.RecipeAutoCompleteActivity"/>
         </activity>
-        <activity android:name=".activities.RecipeSearchActivity"
+        <activity android:name=".activities.RecipeAutoCompleteActivity"
                   android:launchMode="singleTop"
                   android:parentActivityName=".activities.EditGroceryListActivity">
             <intent-filter>
@@ -28,7 +28,7 @@
                     android:resource="@xml/searchable"/>
         </activity>
         <activity android:name=".activities.AddIngredientsActivity"
-                  android:parentActivityName=".activities.RecipeSearchActivity">
+                  android:parentActivityName=".activities.RecipeAutoCompleteActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="de.anycook.app.activities.RecipeAutoCompleteActivity"/>
