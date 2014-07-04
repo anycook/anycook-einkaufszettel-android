@@ -12,7 +12,7 @@ import de.anycook.app.R;
 import de.anycook.app.controller.RecipeResponse;
 import de.anycook.app.tasks.DownloadImageTask;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Custom ArrayAdapter to fill EditMode with amount and ingredients
@@ -21,12 +21,11 @@ import java.util.ArrayList;
  */
 public class RecipeRowAdapter extends ArrayAdapter<RecipeResponse> {
 
-    private static final String TAG = RecipeRowAdapter.class.getSimpleName();
     private Activity context;
-    private ArrayList<RecipeResponse> recipeValues;
+    private List<RecipeResponse> recipeValues;
 
     public RecipeRowAdapter(Context context, int recipeRowResourceId,
-                            ArrayList<RecipeResponse> values) {
+                            List<RecipeResponse> values) {
         super(context, recipeRowResourceId, values);
         this.context = (Activity) context;
         recipeValues = values;

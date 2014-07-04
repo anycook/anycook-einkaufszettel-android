@@ -15,6 +15,7 @@ import de.anycook.app.controller.RecipeLocator;
 import de.anycook.app.controller.RecipeResponse;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -36,7 +37,7 @@ public class LocationActivity extends Activity {
         }
 
         ListView recipeListView = (ListView) this.findViewById(R.id.recipe_list_listview);
-        ArrayList<RecipeResponse> recipeResponseArrayList = new ArrayList<>();
+        List<RecipeResponse> recipeResponseArrayList = new ArrayList<>();
         recipeListView.setAdapter(new RecipeRowAdapter(this, R.layout.recipe_row, recipeResponseArrayList));
 
         GPSTracker gps = new GPSTracker(this);

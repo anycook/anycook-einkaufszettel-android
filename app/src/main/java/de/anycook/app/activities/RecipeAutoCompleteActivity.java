@@ -7,13 +7,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import de.anycook.app.R;
+import de.anycook.app.adapter.RecipeRowAdapter;
 import de.anycook.app.controller.RecipeAutoCompleter;
+import de.anycook.app.controller.RecipeResponse;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -33,8 +35,8 @@ public class RecipeAutoCompleteActivity extends Activity {
         setContentView(R.layout.recipe_list);
 
         this.recipeListView = (ListView) this.findViewById(R.id.recipe_list_listview);
-        ArrayList<String> recipeRowData = new ArrayList<>();
-        this.recipeListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, recipeRowData));
+        List<RecipeResponse> recipeRowData = new ArrayList<>();
+        this.recipeListView.setAdapter(new RecipeRowAdapter(this, R.layout.recipe_row, recipeRowData));
         threadPool = Executors.newSingleThreadExecutor();
         this.recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -56,8 +58,6 @@ public class RecipeAutoCompleteActivity extends Activity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle("Rezepte mit " + intent.getStringExtra(SearchManager.QUERY));
         }
-        handleIntent(intent);
-
     }
 
     @Override

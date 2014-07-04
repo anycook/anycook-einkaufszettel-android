@@ -1,16 +1,7 @@
 package de.anycook.app.controller;
 
-import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import com.google.gson.Gson;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
+import de.anycook.app.tasks.LoadRecipesTask;
 
 /**
  * The auto completion request to the anycook api.
@@ -22,7 +13,11 @@ import java.util.ArrayList;
  * Created by cipo7741 on 19.06.14.
  */
 public class RecipeAutoCompleter implements Runnable {
-    private static final String TAG = RecipeAutoCompleter.class.getSimpleName();
+    private final static String urlPattern;
+
+    static {
+        urlPattern = "https://api.anycook.de/recipe?startsWith=%s";
+    }
 
     private final String query;
     private final ListView listView;
@@ -35,55 +30,9 @@ public class RecipeAutoCompleter implements Runnable {
     @Override
     public void run() {
         if (query == null) return;
-        try {
-            final ArrayList<String> recipeNames = searchRequest(query);
-            listView.post(new Runnable() {
-                @Override
-                public void run() {
-                    ArrayAdapter<String> arrayAdapter = (ArrayAdapter<String>) listView.getAdapter();
-                    for (String recipe : recipeNames) {
-                        arrayAdapter.add(recipe);
-                    }
-                    listView.setAdapter(arrayAdapter);
-                }
-            });
-        } catch (Exception e) {
-            Log.e(TAG, String.format("doRecipeSearch: %s %s", e.toString(), e.getMessage()));
-        }
-    }
+        String url = String.format(urlPattern, query);
+        LoadRecipesTask loadRecipesTask = new LoadRecipesTask(listView);
+        loadRecipesTask.execute(url);
 
-    private ArrayList<String> searchRequest(String searchString) throws IOException {
-        String url = "https://api.anycook.de/autocomplete?query=";
-        URL autocompleteUrl = new URL(url + searchString);
-        HttpURLConnection httpURLConnection = (HttpURLConnection) autocompleteUrl.openConnection();
-        if (httpURLConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-            throw new IOException(httpURLConnection.getResponseMessage());
-        }
-        Log.v(TAG, autocompleteUrl.toString());
-        Reader reader = new InputStreamReader(httpURLConnection.getInputStream());
-        Gson gson = new Gson();
-        AutoCompleteResponse autoCompleteResponse = gson.fromJson(reader, AutoCompleteResponse.class);
-        ArrayList<String> recipeNames = autoCompleteResponse.getRecipes();
-        if (recipeNames.isEmpty()) {
-            recipeNames.add("Leider keine Rezepte mit " + this.query + " gefunden.");
-        }
-        return recipeNames;
-    }
-
-    private static class AutoCompleteResponse {
-
-        private ArrayList<String> recipes;
-
-        public AutoCompleteResponse(ArrayList<String> recipes) {
-            setRecipes(recipes);
-        }
-
-        public ArrayList<String> getRecipes() {
-            return recipes;
-        }
-
-        public void setRecipes(ArrayList<String> recipes) {
-            this.recipes = recipes;
-        }
     }
 }
