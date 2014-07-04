@@ -40,7 +40,7 @@ public class RecipeAutoCompleteActivity extends Activity {
 
                 Intent intent = new Intent(RecipeAutoCompleteActivity.this, AddIngredientsActivity.class);
                 Bundle b = new Bundle();
-                String item = ((TextView) view).getText().toString();
+                String item = ((TextView) view.findViewById(R.id.recipe_row_textview_recipe_name)).getText().toString();
                 b.putString("item", item); //Your id
                 intent.putExtras(b); //Put your id to your next Intent
                 startActivityForResult(intent, 1234);
