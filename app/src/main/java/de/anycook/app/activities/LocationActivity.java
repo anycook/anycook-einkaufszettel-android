@@ -2,6 +2,7 @@ package de.anycook.app.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,9 @@ import de.anycook.app.tasks.LoadRecipesTask;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * Created by cipo7741 on 01.07.14.
@@ -64,8 +68,18 @@ public class LocationActivity extends Activity {
         if (location == null) return;
         String url = String.format(urlPattern, location.getLatitude(), location.getLongitude());
         LoadRecipesTask loadRecipesTask = new LoadRecipesTask(recipeListView);
-        loadRecipesTask.execute(url);
-
+        try {
+            List<RecipeResponse> recipeResponses = loadRecipesTask.execute(url).get(10, TimeUnit.SECONDS);
+            if(recipeResponses.isEmpty()){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Entschldigung");
+                builder.setMessage("Leider wurden keine Rezepte in deiner Nähe gefunden!");
+                builder.setIcon(android.R.drawable.ic_dialog_alert);
+                builder.show();
+            }
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            e.printStackTrace();
+        }
 
 
         recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
