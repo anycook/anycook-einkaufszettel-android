@@ -5,15 +5,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:tag="front">
-    <EditText
-            android:id="@+id/grocery_item_list_textview_grocery_item"
+    <AutoCompleteTextView
+            android:id="@+id/grocery_item_list_autocompletetextview_grocery_item"
             android:layout_toLeftOf="@+id/grocery_item_list_textview_amount"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="@string/grocery_item_hint"
             android:singleLine="true"
             android:gravity="left"
-            android:inputType="textAutoCorrect"
             android:imeOptions="actionNext"/>
     <EditText
             android:id="@id/grocery_item_list_textview_amount"

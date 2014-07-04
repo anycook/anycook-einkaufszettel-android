@@ -40,11 +40,11 @@ public class RecipeAutoCompleter implements Runnable {
             listView.post(new Runnable() {
                 @Override
                 public void run() {
-                    ArrayAdapter<String> tmpRowAdapter = (ArrayAdapter<String>) listView.getAdapter();
+                    ArrayAdapter<String> arrayAdapter = (ArrayAdapter<String>) listView.getAdapter();
                     for (String recipe : recipeNames) {
-                        tmpRowAdapter.add(recipe);
+                        arrayAdapter.add(recipe);
                     }
-                    listView.setAdapter(tmpRowAdapter);
+                    listView.setAdapter(arrayAdapter);
                 }
             });
         } catch (Exception e) {

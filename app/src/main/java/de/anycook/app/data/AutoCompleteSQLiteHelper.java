@@ -10,21 +10,21 @@ import android.util.Log;
  * <p/>
  * Created by cipo7741 on 02.07.14.
  */
-public class RecipeSQLiteHelper extends SQLiteOpenHelper {
+public class AutoCompleteSQLiteHelper extends SQLiteOpenHelper {
 
-    public static final String TABLE_RECIPES = "recipes";
+    public static final String TABLE_AUTOCOMPLETE = "autocomplete";
     public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_RECIPE = "recipe";
+    public static final String COLUMN_SUGGESTION = "suggestion";
 
-    private static final String DATABASE_NAME = "recipes.db";
+    private static final String DATABASE_NAME = "autocomplete.db";
     private static final int DATABASE_VERSION = 1;
 
     private static final String DATABASE_CREATE = "create table "
-            + TABLE_RECIPES + "(" + COLUMN_ID
-            + " integer primary key autoincrement, " + COLUMN_RECIPE
-            + " text not null);";
+            + TABLE_AUTOCOMPLETE + "(" + COLUMN_ID
+            + " integer primary key autoincrement, " + COLUMN_SUGGESTION
+            + " text not null );";
 
-    public RecipeSQLiteHelper(Context context) {
+    public AutoCompleteSQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -35,10 +35,10 @@ public class RecipeSQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        Log.w(RecipeSQLiteHelper.class.getSimpleName(),
+        Log.w(IngredientSQLiteHelper.class.getSimpleName(),
                 "Upgrading database from version " + oldVersion + " to "
                         + newVersion + ", which will destroy all old data");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPES);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_AUTOCOMPLETE);
         onCreate(sqLiteDatabase);
     }
 }
