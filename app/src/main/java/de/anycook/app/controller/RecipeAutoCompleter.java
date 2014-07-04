@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 /**
  * The auto completion request to the anycook api.
- * https://api.anycook.de/autocomplete?query=
+ * https://api.anycook.de/autocomplete_row?query=
  * <p/>
  * Runs in its own thread Thread.
  * Gets json with Gson. (https://code.google.com/p/google-gson/)
@@ -53,7 +53,7 @@ public class RecipeAutoCompleter implements Runnable {
     }
 
     private ArrayList<String> searchRequest(String searchString) throws IOException {
-        String url = "https://api.anycook.de/autocomplete?query=";
+        String url = "https://api.anycook.de/autocomplete_row?query=";
         URL autocompleteUrl = new URL(url + searchString);
         HttpURLConnection httpURLConnection = (HttpURLConnection) autocompleteUrl.openConnection();
         if (httpURLConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {

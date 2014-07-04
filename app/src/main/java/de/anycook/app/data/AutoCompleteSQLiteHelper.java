@@ -12,11 +12,11 @@ import android.util.Log;
  */
 public class AutoCompleteSQLiteHelper extends SQLiteOpenHelper {
 
-    public static final String TABLE_AUTOCOMPLETE = "autocomplete";
+    public static final String TABLE_AUTOCOMPLETE = "autocomplete_row";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_SUGGESTION = "suggestion";
 
-    private static final String DATABASE_NAME = "autocomplete.db";
+    private static final String DATABASE_NAME = "autocomplete_row.db";
     private static final int DATABASE_VERSION = 1;
 
     private static final String DATABASE_CREATE = "create table "
