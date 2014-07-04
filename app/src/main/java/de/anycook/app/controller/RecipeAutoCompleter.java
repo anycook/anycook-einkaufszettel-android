@@ -5,7 +5,7 @@ import de.anycook.app.tasks.LoadRecipesTask;
 
 /**
  * The auto completion request to the anycook api.
- * https://api.anycook.de/autocomplete?query=
+ * https://api.anycook.de/autocomplete_row?query=
  * <p/>
  * Runs in its own thread Thread.
  * Gets json with Gson. (https://code.google.com/p/google-gson/)
@@ -33,6 +33,5 @@ public class RecipeAutoCompleter implements Runnable {
         String url = String.format(urlPattern, query);
         LoadRecipesTask loadRecipesTask = new LoadRecipesTask(listView);
         loadRecipesTask.execute(url);
-
     }
 }
