@@ -54,11 +54,6 @@ public class RecipeAutoCompleteActivity extends Activity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle("Rezepte mit " + intent.getStringExtra(SearchManager.QUERY));
         }
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        setIntent(intent);
         handleIntent(intent);
     }
 
