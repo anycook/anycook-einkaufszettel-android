@@ -11,14 +11,14 @@
     </style>
 
     <style name="AnycookActionBarWidgetTheme">
-        <item name="android:textColor">@color/any_gray</item>
-        <item name="android:editTextColor">@color/any_gray</item>
+        <item name="android:textColor">@color/any_white_gray</item>
+        <item name="android:editTextColor">@color/any_white_gray</item>
         <item name="android:textColorHint">@color/any_green_light</item>
     </style>
 
     <style name="TextAppearanceAnycook" parent="@android:style/TextAppearance">
         <item name="android:typeface">serif</item>
-        <item name="android:textColor">@color/any_grey_dark</item>
+        <item name="android:textColor">@color/any_gray_dark</item>
     </style>
 
     <style name="TextAppearanceAnycook.Small" parent="@style/TextAppearanceAnycook">
@@ -39,15 +39,15 @@
 
     <style name="ActionBarAnycook" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:background">@drawable/bg_texture</item>
-        <item name="android:textColor">@color/any_gray</item>
-        <item name="android:textColorHint">@color/any_gray</item>
+        <item name="android:textColor">@color/any_white_gray</item>
+        <item name="android:textColorHint">@color/any_white_gray</item>
         <item name="android:titleTextStyle">@style/ActionBarTitleTextAnycook</item>
 
     </style>
 
     <style name="ActionBarTitleTextAnycook"
            parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/any_gray</item>
+        <item name="android:textColor">@color/any_white_gray</item>
         <item name="android:textStyle">bold</item>
     </style>
 

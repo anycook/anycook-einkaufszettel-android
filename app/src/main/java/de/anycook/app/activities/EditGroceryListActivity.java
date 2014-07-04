@@ -108,6 +108,7 @@ public class EditGroceryListActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d(TAG,"onCreateOptionsMenue()");
         getMenuInflater().inflate(R.menu.main_activity_actions, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_item_main_search).getActionView();
@@ -132,9 +133,7 @@ public class EditGroceryListActivity extends ActionBarActivity {
     }
 
     private void showTopMessage(String message) {
-        Toast toast = Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP, 0, 0);
-        toast.show();
+        Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
     }
 
 

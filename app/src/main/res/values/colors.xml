@@ -1,63 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- colors -->
+
 <resources>
-    <!-- basic -->
-    <color name="any_gray">@color/any_background</color>
-    <color name="any_black">#000000</color>
-    <color name="any_green">#a3d358</color>
-    <color name="any_green_light">@color/any_activebuttonbackground</color>
-    <color name="any_grey_dark">@color/any_darkgrey</color>
 
-    <!-- text  -->
-    <color name="any_background">#f7f4f1</color>
-    <color name="any_background_right">#ece9e3</color>
-    <color name="any_headergreen">#96c832</color>
-    <color name="any_headergreenbright">#accc5a</color>
-    <color name="any_darkgrey">#5A5A5A</color>
-    <color name="any_darkgreencontour">#5F7624</color>
-    <color name="any_innerborder">#9C8D8D</color>
-    <color name="any_darkergrey">#d1cac5</color>
-    <color name="any_input_background">@color/any_background_right</color>
-    <color name="any_input_background_active">#f0ede6</color>
-    <color name="any_searchbarborder">#577052</color>
-    <color name="any_linkcolor">#859F5E</color>
-    <color name="any_darkfontcolor">#404040</color>
-    <color name="any_imginnerbordercolor">#F9F8F6</color>
-    <color name="any_lightgrey">#dad9d7</color>
-    <color name="any_shadowbeige">#b5b5b5</color>
-    <color name="any_stepcolor">#ece9e3</color>
-    <color name="any_lightbrown">#bfbab0</color>
+    <color name="any_white_active_options">#fdfaf3</color>
+    <color name="any_white_filter_input_background">#fcfcfa</color>
+    <color name="any_white_img_inner_border_color">#f9f8f6</color>
+    <color name="any_white_background">#f7f4f1</color>
+    <color name="any_white_gray">@color/any_white_background</color>
+    <color name="any_white_input_background_active">#f0ede6</color>
+    <color name="any_white_background_right">#ece9e3</color>
+    <color name="any_white_input_background">@color/any_white_background_right</color>
+    <color name="any_white_step_color">@color/any_white_background_right</color>
+    <color name="any_white_tag_shadow">#e6e3dd</color>
+    <color name="any_white_category_head">#e6e2dc</color>
+    <color name="any_white_pushed_button_background">#dedbd5</color>
+    <color name="any_white_tags">#ddd9d2</color>
+    <color name="any_white_light">#dad9d7</color>
+    <color name="any_white_darker">#d1cac5</color>
+    <color name="any_gray_category_border">#cccbca</color>
+    <color name="any_gray_face_book_bg">#c7c7c7</color>
+    <color name="any_gray_tag_border">#c2c0be</color>
+    <color name="any_gray_light_brown">#bfbab0</color>
+    <color name="any_gray_inactive_button_depth">#bab4a8</color>
+    <color name="any_gray_shadow_beige">#b5b5b5</color>
+    <color name="any_gray_active_button_depth">#b0baa8</color>
+    <color name="any_gray_inactive_button_outline">#9c9c9c</color>
+    <color name="any_gray_inner_border">#9c8d8d</color>
+    <color name="any_gray_tag_number">#9b9996</color>
+    <color name="any_gray_button_font_color">#09909090</color>
 
-    <color name="any_smalllightfontcolor">#878787</color>
-    <color name="any_facebookbg">#c7c7c7</color>
-    <color name="any_activeoptions">#fdfaf3</color>
-    <color name="any_dogear">#888888</color>
-    <color name="any_discussionyellow">#f8eea4</color>
-    <color name="any_discussionyellowborder">#cfc36d</color>
-    <color name="any_discussionyellowfont">#b1a867</color>
-    <color name="any_filterinputbackground">#fcfcfa</color>
+    <color name="any_gray_do_gear">#888888</color>
+    <color name="any_gray_shaddow">#878787</color>
+    <color name="any_gray_small_light_font_color">@color/any_gray_shaddow</color>
+    <color name="any_gray_dark">#5a5a5a</color>
+    <color name="any_gray_dark_font_color">#404040</color>
+    <color name="any_black">@android:color/black</color>
 
-    <!-- tags  -->
-    <color name="any_tags">#ddd9d2</color>
-    <color name="any_tagborder">#c2c0be</color>
-    <color name="any_tagnumber">#9b9996</color>
-    <color name="any_tagshadow">#e6e3dd</color>
+    <color name="any_green_light">@color/any_green_active_button_background</color>
+    <color name="any_green_active_button_background">#d7e8b5</color>
+    <color name="any_green_active_button_outline">#859f5e</color>
+    <color name="any_green_success">#859f5e</color>
+    <color name="any_green_active_button_font_color">#7d9757</color>
+    <color name="any_green_link_color">#859f5e</color>
+    <color name="any">#a3d358</color>
+    <color name="any_green_header_bright">#accc5a</color>
+    <color name="any_green_header">#96c832</color>
+    <color name="any_green_dark_contour">#5f7624</color>
+    <color name="any_green_search_bar_border">#577052</color>
 
-    <!-- buttons  -->
-    <color name="any_inactivebuttonoutline">#9c9c9c</color>
-    <color name="any_inactivebuttondepth">#bab4a8</color>
-    <color name="any_buttonfontcolor">#09909090</color>
-    <color name="any_activebuttonbackground">#d7e8b5</color>
-    <color name="any_activebuttonoutline">#859f5e</color>
-    <color name="any_activebuttondepth">#b0baa8</color>
-    <color name="any_activebuttonfontcolor">#7d9757</color>
-    <color name="any_kategoriehead">#e6e2dc</color>
-    <color name="any_kategorieborder">#cccbca</color>
-    <color name="any_pushedbuttonbackground">#dedbd5</color>
+    <color name="any_yellow_discussion">#f8eea4</color>
+    <color name="any_yellow_discussion_border">#cfc36d</color>
+    <color name="any_yellow_discussion_font">#b1a867</color>
 
-    <!-- error  -->
-    <color name="any_error">#d04040</color>
-    <color name="any_success">#859f5e</color>
-
+    <color name="any_red_error">#d04040</color>
 
 </resources>

@@ -20,5 +20,7 @@
     <string name="add_ingredients">Zutaten hinzufügen</string>
 
     <string name="list_end">Zettelende</string>
+    <string name="clean">aufräumen</string>
+    <string name="autocomplete">Komplette Zutat</string>
 </resources>
 

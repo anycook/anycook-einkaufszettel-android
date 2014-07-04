@@ -28,6 +28,6 @@
             android:id="@+id/grocery_item_row_view_stroke"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:background="@color/any_darkgrey"
+            android:background="@color/any_gray_dark"
             android:layout_marginTop="16dp"/>
 </RelativeLayout>

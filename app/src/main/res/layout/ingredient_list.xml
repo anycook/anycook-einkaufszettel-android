@@ -12,7 +12,9 @@
             android:layout_height="wrap_content"
             android:text="@string/add_ingredients"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"/>
+            android:background="@drawable/button_shape"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="12dp"/>
 
     <ListView
             android:id="@+id/ingredient_list_listview"
