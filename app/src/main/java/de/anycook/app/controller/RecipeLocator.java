@@ -13,7 +13,7 @@ import de.anycook.app.tasks.LoadRecipesTask;
  * <p/>
  * Created by cipo7741 on 01.07.14.
  */
-public class RecipeLocator implements Runnable {
+public class RecipeLocator {
 
     private final static String urlPattern;
 
@@ -30,8 +30,7 @@ public class RecipeLocator implements Runnable {
         this.listView = recipeListView;
     }
 
-    @Override
-    public void run() {
+    public void build() {
         if (location == null) return;
         String url = String.format(urlPattern, location.getLatitude(), location.getLongitude());
         LoadRecipesTask loadRecipesTask = new LoadRecipesTask(listView);

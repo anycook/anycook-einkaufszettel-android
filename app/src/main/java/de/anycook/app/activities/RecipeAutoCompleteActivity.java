@@ -16,8 +16,6 @@ import de.anycook.app.controller.RecipeResponse;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * this searchable activity is responsible for returning recipe search results
@@ -27,7 +25,6 @@ import java.util.concurrent.Executors;
 public class RecipeAutoCompleteActivity extends Activity {
 
     private ListView recipeListView;
-    private static ExecutorService threadPool;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,7 +34,6 @@ public class RecipeAutoCompleteActivity extends Activity {
         this.recipeListView = (ListView) this.findViewById(R.id.recipe_list_listview);
         List<RecipeResponse> recipeRowData = new ArrayList<>();
         this.recipeListView.setAdapter(new RecipeRowAdapter(this, R.layout.recipe_row, recipeRowData));
-        threadPool = Executors.newSingleThreadExecutor();
         this.recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -69,7 +65,8 @@ public class RecipeAutoCompleteActivity extends Activity {
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            threadPool.submit(new RecipeAutoCompleter(query, recipeListView));
+            RecipeAutoCompleter autoCompleter = new RecipeAutoCompleter(query, recipeListView);
+            autoCompleter.build();
         }
     }
 }

@@ -41,7 +41,7 @@ public class IngredientAutoCompleter implements Runnable {
                 }
             });
         } catch (Exception e) {
-            Log.e(TAG, String.format("run: %s", e.toString()));
+            Log.e(TAG, String.format("build: %s", e.toString()));
         }
     }
 

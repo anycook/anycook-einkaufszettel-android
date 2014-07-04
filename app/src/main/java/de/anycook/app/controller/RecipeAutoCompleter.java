@@ -12,7 +12,7 @@ import de.anycook.app.tasks.LoadRecipesTask;
  * <p/>
  * Created by cipo7741 on 19.06.14.
  */
-public class RecipeAutoCompleter implements Runnable {
+public class RecipeAutoCompleter{
     private final static String urlPattern;
 
     static {
@@ -27,8 +27,7 @@ public class RecipeAutoCompleter implements Runnable {
         this.listView = listView;
     }
 
-    @Override
-    public void run() {
+    public void build() {
         if (query == null) return;
         String url = String.format(urlPattern, query);
         LoadRecipesTask loadRecipesTask = new LoadRecipesTask(listView);

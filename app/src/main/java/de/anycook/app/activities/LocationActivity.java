@@ -16,8 +16,6 @@ import de.anycook.app.controller.RecipeResponse;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Created by cipo7741 on 01.07.14.
@@ -54,8 +52,8 @@ public class LocationActivity extends Activity {
 
 
         // TODO don't initiate RecipeLocator if location is null! Load standard location or throw an error
-        ExecutorService threadPool = Executors.newSingleThreadExecutor();
-        threadPool.submit(new RecipeLocator(location, recipeListView));
+        RecipeLocator recipeLocator = new RecipeLocator(location, recipeListView);
+        recipeLocator.build();
 
         recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

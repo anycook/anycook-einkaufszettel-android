@@ -41,7 +41,7 @@ public class IngredientSelector implements Runnable {
         if (selectedRecipe == null) return;
         try {
             final ArrayList<IngredientResponse> recipeNames = searchRequest(selectedRecipe);
-            Log.v(TAG, " run: " + selectedRecipe + " has " + recipeNames.size() + " ingredients.");
+            Log.v(TAG, " build: " + selectedRecipe + " has " + recipeNames.size() + " ingredients.");
             ingredientListView.post(new Runnable() {
                 @Override
                 public void run() {
@@ -54,7 +54,7 @@ public class IngredientSelector implements Runnable {
                 }
             });
         } catch (Exception e) {
-            Log.e(TAG, String.format("run: %s %s", e.getMessage()));
+            Log.e(TAG, String.format("build: %s %s", e.getMessage()));
         }
     }
 
