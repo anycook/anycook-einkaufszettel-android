@@ -8,6 +8,7 @@
         <item name="android:textAppearanceMedium">@style/TextAppearanceAnycook.Medium</item>
         <item name="android:textAppearanceLarge">@style/TextAppearanceAnycook.Large</item>
         <item name="android:editTextStyle">@style/TextAppearanceAnycook.EditText</item>
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
     </style>
 
     <style name="AnycookActionBarWidgetTheme">
@@ -22,15 +23,15 @@
     </style>
 
     <style name="TextAppearanceAnycook.Small" parent="@style/TextAppearanceAnycook">
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="TextAppearanceAnycook.Medium" parent="@style/TextAppearanceAnycook">
-        <item name="android:textSize">25dp</item>
+        <item name="android:textSize">25sp</item>
     </style>
 
     <style name="TextAppearanceAnycook.Large" parent="@style/TextAppearanceAnycook">
-        <item name="android:textSize">30dp</item>
+        <item name="android:textSize">30sp</item>
     </style>
 
     <style name="TextAppearanceAnycook.EditText" parent="@android:style/Widget.EditText">
@@ -42,7 +43,14 @@
         <item name="android:textColor">@color/any_white_gray</item>
         <item name="android:textColorHint">@color/any_white_gray</item>
         <item name="android:titleTextStyle">@style/ActionBarTitleTextAnycook</item>
+    </style>
 
+    <style name="ButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:textAlignment">center</item>
     </style>
 
     <style name="ActionBarTitleTextAnycook"

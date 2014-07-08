@@ -3,12 +3,14 @@ package de.anycook.app.activities;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import de.anycook.app.R;
 import de.anycook.app.activities.util.GPSTracker;
 import de.anycook.app.adapter.RecipeRowAdapter;
@@ -32,7 +34,6 @@ public class LocationActivity extends Activity {
         urlPattern = "https://api.anycook.de/discover/near?latitude=%s&" +
                 "longitude=%s&maxRadius=50&recipeNumber=20";
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +86,13 @@ public class LocationActivity extends Activity {
         recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                Intent intent = new Intent(LocationActivity.this, AddIngredientsActivity.class);
+                Bundle b = new Bundle();
+                String item = ((TextView) view.findViewById(R.id.recipe_row_textview_recipe_name)).getText().toString();
+                b.putString("item", item); //Your id
+                intent.putExtras(b); //Put your id to your next Intent
+                startActivityForResult(intent, 1234);
+                finish();
             }
         });
     }
