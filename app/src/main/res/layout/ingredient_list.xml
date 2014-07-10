@@ -7,7 +7,7 @@
                 android:tag="front">
 
     <ListView
-            android:id="@+id/ingredient_list_listview"
+            android:id="@android:id/list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"/>
 

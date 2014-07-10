@@ -1,12 +1,11 @@
 package de.anycook.app.activities;
 
 import android.app.ActionBar;
-import android.app.Activity;
+import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import de.anycook.app.R;
@@ -22,45 +21,39 @@ import java.util.List;
  *
  * Created by cipo7741 on 13.06.14.
  */
-public class RecipeAutoCompleteActivity extends Activity {
-
-    private ListView recipeListView;
+public class RecipeAutoCompleteActivity extends ListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.recipe_list);
 
-        this.recipeListView = (ListView) this.findViewById(R.id.recipe_list_listview);
         List<RecipeResponse> recipeRowData = new ArrayList<>();
-        this.recipeListView.setAdapter(new RecipeRowAdapter(this, R.layout.recipe_row, recipeRowData));
-        this.recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                Intent intent = new Intent(RecipeAutoCompleteActivity.this, AddIngredientsActivity.class);
-                Bundle b = new Bundle();
-                String item = ((TextView) view.findViewById(R.id.recipe_row_textview_recipe_name)).getText().toString();
-                b.putString("item", item); //Your id
-                intent.putExtras(b); //Put your id to your next Intent
-                startActivityForResult(intent, 1234);
-                finish();
-
-            }
-        });
+        this.setListAdapter(new RecipeRowAdapter(this, R.layout.recipe_row, recipeRowData));
         Intent intent = getIntent();
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Rezepte mit " + intent.getStringExtra(SearchManager.QUERY));
-        }
         handleIntent(intent);
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View view, int position, long id) {
+        Intent intent = new Intent(this, AddIngredientsActivity.class);
+        Bundle b = new Bundle();
+        String item = ((TextView) view.findViewById(R.id.recipe_row_textview_recipe_name)).getText().toString();
+        b.putString("item", item); //Your id
+        intent.putExtras(b); //Put your id to your next Intent
+        startActivity(intent);
     }
 
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            ActionBar actionBar = getActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setTitle("Rezepte mit " + intent.getStringExtra(SearchManager.QUERY));
+            }
             String query = intent.getStringExtra(SearchManager.QUERY);
-            RecipeAutoCompleter autoCompleter = new RecipeAutoCompleter(query, recipeListView);
+            RecipeAutoCompleter autoCompleter = new RecipeAutoCompleter(query, this.getListView());
             autoCompleter.build();
         }
     }

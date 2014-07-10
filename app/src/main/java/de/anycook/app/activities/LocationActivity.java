@@ -2,26 +2,8 @@ package de.anycook.app.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
 import de.anycook.app.R;
-import de.anycook.app.activities.util.GPSTracker;
-import de.anycook.app.adapter.RecipeRowAdapter;
-import de.anycook.app.controller.RecipeResponse;
-import de.anycook.app.tasks.LoadRecipesTask;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 /**
  * Created by cipo7741 on 01.07.14.
@@ -46,7 +28,7 @@ public class LocationActivity extends Activity {
             actionBar.setTitle("Rezepte in deiner Nähe");
         }
 
-        ListView recipeListView = (ListView) this.findViewById(R.id.recipe_list_listview);
+        /*ListView recipeListView = (ListView) this.findViewById(R.id.);
         List<RecipeResponse> recipeResponseArrayList = new ArrayList<>();
         recipeListView.setAdapter(new RecipeRowAdapter(this, R.layout.recipe_row, recipeResponseArrayList));
 
@@ -94,7 +76,7 @@ public class LocationActivity extends Activity {
                 startActivityForResult(intent, 1234);
                 finish();
             }
-        });
+        });      */
     }
 
 }

@@ -1,10 +1,10 @@
 package de.anycook.app.activities;
 
 import android.app.ActionBar;
-import android.app.Activity;
+import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import de.anycook.app.R;
@@ -22,15 +22,19 @@ import java.util.concurrent.Executors;
 /**
  * Created by cipo7741 on 03.07.14.
  */
-
-public class AddIngredientsActivity extends Activity {
+public class AddIngredientsActivity extends ListActivity {
 
     private List<GroceryItem> ingredientList;
+
+    public AddIngredientsActivity() {
+        this.ingredientList = new ArrayList<>();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ingredient_list);
+
         Bundle b = getIntent().getExtras();
         String item = b.getString("item");
         ActionBar actionBar = getActionBar();
@@ -39,19 +43,9 @@ public class AddIngredientsActivity extends Activity {
             actionBar.setTitle(item);
         }
 
-        final ListView ingredientListView = (ListView) findViewById(R.id.ingredient_list_listview);
-        ingredientList = new ArrayList<>();
-        ingredientListView.setAdapter(new GroceryItemRowAdapter(this, R.layout.grocery_item_row, ingredientList));
+        setListAdapter(new GroceryItemRowAdapter(this, R.layout.grocery_item_row, ingredientList));
         ExecutorService threadPool = Executors.newSingleThreadExecutor();
-        threadPool.submit(new IngredientSelector(item, ingredientListView));
-
-        ingredientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                changeItemStrokeVisibility(ingredientList.get(i));
-                ((GroceryItemRowAdapter) ingredientListView.getAdapter()).notifyDataSetChanged();
-            }
-        });
+        threadPool.submit(new IngredientSelector(item, getListView()));
 
         final GroceryDataSource dataSource = new GroceryDataSource(this);
         dataSource.open();
@@ -65,14 +59,24 @@ public class AddIngredientsActivity extends Activity {
                         dataSource.createGroceryItem(ingredient);
                     }
                 }
+
                 for (GroceryItem groceryItem : groceryItems) {
                     dataSource.deleteGroceryItem(groceryItem);
                     dataSource.createGroceryItem(groceryItem);
                 }
-                finish();
+
+                Intent intent = new Intent(button.getContext(), EditGroceryListActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
 
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        changeItemStrokeVisibility(ingredientList.get(position));
+        ((GroceryItemRowAdapter) getListView().getAdapter()).notifyDataSetChanged();
     }
 
     private void changeItemStrokeVisibility(GroceryItem groceryItem) {
@@ -82,6 +86,4 @@ public class AddIngredientsActivity extends Activity {
             groceryItem.setStroked(true);
         }
     }
-
-
 }

@@ -7,9 +7,15 @@
                 tools:context=".RecipeSearch">
 
     <ListView
-            android:id="@+id/recipe_list_listview"
+            android:id="@android:id/list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
     </ListView>
+
+    <TextView
+            android:id="@android:id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Nichts gefunden"/>
 
 </RelativeLayout>
