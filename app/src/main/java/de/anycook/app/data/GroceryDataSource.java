@@ -74,7 +74,7 @@ public class GroceryDataSource {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             GroceryItem groceryItem = cursorToGroceryItem(cursor);
-            GroceryItems.add(groceryItem);
+            GroceryItems.add(0,groceryItem);
             cursor.moveToNext();
         }
         // make sure to close the cursor
