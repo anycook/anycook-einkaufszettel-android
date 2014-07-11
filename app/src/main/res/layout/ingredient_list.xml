@@ -16,9 +16,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/add_ingredients"
-            android:layout_alignParentBottom="true"
+            android:layout_margin="5dp"
             android:background="@drawable/button_shape"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="5dp"/>
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

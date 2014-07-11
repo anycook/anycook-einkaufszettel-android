@@ -30,7 +30,6 @@
             android:id="@+id/grocery_item_list_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:text="@string/clean"
             android:layout_margin="5dp"
             android:background="@drawable/button_shape"

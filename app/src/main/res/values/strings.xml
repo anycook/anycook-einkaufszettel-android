@@ -22,5 +22,7 @@
     <string name="list_end">Zettelende</string>
     <string name="clean">aufräumen</string>
     <string name="autocomplete">Komplette Zutat</string>
+    <string name="ingredient">Tomate</string>
+    <string name="amount">2 Stück</string>
 </resources>
 

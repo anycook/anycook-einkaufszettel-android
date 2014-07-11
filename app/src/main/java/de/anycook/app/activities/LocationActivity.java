@@ -41,13 +41,8 @@ public class LocationActivity extends Activity {
             location = null;
         }
         gps.stopUsingGPS();
-
         Log.d("Location", location == null ? "location was null" : location.toString());
-
-
-        // TODO don't initiate RecipeLocator if location is null! Load standard location or throw an error
-        //RecipeLocator recipeLocator = new RecipeLocator(location, recipeListView);
-        //recipeLocator.build();
+        // don't initiate RecipeLocator if location is null! Load standard location or throw an error
         if (location == null) return;
         String url = String.format(urlPattern, location.getLatitude(), location.getLongitude());
         LoadRecipesTask loadRecipesTask = new LoadRecipesTask(recipeListView);
@@ -63,8 +58,6 @@ public class LocationActivity extends Activity {
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             e.printStackTrace();
         }
-
-
         recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

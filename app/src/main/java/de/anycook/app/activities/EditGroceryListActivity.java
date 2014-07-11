@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.widget.*;
-
 import de.anycook.app.R;
 import de.anycook.app.activities.util.SwipeDetector;
 import de.anycook.app.adapter.GroceryItemRowAdapter;
@@ -26,17 +25,17 @@ import java.util.concurrent.Executors;
 /**
  * <p>main activity implementing</p>
  * <ul>
- *     <li></li>
+ * <li></li>
  * </ul>
- *
- *
+ * <p/>
+ * <p/>
  * Created by cipo7741 on 13.06.14.
  */
 public class EditGroceryListActivity extends ActionBarActivity {
 
+    private static final String TAG = EditGroceryListActivity.class.getSimpleName();
     private GroceryDataSource groceryDataSource;
     private List<GroceryItem> groceryItemList;
-    private static final String TAG = EditGroceryListActivity.class.getSimpleName();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,14 +56,14 @@ public class EditGroceryListActivity extends ActionBarActivity {
         //View footerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.grocery_item_list_footer_view, null, false);
         //groceryItemListView.addFooterView(footerView);
         groceryItemListView.setAdapter(new GroceryItemRowAdapter(this, R.layout.grocery_item_row, groceryItemList));
-        
+
         // load and set autocomplete ingredients data
         AutoCompleteDataSource autoCompleteDataSource = new AutoCompleteDataSource(this);
         autoCompleteDataSource.open();
         List<String> suggestionList = autoCompleteDataSource.getAllSuggestions();
 
         final AutoCompleteTextView editTextGroceryItem = (AutoCompleteTextView) findViewById(R.id.grocery_item_list_autocompletetextview_grocery_item);
-        if(suggestionList.isEmpty()){
+        if (suggestionList.isEmpty()) {
             editTextGroceryItem.setAdapter(new ArrayAdapter<>(this, R.layout.autocomplete_row, suggestionList));
         }
         autoCompleteDataSource.close();
@@ -114,8 +113,8 @@ public class EditGroceryListActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 int checkedGroceryItems = 0;
-                while(checkedGroceryItems != groceryItemList.size()){
-                    if(groceryItemList.get(checkedGroceryItems).isStroked()) {
+                while (checkedGroceryItems != groceryItemList.size()) {
+                    if (groceryItemList.get(checkedGroceryItems).isStroked()) {
                         groceryDataSource.open();
                         groceryDataSource.deleteGroceryItem(groceryItemList.remove(checkedGroceryItems));
                         groceryDataSource.close();
@@ -143,7 +142,7 @@ public class EditGroceryListActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.d(TAG,"onCreateOptionsMenu()");
+        Log.d(TAG, "onCreateOptionsMenu()");
         getMenuInflater().inflate(R.menu.main_activity_actions, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         final MenuItem searchMenuItem = menu.findItem(R.id.menu_item_main_search);
