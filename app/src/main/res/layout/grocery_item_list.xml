@@ -23,7 +23,7 @@
             android:singleLine="true"
             android:hint="@string/amount_hint"
             android:gravity="right"
-            android:inputType="none"
+            android:inputType="textNoSuggestions"
             android:imeOptions="actionDone"/>
 
     <RelativeLayout
