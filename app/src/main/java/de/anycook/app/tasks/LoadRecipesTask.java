@@ -2,7 +2,6 @@ package de.anycook.app.tasks;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ListView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import de.anycook.app.adapter.RecipeRowAdapter;
@@ -21,10 +20,10 @@ import java.util.List;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class LoadRecipesTask extends AsyncTask<String, Void, List<RecipeResponse>> {
-    private final ListView listView;
+    private final RecipeRowAdapter adapter;
 
-    public LoadRecipesTask(ListView listView) {
-        this.listView = listView;
+    public LoadRecipesTask(RecipeRowAdapter adapter) {
+        this.adapter = adapter;
     }
 
     @Override
@@ -57,10 +56,7 @@ public class LoadRecipesTask extends AsyncTask<String, Void, List<RecipeResponse
         } else {
             Log.d(getClass().getSimpleName(),
                     String.format("Found %d different recipes", recipeResponses.size()));
-            RecipeRowAdapter recipeRowAdapter = (RecipeRowAdapter) listView.getAdapter();
-            for (RecipeResponse recipeResponse : recipeResponses) {
-                recipeRowAdapter.add(recipeResponse);
-            }
+            adapter.addAll(recipeResponses);
         }
 
     }

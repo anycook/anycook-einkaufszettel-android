@@ -14,7 +14,6 @@ import de.anycook.app.adapter.RecipeRowAdapter;
 import de.anycook.app.model.RecipeResponse;
 import de.anycook.app.tasks.LoadRecipesTask;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -39,8 +38,7 @@ public class RecipeAutoCompleteActivity extends ListActivity {
 
         setContentView(R.layout.recipe_list);
 
-        List<RecipeResponse> recipeRowData = new ArrayList<>();
-        this.setListAdapter(new RecipeRowAdapter(this, R.layout.recipe_row, recipeRowData));
+        this.setListAdapter(new RecipeRowAdapter(this));
         Intent intent = getIntent();
         handleIntent(intent);
     }
@@ -64,7 +62,7 @@ public class RecipeAutoCompleteActivity extends ListActivity {
             }
             String query = intent.getStringExtra(SearchManager.QUERY);
             String url = String.format(urlPattern, query);
-            LoadRecipesTask loadRecipesTask = new LoadRecipesTask(getListView());
+            LoadRecipesTask loadRecipesTask = new LoadRecipesTask((RecipeRowAdapter) getListAdapter());
             try {
                 List<RecipeResponse> recipeRowData = loadRecipesTask.execute(url).get(10, TimeUnit.SECONDS);
                 if (recipeRowData.isEmpty()) {

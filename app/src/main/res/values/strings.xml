@@ -21,6 +21,8 @@
     <string name="grocery_item_hint">Was brauchst du?</string>
     <string name="add_ingredients">Zutaten hinzufügen</string>
 
+    <string name="nearby_recipes">Rezepte in deiner Nähe</string>
+
     <string name="list_end">Zettelende</string>
     <string name="clean">aufräumen</string>
     <string name="autocomplete">Komplette Zutat</string>
