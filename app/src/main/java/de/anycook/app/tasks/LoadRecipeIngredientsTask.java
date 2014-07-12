@@ -1,6 +1,5 @@
 package de.anycook.app.tasks;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import com.google.gson.Gson;
@@ -29,11 +28,9 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
         urlPattern = "https://api.anycook.de/recipe/%s/ingredients";
     }
 
-    private final Context context;
     private final IngredientListRowAdapter adapter;
 
-    public LoadRecipeIngredientsTask(Context context, IngredientListRowAdapter adapter) {
-        this.context = context;
+    public LoadRecipeIngredientsTask(IngredientListRowAdapter adapter) {
         this.adapter = adapter;
     }
 

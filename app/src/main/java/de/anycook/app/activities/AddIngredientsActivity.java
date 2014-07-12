@@ -32,7 +32,7 @@ public class AddIngredientsActivity extends ListActivity implements View.OnClick
 
         IngredientListRowAdapter adapter = new IngredientListRowAdapter(this);
         setListAdapter(adapter);
-        LoadRecipeIngredientsTask loadRecipeIngredientsTask = new LoadRecipeIngredientsTask(this, adapter);
+        LoadRecipeIngredientsTask loadRecipeIngredientsTask = new LoadRecipeIngredientsTask(adapter);
         loadRecipeIngredientsTask.execute(item);
 
         ImageButton addButton = (ImageButton) findViewById(R.id.add_ingredients_button);
