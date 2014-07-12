@@ -21,13 +21,8 @@ import de.anycook.app.store.SQLiteDB;
 import de.anycook.app.tasks.LoadIngredientsTask;
 
 /**
- * <p>main activity implementing</p>
- * <ul>
- *     <li></li>
- * </ul>
- *
- *
- * Created by cipo7741 on 13.06.14.
+ * @author Jan Graßegger
+ * @author Claudia Sichting
  */
 public class MainActivity extends ActionBarActivity implements AdapterView.OnItemClickListener{
 
@@ -198,26 +193,37 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         public void onClick(View v) {
             Log.d(getLocalClassName(), "DiscardButton was clicked");
 
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(v.getContext());
-            alertDialogBuilder.setMessage(R.string.clear_ingredients);
-            alertDialogBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
+            Cursor strokedItemCursor = groceryItemStore.getStrokedListItems();
 
-            alertDialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    groceryItemStore.deleteAllGroceryListItems();
-                    listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
-                    dialog.dismiss();
-                }
-            });
+            if(strokedItemCursor.getCount() == 0) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(v.getContext());
+                alertDialogBuilder.setMessage(R.string.clear_ingredients);
+                alertDialogBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
 
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
+                alertDialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        groceryItemStore.deleteAllGroceryListItems();
+                        listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+            else {
+                while(strokedItemCursor.moveToNext()) {
+                    groceryItemStore.removeGroceryListItem(
+                            strokedItemCursor.getString(SQLiteDB.TableFields.GROCERY_LIST_NAME));
+                }
+                listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
+            }
         }
     }
 

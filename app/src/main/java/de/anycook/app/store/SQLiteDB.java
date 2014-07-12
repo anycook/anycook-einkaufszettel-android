@@ -42,11 +42,9 @@ public class SQLiteDB extends SQLiteOpenHelper{
         db.execSQL("PRAGMA foreign_keys = ON;");
         db.execSQL(String.format("CREATE TABLE %s(name VARCHAR(45) PRIMARY KEY);", GROCERY_TABLE));
         db.execSQL(String.format("CREATE TABLE %s(name VARCHAR(45) PRIMARY KEY, " +
-                "amount INTEGER NOT NULL, " +
-                "stroke INTEGER(1) NOT NULL DEFAULT 0," +
-                "FOREIGN KEY(name) REFERENCES %s(name));", GROCERY_LIST_TABLE, GROCERY_TABLE));
-        /*LoadIngredientsTask loadIngredientsTask = new LoadIngredientsTask(this);
-        loadIngredientsTask.execute(); */
+            "amount INTEGER NOT NULL, " +
+            "stroke INTEGER(1) NOT NULL DEFAULT 0," +
+            "FOREIGN KEY(name) REFERENCES %s(name));", GROCERY_LIST_TABLE, GROCERY_TABLE));
     }
 
     @Override
