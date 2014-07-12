@@ -5,9 +5,9 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
+import org.apache.commons.io.IOUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 
 /**
@@ -23,10 +23,26 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     @Override
     protected Bitmap doInBackground(String... urls) {
         try {
-            Log.d(getClass().getSimpleName(), "Trying to load image from "+urls[0]);
             URL url = new URL(urls[0]);
-            InputStream is = url.openStream();
-            return BitmapFactory.decodeStream(is);
+
+            //Check if image is already cached
+            String imagePath = url.getPath();
+            File cacheDir = imageView.getContext().getCacheDir();
+            File imageFile = new File(cacheDir, imagePath);
+            File imageDirectory = imageFile.getParentFile();
+
+            if(!imageDirectory.exists()) {
+                imageDirectory.mkdirs();
+            }
+
+            if(!imageFile.exists()) {
+                imageFile.createNewFile();
+                OutputStream os = new FileOutputStream(imageFile);
+                InputStream is = url.openStream();
+                IOUtils.copy(is, os);
+
+            }
+            return BitmapFactory.decodeStream(new FileInputStream(imageFile));
         } catch (IOException e) {
             Log.e(getClass().getSimpleName(), "failed to load image", e);
             return null;
