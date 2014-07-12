@@ -17,6 +17,7 @@ import de.anycook.app.R;
 import de.anycook.app.adapter.GroceryItemRowAdapter;
 import de.anycook.app.model.GroceryItem;
 import de.anycook.app.store.GroceryItemStore;
+import de.anycook.app.store.SQLiteDB;
 import de.anycook.app.tasks.LoadIngredientsTask;
 
 /**
@@ -79,6 +80,13 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             @Override
             public Cursor runQuery(CharSequence constraint) {
                 return groceryItemStore.autocompleteIngredients(constraint);
+            }
+        });
+
+        cursorAdapter.setCursorToStringConverter(new SimpleCursorAdapter.CursorToStringConverter() {
+            @Override
+            public CharSequence convertToString(Cursor cursor) {
+                return cursor.getString(SQLiteDB.TableFields.GROCERY_LIST_NAME);
             }
         });
 
