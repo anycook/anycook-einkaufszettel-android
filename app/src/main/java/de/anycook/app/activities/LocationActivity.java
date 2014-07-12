@@ -65,6 +65,5 @@ public class LocationActivity extends ListActivity {
         b.putString("item", recipeResponse.getName()); //Your id
         intent.putExtras(b); //Put your id to your next Intent
         startActivityForResult(intent, 1234);
-        finish();
     }
 }
