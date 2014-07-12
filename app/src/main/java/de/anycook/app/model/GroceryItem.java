@@ -6,6 +6,10 @@ public class GroceryItem {
     private String amount;
     private boolean stroked;
 
+    public GroceryItem(String name, String amount) {
+        this(name, amount, false);
+    }
+
     public GroceryItem(String name, String amount, boolean stroked) {
         this.setName(name);
         this.setAmount(amount);

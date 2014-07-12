@@ -33,8 +33,6 @@ public class RecipeAutoCompleteActivity extends ListActivity {
         urlPattern = "https://api.anycook.de/recipe?startsWith=%s";
     }
 
-    private List<RecipeResponse> recipeRowData;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,13 +60,13 @@ public class RecipeAutoCompleteActivity extends ListActivity {
             ActionBar actionBar = getActionBar();
             if (actionBar != null) {
                 actionBar.setDisplayHomeAsUpEnabled(true);
-                actionBar.setTitle("Rezepte mit " + intent.getStringExtra(SearchManager.QUERY));
+                actionBar.setTitle(String.format("Rezepte mit \"%s\"", intent.getStringExtra(SearchManager.QUERY)));
             }
             String query = intent.getStringExtra(SearchManager.QUERY);
             String url = String.format(urlPattern, query);
             LoadRecipesTask loadRecipesTask = new LoadRecipesTask(getListView());
             try {
-                recipeRowData = loadRecipesTask.execute(url).get(10, TimeUnit.SECONDS);
+                List<RecipeResponse> recipeRowData = loadRecipesTask.execute(url).get(10, TimeUnit.SECONDS);
                 if (recipeRowData.isEmpty()) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setTitle("Entschldigung");

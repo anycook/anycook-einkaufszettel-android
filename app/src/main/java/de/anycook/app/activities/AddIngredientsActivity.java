@@ -2,27 +2,20 @@ package de.anycook.app.activities;
 
 import android.app.ActionBar;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
+import android.widget.ImageButton;
 import de.anycook.app.R;
-import de.anycook.app.adapter.GroceryItemRowAdapter;
-import de.anycook.app.model.GroceryItem;
-
-import java.util.ArrayList;
-import java.util.List;
+import de.anycook.app.adapter.IngredientListRowAdapter;
+import de.anycook.app.tasks.LoadRecipeIngredientsTask;
 
 
 /**
- * Created by cipo7741 on 03.07.14.
+ * @author Claudia Sichting
+ * @author Jan Graßegger
  */
-public class AddIngredientsActivity extends ListActivity {
-
-    private List<GroceryItem> ingredientList;
-
-    public AddIngredientsActivity() {
-        this.ingredientList = new ArrayList<>();
-    }
+public class AddIngredientsActivity extends ListActivity implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,47 +30,22 @@ public class AddIngredientsActivity extends ListActivity {
             actionBar.setTitle(item);
         }
 
-        /*GroceryDataStore store = new GroceryDataStore(this);
-        setListAdapter(new GroceryItemRowAdapter(this, R.layout.grocery_item_row, store.getAllGroceryItemsCursor(), 0));
-        ExecutorService threadPool = Executors.newSingleThreadExecutor();
-        threadPool.submit(new IngredientSelector(item, getListView()));
+        IngredientListRowAdapter adapter = new IngredientListRowAdapter(this);
+        setListAdapter(adapter);
+        LoadRecipeIngredientsTask loadRecipeIngredientsTask = new LoadRecipeIngredientsTask(this, adapter);
+        loadRecipeIngredientsTask.execute(item);
 
-        final GroceryDataStore dataSource = new GroceryDataStore(this);
-        dataSource.open();
-
-        final Button button = (Button) findViewById(R.id.save_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                for (GroceryItem ingredient : ingredientList) {
-                    if (!ingredient.isStroked()) {
-                        dataSource.createGroceryItem(ingredient);
-                    }
-                }
-
-                for (GroceryItem groceryItem : groceryItems) {
-                    dataSource.deleteGroceryItem(groceryItem);
-                    dataSource.createGroceryItem(groceryItem);
-                }
-
-                Intent intent = new Intent(button.getContext(), MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-        });  */
+        ImageButton addButton = (ImageButton) findViewById(R.id.add_ingredients_button);
+        addButton.setOnClickListener(this);
 
     }
 
     @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        changeItemStrokeVisibility(ingredientList.get(position));
-        ((GroceryItemRowAdapter) getListView().getAdapter()).notifyDataSetChanged();
-    }
-
-    private void changeItemStrokeVisibility(GroceryItem groceryItem) {
-        if (groceryItem.isStroked()) {
-            groceryItem.setStroked(false);
-        } else {
-            groceryItem.setStroked(true);
-        }
+    public void onClick(View v) {
+        IngredientListRowAdapter adapter = (IngredientListRowAdapter) getListAdapter();
+        adapter.saveChecked();
+        Intent intent = new Intent(v.getContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }
