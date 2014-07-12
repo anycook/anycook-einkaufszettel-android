@@ -180,13 +180,6 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         groceryItemStore = new GroceryItemStore(this);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        groceryItemStore.close();
-        groceryItemStore = null;
-    }
-
     private class DiscardOnClickListener implements View.OnClickListener {
 
         @Override
