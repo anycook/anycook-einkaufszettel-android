@@ -12,7 +12,7 @@
             android:id="@+id/recipe_row_imageview"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/ic_launcher"
+            android:src="@drawable/anycook"
             android:scaleType="centerCrop"
             android:layout_marginRight="5dp"
             android:contentDescription="@string/image_description"/>
