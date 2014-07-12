@@ -5,7 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
-import org.apache.commons.io.IOUtils;
+import com.google.common.io.ByteStreams;
 
 import java.io.*;
 import java.net.URL;
@@ -38,9 +38,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
             if(!imageFile.exists()) {
                 imageFile.createNewFile();
                 OutputStream os = new FileOutputStream(imageFile);
-                InputStream is = url.openStream();
-                IOUtils.copy(is, os);
-
+                ByteStreams.copy(url.openStream(), os);
             }
             return BitmapFactory.decodeStream(new FileInputStream(imageFile));
         } catch (IOException e) {

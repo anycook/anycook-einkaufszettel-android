@@ -2,6 +2,7 @@ package de.anycook.app.tasks;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import com.google.common.net.UrlEscapers;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import de.anycook.app.adapter.IngredientListRowAdapter;
@@ -37,7 +38,10 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
     @Override
     protected List<Ingredient> doInBackground(String... recipeNames) {
         try {
-            URL url = new URL(String.format(urlPattern, recipeNames[0]));
+            //URLCodec urlCodec = new URLCodec();
+            String urlString = String.format(urlPattern, UrlEscapers.urlPathSegmentEscaper().escape(recipeNames[0]));
+            URL url = new URL(urlString);
+            Log.d(getClass().getSimpleName(), "Loading ingredients from "+url);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             if (httpURLConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new IOException(httpURLConnection.getResponseMessage());
