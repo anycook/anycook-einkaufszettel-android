@@ -2,21 +2,15 @@ package de.anycook.app.activities;
 
 import android.app.ActionBar;
 import android.app.ListActivity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import de.anycook.app.R;
 import de.anycook.app.adapter.GroceryItemRowAdapter;
-import de.anycook.app.controller.IngredientSelector;
-import de.anycook.app.data.GroceryDataSource;
-import de.anycook.app.data.GroceryItem;
+import de.anycook.app.model.GroceryItem;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
 /**
@@ -43,14 +37,15 @@ public class AddIngredientsActivity extends ListActivity {
             actionBar.setTitle(item);
         }
 
-        setListAdapter(new GroceryItemRowAdapter(this, R.layout.grocery_item_row, ingredientList));
+        /*GroceryDataStore store = new GroceryDataStore(this);
+        setListAdapter(new GroceryItemRowAdapter(this, R.layout.grocery_item_row, store.getAllGroceryItemsCursor(), 0));
         ExecutorService threadPool = Executors.newSingleThreadExecutor();
         threadPool.submit(new IngredientSelector(item, getListView()));
 
-        final GroceryDataSource dataSource = new GroceryDataSource(this);
+        final GroceryDataStore dataSource = new GroceryDataStore(this);
         dataSource.open();
 
-        final Button button = (Button) findViewById(R.id.ingredient_list_button);
+        final Button button = (Button) findViewById(R.id.save_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 List<GroceryItem> groceryItems = dataSource.getAllGroceryItems();
@@ -65,11 +60,11 @@ public class AddIngredientsActivity extends ListActivity {
                     dataSource.createGroceryItem(groceryItem);
                 }
 
-                Intent intent = new Intent(button.getContext(), EditGroceryListActivity.class);
+                Intent intent = new Intent(button.getContext(), MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
-        });
+        });  */
 
     }
 

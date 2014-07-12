@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import de.anycook.app.R;
-import de.anycook.app.controller.RecipeResponse;
+import de.anycook.app.model.RecipeResponse;
 import de.anycook.app.tasks.DownloadImageTask;
 
 import java.util.List;

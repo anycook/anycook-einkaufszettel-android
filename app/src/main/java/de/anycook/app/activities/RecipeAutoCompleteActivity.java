@@ -11,7 +11,7 @@ import android.widget.TextView;
 import de.anycook.app.R;
 import de.anycook.app.adapter.RecipeRowAdapter;
 import de.anycook.app.controller.RecipeAutoCompleter;
-import de.anycook.app.controller.RecipeResponse;
+import de.anycook.app.model.RecipeResponse;
 
 import java.util.ArrayList;
 import java.util.List;

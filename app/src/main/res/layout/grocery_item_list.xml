@@ -26,23 +26,25 @@
             android:inputType="none"
             android:imeOptions="actionDone"/>
 
-    <Button
-            android:id="@+id/grocery_item_list_button"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/clean"
-            android:layout_margin="5dp"
-            android:background="@drawable/button_shape"
-            android:gravity="center_vertical|center_horizontal"
-            android:layout_alignParentBottom="true"
-            android:visibility="gone"/>
+    <RelativeLayout
+            android:id="@+id/footer"
+            style="@style/ButtonBarAnycook">
+
+        <ImageButton
+                android:id="@+id/discard_list_button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_accept"
+                android:layout_alignParentRight="true"
+                android:contentDescription="@string/clear"/>
+    </RelativeLayout>
 
     <ListView
             android:id="@+id/grocery_item_list_listview"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/grocery_item_list_textview_amount"
-            android:layout_above="@+id/grocery_item_list_button"/>
+            android:layout_above="@+id/footer"/>
 
 </RelativeLayout>

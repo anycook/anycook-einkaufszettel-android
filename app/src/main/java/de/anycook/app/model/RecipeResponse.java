@@ -1,4 +1,4 @@
-package de.anycook.app.controller;
+package de.anycook.app.model;
 
 /**
  * Created by cipo7741 on 01.07.14.

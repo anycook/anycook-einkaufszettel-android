@@ -4,14 +4,32 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:tag="front">
+                android:tag="front"
+        style="@style/AnycookTheme">
+
+    <LinearLayout
+            android:id="@+id/footer"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            style="@android:style/ButtonBar">
+
+        <Button
+                android:id="@+id/save_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_ingredient"/>
+    </LinearLayout>
 
     <ListView
             android:id="@android:id/list"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_above="@id/footer"/>
 
-    <Button
+
+
+   <!-- <Button
             android:id="@+id/ingredient_list_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -19,6 +37,6 @@
             android:layout_alignParentBottom="true"
             android:background="@drawable/button_shape"
             android:layout_centerHorizontal="true"
-            android:layout_margin="5dp"/>
+            android:layout_margin="5dp"/>   -->
 
 </RelativeLayout>

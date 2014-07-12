@@ -14,6 +14,8 @@
     <string name="cancel">abbrechen</string>
     <string name="accept">speichern</string>
     <string name="delete">löschen</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
 
     <string name="image_description">bild</string>
     <string name="grocery_item_hint">Was brauchst du?</string>
@@ -22,5 +24,8 @@
     <string name="list_end">Zettelende</string>
     <string name="clean">aufräumen</string>
     <string name="autocomplete">Komplette Zutat</string>
+    <string name="add_ingredient">Zutaten hinzufügen</string>
+    <string name="clear_ingredients">Alle Zutaten löschen?</string>
+    <string name="clear">Aufräumen</string>
 </resources>
 

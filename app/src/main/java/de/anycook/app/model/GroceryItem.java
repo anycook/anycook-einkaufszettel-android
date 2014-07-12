@@ -1,4 +1,4 @@
-package de.anycook.app.data;
+package de.anycook.app.model;
 
 public class GroceryItem {
 
