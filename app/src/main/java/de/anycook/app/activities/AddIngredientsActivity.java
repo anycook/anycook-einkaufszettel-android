@@ -48,7 +48,6 @@ public class AddIngredientsActivity extends ListActivity {
         final Button button = (Button) findViewById(R.id.save_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                List<GroceryItem> groceryItems = dataSource.getAllGroceryItems();
                 for (GroceryItem ingredient : ingredientList) {
                     if (!ingredient.isStroked()) {
                         dataSource.createGroceryItem(ingredient);

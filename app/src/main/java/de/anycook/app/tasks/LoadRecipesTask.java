@@ -54,7 +54,6 @@ public class LoadRecipesTask extends AsyncTask<String, Void, List<RecipeResponse
     protected void onPostExecute(final List<RecipeResponse> recipeResponses) {
         if(recipeResponses.size() == 0) {
             Log.v(getClass().getSimpleName(), "Didn't find any nearby recipes");
-            //TODO show it in the UI
         } else {
             Log.d(getClass().getSimpleName(),
                     String.format("Found %d different recipes", recipeResponses.size()));

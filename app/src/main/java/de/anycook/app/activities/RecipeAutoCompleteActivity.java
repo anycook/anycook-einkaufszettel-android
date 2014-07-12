@@ -1,6 +1,7 @@
 package de.anycook.app.activities;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -10,11 +11,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import de.anycook.app.R;
 import de.anycook.app.adapter.RecipeRowAdapter;
-import de.anycook.app.controller.RecipeAutoCompleter;
 import de.anycook.app.model.RecipeResponse;
+import de.anycook.app.tasks.LoadRecipesTask;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * this searchable activity is responsible for returning recipe search results
@@ -22,6 +26,14 @@ import java.util.List;
  * Created by cipo7741 on 13.06.14.
  */
 public class RecipeAutoCompleteActivity extends ListActivity {
+
+    private final static String urlPattern;
+
+    static {
+        urlPattern = "https://api.anycook.de/recipe?startsWith=%s";
+    }
+
+    private List<RecipeResponse> recipeRowData;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,8 +65,20 @@ public class RecipeAutoCompleteActivity extends ListActivity {
                 actionBar.setTitle("Rezepte mit " + intent.getStringExtra(SearchManager.QUERY));
             }
             String query = intent.getStringExtra(SearchManager.QUERY);
-            RecipeAutoCompleter autoCompleter = new RecipeAutoCompleter(query, this.getListView());
-            autoCompleter.build();
+            String url = String.format(urlPattern, query);
+            LoadRecipesTask loadRecipesTask = new LoadRecipesTask(getListView());
+            try {
+                recipeRowData = loadRecipesTask.execute(url).get(10, TimeUnit.SECONDS);
+                if (recipeRowData.isEmpty()) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Entschldigung");
+                    builder.setMessage(String.format("Leider wurden keine Rezepte mit \"%s\" gefunden!", query));
+                    builder.setIcon(android.R.drawable.ic_dialog_alert);
+                    builder.show();
+                }
+            } catch (InterruptedException | ExecutionException | TimeoutException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

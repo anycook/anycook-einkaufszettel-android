@@ -27,16 +27,4 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/footer"/>
 
-
-
-   <!-- <Button
-            android:id="@+id/ingredient_list_button"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/add_ingredients"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/button_shape"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="5dp"/>   -->
-
 </RelativeLayout>
