@@ -70,10 +70,23 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
         discardButton.setOnClickListener(new DiscardOnClickListener());
         groceryAmountTextView.setOnEditorActionListener(new AmountOnEditorActionListener());
+        groceryNameTextView.setAdapter(getAutocompleteCursorAdapter());
 
         LoadIngredientsTask loadIngredientsTask = new LoadIngredientsTask(groceryItemStore);
         loadIngredientsTask.execute();
+    }
 
+    private void addItem(String name, String amount) {
+        if (name.equals("")) {
+            Toast.makeText(getBaseContext(), "Wunschlos glücklich! ;-)", Toast.LENGTH_SHORT).show();
+        } else {
+            GroceryItem groceryItem = new GroceryItem(name, amount, false);
+            groceryItemStore.addGroceryListItem(groceryItem);
+            listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
+        }
+    }
+
+    private CursorAdapter getAutocompleteCursorAdapter() {
         SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(this, R.layout.autocomplete_row, null,
                 new String[]{"_id"}, new int[]{android.R.id.text1}, 0);
         cursorAdapter.setFilterQueryProvider(new FilterQueryProvider() {
@@ -89,18 +102,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 return cursor.getString(SQLiteDB.TableFields.GROCERY_LIST_NAME);
             }
         });
-
-        groceryNameTextView.setAdapter(cursorAdapter);
-    }
-
-    private void addItem(String name, String amount) {
-        if (name.equals("")) {
-            Toast.makeText(getBaseContext(), "Wunschlos glücklich! ;-)", Toast.LENGTH_SHORT).show();
-        } else {
-            GroceryItem groceryItem = new GroceryItem(name, amount, false);
-            groceryItemStore.addGroceryListItem(groceryItem);
-            listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
-        }
+        return cursorAdapter;
     }
 
     @Override
