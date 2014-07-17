@@ -33,10 +33,10 @@
         <ImageButton
                 android:id="@+id/discard_list_button"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_action_accept"
-                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_action_remove"
+                android:layout_centerHorizontal="true"
                 android:contentDescription="@string/clear"/>
     </RelativeLayout>
 

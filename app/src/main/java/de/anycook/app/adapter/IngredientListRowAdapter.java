@@ -34,6 +34,7 @@ public class IngredientListRowAdapter extends ArrayAdapter<Ingredient>{
             holder.nameTextView = (TextView) convertView.findViewById(R.id.ingredient_list_row_name);
             holder.amountTextView = (TextView) convertView.findViewById(R.id.ingredient_list_row_amount);
             holder.checkBox = (CheckBox) convertView.findViewById(R.id.ingredient_list_row_checkbox);
+
             holder.checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

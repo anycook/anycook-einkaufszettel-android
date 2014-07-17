@@ -8,7 +8,7 @@
     <CheckBox
             android:id="@+id/ingredient_list_row_checkbox"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:checked="true"/>
     <TextView
@@ -16,10 +16,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:layout_toLeftOf="@id/ingredient_list_row_checkbox"/>
+            android:layout_toLeftOf="@id/ingredient_list_row_checkbox"
+            android:text="@string/ingredient_amount"/>
     <TextView
             android:id="@+id/ingredient_list_row_name"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="@string/ingredient_name"/>
 
 </RelativeLayout>
