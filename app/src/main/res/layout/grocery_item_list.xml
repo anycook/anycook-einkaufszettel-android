@@ -26,7 +26,19 @@
             android:inputType="textNoSuggestions"
             android:imeOptions="actionDone"/>
 
+    <RelativeLayout
+            android:id="@+id/footer"
+            style="@style/ButtonBarAnycook">
 
+        <ImageButton
+                android:id="@+id/discard_list_button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_accept"
+                android:layout_alignParentRight="true"
+                android:contentDescription="@string/clear"/>
+    </RelativeLayout>
 
     <ListView
             android:id="@+id/grocery_item_list_listview"
