@@ -44,7 +44,7 @@ public class AddIngredientsActivity extends ListActivity implements View.OnClick
     public void onClick(View v) {
         IngredientListRowAdapter adapter = (IngredientListRowAdapter) getListAdapter();
         adapter.saveChecked();
-        Intent intent = new Intent(v.getContext(), MainActivity.class);
+        Intent intent = new Intent(v.getContext(), GroceryListFragment.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }

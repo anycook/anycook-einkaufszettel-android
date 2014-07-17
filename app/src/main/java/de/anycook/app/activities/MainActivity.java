@@ -1,233 +1,107 @@
 package de.anycook.app.activities;
 
-import android.app.AlertDialog;
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.ListFragment;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.SearchView;
-import android.util.Log;
-import android.view.*;
-import android.view.inputmethod.EditorInfo;
-import android.widget.*;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import de.anycook.app.R;
-import de.anycook.app.adapter.GroceryItemRowAdapter;
-import de.anycook.app.store.GroceryItemStore;
-import de.anycook.app.store.SQLiteDB;
-import de.anycook.app.tasks.LoadIngredientsTask;
 
 /**
- * @author Jan Graßegger
- * @author Claudia Sichting
+ * @author Jan Graßegger<jan@anycook.de>
  */
-public class MainActivity extends ActionBarActivity implements AdapterView.OnItemClickListener{
-
-    private static final String TAG = MainActivity.class.getSimpleName();
-
-    private AutoCompleteTextView groceryNameTextView;
-    private EditText groceryAmountTextView;
-
-    //data
-    private GroceryItemStore groceryItemStore;
-    private GroceryItemRowAdapter listAdapter;
+public class MainActivity extends Activity {
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle drawerToggle;
+    private ListView drawerList;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.grocery_item_list);
+        setContentView(R.layout.main);
 
-        // hide keyboard
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        //mPlanetTitles = getResources().getStringArray(R.array.planets_array);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerList = (ListView) findViewById(R.id.left_drawer);
 
+        // Set the adapter for the list view
+        drawerList.setAdapter(new ArrayAdapter<>(this,
+                R.layout.drawer_list_item, getResources().getStringArray(R.array.menu)));
+        // Set the list's click listener
+        //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
-        // load views
-        ListView listView = (ListView) findViewById(R.id.grocery_item_list_listview);
-        ImageButton discardButton = (ImageButton) findViewById(R.id.discard_list_button);
-        this.groceryNameTextView =
-                (AutoCompleteTextView) findViewById(R.id.grocery_item_list_autocompletetextview_grocery_item);
-        this.groceryAmountTextView = (EditText) findViewById(R.id.grocery_item_list_textview_amount);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
 
-        // load and set grocery list data
-        this.groceryItemStore = new GroceryItemStore(this);
-        this.listAdapter = new GroceryItemRowAdapter(this, R.layout.grocery_item_row,
-                groceryItemStore.getAllGroceryItemsCursor(), 0);
+        /*Fragment fragment = new GroceryListFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();*/
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
+                R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
 
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                /*getActionBar().setTitle(mTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()*/
+            }
 
-        //init listView event handlers
-        listView.setOnItemClickListener(this);
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                /*getActionBar().setTitle(mDrawerTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()*/
+            }
+        };
 
-        //init data source adapter
-        listView.setAdapter(this.listAdapter);
+        drawerLayout.setDrawerListener(drawerToggle);
 
-        discardButton.setOnClickListener(new DiscardOnClickListener());
-        groceryAmountTextView.setOnEditorActionListener(new AmountOnEditorActionListener());
-        groceryNameTextView.setAdapter(getAutocompleteCursorAdapter());
-
-        LoadIngredientsTask loadIngredientsTask = new LoadIngredientsTask(groceryItemStore);
-        loadIngredientsTask.execute();
-    }
-
-    private void addItem(String name, String amount) {
-        if (name.equals("")) {
-            Toast.makeText(getBaseContext(), "Wunschlos glücklich! ;-)", Toast.LENGTH_SHORT).show();
-        } else {
-            groceryItemStore.addToGroceryList(name, amount);
-            listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
+        if (savedInstanceState == null) {
+            selectMenuItem(0);
         }
+
     }
 
-    private CursorAdapter getAutocompleteCursorAdapter() {
-        SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(this, R.layout.autocomplete_row, null,
-                new String[]{"_id"}, new int[]{android.R.id.text1}, 0);
-        cursorAdapter.setFilterQueryProvider(new FilterQueryProvider() {
-            @Override
-            public Cursor runQuery(CharSequence constraint) {
-                return groceryItemStore.autocompleteIngredients(constraint);
-            }
-        });
-
-        cursorAdapter.setCursorToStringConverter(new SimpleCursorAdapter.CursorToStringConverter() {
-            @Override
-            public CharSequence convertToString(Cursor cursor) {
-                return cursor.getString(SQLiteDB.TableFields.GROCERY_LIST_NAME);
-            }
-        });
-        return cursorAdapter;
-    }
-
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.d(TAG,"onCreateOptionsMenu()");
-        getMenuInflater().inflate(R.menu.main_activity_actions, menu);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        final MenuItem searchMenuItem = menu.findItem(R.id.menu_item_main_search);
-        final SearchView searchView = (SearchView) searchMenuItem.getActionView();
-        searchView.setIconifiedByDefault(true);
-
-        if (searchManager != null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-            searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (!hasFocus) {
-                        searchMenuItem.collapseActionView();
-                        searchView.setQuery("", false);
-                        searchView.setIconified(true);
-                    }
-                }
-            });
-
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    // hides and then unhides search tab to make sure
-                    // keyboard disappears when query is submitted (=_=;)
-                    searchView.setVisibility(View.INVISIBLE);
-                    searchView.setVisibility(View.VISIBLE);
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    return false;
-                }
-            });
-        }
-
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
+    }*/
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        drawerToggle.syncState();
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_item_main_locate:
-                openLoctionView();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        TextView groceryName = (TextView) view.findViewById(R.id.grocery_item_row_textview_grocery_item);
-        View strokeView = view.findViewById(R.id.grocery_item_row_view_stroke);
-        boolean isStroked = strokeView.getVisibility() == View.VISIBLE;
-        groceryItemStore.strokeGroceryListItem(groceryName.getText(), !isStroked);
-        listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
+    private void selectMenuItem(int position) {
+        // update the main content by replacing fragments
+        ListFragment fragment = new GroceryListFragment();
+        Bundle args = new Bundle();
+        //args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
+        fragment.setArguments(args);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+        // update selected item and title, then close the drawer
+        drawerList.setItemChecked(position, true);
+        //setTitle(mPlanetTitles[position]);
+        drawerLayout.closeDrawer(drawerList);
+        invalidateOptionsMenu();
     }
 
-    private void openLoctionView() {
-        Intent intent = new Intent(this, LocationActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        groceryItemStore.close();
-        groceryItemStore = null;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        groceryItemStore = new GroceryItemStore(this);
-    }
-
-    private class DiscardOnClickListener implements View.OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            Log.d(getLocalClassName(), "DiscardButton was clicked");
-
-            Cursor strokedItemCursor = groceryItemStore.getStrokedListItems();
-
-            if(strokedItemCursor.getCount() == 0) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(v.getContext());
-                alertDialogBuilder.setMessage(R.string.clear_ingredients);
-                alertDialogBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                alertDialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        groceryItemStore.deleteAllGroceryListItems();
-                        listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
-                        dialog.dismiss();
-                    }
-                });
-
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-            }
-            else {
-                while(strokedItemCursor.moveToNext()) {
-                    groceryItemStore.removeGroceryListItem(
-                            strokedItemCursor.getString(SQLiteDB.TableFields.GROCERY_LIST_NAME));
-                }
-                listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
-            }
-        }
-    }
-
-    private class AmountOnEditorActionListener implements TextView.OnEditorActionListener {
-
-        @Override
-        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                addItem(groceryNameTextView.getText().toString(), groceryAmountTextView.getText().toString());
-                groceryNameTextView.setText("");
-                groceryAmountTextView.setText("");
-                return true;
-            } else return false;
-        }
-    }
 }
