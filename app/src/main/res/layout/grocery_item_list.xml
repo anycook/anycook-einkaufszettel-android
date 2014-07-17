@@ -35,7 +35,7 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_action_remove"
+                android:src="@drawable/ic_action_cancel"
                 android:layout_centerHorizontal="true"
                 android:contentDescription="@string/clear"/>
     </RelativeLayout>
