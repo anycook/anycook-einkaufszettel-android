@@ -14,4 +14,9 @@
           android:icon="@drawable/ic_action_place"
           anycook:showAsAction="ifRoom"/>
 
+    <item android:id="@+id/menu_item_main_remove"
+          android:title="@string/remove"
+          android:icon="@drawable/ic_action_remove"
+          android:showAsAction="ifRoom"/>
+
 </menu>
