@@ -4,9 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.TextView;
+import android.widget.*;
 import de.anycook.app.R;
 import de.anycook.app.model.Ingredient;
 import de.anycook.app.store.GroceryItemStore;
@@ -35,14 +33,8 @@ public class IngredientListRowAdapter extends ArrayAdapter<Ingredient>{
             holder.amountTextView = (TextView) convertView.findViewById(R.id.ingredient_list_row_amount);
             holder.checkBox = (CheckBox) convertView.findViewById(R.id.ingredient_list_row_checkbox);
 
-            holder.checkBox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Ingredient ingredient = getItem(position);
-                    ingredient.checked = !ingredient.checked;
-                    notifyDataSetChanged();
-                }
-            });
+
+
 
             convertView.setTag(holder);
         }

@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import de.anycook.app.R;
 import de.anycook.app.adapter.IngredientListRowAdapter;
+import de.anycook.app.model.Ingredient;
 import de.anycook.app.tasks.LoadRecipeIngredientsTask;
 
 
@@ -38,6 +40,15 @@ public class AddIngredientsActivity extends ListActivity implements View.OnClick
         ImageButton addButton = (ImageButton) findViewById(R.id.add_ingredients_button);
         addButton.setOnClickListener(this);
 
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        IngredientListRowAdapter adapter = (IngredientListRowAdapter) getListAdapter();
+        Ingredient ingredient = (Ingredient) l.getItemAtPosition(position);
+        ingredient.checked = !ingredient.checked;
+        adapter.notifyDataSetChanged();
     }
 
     @Override

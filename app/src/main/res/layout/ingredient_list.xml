@@ -5,7 +5,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:tag="front"
-        style="@style/AnycookTheme">
+                style="@style/AnycookTheme">
+
+    <ListView
+            android:id="@android:id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_above="@id/footer"/>
 
     <RelativeLayout
             android:id="@+id/footer"
@@ -20,12 +27,5 @@
                 android:layout_alignParentRight="true"
                 android:contentDescription="@string/add_ingredients"/>
     </RelativeLayout>
-
-    <ListView
-            android:id="@android:id/list"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_above="@id/footer"/>
 
 </RelativeLayout>

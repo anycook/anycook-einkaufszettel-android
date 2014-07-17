@@ -10,7 +10,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:checked="true"/>
+            android:checked="true"
+            android:clickable="false"
+            android:focusable="false"/>
     <TextView
             android:id="@+id/ingredient_list_row_amount"
             android:layout_width="wrap_content"
