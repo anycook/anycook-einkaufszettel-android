@@ -5,8 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import de.anycook.app.model.GroceryItem;
+import de.anycook.app.model.Ingredient;
 
 import java.io.Closeable;
+import java.util.List;
 
 /**
  * @author Jan Graßegger<jan@anycook.de>
@@ -19,28 +21,25 @@ public class GroceryItemStore implements Closeable{
         db = sqLiteDB.getWritableDatabase();
     }
 
-    public void addGroceryListItem(GroceryItem groceryItem) {
-        if(!ingredientExists(groceryItem.getName())) {
-            addIngredient(groceryItem.getName());
+    public void addToGroceryList(String name, String amount) {
+        if(!ingredientExists(name)) {
+            addIngredient(name);
         }
         else {
             try {
-                GroceryItem oldGroceryItem = getGroceryItem(groceryItem.getName());
+                GroceryItem oldGroceryItem = getGroceryItem(name);
 
                 //TODO do a more intelligent addition
-                String newAmount = String.format("%s + %s", groceryItem.getAmount(), oldGroceryItem.getAmount());
-                groceryItem.setAmount(newAmount);
-
+                amount = String.format("%s + %s", amount, oldGroceryItem.getAmount());
             } catch (ItemNotFoundException e) {
                 //nothing to do
             }
         }
 
-        //TODO needs to check if already exists
         ContentValues values = new ContentValues();
-        values.put("name", groceryItem.getName());
-        values.put("amount", groceryItem.getAmount());
-        values.put("stroke", groceryItem.isStroked() ? 1 : 0);
+        values.put("name", name);
+        values.put("amount", amount);
+        values.put("orderId", getMinOrderId()-1);
 
         db.insertWithOnConflict(SQLiteDB.GROCERY_LIST_TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
     }
@@ -93,7 +92,8 @@ public class GroceryItemStore implements Closeable{
     }
 
     public Cursor getAllGroceryItemsCursor() {
-        return db.rawQuery("SELECT name AS _id, amount, stroke FROM "+ SQLiteDB.GROCERY_LIST_TABLE, null);
+        return db.rawQuery("SELECT name AS _id, amount, stroke FROM "+ SQLiteDB.GROCERY_LIST_TABLE + " ORDER BY orderId"
+                , null);
     }
 
     public void deleteAllGroceryListItems() {
@@ -108,6 +108,36 @@ public class GroceryItemStore implements Closeable{
     public Cursor autocompleteIngredients(CharSequence constraint) {
         return db.rawQuery("SELECT name AS _id FROM "+SQLiteDB.GROCERY_TABLE + " WHERE name LIKE ?",
                 new String[]{constraint+"%"});
+    }
+
+    private int getMinOrderId() {
+        Cursor cursor = db.query(true, SQLiteDB.GROCERY_LIST_TABLE, new String[]{"MIN(orderId)"}, null ,
+                null, null, null, null, "1");
+        if (cursor.getCount() == 0) return 100000;
+        cursor.moveToNext();
+        return cursor.getInt(0);
+    }
+
+    public void addIngredientsToGroceryList(List<Ingredient> ingredients) {
+        int orderId = getMinOrderId() - ingredients.size();
+        for (Ingredient ingredient : ingredients) {
+            try {
+                GroceryItem oldGroceryItem = getGroceryItem(ingredient.name);
+                //TODO smarter addition
+                ingredient.menge += " + " + oldGroceryItem.getAmount();
+            } catch (ItemNotFoundException e) {
+                //Nothing to do
+            }
+
+
+            ContentValues values = new ContentValues();
+            values.put("name", ingredient.name);
+            values.put("amount", ingredient.menge);
+            values.put("orderId", orderId++);
+            db.insertWithOnConflict(SQLiteDB.GROCERY_LIST_TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+        }
+
+
     }
 
     public static class ItemNotFoundException extends Exception {

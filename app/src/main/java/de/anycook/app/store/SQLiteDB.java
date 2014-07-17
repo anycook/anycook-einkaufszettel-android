@@ -16,7 +16,7 @@ public class SQLiteDB extends SQLiteOpenHelper{
 
     static {
         DB_NAME = "einkaufszettel.db";
-        DB_VERSION = 1;
+        DB_VERSION = 2;
 
         GROCERY_TABLE = "Grocery";
         GROCERY_LIST_TABLE = "GroceryList";
@@ -37,13 +37,14 @@ public class SQLiteDB extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //TODO create tables and fill grocery table with data!
         //enable foreign key support
         db.execSQL("PRAGMA foreign_keys = ON;");
-        db.execSQL(String.format("CREATE TABLE %s(name VARCHAR(45) PRIMARY KEY);", GROCERY_TABLE));
+        db.execSQL(String.format("CREATE TABLE %s(name VARCHAR(45) PRIMARY KEY, local INTEGER(1) NOT NULL DEFAULT 0);",
+                GROCERY_TABLE));
         db.execSQL(String.format("CREATE TABLE %s(name VARCHAR(45) PRIMARY KEY, " +
             "amount INTEGER NOT NULL, " +
             "stroke INTEGER(1) NOT NULL DEFAULT 0," +
+            "orderId INTEGER NOT NULL," +
             "FOREIGN KEY(name) REFERENCES %s(name));", GROCERY_LIST_TABLE, GROCERY_TABLE));
     }
 

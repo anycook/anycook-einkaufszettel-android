@@ -8,11 +8,11 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import de.anycook.app.R;
-import de.anycook.app.model.GroceryItem;
 import de.anycook.app.model.Ingredient;
 import de.anycook.app.store.GroceryItemStore;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jan Graßegger<jan@anycook.de>
@@ -60,11 +60,13 @@ public class IngredientListRowAdapter extends ArrayAdapter<Ingredient>{
     public void saveChecked() {
         GroceryItemStore groceryItemStore = new GroceryItemStore(getContext());
         try {
+            List<Ingredient> ingredients = new ArrayList<>(getCount());
             for (int i = 0; i < getCount(); i++) {
                 Ingredient ingredient = getItem(i);
                 if(!ingredient.checked) continue;
-                groceryItemStore.addGroceryListItem(new GroceryItem(ingredient.name, ingredient.menge));
+                ingredients.add(ingredient);
             }
+            groceryItemStore.addIngredientsToGroceryList(ingredients);
         } finally {
             groceryItemStore.close();
         }

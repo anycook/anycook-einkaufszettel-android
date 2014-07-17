@@ -15,7 +15,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import de.anycook.app.R;
 import de.anycook.app.adapter.GroceryItemRowAdapter;
-import de.anycook.app.model.GroceryItem;
 import de.anycook.app.store.GroceryItemStore;
 import de.anycook.app.store.SQLiteDB;
 import de.anycook.app.tasks.LoadIngredientsTask;
@@ -75,8 +74,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         if (name.equals("")) {
             Toast.makeText(getBaseContext(), "Wunschlos glücklich! ;-)", Toast.LENGTH_SHORT).show();
         } else {
-            GroceryItem groceryItem = new GroceryItem(name, amount, false);
-            groceryItemStore.addGroceryListItem(groceryItem);
+            groceryItemStore.addToGroceryList(name, amount);
             listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
         }
     }
