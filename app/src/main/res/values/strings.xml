@@ -8,6 +8,7 @@
         <item>Einkaufszettel</item>
         <item>Rezepte suchen</item>
         <item>Rezepte in der Nähe</item>
+        <item>Gericht fotografieren</item>
     </string-array>
 
     <string name="drawer_open">Open navigation drawer</string>
