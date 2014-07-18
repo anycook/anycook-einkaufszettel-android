@@ -17,7 +17,7 @@ import de.anycook.app.store.SQLiteDB;
  * @author Jan Graßegger
  * @author Claudia Sichting
  */
-public class GroceryListFragment extends ListFragment implements MenuItem.OnMenuItemClickListener{
+public class GroceryListFragment extends ListFragment {
     private AutoCompleteTextView groceryNameTextView;
     private EditText groceryAmountTextView;
 
@@ -37,7 +37,6 @@ public class GroceryListFragment extends ListFragment implements MenuItem.OnMenu
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.grocery_item_list, container, false);
         // load views
-        //ListView listView = (ListView) view.findViewById(R.id.grocery_item_list_listview);
         this.groceryNameTextView =
                 (AutoCompleteTextView) view.findViewById(R.id.grocery_item_list_autocompletetextview_grocery_item);
         this.groceryAmountTextView = (EditText) view.findViewById(R.id.grocery_item_list_textview_amount);
@@ -96,21 +95,19 @@ public class GroceryListFragment extends ListFragment implements MenuItem.OnMenu
         menu.clear();
         menuInflater.inflate(R.menu.grocery_list, menu);
 
-        menu.findItem(R.id.action_clear).setOnMenuItemClickListener(this);
-
         super.onCreateOptionsMenu(menu, menuInflater);
     }
 
-    /*@Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_item_main_locate:
-                openLoctionView();
+            case R.id.action_clear:
+                clickedClearButton();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }  */
+    }
 
     @Override
     public void onListItemClick(ListView l, View view, int position, long id) {
@@ -121,11 +118,6 @@ public class GroceryListFragment extends ListFragment implements MenuItem.OnMenu
         GroceryItemRowAdapter listAdapter = (GroceryItemRowAdapter) getListAdapter();
         listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
     }
-
-    /*private void openLoctionView() {
-        Intent intent = new Intent(this, LocationActivity.class);
-        startActivity(intent);
-    }*/
 
     @Override
     public void onPause() {
@@ -140,10 +132,9 @@ public class GroceryListFragment extends ListFragment implements MenuItem.OnMenu
         groceryItemStore = new GroceryItemStore(getActivity().getBaseContext());
     }
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
+    public void clickedClearButton() {
         Cursor strokedItemCursor = groceryItemStore.getStrokedListItems();
-        if(getListView().getCount() == 0) return false;
+        if(getListView().getCount() == 0) return;
         if(strokedItemCursor.getCount() == 0) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
             alertDialogBuilder.setMessage(R.string.clear_ingredients);
@@ -175,8 +166,6 @@ public class GroceryListFragment extends ListFragment implements MenuItem.OnMenu
             GroceryItemRowAdapter listAdapter = (GroceryItemRowAdapter) getListAdapter();
             listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
         }
-
-        return true;
     }
 
     private class AmountOnEditorActionListener implements TextView.OnEditorActionListener {

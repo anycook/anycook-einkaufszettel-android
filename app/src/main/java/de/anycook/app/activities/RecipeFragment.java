@@ -17,7 +17,7 @@ import de.anycook.app.store.GroceryItemStore;
  *
  * Created by cipo7741 on 13.06.14.
  */
-public class RecipeFragment extends ListFragment implements SearchView.OnQueryTextListener{
+public class RecipeFragment extends ListFragment implements SearchView.OnQueryTextListener {
 
     private GroceryItemStore db;
     private SearchView searchView;
