@@ -126,9 +126,6 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             case 2:
                 fragment = new LocationFragment();
                 break;
-            case 3:
-                fragment = new RecipePhotoFragment();
-                break;
             default:
                 return;
         }

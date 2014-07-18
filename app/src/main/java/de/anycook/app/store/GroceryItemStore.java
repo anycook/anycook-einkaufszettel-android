@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import de.anycook.app.activities.util.StringTools;
 import de.anycook.app.model.GroceryItem;
 import de.anycook.app.model.Ingredient;
 import de.anycook.app.model.RecipeResponse;
@@ -30,9 +31,7 @@ public class GroceryItemStore implements Closeable{
         else {
             try {
                 GroceryItem oldGroceryItem = getGroceryItem(name);
-
-                //TODO do a more intelligent addition
-                amount = String.format("%s + %s", amount, oldGroceryItem.getAmount());
+                amount = StringTools.mergeAmounts(amount, oldGroceryItem.getAmount());
             } catch (ItemNotFoundException e) {
                 //nothing to do
             }

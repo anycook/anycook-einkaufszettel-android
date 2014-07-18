@@ -9,6 +9,7 @@ import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import de.anycook.app.R;
+import de.anycook.app.activities.util.StringTools;
 import de.anycook.app.adapter.GroceryItemRowAdapter;
 import de.anycook.app.store.GroceryItemStore;
 import de.anycook.app.store.SQLiteDB;
@@ -166,7 +167,9 @@ public class GroceryListFragment extends ListFragment {
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                addItem(groceryNameTextView.getText().toString(), groceryAmountTextView.getText().toString());
+                String name = groceryNameTextView.getText().toString();
+                String amount = StringTools.formatAmount(groceryAmountTextView.getText().toString());
+                addItem(name, amount);
                 groceryNameTextView.setText("");
                 groceryAmountTextView.setText("");
                 return true;
