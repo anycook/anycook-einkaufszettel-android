@@ -43,5 +43,7 @@
     <string name="ingredient_name">Zutat</string>
     <string name="nothing_found">Leider nichts gefunden. :-(</string>
     <string name="take_pic">photo</string>
+    <string name="drawer_text">Menüpunkt</string>
+    <string name="icon">Icon</string>
 </resources>
 
