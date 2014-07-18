@@ -13,10 +13,11 @@
             android:hint="@string/grocery_item_hint"
             android:singleLine="true"
             android:gravity="left"
+            android:nextFocusForward="@+id/grocery_item_list_textview_amount"
             android:imeOptions="actionNext"/>
 
     <EditText
-            android:id="@id/grocery_item_list_textview_amount"
+            android:id="@+id/grocery_item_list_textview_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -30,7 +31,6 @@
             android:id="@android:id/list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/grocery_item_list_textview_amount"
-            android:layout_above="@+id/footer"/>
+            android:layout_below="@id/grocery_item_list_textview_amount"/>
 
 </RelativeLayout>
