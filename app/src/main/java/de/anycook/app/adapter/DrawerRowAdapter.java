@@ -9,10 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import de.anycook.app.R;
-import de.anycook.app.model.DrawerItem;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * adapter for drawer icons with menu name

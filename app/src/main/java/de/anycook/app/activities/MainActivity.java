@@ -14,17 +14,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+
 import android.widget.ListView;
 import de.anycook.app.R;
 import de.anycook.app.adapter.DrawerRowAdapter;
-import de.anycook.app.model.DrawerItem;
+
 import de.anycook.app.tasks.LoadIngredientsTask;
 import de.anycook.app.tasks.LoadRecipesTask;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Jan Graßegger<jan@anycook.de>
