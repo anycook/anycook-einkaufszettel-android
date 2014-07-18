@@ -101,7 +101,7 @@ public class GroceryListFragment extends ListFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_clear:
+            case R.id.grocery_menu_action_clear:
                 clickedClearButton();
                 return true;
             default:
