@@ -19,12 +19,6 @@ import de.anycook.app.store.GroceryItemStore;
  */
 public class RecipeFragment extends ListFragment implements SearchView.OnQueryTextListener{
 
-    private final static String urlPattern;
-
-    static {
-        urlPattern = "https://api.anycook.de/recipe?startsWith=%s";
-    }
-
     private GroceryItemStore db;
     private SearchView searchView;
 
@@ -51,41 +45,10 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
         menu.clear();
         menuInflater.inflate(R.menu.main_activity_actions, menu);
 
-        //SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
         MenuItem searchMenuItem = menu.findItem(R.id.menu_item_main_search);
         this.searchView = (android.support.v7.widget.SearchView) searchMenuItem.getActionView();
         searchView.setIconifiedByDefault(true);
         searchView.setOnQueryTextListener(this);
-
-        /*if (searchManager != null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-            searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (!hasFocus) {
-                        searchMenuItem.collapseActionView();
-                        searchView.setQuery("", false);
-                        searchView.setIconified(true);
-                    }
-                }
-            });
-
-            searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    // hides and then unhides search tab to make sure
-                    // keyboard disappears when query is submitted (=_=;)
-                    searchView.setVisibility(View.INVISIBLE);
-                    searchView.setVisibility(View.VISIBLE);
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    return false;
-                }
-            });
-        }                                              */
 
         super.onCreateOptionsMenu(menu, menuInflater);
     }
