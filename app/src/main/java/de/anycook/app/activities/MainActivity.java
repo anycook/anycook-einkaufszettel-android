@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -13,11 +14,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+
 import android.widget.ListView;
 import de.anycook.app.R;
+import de.anycook.app.adapter.DrawerRowAdapter;
+
 import de.anycook.app.tasks.LoadIngredientsTask;
 import de.anycook.app.tasks.LoadRecipesTask;
+
 
 /**
  * @author Jan Graßegger<jan@anycook.de>
@@ -37,16 +41,19 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
         this.drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         this.drawerList = (ListView) findViewById(R.id.left_drawer);
-        this.menuTitles = getResources().getStringArray(R.array.menu);
+        this.menuTitles = getResources().getStringArray(R.array.menu_names);
 
         // Set the adapter for the list view
-        drawerList.setAdapter(new ArrayAdapter<>(this,
-                R.layout.drawer_list_item, menuTitles));
+        //drawerList.setAdapter(new ArrayAdapter<>(this, R.layout.drawer_row, menuTitles));
+
+        drawerList.setAdapter(new DrawerRowAdapter(this, menuTitles));
+
         // Set the list's click listener
         drawerList.setOnItemClickListener(this);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+        // todo: do we need that?
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
@@ -99,10 +106,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(drawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     @Override
