@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:anycook="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/grocery_list_make_picture"
           android:icon="@drawable/ic_action_new_picture"
           android:title="@string/clear"
-          android:showAsAction="always" />
+          anycook:showAsAction="always" />
 
     <item android:id="@+id/action_clear"
           android:icon="@drawable/ic_action_accept"
           android:title="@string/clear"
-          android:showAsAction="always" />
+          anycook:showAsAction="always" />
 </menu>
