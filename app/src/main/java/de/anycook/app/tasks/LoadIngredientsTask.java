@@ -1,5 +1,6 @@
 package de.anycook.app.tasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import com.google.gson.Gson;
@@ -31,10 +32,10 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<LoadIngredie
         }
     }
 
-    private final GroceryItemStore db;
+    private final Context context;
 
-    public LoadIngredientsTask(GroceryItemStore db) {
-        this.db = db;
+    public LoadIngredientsTask(Context context) {
+        this.context = context;
     }
 
     @Override
@@ -57,6 +58,7 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<LoadIngredie
 
     @Override
     protected void onPostExecute(List<SuggestionResponse> ingredients) {
+        GroceryItemStore db = new GroceryItemStore(context);
         for(SuggestionResponse ingredient : ingredients) db.addIngredient(ingredient.getName());
     }
 

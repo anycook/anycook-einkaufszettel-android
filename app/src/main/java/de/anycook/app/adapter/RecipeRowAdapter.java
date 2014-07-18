@@ -1,66 +1,35 @@
 package de.anycook.app.adapter;
 
 import android.content.Context;
-import android.view.LayoutInflater;
+import android.database.Cursor;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import de.anycook.app.R;
-import de.anycook.app.model.RecipeResponse;
+import de.anycook.app.store.SQLiteDB;
 import de.anycook.app.tasks.DownloadImageTask;
-
-import java.util.ArrayList;
 
 /**
  * Custom ArrayAdapter to fill EditMode with amount and ingredients
  * <p/>
  * Created by cipo7741 on 07.06.14.
  */
-public class RecipeRowAdapter extends ArrayAdapter<RecipeResponse> {
+public class RecipeRowAdapter extends ResourceCursorAdapter {
 
-    public RecipeRowAdapter(Context context) {
-        super(context, R.layout.recipe_row, new ArrayList<RecipeResponse>());
+    public RecipeRowAdapter(Context context, Cursor c) {
+        super(context, R.layout.recipe_row, c, false);
     }
 
-    /**
-     * Improved getView thanks to ViewHolder (findViewById is and expensive function)
-     *
-     * @param position    where is the view
-     * @param convertView what is visible
-     * @param parent      which is the parent view
-     * @return the view
-     */
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) getContext()
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.recipe_row, parent, false);
-            ViewHolder viewHolder = new ViewHolder();
-            viewHolder.textViewName = (TextView) convertView.findViewById(R.id.recipe_row_textview_recipe_name);
-            viewHolder.textViewDescription =
-                    (TextView) convertView.findViewById(R.id.recipe_row_textview_recipe_description);
-            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.recipe_row_imageview);
-            convertView.setTag(viewHolder);
-        }
+    public void bindView(View view, Context context, Cursor cursor) {
+        TextView name = (TextView) view.findViewById(R.id.recipe_row_textview_recipe_name);
+        name.setText(cursor.getString(SQLiteDB.TableFields.RECIPE_NAME));
 
-        RecipeResponse recipeResponse = getItem(position);
+        TextView descriptionView =  (TextView) view.findViewById(R.id.recipe_row_textview_recipe_description);
+        descriptionView.setText(cursor.getString(SQLiteDB.TableFields.RECIPE_DESCRIPTION));
 
-        ViewHolder viewHolder = (ViewHolder) convertView.getTag();
-        viewHolder.textViewName.setText(recipeResponse.getName());
-        viewHolder.textViewDescription.setText(recipeResponse.getDescription());
-
-        new DownloadImageTask(viewHolder.imageView).execute(recipeResponse.getImage());
-
-        return convertView;
-
-    }
-
-    static class ViewHolder {
-        TextView textViewName;
-        TextView textViewDescription;
-        ImageView imageView;
+        ImageView imageView = (ImageView) view.findViewById(R.id.recipe_row_imageview);
+        new DownloadImageTask(imageView).execute(cursor.getString(SQLiteDB.TableFields.RECIPE_IMAGE));
     }
 }

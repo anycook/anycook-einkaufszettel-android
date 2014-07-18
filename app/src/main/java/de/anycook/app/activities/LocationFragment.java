@@ -1,23 +1,23 @@
 package de.anycook.app.activities;
 
-import android.app.ActionBar;
-import android.app.ListActivity;
+import android.app.ListFragment;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import de.anycook.app.R;
 import de.anycook.app.activities.util.GPSTracker;
-import de.anycook.app.adapter.RecipeRowAdapter;
 import de.anycook.app.model.RecipeResponse;
-import de.anycook.app.tasks.LoadRecipesTask;
 
 /**
  * @author Cladia Sichting
  * @author Jan Graßegger
  */
-public class LocationActivity extends ListActivity {
+public class LocationFragment extends ListFragment {
 
     private final static String urlPattern;
 
@@ -27,17 +27,16 @@ public class LocationActivity extends ListActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.recipe_list);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.recipe_list, container, false);
 
-        ActionBar actionBar = getActionBar();
+        /*ActionBar actionBar = getActivity().getActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(R.string.nearby_recipes);
-        }
+        } */
 
-        GPSTracker gps = new GPSTracker(this);
+        GPSTracker gps = new GPSTracker(getActivity());
         Location location;
         if (gps.canGetLocation()) {
             location = gps.getLocation();
@@ -47,19 +46,27 @@ public class LocationActivity extends ListActivity {
         }
         gps.stopUsingGPS();
 
-        if (location == null) return;
+        if (location == null) return view;
 
-        RecipeRowAdapter adapter = new RecipeRowAdapter(this);
-        setListAdapter(adapter);
-
-        String url = String.format(urlPattern, location.getLatitude(), location.getLongitude());
-        LoadRecipesTask loadRecipesTask = new LoadRecipesTask(adapter);
-        loadRecipesTask.execute(url);
+        // TODO re-enable
+        //RecipeRowAdapter adapter = new RecipeRowAdapter(getActivity());
+//        setListAdapter(adapter);
+//
+//        String url = String.format(urlPattern, location.getLatitude(), location.getLongitude());
+//        LoadNearbyRecipesTask loadNearbyRecipesTask = new LoadNearbyRecipesTask(adapter);
+//        loadNearbyRecipesTask.execute(url);
+        //getActivity().setTitle(R.string.nearby_recipes);
+        return view;
     }
 
     @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        Intent intent = new Intent(this, AddIngredientsActivity.class);
+    public void onPrepareOptionsMenu(Menu menu) {
+
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Intent intent = new Intent(getActivity(), AddIngredientsActivity.class);
         Bundle b = new Bundle();
         RecipeResponse recipeResponse = (RecipeResponse) getListAdapter().getItem(position);
         b.putString("item", recipeResponse.getName()); //Your id
