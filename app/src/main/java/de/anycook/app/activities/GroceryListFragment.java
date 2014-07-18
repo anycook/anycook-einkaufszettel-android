@@ -94,9 +94,9 @@ public class GroceryListFragment extends ListFragment implements MenuItem.OnMenu
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
         menu.clear();
-        menuInflater.inflate(R.menu.grocery_list, menu);
+        menuInflater.inflate(R.menu.grocery_menu, menu);
 
-        menu.findItem(R.id.action_clear).setOnMenuItemClickListener(this);
+        menu.findItem(R.id.grocery_menu_action_clear).setOnMenuItemClickListener(this);
 
         super.onCreateOptionsMenu(menu, menuInflater);
     }
