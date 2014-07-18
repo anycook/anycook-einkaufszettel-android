@@ -25,6 +25,7 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         db = new GroceryItemStore(getActivity());
     }
 
@@ -33,10 +34,18 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
         View view = inflater.inflate(R.layout.recipe_list, container, false);
 
         setHasOptionsMenu(true);
-        RecipeRowCursorAdapter recipeRowCursorAdapter = new RecipeRowCursorAdapter(getActivity(), db.getAllRecipesCursor());
+        RecipeRowCursorAdapter recipeRowCursorAdapter = new RecipeRowCursorAdapter(getActivity());
         setListAdapter(recipeRowCursorAdapter);
 
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            onQueryTextChange(savedInstanceState.getString("query"));
+        }
     }
 
     @Override
@@ -53,6 +62,12 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("query", searchView.getQuery().toString());
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.recipe_menu_camera:
@@ -64,6 +79,8 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
         }
     }
 
+
+
     @Override
     public void onListItemClick(ListView l, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), AddIngredientsActivity.class);
@@ -71,7 +88,7 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
         String item = ((TextView) view.findViewById(R.id.recipe_row_textview_recipe_name)).getText().toString();
         b.putString("item", item); //Your id
         intent.putExtras(b); //Put your id to your next Intent
-        startActivity(intent);
+        startActivityForResult(intent, AddIngredientsActivity.RECIPE_REQUEST);
     }
 
     @Override
@@ -82,10 +99,10 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
     }
 
     @Override
-    public boolean onQueryTextChange(String s) {
-        Log.v(RecipeFragment.class.getSimpleName(), "Searching for " + s);
+    public boolean onQueryTextChange(String query) {
+        Log.v(RecipeFragment.class.getSimpleName(), "Searching for " + query);
         RecipeRowCursorAdapter adapter = (RecipeRowCursorAdapter) getListAdapter();
-        adapter.changeCursor(db.getRecipesForQuery(s));
+        adapter.changeCursor(db.getRecipesForQuery(query));
         return false;
     }
 }

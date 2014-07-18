@@ -34,7 +34,6 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        //mPlanetTitles = getResources().getStringArray(R.array.planets_array);
         this.drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         this.drawerList = (ListView) findViewById(R.id.left_drawer);
         this.menuTitles = getResources().getStringArray(R.array.menu);
@@ -79,13 +78,17 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
         if (savedInstanceState == null) {
             selectMenuItem(0);
+
+            LoadIngredientsTask loadIngredientsTask = new LoadIngredientsTask(this);
+            loadIngredientsTask.execute();
+
+            LoadRecipesTask loadRecipesTask = new LoadRecipesTask(this);
+            loadRecipesTask.execute();
+        } else {
+            selectMenuItem(savedInstanceState.getInt("fragment"));
         }
 
-        LoadIngredientsTask loadIngredientsTask = new LoadIngredientsTask(this);
-        loadIngredientsTask.execute();
 
-        LoadRecipesTask loadRecipesTask = new LoadRecipesTask(this);
-        loadRecipesTask.execute();
 
     }
 
@@ -134,13 +137,16 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         // update the main content by replacing fragments
 
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment)
+                .addToBackStack(title)
+                .commit();
 
         // update selected item and title, then close the drawer
         drawerList.setItemChecked(position, true);
         //setTitle(mPlanetTitles[position]);
         drawerLayout.closeDrawer(drawerList);
         invalidateOptionsMenu();
+
     }
 
     @Override

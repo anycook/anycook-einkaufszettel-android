@@ -21,16 +21,12 @@ public class GroceryListFragment extends ListFragment {
     private AutoCompleteTextView groceryNameTextView;
     private EditText groceryAmountTextView;
 
-    //data
     private GroceryItemStore groceryItemStore;
-    //private GroceryItemRowAdapter listAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        // hide keyboard
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     @Override
@@ -52,9 +48,6 @@ public class GroceryListFragment extends ListFragment {
 
         groceryAmountTextView.setOnEditorActionListener(new AmountOnEditorActionListener());
         groceryNameTextView.setAdapter(getAutocompleteCursorAdapter());
-
-
-        //getActivity().setTitle(R.string.app_label);
 
         return view;
     }

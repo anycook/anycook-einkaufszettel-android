@@ -17,8 +17,8 @@ import de.anycook.app.tasks.DownloadImageTask;
  */
 public class RecipeRowCursorAdapter extends ResourceCursorAdapter {
 
-    public RecipeRowCursorAdapter(Context context, Cursor c) {
-        super(context, R.layout.recipe_row, c, false);
+    public RecipeRowCursorAdapter(Context context) {
+        super(context, R.layout.recipe_row, null, false);
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -17,7 +18,10 @@ import de.anycook.app.tasks.LoadRecipeIngredientsTask;
  * @author Claudia Sichting
  * @author Jan Graßegger
  */
-public class AddIngredientsActivity extends ListActivity implements View.OnClickListener{
+public class AddIngredientsActivity extends ListActivity implements View.OnClickListener {
+
+    public static final int LOCATION_REQUEST = 0,
+                            RECIPE_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +56,26 @@ public class AddIngredientsActivity extends ListActivity implements View.OnClick
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onClick(View v) {
         IngredientListRowAdapter adapter = (IngredientListRowAdapter) getListAdapter();
         adapter.saveChecked();
         Intent intent = new Intent(v.getContext(), GroceryListFragment.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
