@@ -4,8 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import de.anycook.app.model.GroceryItem;
 import de.anycook.app.model.Ingredient;
+import de.anycook.app.model.RecipeResponse;
 
 import java.io.Closeable;
 import java.util.List;
@@ -78,17 +80,17 @@ public class GroceryItemStore implements Closeable{
 
         ContentValues values = new ContentValues();
         values.put("name", name);
-        db.insertWithOnConflict(SQLiteDB.GROCERY_TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+        db.insertWithOnConflict(SQLiteDB.INGREDIENT_TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
     }
 
     public boolean ingredientExists(String name) {
-        Cursor cursor = db.query(SQLiteDB.GROCERY_TABLE, new String[]{"name"}, "name=?", new String[]{name},
+        Cursor cursor = db.query(SQLiteDB.INGREDIENT_TABLE, new String[]{"name"}, "name=?", new String[]{name},
                 null, null, null);
         return cursor.getCount() > 0;
     }
 
     public Cursor getAllIngredientsCursor() {
-        return db.rawQuery("SELECT name AS _id FROM "+SQLiteDB.GROCERY_TABLE, null);
+        return db.rawQuery("SELECT name AS _id FROM "+SQLiteDB.INGREDIENT_TABLE, null);
     }
 
     public Cursor getAllGroceryItemsCursor() {
@@ -106,7 +108,7 @@ public class GroceryItemStore implements Closeable{
     }
 
     public Cursor autocompleteIngredients(CharSequence constraint) {
-        return db.rawQuery("SELECT name AS _id FROM "+SQLiteDB.GROCERY_TABLE + " WHERE name LIKE ?",
+        return db.rawQuery("SELECT name AS _id FROM "+SQLiteDB.INGREDIENT_TABLE + " WHERE name LIKE ?",
                 new String[]{constraint+"%"});
     }
 
@@ -138,6 +140,27 @@ public class GroceryItemStore implements Closeable{
         }
 
 
+    }
+
+    public Cursor getAllRecipesCursor() {
+        return db.rawQuery("SELECT name AS _id, description, image FROM " + SQLiteDB.RECIPE_TABLE, null);
+    }
+
+    public Cursor getRecipesForQuery(String query) {
+        return db.rawQuery("SELECT name AS _id, description, image FROM " + SQLiteDB.RECIPE_TABLE +
+                " WHERE _id LIKE ?", new String[]{"%"+query+"%"});
+    }
+
+    public void replaceRecipes(List<RecipeResponse> recipeResponses) {
+        Log.d(GroceryItemStore.class.getSimpleName(), "Replacing recipes in DB");
+        db.delete(SQLiteDB.RECIPE_TABLE, null, null);
+        for (RecipeResponse recipeResponse : recipeResponses) {
+            ContentValues values = new ContentValues();
+            values.put("name", recipeResponse.getName());
+            values.put("description", recipeResponse.getDescription());
+            values.put("image", recipeResponse.getImage());
+            db.insert(SQLiteDB.RECIPE_TABLE, null, values);
+        }
     }
 
     public static class ItemNotFoundException extends Exception {

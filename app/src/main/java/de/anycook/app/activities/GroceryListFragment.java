@@ -12,7 +12,6 @@ import de.anycook.app.R;
 import de.anycook.app.adapter.GroceryItemRowAdapter;
 import de.anycook.app.store.GroceryItemStore;
 import de.anycook.app.store.SQLiteDB;
-import de.anycook.app.tasks.LoadIngredientsTask;
 
 /**
  * @author Jan Graßegger
@@ -55,8 +54,8 @@ public class GroceryListFragment extends ListFragment implements MenuItem.OnMenu
         groceryAmountTextView.setOnEditorActionListener(new AmountOnEditorActionListener());
         groceryNameTextView.setAdapter(getAutocompleteCursorAdapter());
 
-        LoadIngredientsTask loadIngredientsTask = new LoadIngredientsTask(groceryItemStore);
-        loadIngredientsTask.execute();
+
+        //getActivity().setTitle(R.string.app_label);
 
         return view;
     }
@@ -98,41 +97,6 @@ public class GroceryListFragment extends ListFragment implements MenuItem.OnMenu
         menu.clear();
         menuInflater.inflate(R.menu.grocery_list, menu);
         menu.findItem(R.id.action_clear).setOnMenuItemClickListener(this);
-
-        /*SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-        final MenuItem searchMenuItem = menu.findItem(R.id.menu_item_main_search);
-        final SearchView searchView = (SearchView) searchMenuItem.getActionView();
-        searchView.setIconifiedByDefault(true);
-
-        if (searchManager != null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-            searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (!hasFocus) {
-                        searchMenuItem.collapseActionView();
-                        searchView.setQuery("", false);
-                        searchView.setIconified(true);
-                    }
-                }
-            });
-
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    // hides and then unhides search tab to make sure
-                    // keyboard disappears when query is submitted (=_=;)
-                    searchView.setVisibility(View.INVISIBLE);
-                    searchView.setVisibility(View.VISIBLE);
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    return false;
-                }
-            });
-        } */
     }
 
     /*@Override
