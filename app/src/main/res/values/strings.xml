@@ -4,13 +4,6 @@
     <string name="app_name">Einkaufszettel</string>
     <string name="hello_world">Willkommen zur anycook Einkaufs App!</string>
 
-    <string-array name="menu">
-        <item>Einkaufszettel</item>
-        <item>Rezepte</item>
-        <item>Rezepte in der Nähe</item>
-        <item>Gericht fotografieren</item>
-    </string-array>
-
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
