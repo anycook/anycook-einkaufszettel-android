@@ -65,6 +65,6 @@ public class LocationFragment extends ListFragment {
         RecipeResponse recipeResponse = (RecipeResponse) getListAdapter().getItem(position);
         b.putString("item", recipeResponse.getName());
         intent.putExtras(b); //Put your id to your next Intent
-        startActivityForResult(intent, AddIngredientsActivity.LOCATION_REQUEST);
+        startActivity(intent);
     }
 }

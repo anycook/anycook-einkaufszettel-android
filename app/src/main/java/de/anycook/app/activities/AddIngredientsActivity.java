@@ -1,12 +1,14 @@
 package de.anycook.app.activities;
 
 import android.app.ActionBar;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import de.anycook.app.R;
 import de.anycook.app.adapter.IngredientListRowAdapter;
@@ -18,10 +20,9 @@ import de.anycook.app.tasks.LoadRecipeIngredientsTask;
  * @author Claudia Sichting
  * @author Jan Graßegger
  */
-public class AddIngredientsActivity extends ListActivity implements View.OnClickListener {
+public class AddIngredientsActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
+    private ListView listView;
 
-    public static final int LOCATION_REQUEST = 0,
-                            RECIPE_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,21 +37,28 @@ public class AddIngredientsActivity extends ListActivity implements View.OnClick
             actionBar.setTitle(item);
         }
 
+        this.listView = (ListView) findViewById(android.R.id.list);
+
+
         IngredientListRowAdapter adapter = new IngredientListRowAdapter(this);
-        setListAdapter(adapter);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
+
         LoadRecipeIngredientsTask loadRecipeIngredientsTask = new LoadRecipeIngredientsTask(adapter);
         loadRecipeIngredientsTask.execute(item);
-
-        ImageButton addButton = (ImageButton) findViewById(R.id.add_ingredients_button);
-        addButton.setOnClickListener(this);
-
     }
 
     @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-        IngredientListRowAdapter adapter = (IngredientListRowAdapter) getListAdapter();
-        Ingredient ingredient = (Ingredient) l.getItemAtPosition(position);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.ingredient_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        IngredientListRowAdapter adapter = (IngredientListRowAdapter) listView.getAdapter();
+        Ingredient ingredient = (Ingredient) listView.getItemAtPosition(position);
         ingredient.checked = !ingredient.checked;
         adapter.notifyDataSetChanged();
     }
@@ -61,21 +69,20 @@ public class AddIngredientsActivity extends ListActivity implements View.OnClick
             case android.R.id.home:
                 finish();
                 return true;
+            case R.id.ingredient_menu_action_add:
+                IngredientListRowAdapter adapter = (IngredientListRowAdapter) listView.getAdapter();
+                adapter.saveChecked();
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onClick(View v) {
-        IngredientListRowAdapter adapter = (IngredientListRowAdapter) getListAdapter();
-        adapter.saveChecked();
-        Intent intent = new Intent(v.getContext(), GroceryListFragment.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
+
 }

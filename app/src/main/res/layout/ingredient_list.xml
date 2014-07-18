@@ -11,21 +11,5 @@
             android:id="@android:id/list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_above="@id/footer"/>
-
-    <RelativeLayout
-            android:id="@+id/footer"
-            style="@style/ButtonBarAnycook">
-
-        <ImageButton
-                android:id="@+id/add_ingredients_button"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_action_new"
-                android:layout_alignParentRight="true"
-                android:contentDescription="@string/add_ingredients"/>
-    </RelativeLayout>
-
+            android:layout_alignParentTop="true"/>
 </RelativeLayout>

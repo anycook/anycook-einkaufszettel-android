@@ -23,6 +23,7 @@ import de.anycook.app.tasks.LoadRecipesTask;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class MainActivity extends ActionBarActivity implements AdapterView.OnItemClickListener{
+
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private ListView drawerList;
@@ -87,9 +88,6 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         } else {
             selectMenuItem(savedInstanceState.getInt("fragment"));
         }
-
-
-
     }
 
     @Override
