@@ -9,7 +9,7 @@ import android.view.*;
 import android.widget.ListView;
 import android.widget.TextView;
 import de.anycook.app.R;
-import de.anycook.app.adapter.RecipeRowAdapter;
+import de.anycook.app.adapter.RecipeRowCursorAdapter;
 import de.anycook.app.store.GroceryItemStore;
 
 /**
@@ -39,8 +39,8 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
         View view = inflater.inflate(R.layout.recipe_list, container, false);
 
         setHasOptionsMenu(true);
-        RecipeRowAdapter recipeRowAdapter = new RecipeRowAdapter(getActivity(), db.getAllRecipesCursor());
-        setListAdapter(recipeRowAdapter);
+        RecipeRowCursorAdapter recipeRowCursorAdapter = new RecipeRowCursorAdapter(getActivity(), db.getAllRecipesCursor());
+        setListAdapter(recipeRowCursorAdapter);
 
         return view;
     }
@@ -110,7 +110,7 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
     @Override
     public boolean onQueryTextChange(String s) {
         Log.v(RecipeFragment.class.getSimpleName(), "Searching for " + s);
-        RecipeRowAdapter adapter = (RecipeRowAdapter) getListAdapter();
+        RecipeRowCursorAdapter adapter = (RecipeRowCursorAdapter) getListAdapter();
         adapter.changeCursor(db.getRecipesForQuery(s));
         return false;
     }

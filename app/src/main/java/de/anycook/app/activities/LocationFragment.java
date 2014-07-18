@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import de.anycook.app.R;
 import de.anycook.app.activities.util.GPSTracker;
+import de.anycook.app.adapter.RecipeRowArrayAdapter;
 import de.anycook.app.model.RecipeResponse;
+import de.anycook.app.tasks.LoadNearbyRecipesTask;
 
 /**
  * @author Cladia Sichting
@@ -30,12 +32,6 @@ public class LocationFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recipe_list, container, false);
 
-        /*ActionBar actionBar = getActivity().getActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(R.string.nearby_recipes);
-        } */
-
         GPSTracker gps = new GPSTracker(getActivity());
         Location location;
         if (gps.canGetLocation()) {
@@ -48,13 +44,11 @@ public class LocationFragment extends ListFragment {
 
         if (location == null) return view;
 
-        // TODO re-enable
-        //RecipeRowAdapter adapter = new RecipeRowAdapter(getActivity());
-//        setListAdapter(adapter);
-//
-//        String url = String.format(urlPattern, location.getLatitude(), location.getLongitude());
-//        LoadNearbyRecipesTask loadNearbyRecipesTask = new LoadNearbyRecipesTask(adapter);
-//        loadNearbyRecipesTask.execute(url);
+        RecipeRowArrayAdapter adapter = new RecipeRowArrayAdapter(getActivity());
+        setListAdapter(adapter);
+        String url = String.format(urlPattern, location.getLatitude(), location.getLongitude());
+        LoadNearbyRecipesTask loadNearbyRecipesTask = new LoadNearbyRecipesTask(adapter);
+        loadNearbyRecipesTask.execute(url);
         //getActivity().setTitle(R.string.nearby_recipes);
         return view;
     }

@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import de.anycook.app.adapter.RecipeRowAdapter;
+import de.anycook.app.adapter.RecipeRowArrayAdapter;
 import de.anycook.app.model.RecipeResponse;
 
 import java.io.IOException;
@@ -20,9 +20,9 @@ import java.util.List;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class LoadNearbyRecipesTask extends AsyncTask<String, Void, List<RecipeResponse>> {
-    private final RecipeRowAdapter adapter;
+    private final RecipeRowArrayAdapter adapter;
 
-    public LoadNearbyRecipesTask(RecipeRowAdapter adapter) {
+    public LoadNearbyRecipesTask(RecipeRowArrayAdapter adapter) {
         this.adapter = adapter;
     }
 
@@ -56,7 +56,7 @@ public class LoadNearbyRecipesTask extends AsyncTask<String, Void, List<RecipeRe
         } else {
             Log.d(getClass().getSimpleName(),
                     String.format("Found %d different recipes", recipeResponses.size()));
-            //adapter.addAll(recipeResponses);
+            adapter.addAll(recipeResponses);
         }
 
     }
