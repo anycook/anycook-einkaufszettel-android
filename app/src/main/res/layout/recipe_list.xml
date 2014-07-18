@@ -14,8 +14,10 @@
 
     <TextView
             android:id="@android:id/empty"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Nichts gefunden"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nothing_found"
+            android:layout_centerHorizontal="true"
+            android:padding="16dp"/>
 
 </RelativeLayout>

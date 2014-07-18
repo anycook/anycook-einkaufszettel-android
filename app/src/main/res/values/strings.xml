@@ -40,5 +40,7 @@
     <string name="clear">Aufräumen</string>
     <string name="ingredient_amount">Menge</string>
     <string name="ingredient_name">Zutat</string>
+    <string name="nothing_found">Leider nichts gefunden. :-(</string>
+    <string name="take_pic">photo</string>
 </resources>
 

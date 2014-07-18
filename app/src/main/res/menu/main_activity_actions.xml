@@ -14,4 +14,9 @@
           android:icon="@drawable/ic_action_place"
           anycook:showAsAction="ifRoom"/>-->
 
+    <item android:id="@+id/menu_item_main_new_picture"
+          android:title="@string/take_pic"
+          android:icon="@drawable/ic_action_new_picture"
+          anycook:showAsAction="ifRoom"/>
+
 </menu>
