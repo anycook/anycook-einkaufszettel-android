@@ -6,7 +6,7 @@
 
     <string-array name="menu">
         <item>Einkaufszettel</item>
-        <item>Rezepte suchen</item>
+        <item>Rezepte</item>
         <item>Rezepte in der Nähe</item>
         <item>Gericht fotografieren</item>
     </string-array>
