@@ -10,6 +10,7 @@
         <item name="android:editTextStyle">@style/TextAppearanceAnycook.EditText</item>
         <item name="android:buttonStyle">@style/ButtonStyle</item>
         <item name="android:buttonBarStyle">@style/ButtonBarAnycook</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/list_activated_background</item>
     </style>
 
     <style name="AnycookActionBarWidgetTheme">
@@ -74,6 +75,10 @@
            parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">@color/any_white_gray</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="DrawerStyle">
+        <item name="android:activatedBackgroundIndicator">@color/any_green_header</item>
     </style>
 
 </resources>

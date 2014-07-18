@@ -6,8 +6,8 @@
               android:layout_height="match_parent">
 
     <ListView android:id="@+id/darwer_list_listview"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
             </ListView>
 
 </LinearLayout>
