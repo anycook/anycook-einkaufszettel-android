@@ -38,12 +38,12 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="de.anycook.app.activities.MainActivity"/>
         </activity>
-        <!--<activity android:name=".activities.LocationActivity"
-                  android:parentActivityName=".activities.GroceryListActivity">
+        <activity android:name=".activities.RecipePhotoActivity"
+                  android:parentActivityName=".activities.RecipePhotoActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="de.anycook.app.activities.EditGroceryListActivity"/>
-        </activity> -->
+        </activity>
     </application>
 
 </manifest>

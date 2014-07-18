@@ -43,14 +43,25 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
 
         menu.clear();
-        menuInflater.inflate(R.menu.main_activity_actions, menu);
+        menuInflater.inflate(R.menu.recipe_menu, menu);
 
-        MenuItem searchMenuItem = menu.findItem(R.id.menu_item_main_search);
+        MenuItem searchMenuItem = menu.findItem(R.id.recipe_menu_search);
         this.searchView = (android.support.v7.widget.SearchView) searchMenuItem.getActionView();
         searchView.setIconifiedByDefault(true);
         searchView.setOnQueryTextListener(this);
-
         super.onCreateOptionsMenu(menu, menuInflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.recipe_menu_camera:
+                Intent intent = new Intent(getActivity(), RecipePhotoActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

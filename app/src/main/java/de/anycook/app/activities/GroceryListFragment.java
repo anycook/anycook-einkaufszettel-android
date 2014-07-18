@@ -93,7 +93,7 @@ public class GroceryListFragment extends ListFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
         menu.clear();
-        menuInflater.inflate(R.menu.grocery_list, menu);
+        menuInflater.inflate(R.menu.grocery_menu, menu);
 
         super.onCreateOptionsMenu(menu, menuInflater);
     }
