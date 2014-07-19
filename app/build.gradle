@@ -41,4 +41,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.4',
             'com.google.guava:guava:17.0',
             'com.android.support:appcompat-v7:19.+'
+    compile ('org.apache.httpcomponents:httpmime:4.0.1') {
+        exclude group: 'org.apache.httpcomponents', module: 'httpcore'
+    }
 }

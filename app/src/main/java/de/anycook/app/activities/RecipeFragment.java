@@ -62,12 +62,6 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString("query", searchView.getQuery().toString());
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.recipe_menu_camera:

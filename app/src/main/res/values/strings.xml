@@ -38,5 +38,6 @@
     <string name="take_pic">photo</string>
     <string name="drawer_text">Menüpunkt</string>
     <string name="icon">Icon</string>
+    <string name="upload_message">Bild wurde nach %s hochgeladen. Demnächst dreht sich das Funktionalitätenkarussel wieder weiter!</string>
 </resources>
 
