@@ -10,8 +10,9 @@ import de.anycook.app.store.SQLiteDB;
 
 /**
  * Custom ArrayAdapter to fill EditMode with grocery item and amount
- * <p/>
- * Created by cipo7741 on 07.06.14.
+ *
+ * @author Jan Grassegger <jan@anycook.de>
+ * @author Claudia Sichting <claudia.sichting@uni-weimar.de>
  */
 public class GroceryItemRowAdapter extends ResourceCursorAdapter {
 

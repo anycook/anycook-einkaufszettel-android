@@ -24,7 +24,6 @@ public class IngredientListRowAdapter extends ArrayAdapter<Ingredient>{
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         IngredientHolder holder;
-
         if(convertView == null) {
             final LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.ingredient_list_row, parent, false);
@@ -32,16 +31,11 @@ public class IngredientListRowAdapter extends ArrayAdapter<Ingredient>{
             holder.nameTextView = (TextView) convertView.findViewById(R.id.ingredient_list_row_name);
             holder.amountTextView = (TextView) convertView.findViewById(R.id.ingredient_list_row_amount);
             holder.checkBox = (CheckBox) convertView.findViewById(R.id.ingredient_list_row_checkbox);
-
-
-
-
             convertView.setTag(holder);
         }
         else {
             holder = (IngredientHolder) convertView.getTag();
         }
-
         Ingredient ingredient = getItem(position);
         holder.nameTextView.setText(ingredient.name);
         holder.amountTextView.setText(ingredient.menge);

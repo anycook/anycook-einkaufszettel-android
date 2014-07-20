@@ -12,8 +12,8 @@ import de.anycook.app.tasks.DownloadImageTask;
 
 /**
  * Custom ArrayAdapter to fill EditMode with amount and ingredients
- * <p/>
- * Created by cipo7741 on 07.06.14.
+ *
+ * @author Jan Grassegger <jan@anycook.de>
  */
 public class RecipeRowCursorAdapter extends ResourceCursorAdapter {
 

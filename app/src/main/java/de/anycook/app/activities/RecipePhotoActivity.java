@@ -19,7 +19,7 @@ import java.io.File;
 /**
  * upload photos of recipes
  *
- * Created by cipo7741 on 18.07.14.
+ * @author Claudia Sichting <claudia.sichting@uni-weimar.de>
  */
 public class RecipePhotoActivity extends ListActivity {
 

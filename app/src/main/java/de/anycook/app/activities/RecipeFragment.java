@@ -15,7 +15,8 @@ import de.anycook.app.store.GroceryItemStore;
 /**
  * this searchable activity is responsible for returning recipe search results
  *
- * Created by cipo7741 on 13.06.14.
+ * @author Jan Grassegger <jan@anycook.de>
+ * @author Claudia Sichting <claudia.sichting@uni-weimar.de>
  */
 public class RecipeFragment extends ListFragment implements SearchView.OnQueryTextListener {
 

@@ -1,7 +1,7 @@
 package de.anycook.app.model;
 
 /**
- * Created by cipo7741 on 01.07.14.
+ * @author Claudia Sichting <claudia.sichting@uni-weimar.de>
  */
 public class RecipeResponse {
     private String name;

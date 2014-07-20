@@ -24,7 +24,10 @@ import de.anycook.app.tasks.LoadRecipesTask;
 
 
 /**
- * @author Jan Graßegger<jan@anycook.de>
+ *
+ *
+ * @author Jan Graßegger <jan@anycook.de>
+ * @author Claudia Sichting
  */
 public class MainActivity extends ActionBarActivity implements AdapterView.OnItemClickListener{
 
@@ -38,21 +41,12 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
         this.drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         this.drawerList = (ListView) findViewById(R.id.left_drawer);
         this.menuTitles = getResources().getStringArray(R.array.menu_names);
-
-        // Set the adapter for the list view
-        //drawerList.setAdapter(new ArrayAdapter<>(this, R.layout.drawer_row, menuTitles));
-
         drawerList.setAdapter(new DrawerRowAdapter(this, menuTitles));
-
-        // Set the list's click listener
         drawerList.setOnItemClickListener(this);
-
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
         // todo: do we need that?
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
@@ -62,18 +56,15 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();*/
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
                 R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
-
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 getActionBar().setTitle(title);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
-
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-
                 //hide keyboard
                 final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(drawerView.getWindowToken(), 0);
@@ -81,15 +72,11 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
-
         drawerLayout.setDrawerListener(drawerToggle);
-
         if (savedInstanceState == null) {
             selectMenuItem(0);
-
             LoadIngredientsTask loadIngredientsTask = new LoadIngredientsTask(this);
             loadIngredientsTask.execute();
-
             LoadRecipesTask loadRecipesTask = new LoadRecipesTask(this);
             loadRecipesTask.execute();
         } else {
@@ -117,9 +104,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
     private void selectMenuItem(int position) {
         title = menuTitles[position];
-
         Fragment fragment;
-
         switch (position) {
             case 0:
                 fragment = new GroceryListFragment();
@@ -134,12 +119,10 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 return;
         }
         // update the main content by replacing fragments
-
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment)
                 .addToBackStack(title)
                 .commit();
-
         // update selected item and title, then close the drawer
         drawerList.setItemChecked(position, true);
         //setTitle(mPlanetTitles[position]);

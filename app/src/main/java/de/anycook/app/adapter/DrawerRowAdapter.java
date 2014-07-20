@@ -12,7 +12,8 @@ import de.anycook.app.R;
 
 /**
  * adapter for drawer icons with menu name
- * Created by cipo7741 on 18.07.14.
+ * @author Jan Grassegger <jan@anycook.de>
+ * @author Claudia Sichting <claudia.sichting@uni-weimar.de>
  */
 public class DrawerRowAdapter extends ArrayAdapter<String> {
     private final TypedArray icons;
