@@ -6,7 +6,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import de.anycook.app.model.RecipeResponse;
-import de.anycook.app.store.GroceryItemStore;
+import de.anycook.app.store.RecipeStore;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -67,8 +67,8 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
         } else {
             Log.d(getClass().getSimpleName(),
                     String.format("Found %d different recipes", recipeResponses.size()));
-            GroceryItemStore db = new GroceryItemStore(context);
-            db.replaceRecipes(recipeResponses);
+            RecipeStore recipeDatabase = new RecipeStore(context);
+            recipeDatabase.replaceRecipes(recipeResponses);
         }
 
     }

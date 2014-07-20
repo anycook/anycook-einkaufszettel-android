@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.ListView;
 import de.anycook.app.R;
 import de.anycook.app.adapter.RecipeRowCursorAdapter;
-import de.anycook.app.store.GroceryItemStore;
+import de.anycook.app.store.RecipeStore;
 import de.anycook.app.tasks.UploadTask;
 
 import java.io.File;
@@ -26,7 +26,7 @@ public class RecipePhotoActivity extends ListActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
 
     private File imageFile;
-    private GroceryItemStore db;
+    private RecipeStore RecipesDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class RecipePhotoActivity extends ListActivity {
             return;
         }
 
-        this.db = new GroceryItemStore(this);
+        this.RecipesDatabase = new RecipeStore(this);
 
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile));
 
@@ -57,7 +57,7 @@ public class RecipePhotoActivity extends ListActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            setListAdapter(new RecipeRowCursorAdapter(this, db.getAllRecipesCursor()));
+            setListAdapter(new RecipeRowCursorAdapter(this, RecipesDatabase.getAllRecipesCursor()));
         }
         if (resultCode == RESULT_CANCELED) {
             finish();

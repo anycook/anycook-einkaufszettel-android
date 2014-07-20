@@ -4,11 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 import de.anycook.app.activities.util.StringTools;
 import de.anycook.app.model.GroceryItem;
 import de.anycook.app.model.Ingredient;
-import de.anycook.app.model.RecipeResponse;
 
 import java.io.Closeable;
 import java.util.List;
@@ -18,15 +16,23 @@ import java.util.List;
  */
 public class GroceryItemStore implements Closeable{
     private final SQLiteDatabase db;
+    private final Context context;
 
     public GroceryItemStore(Context context) {
-        SQLiteDB sqLiteDB = new SQLiteDB(context);
+        this.context = context;
+        SQLiteDB sqLiteDB = new SQLiteDB(this.context);
         db = sqLiteDB.getWritableDatabase();
     }
 
+    @Override
+    public void close() {
+        db.close();
+    }
+
     public void addToGroceryList(String name, String amount) {
-        if(!ingredientExists(name)) {
-            addIngredient(name);
+        IngredientStore ingredientStore = new IngredientStore(this.context);
+        if(!ingredientStore.ingredientExists(name)) {
+            ingredientStore.addIngredient(name);
         }
         else {
             try {
@@ -75,23 +81,6 @@ public class GroceryItemStore implements Closeable{
         return db.query(SQLiteDB.GROCERY_LIST_TABLE, new String[]{"name"}, "stroke=1", null, null, null, null);
     }
 
-    public void addIngredient(String name){
-
-        ContentValues values = new ContentValues();
-        values.put("name", name);
-        db.insertWithOnConflict(SQLiteDB.INGREDIENT_TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
-    }
-
-    public boolean ingredientExists(String name) {
-        Cursor cursor = db.query(SQLiteDB.INGREDIENT_TABLE, new String[]{"name"}, "name=?", new String[]{name},
-                null, null, null);
-        return cursor.getCount() > 0;
-    }
-
-    public Cursor getAllIngredientsCursor() {
-        return db.rawQuery("SELECT name AS _id FROM "+SQLiteDB.INGREDIENT_TABLE, null);
-    }
-
     public Cursor getAllGroceryItemsCursor() {
         return db.rawQuery("SELECT name AS _id, amount, stroke FROM "+ SQLiteDB.GROCERY_LIST_TABLE + " ORDER BY orderId"
                 , null);
@@ -99,11 +88,6 @@ public class GroceryItemStore implements Closeable{
 
     public void deleteAllGroceryListItems() {
         db.delete(SQLiteDB.GROCERY_LIST_TABLE, null, null);
-    }
-
-    @Override
-    public void close() {
-        db.close();
     }
 
     public Cursor autocompleteIngredients(CharSequence constraint) {
@@ -129,36 +113,11 @@ public class GroceryItemStore implements Closeable{
             } catch (ItemNotFoundException e) {
                 //Nothing to do
             }
-
-
             ContentValues values = new ContentValues();
             values.put("name", ingredient.name);
             values.put("amount", ingredient.menge);
             values.put("orderId", orderId++);
             db.insertWithOnConflict(SQLiteDB.GROCERY_LIST_TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-        }
-
-
-    }
-
-    public Cursor getAllRecipesCursor() {
-        return db.rawQuery("SELECT name AS _id, description, image FROM " + SQLiteDB.RECIPE_TABLE, null);
-    }
-
-    public Cursor getRecipesForQuery(String query) {
-        return db.rawQuery("SELECT name AS _id, description, image FROM " + SQLiteDB.RECIPE_TABLE +
-                " WHERE _id LIKE ?", new String[]{"%"+query+"%"});
-    }
-
-    public void replaceRecipes(List<RecipeResponse> recipeResponses) {
-        Log.d(GroceryItemStore.class.getSimpleName(), "Replacing recipes in DB");
-        db.delete(SQLiteDB.RECIPE_TABLE, null, null);
-        for (RecipeResponse recipeResponse : recipeResponses) {
-            ContentValues values = new ContentValues();
-            values.put("name", recipeResponse.getName());
-            values.put("description", recipeResponse.getDescription());
-            values.put("image", recipeResponse.getImage());
-            db.insert(SQLiteDB.RECIPE_TABLE, null, values);
         }
     }
 

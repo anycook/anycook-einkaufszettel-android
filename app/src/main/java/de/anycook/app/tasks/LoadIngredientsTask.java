@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import de.anycook.app.store.GroceryItemStore;
+import de.anycook.app.store.IngredientStore;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -58,8 +58,8 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<LoadIngredie
 
     @Override
     protected void onPostExecute(List<SuggestionResponse> ingredients) {
-        GroceryItemStore db = new GroceryItemStore(context);
-        for(SuggestionResponse ingredient : ingredients) db.addIngredient(ingredient.getName());
+        IngredientStore ingredientDatabase = new IngredientStore(context);
+        for(SuggestionResponse ingredient : ingredients) ingredientDatabase.addIngredient(ingredient.getName());
     }
 
     public static class SuggestionResponse {

@@ -10,7 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import de.anycook.app.R;
 import de.anycook.app.adapter.RecipeRowCursorAdapter;
-import de.anycook.app.store.GroceryItemStore;
+import de.anycook.app.store.RecipeStore;
 
 /**
  * this searchable activity is responsible for returning recipe search results
@@ -20,14 +20,14 @@ import de.anycook.app.store.GroceryItemStore;
  */
 public class RecipeFragment extends ListFragment implements SearchView.OnQueryTextListener {
 
-    private GroceryItemStore db;
+    private RecipeStore recipeDatabase;
     private SearchView searchView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        db = new GroceryItemStore(getActivity());
+        recipeDatabase = new RecipeStore(getActivity());
     }
 
     @Override
@@ -97,7 +97,7 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
     public boolean onQueryTextChange(String query) {
         Log.v(RecipeFragment.class.getSimpleName(), "Searching for " + query);
         RecipeRowCursorAdapter adapter = (RecipeRowCursorAdapter) getListAdapter();
-        adapter.changeCursor(db.getRecipesForQuery(query));
+        adapter.changeCursor(recipeDatabase.getRecipesForQuery(query));
         return false;
     }
 }
