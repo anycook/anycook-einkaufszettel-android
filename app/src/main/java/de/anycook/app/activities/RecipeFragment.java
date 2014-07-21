@@ -33,7 +33,6 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recipe_list, container, false);
-
         setHasOptionsMenu(true);
         RecipeRowCursorAdapter recipeRowCursorAdapter = new RecipeRowCursorAdapter(getActivity());
         setListAdapter(recipeRowCursorAdapter);
@@ -74,8 +73,6 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
         }
     }
 
-
-
     @Override
     public void onListItemClick(ListView l, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), AddIngredientsActivity.class);
@@ -103,14 +100,12 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
 
     @Override
     public void onResume() {
-        Log.d(getClass().getSimpleName(),"OnResume");
         super.onResume();
         recipeDatabase.open();
     }
 
     @Override
     public void onPause() {
-        Log.d(getClass().getSimpleName(),"OnPause");
         super.onPause();
         recipeDatabase.close();
     }

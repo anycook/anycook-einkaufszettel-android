@@ -26,7 +26,7 @@ public class RecipePhotoActivity extends ListActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
 
     private File imageFile;
-    private RecipeStore RecipesDatabase;
+    private RecipeStore recipeStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,8 @@ public class RecipePhotoActivity extends ListActivity {
             return;
         }
 
-        this.RecipesDatabase = new RecipeStore(this);
+        this.recipeStore = new RecipeStore(this);
+        recipeStore.open();
 
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile));
 
@@ -57,7 +58,7 @@ public class RecipePhotoActivity extends ListActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            setListAdapter(new RecipeRowCursorAdapter(this, RecipesDatabase.getAllRecipesCursor()));
+            setListAdapter(new RecipeRowCursorAdapter(this, recipeStore.getAllRecipesCursor()));
         }
         if (resultCode == RESULT_CANCELED) {
             finish();
@@ -83,5 +84,17 @@ public class RecipePhotoActivity extends ListActivity {
         }
 
         return new File(mediaDir, String.format("GerichtetesAllerlei_%d.png", System.currentTimeMillis()));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        recipeStore.open();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        recipeStore.close();
     }
 }
