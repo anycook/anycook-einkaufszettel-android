@@ -59,7 +59,11 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<LoadIngredie
     @Override
     protected void onPostExecute(List<SuggestionResponse> ingredients) {
         IngredientStore ingredientDatabase = new IngredientStore(context);
-        for(SuggestionResponse ingredient : ingredients) ingredientDatabase.addIngredient(ingredient.getName());
+        try{
+            for(SuggestionResponse ingredient : ingredients) ingredientDatabase.addIngredient(ingredient.getName());
+        } finally {
+            ingredientDatabase.close();
+        }
     }
 
     public static class SuggestionResponse {

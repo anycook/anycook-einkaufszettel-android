@@ -36,18 +36,21 @@ public class GroceryItemStore implements Closeable{
 
     public void addToGroceryList(String name, String amount) {
         IngredientStore ingredientStore = new IngredientStore(this.context);
-        if(!ingredientStore.ingredientExists(name)) {
-            ingredientStore.addIngredient(name);
-        }
-        else {
-            try {
-                GroceryItem oldGroceryItem = getGroceryItem(name);
-                amount = StringTools.mergeAmounts(amount, oldGroceryItem.getAmount());
-            } catch (ItemNotFoundException e) {
-                Log.e(getClass().getName(), String.format("%s\nItem: Grocery Item %s was not found.", e.getMessage(), name));
+        try {
+            if(!ingredientStore.ingredientExists(name)) {
+                ingredientStore.addIngredient(name);
             }
+            else {
+                try {
+                    GroceryItem oldGroceryItem = getGroceryItem(name);
+                    amount = StringTools.mergeAmounts(amount, oldGroceryItem.getAmount());
+                } catch (ItemNotFoundException e) {
+                    Log.v(getClass().getName(), String.format("Added new Ingredient %s %s.", ingredient.menge, ingredient.name));
+                }
+            }
+        } finally {
+            ingredientStore.close();
         }
-        ingredientStore.close();
 
         ContentValues values = new ContentValues();
         values.put("name", name);
