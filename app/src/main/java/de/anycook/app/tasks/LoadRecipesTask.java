@@ -67,9 +67,14 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
         } else {
             Log.d(getClass().getSimpleName(),
                     String.format("Found %d different recipes", recipeResponses.size()));
-            RecipeStore recipeDatabase = new RecipeStore(context);
-            recipeDatabase.replaceRecipes(recipeResponses);
+            RecipeStore recipeStore = new RecipeStore(context);
+            try{
+                recipeStore.open();
+                recipeStore.replaceRecipes(recipeResponses);
+            } finally {
+                recipeStore.close();
+            }
         }
-
     }
+
 }

@@ -5,8 +5,8 @@ package de.anycook.app.model;
  */
 public class RecipeResponse {
     private String name;
-    private String description;
-    private RecipeImage image;
+    protected String description;
+    protected RecipeImage image;
     private long id;
 
     public String getName() {
@@ -17,23 +17,13 @@ public class RecipeResponse {
         this.name = name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setImage(RecipeImage recipeImage) {
-        this.image = recipeImage;
-    }
-
     public String getDescription() {
         return description;
     }
 
-
     public String getImage() {
         return this.image.getSmallImage();
     }
-
 
     public long getId() {
         return id;
@@ -50,15 +40,12 @@ public class RecipeResponse {
 
 
     private static class RecipeImage {
-        private String small;
+        protected String small;
 
         public String getSmallImage() {
             return this.small;
         }
 
-        public void setSmallImage(String smallImage) {
-            this.small = smallImage;
-        }
     }
 
 

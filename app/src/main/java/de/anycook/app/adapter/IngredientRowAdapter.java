@@ -15,9 +15,9 @@ import java.util.List;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class IngredientListRowAdapter extends ArrayAdapter<Ingredient>{
+public class IngredientRowAdapter extends ArrayAdapter<Ingredient>{
 
-    public IngredientListRowAdapter(Context context) {
+    public IngredientRowAdapter(Context context) {
         super(context, R.layout.ingredient_list_row, new ArrayList<Ingredient>());
     }
 
@@ -37,26 +37,11 @@ public class IngredientListRowAdapter extends ArrayAdapter<Ingredient>{
             holder = (IngredientHolder) convertView.getTag();
         }
         Ingredient ingredient = getItem(position);
-        holder.nameTextView.setText(ingredient.name);
-        holder.amountTextView.setText(ingredient.menge);
-        holder.checkBox.setChecked(ingredient.checked);
+        holder.nameTextView.setText(ingredient.getName());
+        holder.amountTextView.setText(ingredient.getAmount());
+        holder.checkBox.setChecked(ingredient.isChecked());
 
         return convertView;
-    }
-
-    public void saveChecked() {
-        GroceryItemStore groceryItemStore = new GroceryItemStore(getContext());
-        try {
-            List<Ingredient> ingredients = new ArrayList<>(getCount());
-            for (int i = 0; i < getCount(); i++) {
-                Ingredient ingredient = getItem(i);
-                if(!ingredient.checked) continue;
-                ingredients.add(ingredient);
-            }
-            groceryItemStore.addIngredientsToGroceryList(ingredients);
-        } finally {
-            groceryItemStore.close();
-        }
     }
 
     private static class IngredientHolder {

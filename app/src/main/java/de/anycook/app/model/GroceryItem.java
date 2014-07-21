@@ -1,20 +1,15 @@
 package de.anycook.app.model;
 
+/**
+ * anycook-api json response object ingredient
+ *
+ * @author Jan Graßegger<jan@anycook.de>
+ */
 public class GroceryItem {
 
     private String name;
     private String amount;
     private boolean stroked;
-
-    public GroceryItem(String name, String amount) {
-        this(name, amount, false);
-    }
-
-    public GroceryItem(String name, String amount, boolean stroked) {
-        this.setName(name);
-        this.setAmount(amount);
-        this.setStroked(stroked);
-    }
 
     public GroceryItem() {
         this.setName("");

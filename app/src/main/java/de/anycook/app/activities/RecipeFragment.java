@@ -26,8 +26,8 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         recipeDatabase = new RecipeStore(getActivity());
+        recipeDatabase.open();
     }
 
     @Override
@@ -99,5 +99,19 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
         RecipeRowCursorAdapter adapter = (RecipeRowCursorAdapter) getListAdapter();
         adapter.changeCursor(recipeDatabase.getRecipesForQuery(query));
         return false;
+    }
+
+    @Override
+    public void onResume() {
+        Log.d(getClass().getSimpleName(),"OnResume");
+        super.onResume();
+        recipeDatabase.open();
+    }
+
+    @Override
+    public void onPause() {
+        Log.d(getClass().getSimpleName(),"OnPause");
+        super.onPause();
+        recipeDatabase.close();
     }
 }

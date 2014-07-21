@@ -11,9 +11,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import de.anycook.app.R;
-import de.anycook.app.adapter.IngredientListRowAdapter;
+import de.anycook.app.adapter.IngredientRowAdapter;
 import de.anycook.app.model.Ingredient;
+import de.anycook.app.store.GroceryItemStore;
 import de.anycook.app.tasks.LoadRecipeIngredientsTask;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -21,8 +25,7 @@ import de.anycook.app.tasks.LoadRecipeIngredientsTask;
  * @author Jan Graßegger
  */
 public class AddIngredientsActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
-    private ListView listView;
-
+    private ListView ingredientListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +40,10 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
             actionBar.setTitle(item);
         }
 
-        this.listView = (ListView) findViewById(android.R.id.list);
-
-
-        IngredientListRowAdapter adapter = new IngredientListRowAdapter(this);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(this);
+        this.ingredientListView = (ListView) findViewById(R.id.ingredient_list_listview);
+        IngredientRowAdapter adapter = new IngredientRowAdapter(this);
+        ingredientListView.setAdapter(adapter);
+        ingredientListView.setOnItemClickListener(this);
 
         LoadRecipeIngredientsTask loadRecipeIngredientsTask = new LoadRecipeIngredientsTask(adapter);
         loadRecipeIngredientsTask.execute(item);
@@ -57,9 +58,9 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        IngredientListRowAdapter adapter = (IngredientListRowAdapter) listView.getAdapter();
-        Ingredient ingredient = (Ingredient) listView.getItemAtPosition(position);
-        ingredient.checked = !ingredient.checked;
+        IngredientRowAdapter adapter = (IngredientRowAdapter) ingredientListView.getAdapter();
+        Ingredient ingredient = (Ingredient) ingredientListView.getItemAtPosition(position);
+        ingredient.setChecked(!ingredient.isChecked());
         adapter.notifyDataSetChanged();
     }
 
@@ -70,14 +71,31 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
                 finish();
                 return true;
             case R.id.ingredient_menu_action_add:
-                IngredientListRowAdapter adapter = (IngredientListRowAdapter) listView.getAdapter();
-                adapter.saveChecked();
+
+                includeCheckedIngredientsToGroceryList();
+
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void includeCheckedIngredientsToGroceryList() {
+        GroceryItemStore groceryItemStore = new GroceryItemStore(this);
+        try {
+            groceryItemStore.open();
+            int ingredientsCount = ingredientListView.getAdapter().getCount();
+            List<Ingredient> ingredients = new ArrayList<>(ingredientsCount);
+            for (int i = 0; i < ingredientsCount; i++) {
+                Ingredient ingredient = ((IngredientRowAdapter) ingredientListView.getAdapter()).getItem(i);
+                if(!ingredient.isChecked()) continue;
+                ingredients.add(ingredient);
+            }
+            groceryItemStore.addIngredientsToGroceryList(ingredients);
+        } finally {
+            groceryItemStore.close();
+        }
     }
 
     @Override

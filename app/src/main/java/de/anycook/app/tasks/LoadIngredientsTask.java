@@ -5,7 +5,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import de.anycook.app.store.IngredientStore;
+import de.anycook.app.model.Ingredient;
+import de.anycook.app.store.IngredientNameStore;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,7 +22,7 @@ import java.util.List;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class LoadIngredientsTask extends AsyncTask<Void, Void, List<LoadIngredientsTask.SuggestionResponse>> {
+public class LoadIngredientsTask extends AsyncTask<Void, Void, List<Ingredient>> {
     public static URL url;
 
     static {
@@ -39,7 +40,7 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<LoadIngredie
     }
 
     @Override
-    protected List<SuggestionResponse> doInBackground(Void... params) {
+    protected List<Ingredient> doInBackground(Void... params) {
         try {
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             if (httpURLConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
@@ -47,7 +48,7 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<LoadIngredie
             }
             Reader reader = new InputStreamReader(httpURLConnection.getInputStream());
             Gson gson = new Gson();
-            Type collectionType = new TypeToken<ArrayList<SuggestionResponse>>() {
+            Type collectionType = new TypeToken<ArrayList<Ingredient>>() {
             }.getType();
             return gson.fromJson(reader, collectionType);
         } catch (IOException e) {
@@ -57,22 +58,14 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<LoadIngredie
     }
 
     @Override
-    protected void onPostExecute(List<SuggestionResponse> ingredients) {
-        IngredientStore ingredientDatabase = new IngredientStore(context);
+    protected void onPostExecute(List<Ingredient> ingredients) {
+        IngredientNameStore ingredientDatabase = new IngredientNameStore(context);
         try{
-            for(SuggestionResponse ingredient : ingredients) ingredientDatabase.addIngredient(ingredient.getName());
+            ingredientDatabase.open();
+            for(Ingredient ingredient : ingredients) ingredientDatabase.addIngredient(ingredient);
         } finally {
             ingredientDatabase.close();
         }
     }
 
-    public static class SuggestionResponse {
-        private String name;
-        public String getName() {
-            return name;
-        }
-        public void setName(String name) {
-            this.name = name;
-        }
-    }
 }

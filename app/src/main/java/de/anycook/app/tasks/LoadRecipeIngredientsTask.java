@@ -5,7 +5,7 @@ import android.util.Log;
 import com.google.common.net.UrlEscapers;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import de.anycook.app.adapter.IngredientListRowAdapter;
+import de.anycook.app.adapter.IngredientRowAdapter;
 import de.anycook.app.model.Ingredient;
 
 import java.io.IOException;
@@ -29,10 +29,10 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
         urlPattern = "https://api.anycook.de/recipe/%s/ingredients";
     }
 
-    private final IngredientListRowAdapter adapter;
+    private final IngredientRowAdapter ingredientRowAdapter;
 
-    public LoadRecipeIngredientsTask(IngredientListRowAdapter adapter) {
-        this.adapter = adapter;
+    public LoadRecipeIngredientsTask(IngredientRowAdapter ingredientRowAdapter) {
+        this.ingredientRowAdapter = ingredientRowAdapter;
     }
 
     @Override
@@ -59,6 +59,6 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
 
     @Override
     protected void onPostExecute(List<Ingredient> ingredients) {
-        adapter.addAll(ingredients);
+        ingredientRowAdapter.addAll(ingredients);
     }
 }
