@@ -12,6 +12,7 @@ import de.anycook.app.R;
 import de.anycook.app.activities.util.StringTools;
 import de.anycook.app.adapter.GroceryItemRowAdapter;
 import de.anycook.app.store.GroceryItemStore;
+import de.anycook.app.store.IngredientStore;
 import de.anycook.app.store.SQLiteDB;
 
 /**
@@ -65,13 +66,14 @@ public class GroceryListFragment extends ListFragment {
     }
 
     private CursorAdapter getAutocompleteCursorAdapter() {
+        final IngredientStore ingredientDatabase = new IngredientStore(this.groceryNameTextView.getContext());
         SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(getActivity().getBaseContext(),
                 R.layout.autocomplete_row, null,
                 new String[]{"_id"}, new int[]{android.R.id.text1}, 0);
         cursorAdapter.setFilterQueryProvider(new FilterQueryProvider() {
             @Override
             public Cursor runQuery(CharSequence constraint) {
-                return groceryItemStore.autocompleteIngredients(constraint);
+                return ingredientDatabase.autocompleteIngredients(constraint);
             }
         });
 
@@ -117,13 +119,19 @@ public class GroceryListFragment extends ListFragment {
     public void onPause() {
         super.onPause();
         groceryItemStore.close();
-        groceryItemStore = null;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        groceryItemStore = new GroceryItemStore(getActivity().getBaseContext());
+        groceryItemStore.open();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        groceryItemStore.close();
+        groceryItemStore = null;
     }
 
     public void clickedClearButton() {

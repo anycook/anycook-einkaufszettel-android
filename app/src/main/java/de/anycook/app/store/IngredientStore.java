@@ -11,38 +11,38 @@ import java.io.Closeable;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class IngredientStore implements Closeable{
-    private final SQLiteDatabase db;
+    private final Context context;
+    private SQLiteDatabase database;
 
     public IngredientStore(Context context) {
-        SQLiteDB sqLiteDB = new SQLiteDB(context);
-        db = sqLiteDB.getWritableDatabase();
+        this.context = context;
+        open();
+    }
+
+    public void open() {
+        SQLiteDB sqLiteDB = new SQLiteDB(this.context);
+        database = sqLiteDB.getWritableDatabase();
+    }
+
+    @Override
+    public void close() {
+        database.close();
     }
 
     public void addIngredient(String name){
         ContentValues values = new ContentValues();
         values.put("name", name);
-        db.insertWithOnConflict(SQLiteDB.INGREDIENT_TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+        database.insertWithOnConflict(SQLiteDB.INGREDIENT_TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
     }
 
     public boolean ingredientExists(String name) {
-        Cursor cursor = db.query(SQLiteDB.INGREDIENT_TABLE, new String[]{"name"}, "name=?", new String[]{name},
+        Cursor cursor = database.query(SQLiteDB.INGREDIENT_TABLE, new String[]{"name"}, "name=?", new String[]{name},
                 null, null, null);
         return cursor.getCount() > 0;
     }
 
-    @Override
-    public void close() {
-        db.close();
-    }
-
     public Cursor autocompleteIngredients(CharSequence constraint) {
-        return db.rawQuery("SELECT name AS _id FROM "+SQLiteDB.INGREDIENT_TABLE + " WHERE name LIKE ?",
+        return database.rawQuery("SELECT name AS _id FROM "+SQLiteDB.INGREDIENT_TABLE + " WHERE name LIKE ?",
                 new String[]{constraint+"%"});
-    }
-
-    public static class ItemNotFoundException extends Exception {
-        public ItemNotFoundException(String name) {
-            super(String.format("Item %s does not exist", name));
-        }
     }
 }
