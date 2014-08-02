@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -19,7 +20,7 @@ import java.io.IOException;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class UploadTask extends AsyncTask<File, Void, String> {
+public class UploadTask extends AsyncTask<Uri, Void, String> {
     private final static String url;
 
     static {
@@ -42,10 +43,11 @@ public class UploadTask extends AsyncTask<File, Void, String> {
     }
 
     @Override
-    protected String doInBackground(File... files) {
+    protected String doInBackground(Uri... uris) {
         AndroidHttpClient httpClient = AndroidHttpClient.newInstance("Einkaufszettel");
         try {
-            FileBody fileBody = new FileBody(files[0]);
+            File imageFile = new File(uris[0].getPath());
+            FileBody fileBody = new FileBody(imageFile);
             MultipartEntity entity = new MultipartEntity();
                 entity.addPart("file", fileBody);
 

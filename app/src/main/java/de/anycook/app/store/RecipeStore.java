@@ -22,14 +22,14 @@ public class RecipeStore implements Closeable{
     }
 
     public void open() {
-        Log.d(getClass().getSimpleName(), "Open Database");
+        Log.d(RecipeStore.class.getSimpleName(), "Open Database");
         SQLiteDB sqLiteDB = new SQLiteDB(this.context);
         database = sqLiteDB.getWritableDatabase();
     }
 
     @Override
     public void close() {
-        Log.d(getClass().getSimpleName(), "Open Database");
+        Log.d(RecipeStore.class.getSimpleName(), "Open Database");
         database.close();
     }
 

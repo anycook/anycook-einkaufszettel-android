@@ -63,14 +63,7 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.recipe_menu_camera:
-                Intent intent = new Intent(getActivity(), RecipePhotoActivity.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
