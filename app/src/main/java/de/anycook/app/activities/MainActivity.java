@@ -21,12 +21,10 @@ import de.anycook.app.tasks.LoadRecipesTask;
 
 
 /**
- *
- *
  * @author Jan Graßegger <jan@anycook.de>
  * @author Claudia Sichting
  */
-public class MainActivity extends ActionBarActivity implements AdapterView.OnItemClickListener{
+public class MainActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -125,7 +123,6 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 .commit();
         // update selected item and title, then close the drawer
         drawerList.setItemChecked(position, true);
-        //setTitle(mPlanetTitles[position]);
         drawerLayout.closeDrawer(drawerList);
         invalidateOptionsMenu();
 

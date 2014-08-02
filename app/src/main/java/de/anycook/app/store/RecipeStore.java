@@ -33,10 +33,6 @@ public class RecipeStore implements Closeable{
         database.close();
     }
 
-    public Cursor getAllRecipesCursor() {
-        return database.rawQuery("SELECT name AS _id, description, image FROM " + SQLiteDB.RECIPE_TABLE, null);
-    }
-
     public Cursor getRecipesForQuery(String query) {
         return database.rawQuery("SELECT name AS _id, description, image FROM " + SQLiteDB.RECIPE_TABLE +
                 " WHERE _id LIKE ?", new String[]{"%"+query+"%"});
