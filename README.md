@@ -1,5 +1,6 @@
 anycook-einkaufszettel-android
 ===========
+[![Build Status](https://jenkins.anycook.de/buildStatus/icon?job=anycook-einkaufzettel-android)](https://jenkins.anycook.de/job/anycook-einkaufzettel-android/)
 
 mobile grocery list for anycook
 
