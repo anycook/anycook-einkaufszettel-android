@@ -5,11 +5,13 @@
         <item>Einkaufszettel</item>
         <item>Rezepte</item>
         <item>Rezepte in der Nähe</item>
+        <item>anycook im Web</item>
     </string-array>
 
     <array name="menu_icons">
         <item>@drawable/ic_action_view_as_list</item>
         <item>@drawable/ic_action_search_dark</item>
         <item>@drawable/ic_action_place_dark</item>
+        <item>@drawable/anycook_transparent_dark</item>
     </array>
 </resources>
