@@ -11,7 +11,6 @@
         <item name="android:buttonStyle">@style/ButtonStyle</item>
         <item name="android:buttonBarStyle">@style/ButtonBarAnycook</item>
         <item name="android:activatedBackgroundIndicator">@drawable/list_activated_background</item>
-        <item name="anycook:guideText">@style/GuideTextAnycook</item>
     </style>
 
     <style name="AnycookActionBarWidgetTheme">
@@ -34,6 +33,10 @@
     </style>
 
     <style name="TextAppearanceAnycook.Large" parent="@style/TextAppearanceAnycook">
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="TextAppearanceGuideText" parent="@style/TextAppearanceAnycook">
         <item name="android:textSize">30sp</item>
     </style>
 
@@ -76,12 +79,6 @@
            parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">@color/any_white_gray</item>
         <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="GuideTextAnycook"
-           parent="@android:style/ButtonStyle">
-        <item name="android:typeface">sans</item>
-        <item name="android:textColor">@color/any_gray_shaddow</item>
     </style>
 
     <style name="DrawerStyle">

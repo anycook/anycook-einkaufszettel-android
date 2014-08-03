@@ -15,7 +15,7 @@
             android:layout_marginRight="4dp"
             android:paddingTop="4dp"
             android:text="@string/ingredients_for"
-            android:style="@style/GuideTextAnycook"/>
+            style="@style/GuideTextAnycook"/>
 
     <Button
             android:id="@+id/ingredient_list_minus_button"
@@ -50,9 +50,9 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/ingredient_list_plus_button"
             android:layout_marginLeft="4dp"
-            android:text="@string/persons"
-            android:style="@style/GuideTextAnycook"
             android:paddingTop="4dp"
+            android:text="@string/persons"
+            style="@style/GuideTextAnycook"
             />
 
 </RelativeLayout>
