@@ -4,8 +4,8 @@ import android.app.ListFragment;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -32,30 +32,20 @@ public class LocationFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recipe_list, container, false);
 
-        GPSTracker gps = new GPSTracker(getActivity());
-        Location location;
-        if (gps.canGetLocation()) {
-            location = gps.getLocation();
-        } else {
-            gps.showSettingsAlert();
-            location = null;
+        try {
+            GPSTracker gps = new GPSTracker(getActivity());
+            Location location = gps.getLocation();
+            RecipeRowArrayAdapter adapter = new RecipeRowArrayAdapter(getActivity());
+            setListAdapter(adapter);
+            String url = String.format(urlPattern, location.getLatitude(), location.getLongitude());
+            LoadNearbyRecipesTask loadNearbyRecipesTask = new LoadNearbyRecipesTask(adapter);
+            loadNearbyRecipesTask.execute(url);
+
+        } catch (GPSTracker.UnableToRetrieveLocationException e) {
+            Log.w(getClass().getSimpleName(), e.getMessage());
+            GPSTracker.showSettingsAlert(getActivity());
         }
-        gps.stopUsingGPS();
-
-        if (location == null) return view;
-
-        RecipeRowArrayAdapter adapter = new RecipeRowArrayAdapter(getActivity());
-        setListAdapter(adapter);
-        String url = String.format(urlPattern, location.getLatitude(), location.getLongitude());
-        LoadNearbyRecipesTask loadNearbyRecipesTask = new LoadNearbyRecipesTask(adapter);
-        loadNearbyRecipesTask.execute(url);
-        //getActivity().setTitle(R.string.nearby_recipes);
         return view;
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-
     }
 
     @Override
@@ -64,7 +54,7 @@ public class LocationFragment extends ListFragment {
         Bundle b = new Bundle();
         RecipeResponse recipeResponse = (RecipeResponse) getListAdapter().getItem(position);
         b.putString("item", recipeResponse.getName());
-        intent.putExtras(b); //Put your id to your next Intent
+        intent.putExtras(b);
         startActivity(intent);
     }
 }
