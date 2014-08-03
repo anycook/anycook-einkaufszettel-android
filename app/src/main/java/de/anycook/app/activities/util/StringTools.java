@@ -78,6 +78,4 @@ public class StringTools {
 
         return newAmount.replace('.', ',');
     }
-
-
 }
