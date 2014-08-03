@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import com.noveogroup.android.log.Logger;
@@ -30,11 +31,13 @@ import java.util.List;
  * @author Claudia Sichting
  * @author Jan Graßegger
  */
-public class AddIngredientsActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
+public class AddIngredientsActivity extends ActionBarActivity implements AdapterView.OnItemClickListener,
+        View.OnClickListener{
     private static final Logger logger = LoggerManager.getLogger();
 
     private ListView ingredientListView;
     private RecipeResponse recipe;
+    private EditText personsEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +47,14 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         Bundle b = getIntent().getExtras();
         String item = b.getString("item");
 
+        this.personsEditText = (EditText) findViewById(R.id.ingredient_list_persons);
+
         RecipeStore recipeStore = new RecipeStore(this);
         try {
             recipeStore.open();
             recipe = recipeStore.getRecipe(item);
-            EditText personsText = (EditText) findViewById(R.id.ingredient_list_persons);
-            personsText.setText(Integer.toString(recipe.getPersons()));
+
+            personsEditText.setText(Integer.toString(recipe.getPersons()));
         } catch (ItemNotFoundException e) {
             logger.e("Failed load recipe", e);
             return;
@@ -68,7 +73,11 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         ingredientListView.setAdapter(adapter);
         ingredientListView.setOnItemClickListener(this);
 
+        Button increasePersonsButton = (Button)findViewById(R.id.ingredient_list_plus_button);
+        increasePersonsButton.setOnClickListener(this);
 
+        Button decreasePersonsButton = (Button)findViewById(R.id.ingredient_list_minus_button);
+        decreasePersonsButton.setOnClickListener(this);
 
 
         LoadRecipeIngredientsTask loadRecipeIngredientsTask = new LoadRecipeIngredientsTask(adapter);
@@ -129,4 +138,13 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         super.onBackPressed();
     }
 
+    @Override
+    public void onClick(View v) {
+        int numPersons = Integer.parseInt(personsEditText.getText().toString());
+
+        if (v.getId() == R.id.ingredient_list_plus_button && numPersons < 99) numPersons++;
+        else if (v.getId() == R.id.ingredient_list_minus_button && numPersons > 1) numPersons--;
+
+        personsEditText.setText(Integer.toString(numPersons));
+    }
 }
