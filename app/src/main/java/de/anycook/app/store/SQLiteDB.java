@@ -17,7 +17,7 @@ public class SQLiteDB extends SQLiteOpenHelper{
 
     static {
         DB_NAME = "einkaufszettel.db";
-        DB_VERSION = 3;
+        DB_VERSION = 4;
 
         INGREDIENT_NAME_TABLE = "Ingredient";
         GROCERY_ITEM_TABLE = "GroceryList";
@@ -31,6 +31,7 @@ public class SQLiteDB extends SQLiteOpenHelper{
         public static final int RECIPE_NAME = 0;
         public static final int RECIPE_DESCRIPTION = 1;
         public static final int RECIPE_IMAGE = 2;
+        public static final int RECIPE_PERSONS = 3;
 
     }
 
@@ -53,7 +54,8 @@ public class SQLiteDB extends SQLiteOpenHelper{
             "FOREIGN KEY(name) REFERENCES %s(name));", GROCERY_ITEM_TABLE, INGREDIENT_NAME_TABLE));
         db.execSQL(String.format("CREATE TABLE %s(name VARCHAR(45) PRIMARY KEY, " +
                 "description TEXT," +
-                "image VARCHAR(100));", RECIPE_TABLE));
+                "image VARCHAR(100)," +
+                "persons INTEGER NOT NULL);", RECIPE_TABLE));
     }
 
     @Override

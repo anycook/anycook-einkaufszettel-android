@@ -52,7 +52,7 @@ public class GroceryItemStore implements Closeable{
                     if (!oldGroceryItem.isStroked() )
                         amount = StringTools.mergeAmounts(amount, oldGroceryItem.getAmount());
                 } catch (ItemNotFoundException e) {
-                    logger.d(String.format("Added new Ingredient %s %s.", name, amount));
+                    logger.d("Added new Ingredient %s %s.", name, amount);
                 }
             }
         } finally {
@@ -86,7 +86,7 @@ public class GroceryItemStore implements Closeable{
         try {
             values.put("stroke", !getGroceryItem((String) groceryItemName).isStroked());
         } catch (ItemNotFoundException e) {
-            logger.d(String.format("User wanted to stroke \"%s\" but it's not in the database.", groceryItemName), e);
+            logger.d(e, "User wanted to stroke \"%s\" but it's not in the database.", groceryItemName);
         }
 
         database.update(SQLiteDB.GROCERY_ITEM_TABLE, values,
@@ -135,9 +135,4 @@ public class GroceryItemStore implements Closeable{
         }
     }
 
-    public static class ItemNotFoundException extends Exception {
-        public ItemNotFoundException(String name) {
-            super(String.format("Item %s does not exist", name));
-        }
-    }
 }

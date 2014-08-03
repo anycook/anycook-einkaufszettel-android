@@ -44,7 +44,7 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
             //URLCodec urlCodec = new URLCodec();
             String urlString = String.format(urlPattern, UrlEscapers.urlPathSegmentEscaper().escape(recipeNames[0]));
             URL url = new URL(urlString);
-            logger.d("Loading ingredients from " + url);
+            logger.d("Loading ingredients from %s", url);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             if (httpURLConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new IOException(httpURLConnection.getResponseMessage());

@@ -6,10 +6,55 @@
                 android:layout_height="match_parent"
                 android:tag="front"
                 style="@style/AnycookTheme">
+    <TextView
+            android:id="@+id/ingredient_list_ingredient_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Zutaten für "
+            android:gravity="left"/>
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:id="@+id/ingredient_list_minus_button"
+            android:layout_toRightOf="@+id/ingredient_list_ingredient_label"/>
+
+
+
+    <EditText
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/ingredient_list_persons"
+            android:layout_toRightOf="@+id/ingredient_list_minus_button"
+            android:gravity="right"/>
+
+
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:id="@+id/ingredient_list_plus_button"
+            android:layout_toRightOf="@+id/ingredient_list_persons"/>
+
+    <TextView
+            android:id="@+id/ingredient_list_persons_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Personen:"
+            android:gravity="left"
+            android:layout_toRightOf="@+id/ingredient_list_plus_button"/>
 
     <ListView
             android:id="@+id/ingredient_list_listview"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"/>
+            android:layout_below="@+id/ingredient_list_persons"
+            />
+
+
+
 </RelativeLayout>

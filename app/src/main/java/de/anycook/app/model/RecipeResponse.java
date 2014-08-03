@@ -5,9 +5,10 @@ package de.anycook.app.model;
  */
 public class RecipeResponse {
     private String name;
-    protected String description;
-    protected RecipeImage image;
-    private long id;
+    private String description;
+    private RecipeImage image;
+    private int persons;
+
 
     public String getName() {
         return name;
@@ -25,19 +26,26 @@ public class RecipeResponse {
         return this.image.getSmallImage();
     }
 
-    public long getId() {
-        return id;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setImage(RecipeImage image) {
+        this.image = image;
+    }
+
+    public int getPersons() {
+        return persons;
+    }
+
+    public void setPersons(int persons) {
+        this.persons = persons;
     }
 
     @Override
     public String toString() {
         return name;
     }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
 
     private static class RecipeImage {
         protected String small;

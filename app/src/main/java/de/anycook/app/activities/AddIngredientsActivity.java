@@ -9,11 +9,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
+import com.noveogroup.android.log.Logger;
+import com.noveogroup.android.log.LoggerManager;
 import de.anycook.app.R;
 import de.anycook.app.adapter.IngredientRowAdapter;
 import de.anycook.app.model.Ingredient;
+import de.anycook.app.model.RecipeResponse;
 import de.anycook.app.store.GroceryItemStore;
+import de.anycook.app.store.ItemNotFoundException;
+import de.anycook.app.store.RecipeStore;
 import de.anycook.app.tasks.LoadRecipeIngredientsTask;
 
 import java.util.ArrayList;
@@ -25,7 +31,10 @@ import java.util.List;
  * @author Jan Graßegger
  */
 public class AddIngredientsActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
+    private static final Logger logger = LoggerManager.getLogger();
+
     private ListView ingredientListView;
+    private RecipeResponse recipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,16 +43,33 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
 
         Bundle b = getIntent().getExtras();
         String item = b.getString("item");
+
+        RecipeStore recipeStore = new RecipeStore(this);
+        try {
+            recipeStore.open();
+            recipe = recipeStore.getRecipe(item);
+            EditText personsText = (EditText) findViewById(R.id.ingredient_list_persons);
+            personsText.setText(Integer.toString(recipe.getPersons()));
+        } catch (ItemNotFoundException e) {
+            logger.e("Failed load recipe", e);
+            return;
+        } finally {
+            recipeStore.close();
+        }
+
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(item);
+            actionBar.setTitle(recipe.getName());
         }
 
         this.ingredientListView = (ListView) findViewById(R.id.ingredient_list_listview);
         IngredientRowAdapter adapter = new IngredientRowAdapter(this);
         ingredientListView.setAdapter(adapter);
         ingredientListView.setOnItemClickListener(this);
+
+
+
 
         LoadRecipeIngredientsTask loadRecipeIngredientsTask = new LoadRecipeIngredientsTask(adapter);
         loadRecipeIngredientsTask.execute(item);
