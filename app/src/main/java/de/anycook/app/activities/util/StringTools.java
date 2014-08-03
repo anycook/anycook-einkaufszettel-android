@@ -1,6 +1,7 @@
 package de.anycook.app.activities.util;
 
-import android.util.Log;
+import com.noveogroup.android.log.Logger;
+import com.noveogroup.android.log.LoggerManager;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -11,11 +12,13 @@ import java.util.regex.Pattern;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class StringTools {
+    private final static Logger logger;
     private final static Pattern hasUnitPattern;
     private final static Pattern numberPattern;
     private final static NumberFormat numberFormat;
 
     static {
+        logger = LoggerManager.getLogger();
         hasUnitPattern = Pattern.compile("(\\d+|\\d+\\.\\d+) ([a-zA-Z]+)");
         numberPattern = Pattern.compile("(\\d+|\\d+\\.\\d+)");
         numberFormat = new DecimalFormat("0.##");
@@ -28,13 +31,13 @@ public class StringTools {
 
         for (int i = 0; i < input.length() - 1; i++) {
             char c = input.charAt(i);
-            if(Character.isDigit(c) && Character.isLetter(input.codePointAt(i + 1))) output.append(' ');
+            if (Character.isDigit(c) && Character.isLetter(input.codePointAt(i + 1))) output.append(' ');
 
-            if(input.charAt(i+1) == '.') output.append(',');
+            if (input.charAt(i+1) == '.') output.append(',');
             else  output.append(input.charAt(i+1));
         }
 
-        Log.v(StringTools.class.getSimpleName(), String.format("Input: '%s' Output: '%s", input, output));
+        logger.v("Input: '%s' Output: '%s", input, output);
 
         return output.toString();
     }
@@ -77,5 +80,32 @@ public class StringTools {
         }
 
         return newAmount.replace('.', ',');
+    }
+
+    public static String multiplyAmount(String amount, int recipePersons, int newPersons) {
+        amount = amount.replaceAll(",", ".");
+
+        float factor = (float)newPersons/(float)recipePersons;
+        Matcher numberMatcher = numberPattern.matcher(amount);
+
+        StringBuffer newAmount = new StringBuffer();
+
+        int start, end = 0;
+        while (numberMatcher.find(end)) {
+            start = numberMatcher.start();
+
+            // append non-matching
+            if (end < start)
+                newAmount.append(amount.substring(end, start));
+
+            end = numberMatcher.end();
+
+            float number = Float.parseFloat(amount.substring(start, end));
+            newAmount.append(numberFormat.format(factor * number));
+        }
+
+        newAmount.append(amount.substring(end, amount.length()));
+
+        return newAmount.toString().replaceAll("\\.", ",");
     }
 }

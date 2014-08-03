@@ -4,14 +4,13 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.*;
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 import de.anycook.app.R;
@@ -31,7 +30,7 @@ import java.util.List;
  * @author Claudia Sichting
  * @author Jan Graßegger
  */
-public class AddIngredientsActivity extends ActionBarActivity implements AdapterView.OnItemClickListener,
+public class AddIngredientsActivity extends ActionBarActivity implements AdapterView.OnItemClickListener, TextWatcher,
         View.OnClickListener{
     private static final Logger logger = LoggerManager.getLogger();
 
@@ -47,14 +46,10 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         Bundle b = getIntent().getExtras();
         String item = b.getString("item");
 
-        this.personsEditText = (EditText) findViewById(R.id.ingredient_list_persons);
-
         RecipeStore recipeStore = new RecipeStore(this);
         try {
             recipeStore.open();
             recipe = recipeStore.getRecipe(item);
-
-            personsEditText.setText(Integer.toString(recipe.getPersons()));
         } catch (ItemNotFoundException e) {
             logger.e("Failed load recipe", e);
             return;
@@ -69,9 +64,13 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         }
 
         this.ingredientListView = (ListView) findViewById(R.id.ingredient_list_listview);
-        IngredientRowAdapter adapter = new IngredientRowAdapter(this);
+        IngredientRowAdapter adapter = new IngredientRowAdapter(this, recipe.getPersons());
         ingredientListView.setAdapter(adapter);
         ingredientListView.setOnItemClickListener(this);
+
+        this.personsEditText = (EditText) findViewById(R.id.ingredient_list_persons);
+        personsEditText.setText(Integer.toString(recipe.getPersons()));
+        personsEditText.addTextChangedListener(this);
 
         Button increasePersonsButton = (Button)findViewById(R.id.ingredient_list_plus_button);
         increasePersonsButton.setOnClickListener(this);
@@ -123,7 +122,8 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
             int ingredientsCount = ingredientListView.getAdapter().getCount();
             List<Ingredient> ingredients = new ArrayList<>(ingredientsCount);
             for (int i = 0; i < ingredientsCount; i++) {
-                Ingredient ingredient = ((IngredientRowAdapter) ingredientListView.getAdapter()).getItem(i);
+                Ingredient ingredient =
+                        ((IngredientRowAdapter) ingredientListView.getAdapter()).getMultipliedItem(i);
                 if(!ingredient.isChecked()) continue;
                 ingredients.add(ingredient);
             }
@@ -146,5 +146,20 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         else if (v.getId() == R.id.ingredient_list_minus_button && numPersons > 1) numPersons--;
 
         personsEditText.setText(Integer.toString(numPersons));
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        int numPersons = Integer.parseInt(personsEditText.getText().toString());
+        ((IngredientRowAdapter) ingredientListView.getAdapter()).setCurrentPersons(numPersons);
     }
 }

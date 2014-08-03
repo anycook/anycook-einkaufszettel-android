@@ -1,6 +1,6 @@
 package de.anycook.app.model;
 
-import android.util.Log;
+import de.anycook.app.activities.util.StringTools;
 
 /**
  * anycook-api json response object ingredient
@@ -25,6 +25,12 @@ public class Ingredient {
         setChecked(true);
     }
 
+    public Ingredient(Ingredient ingredient) {
+        this.name = ingredient.name;
+        this.menge = ingredient.menge;
+        this.checked = ingredient.checked;
+    }
+
     public String getName() {
         return name;
     }
@@ -32,6 +38,8 @@ public class Ingredient {
     public String getAmount() {
         return menge;
     }
+
+
 
     public boolean isChecked() {
         return checked;
@@ -47,6 +55,11 @@ public class Ingredient {
 
     public void setChecked(boolean stroked) {
         this.checked = stroked;
+    }
+
+    public void multiplyAmount(int recipePersons, int newPersons) {
+        if (recipePersons == newPersons) return;
+        menge = StringTools.multiplyAmount(menge, recipePersons, newPersons);
     }
 
     @Override

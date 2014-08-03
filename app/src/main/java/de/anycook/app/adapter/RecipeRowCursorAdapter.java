@@ -24,7 +24,6 @@ public class RecipeRowCursorAdapter extends ResourceCursorAdapter {
         super(context, R.layout.recipe_row, cursor, false);
     }
 
-
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         TextView name = (TextView) view.findViewById(R.id.recipe_row_textview_recipe_name);
