@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.noveogroup.android.log.Logger;
+import com.noveogroup.android.log.LoggerManager;
 import de.anycook.app.adapter.RecipeRowArrayAdapter;
 import de.anycook.app.model.RecipeResponse;
 
@@ -20,6 +22,8 @@ import java.util.List;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class LoadNearbyRecipesTask extends AsyncTask<String, Void, List<RecipeResponse>> {
+    private final static Logger logger = LoggerManager.getLogger();
+
     private final RecipeRowArrayAdapter adapter;
 
     public LoadNearbyRecipesTask(RecipeRowArrayAdapter adapter) {
@@ -44,7 +48,7 @@ public class LoadNearbyRecipesTask extends AsyncTask<String, Void, List<RecipeRe
             }.getType();
             return gson.fromJson(reader, collectionType);
         } catch (IOException e) {
-            Log.e(getClass().getSimpleName(), "failed to load recipes from "+url[0], e);
+            logger.e("failed to load recipes from "+url[0], e);
             return null;
         }
     }
@@ -54,8 +58,7 @@ public class LoadNearbyRecipesTask extends AsyncTask<String, Void, List<RecipeRe
         if(recipeResponses.size() == 0) {
             Log.v(getClass().getSimpleName(), "Didn't find any nearby recipes");
         } else {
-            Log.d(getClass().getSimpleName(),
-                    String.format("Found %d different recipes", recipeResponses.size()));
+            logger.d(String.format("Found %d different recipes", recipeResponses.size()));
             adapter.addAll(recipeResponses);
         }
 

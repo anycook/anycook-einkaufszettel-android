@@ -2,9 +2,10 @@ package de.anycook.app.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.noveogroup.android.log.Logger;
+import com.noveogroup.android.log.LoggerManager;
 import de.anycook.app.model.Ingredient;
 import de.anycook.app.store.IngredientNameStore;
 
@@ -23,13 +24,15 @@ import java.util.List;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class LoadIngredientsTask extends AsyncTask<Void, Void, List<Ingredient>> {
+    private final static Logger logger = LoggerManager.getLogger();
+
     public static URL url;
 
     static {
         try {
             url = new URL("https://api.anycook.de/ingredient");
         } catch (MalformedURLException e) {
-            Log.e(LoadIngredientsTask.class.getSimpleName(), "Failed to init url", e);
+            logger.e("Failed to init url", e);
         }
     }
 
@@ -52,7 +55,7 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<Ingredient>>
             }.getType();
             return gson.fromJson(reader, collectionType);
         } catch (IOException e) {
-            Log.e(getClass().getSimpleName(), e.getLocalizedMessage(), e);
+            logger.e(e.getLocalizedMessage(), e);
             return Collections.emptyList();
         }
     }

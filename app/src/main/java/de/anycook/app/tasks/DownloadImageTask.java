@@ -3,9 +3,9 @@ package de.anycook.app.tasks;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.ImageView;
 import com.google.common.io.ByteStreams;
+import com.noveogroup.android.log.Log;
 
 import java.io.*;
 import java.net.URL;
@@ -31,18 +31,14 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
             File imageFile = new File(cacheDir, imagePath);
             File imageDirectory = imageFile.getParentFile();
 
-            if(!imageDirectory.exists()) {
-                imageDirectory.mkdirs();
-            }
-
-            if(!imageFile.exists()) {
+            if((imageDirectory.exists() || imageDirectory.mkdirs()) && !imageFile.exists()) {
                 imageFile.createNewFile();
                 OutputStream os = new FileOutputStream(imageFile);
                 ByteStreams.copy(url.openStream(), os);
             }
             return BitmapFactory.decodeStream(new FileInputStream(imageFile));
         } catch (IOException e) {
-            Log.e(getClass().getSimpleName(), "failed to load image", e);
+            Log.e("failed to load image", e);
             return null;
         }
     }

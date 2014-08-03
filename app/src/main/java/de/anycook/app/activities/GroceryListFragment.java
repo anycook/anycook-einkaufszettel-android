@@ -5,10 +5,11 @@ import android.app.ListFragment;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.widget.*;
+import com.noveogroup.android.log.Logger;
+import com.noveogroup.android.log.LoggerManager;
 import de.anycook.app.R;
 import de.anycook.app.activities.util.StringTools;
 import de.anycook.app.adapter.GroceryItemRowAdapter;
@@ -21,6 +22,8 @@ import de.anycook.app.store.SQLiteDB;
  * @author Claudia Sichting
  */
 public class GroceryListFragment extends ListFragment {
+    private final static Logger logger = LoggerManager.getLogger();
+
     private AutoCompleteTextView groceryNameTextView;
     private EditText groceryAmountTextView;
 
@@ -119,14 +122,14 @@ public class GroceryListFragment extends ListFragment {
     @Override
     public void onPause() {
         super.onPause();
-        Log.v(getClass().getSimpleName(),"Pause: Close database");
+        logger.v("Pause: Close database");
         groceryItemStore.close();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.v(getClass().getSimpleName(), "Resume: Open database");
+        logger.v("Resume: Open database");
         groceryItemStore.open();
     }
 

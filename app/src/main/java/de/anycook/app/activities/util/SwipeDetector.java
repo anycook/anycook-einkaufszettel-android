@@ -1,8 +1,8 @@
 package de.anycook.app.activities.util;
 
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import com.noveogroup.android.log.Log;
 
 /**
  * http://stackoverflow.com/questions/4373485/android-swipe-on-list
@@ -10,7 +10,6 @@ import android.view.View;
  */
 public class SwipeDetector implements View.OnTouchListener {
 
-    private static final String logTag = "SwipeDetector";
     private static final int VERTICAL_MIN_DISTANCE = 100;
     private static final int HORIZONTAL_MIN_DISTANCE = 100;
     private float downX;
@@ -41,12 +40,12 @@ public class SwipeDetector implements View.OnTouchListener {
                 if (Math.abs(deltaX) > HORIZONTAL_MIN_DISTANCE) {
                     // left or right
                     if (deltaX < 0) {
-                        Log.i(logTag, "Swipe Left to Right by " + deltaX);
+                        Log.i("Swipe Left to Right by " + deltaX);
                         mSwipeDetected = Action.LR;
                         return true;
                     }
                     if (deltaX > 0) {
-                        Log.i(logTag, "Swipe Right to Left by " + deltaX);
+                        Log.i("Swipe Right to Left by " + deltaX);
                         mSwipeDetected = Action.RL;
                         return false;
                     }

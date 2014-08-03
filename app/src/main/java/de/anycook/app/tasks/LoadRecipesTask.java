@@ -2,9 +2,10 @@ package de.anycook.app.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.noveogroup.android.log.Logger;
+import com.noveogroup.android.log.LoggerManager;
 import de.anycook.app.model.RecipeResponse;
 import de.anycook.app.store.RecipeStore;
 
@@ -22,13 +23,15 @@ import java.util.List;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>> {
+    private final static Logger logger = LoggerManager.getLogger();
+
     public static URL url;
 
     static {
         try {
             url = new URL("https://api.anycook.de/recipe");
         } catch (MalformedURLException e) {
-            Log.e(LoadIngredientsTask.class.getSimpleName(), "Failed to init url", e);
+            logger.e("Failed to init url", e);
         }
     }
 
@@ -41,7 +44,7 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
     @Override
     protected List<RecipeResponse> doInBackground(Void... b) {
         try {
-            Log.d(getClass().getSimpleName(), "Trying to load recipes from " + url);
+            logger.d("Trying to load recipes from " + url);
 
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
@@ -55,7 +58,7 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
             }.getType();
             return gson.fromJson(reader, collectionType);
         } catch (IOException e) {
-            Log.e(getClass().getSimpleName(), "failed to load recipes from "+url, e);
+            logger.e("failed to load recipes from "+url, e);
             return null;
         }
     }
@@ -63,10 +66,9 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
     @Override
     protected void onPostExecute(final List<RecipeResponse> recipeResponses) {
         if(recipeResponses == null || recipeResponses.size() == 0) {
-            Log.v(getClass().getSimpleName(), "Didn't find any nearby recipes");
+            logger.v("Didn't find any nearby recipes");
         } else {
-            Log.d(getClass().getSimpleName(),
-                    String.format("Found %d different recipes", recipeResponses.size()));
+            logger.d(String.format("Found %d different recipes", recipeResponses.size()));
             RecipeStore recipeStore = new RecipeStore(context);
             try{
                 recipeStore.open();

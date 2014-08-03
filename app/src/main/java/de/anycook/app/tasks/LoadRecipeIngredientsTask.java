@@ -1,10 +1,11 @@
 package de.anycook.app.tasks;
 
 import android.os.AsyncTask;
-import android.util.Log;
 import com.google.common.net.UrlEscapers;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.noveogroup.android.log.Logger;
+import com.noveogroup.android.log.LoggerManager;
 import de.anycook.app.adapter.IngredientRowAdapter;
 import de.anycook.app.model.Ingredient;
 
@@ -24,9 +25,11 @@ import java.util.List;
 public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingredient>>{
 
     private static final String urlPattern;
+    private static final Logger logger;
 
     static {
         urlPattern = "https://api.anycook.de/recipe/%s/ingredients";
+        logger = LoggerManager.getLogger();
     }
 
     private final IngredientRowAdapter ingredientRowAdapter;
@@ -41,7 +44,7 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
             //URLCodec urlCodec = new URLCodec();
             String urlString = String.format(urlPattern, UrlEscapers.urlPathSegmentEscaper().escape(recipeNames[0]));
             URL url = new URL(urlString);
-            Log.d(getClass().getSimpleName(), "Loading ingredients from "+url);
+            logger.d("Loading ingredients from " + url);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             if (httpURLConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new IOException(httpURLConnection.getResponseMessage());
@@ -52,7 +55,7 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
             }.getType();
             return gson.fromJson(reader, collectionType);
         } catch (IOException e) {
-            Log.e(getClass().getSimpleName(), "Failed to load recipe ingredients", e);
+            logger.e("Failed to load recipe ingredients", e);
             return Collections.emptyList();
         }
     }

@@ -4,11 +4,11 @@ import android.app.ListFragment;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import com.noveogroup.android.log.Log;
 import de.anycook.app.R;
 import de.anycook.app.activities.util.GPSTracker;
 import de.anycook.app.adapter.RecipeRowArrayAdapter;
@@ -42,7 +42,7 @@ public class LocationFragment extends ListFragment {
             loadNearbyRecipesTask.execute(url);
 
         } catch (GPSTracker.UnableToRetrieveLocationException e) {
-            Log.w(getClass().getSimpleName(), e.getMessage());
+            Log.i(e.getMessage());
             GPSTracker.showSettingsAlert(getActivity());
         }
         return view;

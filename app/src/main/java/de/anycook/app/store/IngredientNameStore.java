@@ -4,7 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
+import com.noveogroup.android.log.Logger;
+import com.noveogroup.android.log.LoggerManager;
 import de.anycook.app.model.Ingredient;
 
 import java.io.Closeable;
@@ -13,6 +14,8 @@ import java.io.Closeable;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class IngredientNameStore implements Closeable{
+    private static final Logger logger = LoggerManager.getLogger();
+
     private final Context context;
     private SQLiteDatabase database;
 
@@ -21,14 +24,14 @@ public class IngredientNameStore implements Closeable{
     }
 
     public void open() {
-        Log.v(getClass().getSimpleName(), "Open database");
+        logger.v("Open database");
         SQLiteDB sqLiteDB = new SQLiteDB(this.context);
         database = sqLiteDB.getWritableDatabase();
     }
 
     @Override
     public void close() {
-        Log.v(getClass().getSimpleName(),"Close database");
+        logger.v("Close database");
         database.close();
     }
 
