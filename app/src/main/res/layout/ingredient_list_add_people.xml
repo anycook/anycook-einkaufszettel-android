@@ -12,17 +12,19 @@
             android:id="@+id/ingredient_list_ingredient_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:text="@string/ingredients_for"/>
+            android:layout_marginRight="4dp"
+            android:paddingTop="4dp"
+            android:text="@string/ingredients_for"
+            android:style="@style/GuideTextAnycook"/>
 
     <Button
             android:id="@+id/ingredient_list_minus_button"
-            android:layout_width="35dp"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/ingredient_list_ingredient_label"
-            android:background="@color/any_white_input_background"
+            android:background="@color/any_gray_shadow_beige"
             android:text="@string/minus"
-            android:paddingLeft="13dp"
+            android:paddingLeft="11dp"
             />
 
     <EditText
@@ -31,24 +33,26 @@
             android:maxLength="2"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/ingredient_list_minus_button"
-            android:layout_alignBottom="@id/ingredient_list_ingredient_label"
             android:inputType="number"/>
 
     <Button
             android:id="@+id/ingredient_list_plus_button"
-            android:layout_width="35dp"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/ingredient_list_persons"
-            android:background="@color/any_white_input_background"
+            android:background="@color/any_gray_shadow_beige"
             android:text="@string/plus"
-            android:paddingLeft="12dp"/>
+            android:paddingLeft="10dp"/>
 
     <TextView
             android:id="@+id/ingredient_list_persons_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/ingredient_list_plus_button"
+            android:layout_marginLeft="4dp"
             android:text="@string/persons"
-            android:layout_toRightOf="@id/ingredient_list_plus_button"/>
+            android:style="@style/GuideTextAnycook"
+            android:paddingTop="4dp"
+            />
 
 </RelativeLayout>
