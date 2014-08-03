@@ -49,7 +49,8 @@ public class GroceryItemStore implements Closeable{
             else {
                 try {
                     GroceryItem oldGroceryItem = getGroceryItem(name);
-                    amount = StringTools.mergeAmounts(amount, oldGroceryItem.getAmount());
+                    if (!oldGroceryItem.isStroked() )
+                        amount = StringTools.mergeAmounts(amount, oldGroceryItem.getAmount());
                 } catch (ItemNotFoundException e) {
                     logger.d(String.format("Added new Ingredient %s %s.", name, amount));
                 }
