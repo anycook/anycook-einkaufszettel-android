@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingTop="7dp">
+
+    <TextView
+            android:id="@+id/ingredient_list_ingredient_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:text="@string/ingredients_for"/>
+
+    <Button
+            android:id="@+id/ingredient_list_minus_button"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/ingredient_list_ingredient_label"
+            android:background="@color/any_white_input_background"
+            android:text="@string/minus"
+            android:paddingLeft="13dp"
+            />
+
+    <EditText
+            android:id="@+id/ingredient_list_persons"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/ingredient_list_minus_button"
+            android:layout_alignBottom="@id/ingredient_list_ingredient_label"
+            android:inputType="number"/>
+
+    <Button
+            android:id="@+id/ingredient_list_plus_button"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/ingredient_list_persons"
+            android:background="@color/any_white_input_background"
+            android:text="@string/plus"
+            android:paddingLeft="12dp"/>
+
+    <TextView
+            android:id="@+id/ingredient_list_persons_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/persons"
+            android:layout_toRightOf="@id/ingredient_list_plus_button"/>
+
+</RelativeLayout>

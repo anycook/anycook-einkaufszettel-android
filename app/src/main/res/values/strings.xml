@@ -39,5 +39,9 @@
     <string name="drawer_text">Menüpunkt</string>
     <string name="icon">Icon</string>
     <string name="upload_message">Bild wurde nach %s hochgeladen. Demnächst dreht sich das Funktionalitätenkarussel wieder weiter!</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="ingredients_for">Zutaten für</string>
+    <string name="persons">Personen:</string>
 </resources>
 
