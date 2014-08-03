@@ -159,6 +159,8 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
 
     @Override
     public void afterTextChanged(Editable s) {
+        String personsString = personsEditText.getText().toString();
+        if (personsString.length() == 0) return;
         int numPersons = Integer.parseInt(personsEditText.getText().toString());
         ((IngredientRowAdapter) ingredientListView.getAdapter()).setCurrentPersons(numPersons);
     }
