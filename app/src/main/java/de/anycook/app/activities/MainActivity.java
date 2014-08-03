@@ -3,7 +3,9 @@ package de.anycook.app.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -113,6 +115,9 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             case 2:
                 fragment = new LocationFragment();
                 break;
+            case 3:
+                startBrowser();
+                return;
             default:
                 return;
         }
@@ -126,6 +131,14 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         drawerLayout.closeDrawer(drawerList);
         invalidateOptionsMenu();
 
+    }
+
+    private void startBrowser() {
+        Uri uri = Uri.parse("http://www.anycook.de/");
+        Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+        // Create and start the chooser
+        Intent chooser = Intent.createChooser(intent, "Open with");
+        startActivity(chooser);
     }
 
     @Override
