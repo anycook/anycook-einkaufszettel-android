@@ -30,13 +30,12 @@ import java.util.List;
  * @author Claudia Sichting
  * @author Jan Graßegger
  */
-public class AddIngredientsActivity extends ActionBarActivity implements AdapterView.OnItemClickListener, TextWatcher,
+public class AddIngredientsActivity extends ActionBarActivity implements AdapterView.OnItemClickListener,
         View.OnClickListener{
     private static final Logger logger = LoggerManager.getLogger();
 
     private ListView ingredientListView;
     protected RecipeResponse recipe;
-    private EditText personsEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +67,8 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         ingredientListView.setAdapter(adapter);
         ingredientListView.setOnItemClickListener(this);
 
-        this.personsEditText = (EditText) findViewById(R.id.ingredient_list_persons);
+        EditText personsEditText = (EditText) findViewById(R.id.ingredient_list_persons);
         personsEditText.setText(Integer.toString(recipe.getPersons()));
-        personsEditText.clearFocus();
-
-
-
         personsEditText.setOnClickListener(this);
 
         LoadRecipeIngredientsTask loadRecipeIngredientsTask = new LoadRecipeIngredientsTask(adapter);
@@ -136,9 +131,11 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
     }
 
     @Override
-    public void onClick(final View view) {
+    public void onClick(View view) {
 
-        final TextView textView = (TextView) view;
+        final EditText personsEditText = (EditText) view;
+        int numPersons = Integer.parseInt(personsEditText.getText().toString());
+
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(R.string.for_x_people);
 
@@ -148,7 +145,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         final NumberPicker numberPicker = (NumberPicker)alertDialogContent
                 .findViewById(R.id.number_picker_dialog_numberpicker);
         numberPicker.setMaxValue(99);
-        numberPicker.setValue(Integer.parseInt(textView.getText().toString()));
+        numberPicker.setValue(numPersons);
         numberPicker.setMinValue(1);
 
         alertDialogBuilder.setView(alertDialogContent);
@@ -156,34 +153,16 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         alertDialogBuilder.setPositiveButton(R.string.set, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                textView.setText(numberPicker.getValue());
+                String personsString = Integer.toString(numberPicker.getValue());
+                personsEditText.setText(personsString);
+                if (personsString.length() == 0) return;
+                int numPersons = Integer.parseInt(personsEditText.getText().toString());
+                ((IngredientRowAdapter) ingredientListView.getAdapter()).setCurrentPersons(numPersons);
             }
         });
-        alertDialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //textView.setText(which);
-            }
-        });
+        alertDialogBuilder.setNegativeButton(R.string.cancel, null);
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        String personsString = personsEditText.getText().toString();
-        if (personsString.length() == 0) return;
-        int numPersons = Integer.parseInt(personsEditText.getText().toString());
-        ((IngredientRowAdapter) ingredientListView.getAdapter()).setCurrentPersons(numPersons);
     }
 }
