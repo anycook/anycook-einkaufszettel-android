@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class IngredientRowAdapter extends ArrayAdapter<Ingredient>{
+public class IngredientRowAdapter extends ArrayAdapter<Ingredient> {
 
     private final int recipePersons;
     private int currentPersons;
@@ -29,16 +29,16 @@ public class IngredientRowAdapter extends ArrayAdapter<Ingredient>{
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         IngredientHolder holder;
-        if(convertView == null) {
-            final LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (convertView == null) {
+            final LayoutInflater inflater =
+                    (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.ingredient_list_row, parent, false);
             holder = new IngredientHolder();
             holder.nameTextView = (TextView) convertView.findViewById(R.id.ingredient_list_row_name);
             holder.amountTextView = (TextView) convertView.findViewById(R.id.ingredient_list_row_amount);
             holder.checkBox = (CheckBox) convertView.findViewById(R.id.ingredient_list_row_checkbox);
             convertView.setTag(holder);
-        }
-        else {
+        } else {
             holder = (IngredientHolder) convertView.getTag();
         }
         Ingredient ingredient = getMultipliedItem(position);
@@ -58,7 +58,7 @@ public class IngredientRowAdapter extends ArrayAdapter<Ingredient>{
     }
 
     public void setCurrentPersons(int currentPersons) {
-        if (currentPersons == 0) return;
+        if (currentPersons == 0) { return; }
         this.currentPersons = currentPersons;
         notifyDataSetChanged();
     }

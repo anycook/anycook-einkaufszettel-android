@@ -14,11 +14,9 @@ import android.provider.Settings;
  */
 public class GPSTracker {
 
-    private final Context context;
     private final LocationManager locationManager;
 
     public GPSTracker(Context context) {
-        this.context = context;
         this.locationManager = (LocationManager) context.getSystemService(Service.LOCATION_SERVICE);
     }
 
@@ -28,13 +26,13 @@ public class GPSTracker {
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 Location location = locationManager
                         .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                if (location != null) return location;
+                if (location != null) { return location; }
             }
 
             if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
                 Location location = locationManager
                         .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                if (location != null) return location;
+                if (location != null) { return location; }
             }
         }
 

@@ -33,7 +33,9 @@
             <property name="tokens" value="BNOT,DEC,DOT,INC,LNOT,UNARY_MINUS,UNARY_PLUS" />
         </module>
         <module name="NoWhitespaceBefore" />
-        <module name="OperatorWrap" />
+        <module name="OperatorWrap">
+            <property name="option" value="eol"/>
+        </module>
         <module name="ParenPad" />
         <module name="TypecastParenPad" />
         <module name="WhitespaceAfter" />
@@ -52,8 +54,8 @@
         <!-- <module name="HiddenField"/> -->
         <module name="IllegalInstantiation" />
         <module name="InnerAssignment" />
-        <module name="MagicNumber" />
-        <module name="MissingSwitchDefault" />
+        <!--<module name="MagicNumber" />-->
+        <!--<module name="MissingSwitchDefault" />-->
         <module name="RedundantThrows">
             <property name="suppressLoadErrors" value="true" />
         </module>

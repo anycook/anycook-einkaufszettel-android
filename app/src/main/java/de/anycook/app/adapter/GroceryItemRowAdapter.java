@@ -6,12 +6,7 @@ import android.view.View;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import de.anycook.app.R;
-import de.anycook.app.model.Ingredient;
-import de.anycook.app.store.GroceryItemStore;
 import de.anycook.app.store.SQLiteDB;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Custom ArrayAdapter to fill EditMode with grocery item and amount

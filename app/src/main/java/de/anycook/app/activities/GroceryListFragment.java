@@ -5,9 +5,22 @@ import android.app.ListFragment;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.*;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.*;
+import android.widget.AutoCompleteTextView;
+import android.widget.CursorAdapter;
+import android.widget.EditText;
+import android.widget.FilterQueryProvider;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 import de.anycook.app.R;
@@ -22,7 +35,7 @@ import de.anycook.app.store.SQLiteDB;
  * @author Claudia Sichting
  */
 public class GroceryListFragment extends ListFragment {
-    private final static Logger logger = LoggerManager.getLogger();
+    private static final Logger LOGGER = LoggerManager.getLogger();
 
     private AutoCompleteTextView groceryNameTextView;
     private EditText groceryAmountTextView;
@@ -122,21 +135,21 @@ public class GroceryListFragment extends ListFragment {
     @Override
     public void onPause() {
         super.onPause();
-        logger.v("Pause: Close database");
+        LOGGER.v("Pause: Close database");
         groceryItemStore.close();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        logger.v("Resume: Open database");
+        LOGGER.v("Resume: Open database");
         groceryItemStore.open();
     }
 
     public void clickedClearButton() {
         Cursor strokedItemCursor = groceryItemStore.getStrokedGroceryItems();
-        if(getListView().getCount() == 0) return;
-        if(strokedItemCursor.getCount() == 0) {
+        if (getListView().getCount() == 0) { return; }
+        if (strokedItemCursor.getCount() == 0) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
             alertDialogBuilder.setMessage(R.string.clear_ingredients);
             alertDialogBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
@@ -158,9 +171,8 @@ public class GroceryListFragment extends ListFragment {
 
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
-        }
-        else {
-            while(strokedItemCursor.moveToNext()) {
+        } else {
+            while (strokedItemCursor.moveToNext()) {
                 groceryItemStore.removeGroceryItem(
                         strokedItemCursor.getString(SQLiteDB.TableFields.GROCERY_ITEM_NAME));
             }
@@ -180,7 +192,7 @@ public class GroceryListFragment extends ListFragment {
                 groceryNameTextView.setText("");
                 groceryAmountTextView.setText("");
                 return true;
-            } else return false;
+            } else { return false; }
         }
     }
 }

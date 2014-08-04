@@ -58,7 +58,7 @@ public class Ingredient {
     }
 
     public void multiplyAmount(int recipePersons, int newPersons) {
-        if (recipePersons == newPersons) return;
+        if (recipePersons == newPersons) { return; }
         menge = StringTools.multiplyAmount(menge, recipePersons, newPersons);
     }
 

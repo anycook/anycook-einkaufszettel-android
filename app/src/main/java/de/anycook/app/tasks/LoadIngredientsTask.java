@@ -24,7 +24,7 @@ import java.util.List;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class LoadIngredientsTask extends AsyncTask<Void, Void, List<Ingredient>> {
-    private final static Logger logger = LoggerManager.getLogger();
+    private static final Logger LOGGER = LoggerManager.getLogger();
 
     public static URL url;
 
@@ -32,7 +32,7 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<Ingredient>>
         try {
             url = new URL("https://api.anycook.de/ingredient");
         } catch (MalformedURLException e) {
-            logger.e("Failed to init url", e);
+            LOGGER.e("Failed to init url", e);
         }
     }
 
@@ -51,11 +51,10 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<Ingredient>>
             }
             Reader reader = new InputStreamReader(httpURLConnection.getInputStream());
             Gson gson = new Gson();
-            Type collectionType = new TypeToken<ArrayList<Ingredient>>() {
-            }.getType();
+            Type collectionType = new TypeToken<ArrayList<Ingredient>>() { } .getType();
             return gson.fromJson(reader, collectionType);
         } catch (IOException e) {
-            logger.e(e.getLocalizedMessage(), e);
+            LOGGER.e(e.getLocalizedMessage(), e);
             return Collections.emptyList();
         }
     }
@@ -63,9 +62,9 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<Ingredient>>
     @Override
     protected void onPostExecute(List<Ingredient> ingredients) {
         IngredientNameStore ingredientDatabase = new IngredientNameStore(context);
-        try{
+        try {
             ingredientDatabase.open();
-            for(Ingredient ingredient : ingredients) ingredientDatabase.addIngredient(ingredient);
+            for (Ingredient ingredient : ingredients) { ingredientDatabase.addIngredient(ingredient); }
         } finally {
             ingredientDatabase.close();
         }

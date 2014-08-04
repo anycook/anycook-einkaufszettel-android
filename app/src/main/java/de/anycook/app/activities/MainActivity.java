@@ -54,25 +54,9 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         drawerList.setAdapter(new DrawerRowAdapter(this, menuTitles));
         drawerList.setOnItemClickListener(this);
 
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
-                R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                getActionBar().setTitle(title);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                //hide keyboard
-                final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(drawerView.getWindowToken(), 0);
-                //getActionBar().setTitle();
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
+        this.drawerToggle = getDrawerToggle();
         drawerLayout.setDrawerListener(drawerToggle);
+
         if (savedInstanceState == null) {
             selectMenuItem(0);
             LoadIngredientsTask loadIngredientsTask = new LoadIngredientsTask(this);
@@ -82,6 +66,28 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         } else {
             selectMenuItem(savedInstanceState.getInt("fragment"));
         }
+    }
+
+    private ActionBarDrawerToggle getDrawerToggle() {
+        return new ActionBarDrawerToggle(this, drawerLayout,
+                R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                if (getActionBar() != null) {
+                    getActionBar().setTitle(title);
+                }
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                //hide keyboard
+                final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(drawerView.getWindowToken(), 0);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
     }
 
     @Override
@@ -118,6 +124,9 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             case 3:
                 startBrowser();
                 return;
+            case 4:
+                fragment = new SettingsFragment();
+                break;
             default:
                 return;
         }
@@ -135,7 +144,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
     private void startBrowser() {
         Uri uri = Uri.parse("http://www.anycook.de/");
-        Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         // Create and start the chooser
         Intent chooser = Intent.createChooser(intent, "Open with");
         startActivity(chooser);

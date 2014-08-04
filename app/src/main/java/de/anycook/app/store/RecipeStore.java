@@ -14,8 +14,8 @@ import java.util.List;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class RecipeStore implements Closeable{
-    private static final Logger logger = LoggerManager.getLogger();
+public class RecipeStore implements Closeable {
+    private static final Logger LOGGER = LoggerManager.getLogger();
 
     private final Context context;
     private SQLiteDatabase database;
@@ -25,27 +25,29 @@ public class RecipeStore implements Closeable{
     }
 
     public void open() {
-        logger.d("Open Database");
+        LOGGER.d("Open Database");
         SQLiteDB sqLiteDB = new SQLiteDB(this.context);
         database = sqLiteDB.getWritableDatabase();
     }
 
     @Override
     public void close() {
-        logger.d("Open Database");
+        LOGGER.d("Open Database");
         database.close();
     }
 
-    public Cursor getRecipesForQuery(String query) {
-        return database.rawQuery("SELECT name AS _id, description, image, persons FROM " + SQLiteDB.RECIPE_TABLE +
-                " WHERE _id LIKE ?", new String[]{"%"+query+"%"});
+    public Cursor getRecipesForQuery(String like) {
+        String query = String.format("SELECT name AS _id, description, image, persons FROM %s WHERE _id LIKE ?",
+                SQLiteDB.RECIPE_TABLE);
+        return database.rawQuery(query , new String[]{"%" + like + "%"});
     }
 
     public RecipeResponse getRecipe(String name) throws ItemNotFoundException {
         RecipeResponse recipe = new RecipeResponse();
-        Cursor cursor = database.rawQuery("SELECT name AS _id, description, image, persons FROM " + SQLiteDB.RECIPE_TABLE +
-                " WHERE _id = ?", new String[]{name});
-        if(!cursor.moveToNext()) throw new ItemNotFoundException(name);
+        String query = String.format("SELECT name AS _id, description, image, persons FROM %s WHERE _id = ?",
+                SQLiteDB.RECIPE_TABLE);
+        Cursor cursor = database.rawQuery(query, new String[]{name});
+        if (!cursor.moveToNext()) { throw new ItemNotFoundException(name); }
 
         recipe.setName(cursor.getString(SQLiteDB.TableFields.RECIPE_NAME));
         recipe.setDescription(cursor.getString(SQLiteDB.TableFields.RECIPE_DESCRIPTION));
@@ -55,7 +57,7 @@ public class RecipeStore implements Closeable{
     }
 
     public void replaceRecipes(List<RecipeResponse> recipeResponses) {
-        logger.d("Replacing recipes in DB");
+        LOGGER.d("Replacing recipes in DB");
         database.delete(SQLiteDB.RECIPE_TABLE, null, null);
         for (RecipeResponse recipeResponse : recipeResponses) {
             ContentValues values = new ContentValues();

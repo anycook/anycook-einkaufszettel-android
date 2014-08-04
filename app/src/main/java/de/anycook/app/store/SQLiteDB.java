@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class SQLiteDB extends SQLiteOpenHelper{
+public class SQLiteDB extends SQLiteOpenHelper {
     private static final String DB_NAME;
     private static final int DB_VERSION;
 
@@ -22,17 +22,6 @@ public class SQLiteDB extends SQLiteOpenHelper{
         INGREDIENT_NAME_TABLE = "Ingredient";
         GROCERY_ITEM_TABLE = "GroceryList";
         RECIPE_TABLE = "Recipe";
-    }
-
-    public static class TableFields {
-        public static final int GROCERY_ITEM_NAME = 0;
-        public static final int GROCERY_ITEM_AMOUNT = 1;
-        public static final int GROCERY_ITEM_STROKE = 2;
-        public static final int RECIPE_NAME = 0;
-        public static final int RECIPE_DESCRIPTION = 1;
-        public static final int RECIPE_IMAGE = 2;
-        public static final int RECIPE_PERSONS = 3;
-
     }
 
     public SQLiteDB(Context context) {
@@ -65,5 +54,16 @@ public class SQLiteDB extends SQLiteOpenHelper{
         db.execSQL(String.format(dropTablePattern, INGREDIENT_NAME_TABLE));
         db.execSQL(String.format(dropTablePattern, RECIPE_TABLE));
         onCreate(db);
+    }
+
+    public static class TableFields {
+        public static final int GROCERY_ITEM_NAME = 0;
+        public static final int GROCERY_ITEM_AMOUNT = 1;
+        public static final int GROCERY_ITEM_STROKE = 2;
+        public static final int RECIPE_NAME = 0;
+        public static final int RECIPE_DESCRIPTION = 1;
+        public static final int RECIPE_IMAGE = 2;
+        public static final int RECIPE_PERSONS = 3;
+
     }
 }

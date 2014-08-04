@@ -12,7 +12,6 @@ import de.anycook.app.store.RecipeStore;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -23,7 +22,7 @@ import java.util.List;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>> {
-    private final static Logger logger = LoggerManager.getLogger();
+    private static final Logger LOGGER = LoggerManager.getLogger();
 
     public static URL url;
 
@@ -31,7 +30,7 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
         try {
             url = new URL("https://api.anycook.de/recipe");
         } catch (MalformedURLException e) {
-            logger.e("Failed to init url", e);
+            LOGGER.e("Failed to init url", e);
         }
     }
 
@@ -44,7 +43,7 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
     @Override
     protected List<RecipeResponse> doInBackground(Void... b) {
         try {
-            logger.d("Trying to load recipes from " + url);
+            LOGGER.d("Trying to load recipes from %s", url);
 
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
@@ -54,23 +53,22 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
 
             Reader reader = new InputStreamReader(httpURLConnection.getInputStream());
             Gson gson = new Gson();
-            Type collectionType = new TypeToken<ArrayList<RecipeResponse>>() {
-            }.getType();
-            return gson.fromJson(reader, collectionType);
+            TypeToken<ArrayList<RecipeResponse>> typeToken = new TypeToken<ArrayList<RecipeResponse>>() { };
+            return gson.fromJson(reader, typeToken.getType());
         } catch (IOException e) {
-            logger.e("failed to load recipes from "+url, e);
+            LOGGER.e("failed to load recipes from " + url, e);
             return null;
         }
     }
 
     @Override
     protected void onPostExecute(final List<RecipeResponse> recipeResponses) {
-        if(recipeResponses == null || recipeResponses.size() == 0) {
-            logger.v("Didn't find any nearby recipes");
+        if (recipeResponses == null || recipeResponses.size() == 0) {
+            LOGGER.v("Didn't find any nearby recipes");
         } else {
-            logger.d(String.format("Found %d different recipes", recipeResponses.size()));
+            LOGGER.d(String.format("Found %d different recipes", recipeResponses.size()));
             RecipeStore recipeStore = new RecipeStore(context);
-            try{
+            try {
                 recipeStore.open();
                 recipeStore.replaceRecipes(recipeResponses);
             } finally {

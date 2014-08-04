@@ -13,8 +13,8 @@ import java.io.Closeable;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class IngredientNameStore implements Closeable{
-    private static final Logger logger = LoggerManager.getLogger();
+public class IngredientNameStore implements Closeable {
+    private static final Logger LOGGER = LoggerManager.getLogger();
 
     private final Context context;
     private SQLiteDatabase database;
@@ -24,31 +24,31 @@ public class IngredientNameStore implements Closeable{
     }
 
     public void open() {
-        logger.v("Open database");
+        LOGGER.v("Open database");
         SQLiteDB sqLiteDB = new SQLiteDB(this.context);
         database = sqLiteDB.getWritableDatabase();
     }
 
     @Override
     public void close() {
-        logger.v("Close database");
+        LOGGER.v("Close database");
         database.close();
     }
 
-    public void addIngredient(Ingredient ingredient){
+    public void addIngredient(Ingredient ingredient) {
         ContentValues values = new ContentValues();
         values.put("name", ingredient.getName());
         database.insertWithOnConflict(SQLiteDB.INGREDIENT_NAME_TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
     }
 
     public boolean ingredientExists(String name) {
-        Cursor cursor = database.query(SQLiteDB.INGREDIENT_NAME_TABLE, new String[]{"name"}, "name=?", new String[]{name},
-                null, null, null);
+        Cursor cursor = database.query(SQLiteDB.INGREDIENT_NAME_TABLE, new String[]{"name"}, "name=?",
+                new String[]{name}, null, null, null);
         return cursor.getCount() > 0;
     }
 
     public Cursor autocompleteIngredients(CharSequence constraint) {
-        return database.rawQuery("SELECT name AS _id FROM "+SQLiteDB.INGREDIENT_NAME_TABLE + " WHERE name LIKE ?",
-                new String[]{constraint+"%"});
+        String query = String.format("SELECT name AS _id FROM %s WHERE name LIKE ?", SQLiteDB.INGREDIENT_NAME_TABLE);
+        return database.rawQuery(query, new String[]{constraint + "%"});
     }
 }

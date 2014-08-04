@@ -24,14 +24,14 @@ import java.util.Set;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingredient>>{
+public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingredient>> {
 
-    private static final String urlPattern;
-    private static final Logger logger;
+    private static final String URL_PATTERN;
+    private static final Logger LOGGER;
 
     static {
-        urlPattern = "https://api.anycook.de/recipe/%s/ingredients";
-        logger = LoggerManager.getLogger();
+        URL_PATTERN = "https://api.anycook.de/recipe/%s/ingredients";
+        LOGGER = LoggerManager.getLogger();
     }
 
     private final IngredientRowAdapter ingredientRowAdapter;
@@ -43,21 +43,19 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
     @Override
     protected List<Ingredient> doInBackground(String... recipeNames) {
         try {
-            //URLCodec urlCodec = new URLCodec();
-            String urlString = String.format(urlPattern, UrlEscapers.urlPathSegmentEscaper().escape(recipeNames[0]));
+            String urlString = String.format(URL_PATTERN, UrlEscapers.urlPathSegmentEscaper().escape(recipeNames[0]));
             URL url = new URL(urlString);
-            logger.d("Loading ingredients from %s", url);
+            LOGGER.d("Loading ingredients from %s", url);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             if (httpURLConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new IOException(httpURLConnection.getResponseMessage());
             }
             Reader reader = new InputStreamReader(httpURLConnection.getInputStream());
             Gson gson = new Gson();
-            Type collectionType = new TypeToken<ArrayList<Ingredient>>() {
-            }.getType();
+            Type collectionType = new TypeToken<ArrayList<Ingredient>>() { } .getType();
             return gson.fromJson(reader, collectionType);
         } catch (IOException e) {
-            logger.e("Failed to load recipe ingredients", e);
+            LOGGER.e("Failed to load recipe ingredients", e);
             return Collections.emptyList();
         }
     }

@@ -21,12 +21,8 @@ import de.anycook.app.tasks.LoadNearbyRecipesTask;
  */
 public class LocationFragment extends ListFragment {
 
-    private final static String urlPattern;
-
-    static {
-        urlPattern = "https://api.anycook.de/discover/near?latitude=%s&" +
-                "longitude=%s&maxRadius=50&recipeNumber=20";
-    }
+    private static final String URL_PATTERN = "https://api.anycook.de/discover/near?latitude=%s&" +
+            "longitude=%s&maxRadius=50&recipeNumber=20";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,7 +33,7 @@ public class LocationFragment extends ListFragment {
             Location location = gps.getLocation();
             RecipeRowArrayAdapter adapter = new RecipeRowArrayAdapter(getActivity());
             setListAdapter(adapter);
-            String url = String.format(urlPattern, location.getLatitude(), location.getLongitude());
+            String url = String.format(URL_PATTERN, location.getLatitude(), location.getLongitude());
             LoadNearbyRecipesTask loadNearbyRecipesTask = new LoadNearbyRecipesTask(adapter);
             loadNearbyRecipesTask.execute(url);
 

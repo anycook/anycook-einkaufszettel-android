@@ -1,7 +1,6 @@
 package de.anycook.app.tasks;
 
 import android.os.AsyncTask;
-import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.noveogroup.android.log.Logger;
@@ -22,7 +21,7 @@ import java.util.List;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class LoadNearbyRecipesTask extends AsyncTask<String, Void, List<RecipeResponse>> {
-    private final static Logger logger = LoggerManager.getLogger();
+    private static final Logger LOGGER = LoggerManager.getLogger();
 
     private final RecipeRowArrayAdapter adapter;
 
@@ -34,7 +33,7 @@ public class LoadNearbyRecipesTask extends AsyncTask<String, Void, List<RecipeRe
     protected List<RecipeResponse> doInBackground(String... url) {
         try {
             URL nearRecipesUrl = new URL(url[0]);
-            Log.d(getClass().getSimpleName(), "Trying to load recipes from "+url[0]);
+            LOGGER.v("Trying to load recipes from %s", url[0]);
 
             HttpURLConnection httpURLConnection = (HttpURLConnection) nearRecipesUrl.openConnection();
 
@@ -44,21 +43,20 @@ public class LoadNearbyRecipesTask extends AsyncTask<String, Void, List<RecipeRe
 
             Reader reader = new InputStreamReader(httpURLConnection.getInputStream());
             Gson gson = new Gson();
-            Type collectionType = new TypeToken<ArrayList<RecipeResponse>>() {
-            }.getType();
+            Type collectionType = new TypeToken<ArrayList<RecipeResponse>>() { } .getType();
             return gson.fromJson(reader, collectionType);
         } catch (IOException e) {
-            logger.e("failed to load recipes from "+url[0], e);
+            LOGGER.e("failed to load recipes from " + url[0], e);
             return null;
         }
     }
 
     @Override
     protected void onPostExecute(final List<RecipeResponse> recipeResponses) {
-        if(recipeResponses.size() == 0) {
-            Log.v(getClass().getSimpleName(), "Didn't find any nearby recipes");
+        if (recipeResponses.size() == 0) {
+            LOGGER.i("Didn't find any nearby recipes");
         } else {
-            logger.d(String.format("Found %d different recipes", recipeResponses.size()));
+            LOGGER.d(String.format("Found %d different recipes", recipeResponses.size()));
             adapter.addAll(recipeResponses);
         }
 

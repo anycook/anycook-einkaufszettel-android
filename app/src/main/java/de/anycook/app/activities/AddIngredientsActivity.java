@@ -35,8 +35,10 @@ import java.util.List;
  * @author Jan Graßegger
  */
 public class AddIngredientsActivity extends ActionBarActivity implements AdapterView.OnItemClickListener,
-        View.OnClickListener{
-    private static final Logger logger = LoggerManager.getLogger();
+        View.OnClickListener {
+    private static final Logger LOGGER = LoggerManager.getLogger();
+    private static final int MAX_PERSONS = 99;
+    private static final int MIN_PERSONS = 1;
 
     private ListView ingredientListView;
     protected RecipeResponse recipe;
@@ -54,7 +56,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
             recipeStore.open();
             recipe = recipeStore.getRecipe(item);
         } catch (ItemNotFoundException e) {
-            logger.e("Failed load recipe", e);
+            LOGGER.e("Failed load recipe", e);
             return;
         } finally {
             recipeStore.close();
@@ -107,6 +109,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+            default:
         }
         return super.onOptionsItemSelected(item);
     }
@@ -120,7 +123,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
             for (int i = 0; i < ingredientsCount; i++) {
                 Ingredient ingredient =
                         ((IngredientRowAdapter) ingredientListView.getAdapter()).getMultipliedItem(i);
-                if(!ingredient.isChecked()) continue;
+                if (!ingredient.isChecked()) { continue; }
                 ingredients.add(ingredient);
             }
             groceryItemStore.addIngredientsToGroceryList(ingredients);
@@ -146,11 +149,11 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         View alertDialogContent = LayoutInflater.from(alertDialogBuilder.getContext())
                 .inflate(R.layout.number_picker_dialog, null);
 
-        final NumberPicker numberPicker = (NumberPicker)alertDialogContent
+        final NumberPicker numberPicker = (NumberPicker) alertDialogContent
                 .findViewById(R.id.number_picker_dialog_numberpicker);
-        numberPicker.setMaxValue(99);
+        numberPicker.setMaxValue(MAX_PERSONS);
         numberPicker.setValue(numPersons);
-        numberPicker.setMinValue(1);
+        numberPicker.setMinValue(MIN_PERSONS);
 
         alertDialogBuilder.setView(alertDialogContent);
 
@@ -159,7 +162,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
             public void onClick(DialogInterface dialog, int which) {
                 String personsString = Integer.toString(numberPicker.getValue());
                 personsEditText.setText(personsString);
-                if (personsString.length() == 0) return;
+                if (personsString.length() == 0) { return; }
                 int numPersons = Integer.parseInt(personsEditText.getText().toString());
                 ((IngredientRowAdapter) ingredientListView.getAdapter()).setCurrentPersons(numPersons);
             }
