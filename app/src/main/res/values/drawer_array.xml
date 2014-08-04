@@ -6,6 +6,7 @@
         <item>Rezepte</item>
         <item>Rezepte in der Nähe</item>
         <item>Website</item>
+        <item>Einstellungen</item>
     </string-array>
 
     <array name="menu_icons">
@@ -13,5 +14,6 @@
         <item>@drawable/anycook_transparent_dark</item>
         <item>@drawable/ic_action_place_dark</item>
         <item>@drawable/ic_action_web_site</item>
+        <item>@drawable/ic_action_settings</item>
     </array>
 </resources>

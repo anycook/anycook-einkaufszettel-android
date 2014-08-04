@@ -3,7 +3,10 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <EditTextPreference
         android:key="blacklisted_ingredients"
-        android:title="TODO"
+        android:title="Standardzutaten"
+        android:summary="Diese Zutaten sind standardmäßig nicht markiert"
+        android:dialogMessage="Zutaten, die man normalerweise nicht einkaufen muss. Diese Zutaten sind standartmäßig
+nicht markiert"
         android:defaultValue="Salz,Pfeffer,Öl"/>
 
 </PreferenceScreen>
