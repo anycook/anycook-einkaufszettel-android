@@ -43,5 +43,7 @@
     <string name="minus">-</string>
     <string name="ingredients_for">Zutaten für</string>
     <string name="persons">Personen:</string>
+    <string name="for_x_people">Für wie viele Personen?</string>
+    <string name="set">OK</string>
 </resources>
 

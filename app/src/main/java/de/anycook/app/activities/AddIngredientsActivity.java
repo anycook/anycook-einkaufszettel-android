@@ -1,15 +1,15 @@
 package de.anycook.app.activities;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.*;
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
@@ -35,7 +35,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
     private static final Logger logger = LoggerManager.getLogger();
 
     private ListView ingredientListView;
-    private RecipeResponse recipe;
+    protected RecipeResponse recipe;
     private EditText personsEditText;
 
     @Override
@@ -70,14 +70,11 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
 
         this.personsEditText = (EditText) findViewById(R.id.ingredient_list_persons);
         personsEditText.setText(Integer.toString(recipe.getPersons()));
-        personsEditText.addTextChangedListener(this);
+        personsEditText.clearFocus();
 
-        Button increasePersonsButton = (Button)findViewById(R.id.ingredient_list_plus_button);
-        increasePersonsButton.setOnClickListener(this);
 
-        Button decreasePersonsButton = (Button)findViewById(R.id.ingredient_list_minus_button);
-        decreasePersonsButton.setOnClickListener(this);
 
+        personsEditText.setOnClickListener(this);
 
         LoadRecipeIngredientsTask loadRecipeIngredientsTask = new LoadRecipeIngredientsTask(adapter);
         loadRecipeIngredientsTask.execute(item);
@@ -139,13 +136,38 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
     }
 
     @Override
-    public void onClick(View v) {
-        int numPersons = Integer.parseInt(personsEditText.getText().toString());
+    public void onClick(final View view) {
 
-        if (v.getId() == R.id.ingredient_list_plus_button && numPersons < 99) numPersons++;
-        else if (v.getId() == R.id.ingredient_list_minus_button && numPersons > 1) numPersons--;
+        final TextView textView = (TextView) view;
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(R.string.for_x_people);
 
-        personsEditText.setText(Integer.toString(numPersons));
+        View alertDialogContent = LayoutInflater.from(alertDialogBuilder.getContext())
+                .inflate(R.layout.number_picker_dialog, null);
+
+        final NumberPicker numberPicker = (NumberPicker)alertDialogContent
+                .findViewById(R.id.number_picker_dialog_numberpicker);
+        numberPicker.setMaxValue(99);
+        numberPicker.setValue(Integer.parseInt(textView.getText().toString()));
+        numberPicker.setMinValue(1);
+
+        alertDialogBuilder.setView(alertDialogContent);
+
+        alertDialogBuilder.setPositiveButton(R.string.set, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                textView.setText(numberPicker.getValue());
+            }
+        });
+        alertDialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //textView.setText(which);
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     @Override
