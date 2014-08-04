@@ -8,6 +8,7 @@ import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 import de.anycook.app.adapter.IngredientRowAdapter;
 import de.anycook.app.model.Ingredient;
+import de.anycook.app.util.Properties;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,6 +19,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Jan Graßegger<jan@anycook.de>
@@ -62,6 +64,15 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
 
     @Override
     protected void onPostExecute(List<Ingredient> ingredients) {
-        ingredientRowAdapter.addAll(ingredients);
+        Properties properties = new Properties(ingredientRowAdapter.getContext());
+        Set<String> blacklistedIngredients = properties.getBlacklistedIngredients();
+
+        for (Ingredient ingredient : ingredients) {
+            if (blacklistedIngredients.contains(ingredient.getName())) {
+                ingredient.setChecked(false);
+            }
+
+            ingredientRowAdapter.add(ingredient);
+        }
     }
 }
