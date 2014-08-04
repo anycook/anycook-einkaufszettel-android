@@ -7,6 +7,7 @@ buildscript {
     }
 }
 apply plugin: 'android'
+apply from: '../config/quality.gradle'
 
 repositories {
     mavenCentral()
@@ -22,6 +23,11 @@ android {
         targetSdkVersion 19
         versionCode 1
         versionName "1.0"
+    }
+
+    lintOptions {
+        abortOnError true
+        disable 'InvalidPackage'
     }
 
     compileOptions {
