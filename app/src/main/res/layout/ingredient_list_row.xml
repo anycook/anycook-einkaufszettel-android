@@ -7,12 +7,14 @@
 
     <CheckBox
             android:id="@+id/ingredient_list_row_checkbox"
+            android:button="@drawable/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:checked="true"
             android:clickable="false"
-            android:focusable="false"/>
+            android:focusable="false"
+            android:layout_margin="3dp"/>
     <TextView
             android:id="@+id/ingredient_list_row_amount"
             android:layout_width="wrap_content"
