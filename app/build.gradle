@@ -3,11 +3,14 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
+        classpath 'com.android.tools.build:gradle:0.10.+'
+        classpath 'org.robolectric:robolectric-gradle-plugin:0.11.+'
     }
 }
 apply plugin: 'android'
-apply from: '../config/quality.gradle'
+apply plugin: 'robolectric'
+//apply from: '../signing.gradle'
+apply from: 'config/quality.gradle'
 
 repositories {
     mavenCentral()
@@ -16,13 +19,14 @@ repositories {
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    buildToolsVersion '19.1.0'
 
     defaultConfig {
         minSdkVersion 18
         targetSdkVersion 19
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
     }
 
     lintOptions {
@@ -40,15 +44,26 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+
+    sourceSets {
+        androidTest {
+            setRoot('src/test')
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.google.code.gson:gson:2.2.4',
-            'com.google.guava:guava:17.0',
-            'com.android.support:appcompat-v7:19.+',
-            'com.noveogroup.android:android-logger:1.3.1'
-    compile ('org.apache.httpcomponents:httpmime:4.0.1') {
-        exclude group: 'org.apache.httpcomponents', module: 'httpcore'
-    }
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.google.guava:guava:17.0'
+    compile 'com.android.support:appcompat-v7:19.+'
+    compile 'com.noveogroup.android:android-logger:1.3.1'
+    compile 'org.apache.httpcomponents:httpmime:4.0.1'
+    androidTestCompile 'junit:junit:4.11'
+    androidTestCompile 'org.robolectric:robolectric:2.3+'
 }
