@@ -32,9 +32,9 @@ With the ingredients anycook Einkaufszettel (anycook shopping list) you can add 
   - Extras: Android Support Library
 
 ## Java Libraries
-- [Google GSON v2.2.4](https://code.google.com/p/google-gson/)
-- [Google Guava v17.0](https://code.google.com/p/guava-libraries/)
-- [Android-Logger v1.3.1](http://noveogroup.github.io/android-logger/)
+- [Google GSON 2.2.4](https://code.google.com/p/google-gson/)
+- [Google Guava 17.0](https://code.google.com/p/guava-libraries/)
+- [Android-Logger 1.3.1](http://noveogroup.github.io/android-logger/)
 
 ## Development environment
 - [Android Studio](https://developer.android.com/sdk/installing/studio.html)
