@@ -1,6 +1,6 @@
 package de.anycook.app.model;
 
-import de.anycook.app.activities.util.StringTools;
+import de.anycook.app.util.StringTools;
 
 /**
  * anycook-api json response object ingredient

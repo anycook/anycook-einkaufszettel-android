@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import com.noveogroup.android.log.Log;
 import de.anycook.app.R;
-import de.anycook.app.activities.util.GPSTracker;
+import de.anycook.app.util.GPSTracker;
 import de.anycook.app.adapter.RecipeRowArrayAdapter;
 import de.anycook.app.model.RecipeResponse;
 import de.anycook.app.tasks.LoadNearbyRecipesTask;

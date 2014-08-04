@@ -1,4 +1,4 @@
-package de.anycook.app.activities.util;
+package de.anycook.app.util;
 
 import android.app.AlertDialog;
 import android.app.Service;

@@ -11,7 +11,7 @@ import android.widget.*;
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 import de.anycook.app.R;
-import de.anycook.app.activities.util.StringTools;
+import de.anycook.app.util.StringTools;
 import de.anycook.app.adapter.GroceryItemRowAdapter;
 import de.anycook.app.store.GroceryItemStore;
 import de.anycook.app.store.IngredientNameStore;

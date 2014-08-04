@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
-import de.anycook.app.activities.util.StringTools;
+import de.anycook.app.util.StringTools;
 import de.anycook.app.model.GroceryItem;
 import de.anycook.app.model.Ingredient;
 

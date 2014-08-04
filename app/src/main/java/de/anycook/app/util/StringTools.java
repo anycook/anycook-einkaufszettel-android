@@ -1,4 +1,4 @@
-package de.anycook.app.activities.util;
+package de.anycook.app.util;
 
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
