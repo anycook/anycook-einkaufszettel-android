@@ -17,6 +17,8 @@ public class StringToolsTest extends TestCase {
         assertEquals("2", StringTools.formatAmount("2"));
         assertEquals("2,3", StringTools.formatAmount("2,3"));
         assertEquals("2,3", StringTools.formatAmount("2.3"));
+        assertEquals("2,3 kg", StringTools.formatAmount("2,3kg"));
+        assertEquals("2,3 kg", StringTools.formatAmount("2.3kg"));
     }
 
     @Test
