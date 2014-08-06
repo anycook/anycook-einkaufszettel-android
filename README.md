@@ -60,7 +60,7 @@ If you see the following exception when you try to run tests, you have to make s
 1. Go to Project Structure -> Modules -> anycook-einkaufszettel-android pane. 
 In the Dependencies tab, move the Module SDK dependency 
 (i.e. Android API 19 Platform) to be the last item in the list.
-2. Go to Project Structure -> Modules -> deckard-gradle -> Paths. 
+2. Go to Project Structure -> Modules -> anycook-einkaufszettel-android -> Paths. 
 The value for 'Output path' should be filled in, but 'Test output path' will not be. 
 Copy the text that's in 'Output path', paste into 'Test output path', but change the final 'build/classes/debug' to 
 'build/test-classes'.
