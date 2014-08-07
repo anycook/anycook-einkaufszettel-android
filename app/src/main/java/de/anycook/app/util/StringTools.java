@@ -44,7 +44,7 @@ public final class StringTools {
 
         LOGGER.v("Input: '%s' Output: '%s", input, output);
 
-        return output.toString();
+        return output.toString().trim();
     }
 
     public static String mergeAmounts(String amount1, String amount2) {
