@@ -19,7 +19,7 @@ public final class StringTools {
 
     static {
         LOGGER = LoggerManager.getLogger();
-        HAS_UNIT_PATTERN = Pattern.compile("(\\d+|\\d+\\.\\d+) ([a-zA-Z]+)");
+        HAS_UNIT_PATTERN = Pattern.compile("(\\d+|\\d+\\.\\d+) ([a-zA-ZÄÜÖäüöß]+)");
         NUMBER_PATTERN = Pattern.compile("(\\d+|\\d+\\.\\d+)");
         NUMBER_FORMAT = new DecimalFormat("0.##");
     }

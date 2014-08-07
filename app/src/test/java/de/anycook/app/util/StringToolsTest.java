@@ -26,7 +26,13 @@ public class StringToolsTest {
 
     @Test
     public void testMergeAmounts() throws Exception {
-
+        assertEquals("2 bla + 2 blub", StringTools.mergeAmounts("2 bla", "2 blub"));
+        assertEquals("5", StringTools.mergeAmounts("2", "3"));
+        assertEquals("250 kg", StringTools.mergeAmounts("120 kg", "130 kg"));
+        assertEquals("5 Stück", StringTools.mergeAmounts("2 Stück", "3 Stück"));
+        assertEquals("4,35", StringTools.mergeAmounts("4,12", "0,23"));
+        assertEquals("4,35", StringTools.mergeAmounts("4,12011", "0,23"));
+        assertEquals("5,76 blub", StringTools.mergeAmounts("3,4 blub", "2,36 blub"));
     }
 
     @Test
