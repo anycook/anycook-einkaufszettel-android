@@ -8,8 +8,6 @@
         <item name="android:textAppearanceMedium">@style/TextAppearanceAnycook.Medium</item>
         <item name="android:textAppearanceLarge">@style/TextAppearanceAnycook.Large</item>
         <item name="android:editTextStyle">@style/TextAppearanceAnycook.EditText</item>
-        <item name="android:buttonStyle">@style/ButtonStyle</item>
-        <item name="android:buttonBarStyle">@style/ButtonBarAnycook</item>
         <item name="android:activatedBackgroundIndicator">@drawable/list_activated_background</item>
     </style>
 
@@ -49,30 +47,6 @@
         <item name="android:textColor">@color/any_white_gray</item>
         <item name="android:textColorHint">@color/any_white_gray</item>
         <item name="android:titleTextStyle">@style/ActionBarTitleTextAnycook</item>
-    </style>
-
-    <style name="ButtonBarAnycook" parent="@android:style/ButtonBar">
-        <item name="android:background">@drawable/bg_texture</item>
-        <item name="android:layout_height">45dp</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_alignParentBottom">true</item>
-        <!--<item name="android:height">10dp</item>-->
-        <item name="android:buttonStyle">@style/ButtonBarButtonStyle</item>
-    </style>
-
-    <style name="ButtonBarButtonStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/any_white_gray</item>
-        <item name="android:paddingRight">0dp</item>
-    </style>
-
-    <style name="ButtonStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:typeface">serif</item>
-        <item name="android:textAlignment">center</item>
     </style>
 
     <style name="ActionBarTitleTextAnycook"

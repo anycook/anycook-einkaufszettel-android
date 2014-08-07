@@ -1,10 +1,10 @@
 package de.anycook.app.activities;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -62,7 +62,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
             recipeStore.close();
         }
 
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(recipe.getName());
@@ -147,7 +147,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         alertDialogBuilder.setMessage(R.string.for_x_people);
 
         View alertDialogContent = LayoutInflater.from(alertDialogBuilder.getContext())
-                .inflate(R.layout.number_picker_dialog, null);
+                .inflate(R.layout.number_picker_dialog, this.ingredientListView, false);
 
         final NumberPicker numberPicker = (NumberPicker) alertDialogContent
                 .findViewById(R.id.number_picker_dialog_numberpicker);
