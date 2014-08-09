@@ -114,24 +114,19 @@ public final class StringTools {
                     newAmount.append(1);
                 } else {
                     int gcd = euclideanGCD(numerator, denominator);
-                    newAmount.append(numerator/gcd).append('/').append(denominator/gcd);
+                    newAmount.append(numerator / gcd).append('/').append(denominator / gcd);
                 }
             } else {
                 float number = Float.parseFloat(numberString);
                 newAmount.append(NUMBER_FORMAT.format(factor * number));
             }
-
-
         }
-
         newAmount.append(amount.substring(end, amount.length()));
-
         return newAmount.toString().replaceAll("\\.", ",");
     }
 
     private static int euclideanGCD(int a, int b) {
-        if (a == 0)
-            return b;
+        if (a == 0) { return b; }
 
         while (b != 0) {
             if (a > b) {
