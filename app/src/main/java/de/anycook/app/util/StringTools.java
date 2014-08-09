@@ -20,7 +20,7 @@ public final class StringTools {
     static {
         LOGGER = LoggerManager.getLogger();
         HAS_UNIT_PATTERN = Pattern.compile("(\\d+|\\d+\\.\\d+) ([a-zA-ZÄÜÖäüöß]+)");
-        NUMBER_PATTERN = Pattern.compile("(\\d+|\\d+\\.\\d+)");
+        NUMBER_PATTERN = Pattern.compile("(\\d+/\\d+)|(\\d+)|(\\d+\\.\\d+)");
         NUMBER_FORMAT = new DecimalFormat("0.##");
     }
 
@@ -101,12 +101,45 @@ public final class StringTools {
 
             end = numberMatcher.end();
 
-            float number = Float.parseFloat(amount.substring(start, end));
-            newAmount.append(NUMBER_FORMAT.format(factor * number));
+            String numberString = amount.substring(start, end);
+
+            if (numberString.contains("/")) {
+                String[] split = numberString.split("/");
+                int numerator = Integer.parseInt(split[0]);
+                int denominator = Integer.parseInt(split[1]);
+                numerator *= newPersons;
+                denominator *= recipePersons;
+
+                if (numerator == denominator) {
+                    newAmount.append(1);
+                } else {
+                    int gcd = euclideanGCD(numerator, denominator);
+                    newAmount.append(numerator/gcd).append('/').append(denominator/gcd);
+                }
+            } else {
+                float number = Float.parseFloat(numberString);
+                newAmount.append(NUMBER_FORMAT.format(factor * number));
+            }
+
+
         }
 
         newAmount.append(amount.substring(end, amount.length()));
 
         return newAmount.toString().replaceAll("\\.", ",");
+    }
+
+    private static int euclideanGCD(int a, int b) {
+        if (a == 0)
+            return b;
+
+        while (b != 0) {
+            if (a > b) {
+                a -= b;
+            } else {
+                b -= a;
+            }
+        }
+        return a;
     }
 }
