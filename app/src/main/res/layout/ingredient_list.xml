@@ -8,14 +8,14 @@
                 style="@style/AnycookTheme">
 
     <include
-             android:id="@+id/ingredient_list_include"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             layout="@layout/ingredient_list_add_people" />
+            android:id="@+id/ingredient_list_include"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/ingredient_list_add_people" />
 
     <ListView
             android:id="@+id/ingredient_list_listview"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ingredient_list_include"
             />

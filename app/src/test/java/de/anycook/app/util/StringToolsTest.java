@@ -37,6 +37,7 @@ public class StringToolsTest {
 
     @Test
     public void testMultiplyAmount() throws Exception {
+        //test fractions
         assertEquals("1/2", StringTools.multiplyAmount("2/4", 1, 1));
         assertEquals("1/2", StringTools.multiplyAmount("1/4", 1, 2));
         assertEquals("5/16", StringTools.multiplyAmount("1/4", 4, 5));

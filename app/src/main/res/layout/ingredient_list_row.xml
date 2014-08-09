@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp">
 
+    <TextView
+            android:id="@+id/ingredient_list_row_name"
+            android:layout_width="wrap_content"
+            android:layout_weight=".7"
+            android:layout_height="wrap_content"
+            android:text="@string/ingredient_name"/>
+    <TextView
+            android:id="@+id/ingredient_list_row_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:gravity="right"
+            android:text="@string/ingredient_amount"/>
     <CheckBox
             android:id="@+id/ingredient_list_row_checkbox"
             android:button="@drawable/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:checked="true"
+            android:gravity="right"
             android:clickable="false"
             android:focusable="false"
-            android:layout_margin="3dp"/>
-    <TextView
-            android:id="@+id/ingredient_list_row_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:layout_toLeftOf="@id/ingredient_list_row_checkbox"
-            android:text="@string/ingredient_amount"/>
-    <TextView
-            android:id="@+id/ingredient_list_row_name"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/ingredient_name"/>
-
-</RelativeLayout>
+            />
+</LinearLayout>
