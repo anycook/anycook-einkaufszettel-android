@@ -27,5 +27,5 @@
             android:gravity="right"
             android:clickable="false"
             android:focusable="false"
-            />
+            android:layout_marginLeft="3dp"/>
 </LinearLayout>
