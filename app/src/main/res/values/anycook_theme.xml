@@ -9,6 +9,7 @@
         <item name="android:textAppearanceLarge">@style/TextAppearanceAnycook.Large</item>
         <item name="android:editTextStyle">@style/TextAppearanceAnycook.EditText</item>
         <item name="android:activatedBackgroundIndicator">@drawable/list_activated_background</item>
+        <item name="searchViewSearchIcon">@drawable/ic_action_search</item>
     </style>
 
     <style name="AnycookActionBarWidgetTheme">
