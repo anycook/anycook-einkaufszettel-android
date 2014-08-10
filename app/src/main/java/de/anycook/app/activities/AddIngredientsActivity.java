@@ -77,7 +77,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         personsEditText.setText(Integer.toString(recipe.getPersons()));
         personsEditText.setOnClickListener(this);
 
-        LoadRecipeIngredientsTask loadRecipeIngredientsTask = new LoadRecipeIngredientsTask(adapter);
+        LoadRecipeIngredientsTask loadRecipeIngredientsTask = new LoadRecipeIngredientsTask(adapter, this);
         loadRecipeIngredientsTask.execute(item);
     }
 

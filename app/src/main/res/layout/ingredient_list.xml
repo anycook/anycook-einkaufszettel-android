@@ -6,6 +6,21 @@
                 android:layout_height="match_parent"
                 android:tag="front"
                 style="@style/AnycookTheme">
+    <LinearLayout
+            android:id="@+id/ingredient_list_progress"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+        <ProgressBar
+                android:id="@+id/pbHeaderProgress"
+                style="@style/Widget.AppCompat.Light.Base.Spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+        </ProgressBar>
+    </LinearLayout>
 
     <include
             android:id="@+id/ingredient_list_include"

@@ -1,11 +1,15 @@
 package de.anycook.app.tasks;
 
+import android.app.Activity;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.LinearLayout;
 import com.google.common.net.UrlEscapers;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
+import de.anycook.app.R;
 import de.anycook.app.adapter.IngredientRowAdapter;
 import de.anycook.app.model.Ingredient;
 import de.anycook.app.util.Properties;
@@ -35,9 +39,16 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
     }
 
     private final IngredientRowAdapter ingredientRowAdapter;
+    private final LinearLayout ingredientListProgress;
 
-    public LoadRecipeIngredientsTask(IngredientRowAdapter ingredientRowAdapter) {
+    public LoadRecipeIngredientsTask(IngredientRowAdapter ingredientRowAdapter, Activity activity) {
         this.ingredientRowAdapter = ingredientRowAdapter;
+        this.ingredientListProgress = (LinearLayout) activity.findViewById(R.id.ingredient_list_progress);
+    }
+
+    @Override
+    protected void onPreExecute() {
+        ingredientListProgress.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -62,6 +73,7 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
 
     @Override
     protected void onPostExecute(List<Ingredient> ingredients) {
+        ingredientListProgress.setVisibility(View.GONE);
         Properties properties = new Properties(ingredientRowAdapter.getContext());
         Set<String> blacklistedIngredients = properties.getBlacklistedIngredients();
 
