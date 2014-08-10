@@ -19,8 +19,9 @@ public final class StringTools {
 
     static {
         LOGGER = LoggerManager.getLogger();
-        HAS_UNIT_PATTERN = Pattern.compile("(\\d+|\\d+\\.\\d+) ([a-zA-ZÄÜÖäüöß]+)");
         NUMBER_PATTERN = Pattern.compile("(\\d+/\\d+)|(\\d+)|(\\d+\\.\\d+)");
+        HAS_UNIT_PATTERN = Pattern.compile("(\\d+/\\d+|\\d+|\\d+\\.\\d+) ([a-zA-ZÄÜÖäüöß]+)");
+
         NUMBER_FORMAT = new DecimalFormat("0.##");
     }
 
@@ -54,40 +55,68 @@ public final class StringTools {
         amount1 = amount1.replace(',', '.');
         amount2 = amount2.replace(',', '.');
 
-        String newAmount = null;
+        Matcher amount1NumberMatcher = NUMBER_PATTERN.matcher(amount1);
+        Matcher amount2NumberMatcher = NUMBER_PATTERN.matcher(amount2);
 
         Matcher amount1UnitMatcher = HAS_UNIT_PATTERN.matcher(amount1);
         Matcher amount2UnitMatcher = HAS_UNIT_PATTERN.matcher(amount2);
-
-        Matcher amount1NumberMatcher = NUMBER_PATTERN.matcher(amount1);
-        Matcher amount2NumberMatcher = NUMBER_PATTERN.matcher(amount2);
 
         if (amount1UnitMatcher.matches() && amount2UnitMatcher.matches()) {
             String unit1 = amount1UnitMatcher.group(2);
             String unit2 = amount2UnitMatcher.group(2);
 
             if (unit1.equals(unit2)) {
-                float number1 = Float.parseFloat(amount1UnitMatcher.group(1));
-                float number2 = Float.parseFloat(amount2UnitMatcher.group(1));
-
-                newAmount = String.format("%s %s", NUMBER_FORMAT.format(number1 + number2), unit1);
+                String newNumber = mergeNumbers(amount1UnitMatcher.group(1), amount2UnitMatcher.group(1));
+                return String.format("%s %s", newNumber, unit1);
             }
-        } else if (amount1NumberMatcher.matches() && amount2NumberMatcher.matches()) {
-            float number1 = Float.parseFloat(amount1);
-            float number2 = Float.parseFloat(amount2);
-
-            newAmount = NUMBER_FORMAT.format(number1 + number2);
         }
 
-        if (newAmount == null) { newAmount = String.format("%s + %s", amount1, amount2); }
+        if (amount1NumberMatcher.matches() && amount2NumberMatcher.matches()) {
+            return mergeNumbers(amount1, amount2);
+        }
 
-        return newAmount.replace('.', ',');
+        return String.format("%s + %s", amount1, amount2);
+    }
+
+    private static String mergeNumbers(String number1, String number2) {
+        if (number1.contains("/") && number2.contains("/")) {
+            return mergeFractions(number1, number2);
+        } else if (number1.contains("/")) {
+            return mergeFractionAndDecimal(number1, number2);
+        } else if (number2.contains("/")) {
+            return  mergeFractionAndDecimal(number2, number1);
+        }
+        return mergeDecimals(number1, number2);
+    }
+
+    private static String mergeFractions(String fraction1, String fraction2) {
+        String[] split1 = fraction1.split("/");
+        String[] split2 = fraction2.split("/");
+
+        int numerator1 = Integer.parseInt(split1[0]);
+        int denominator1 = Integer.parseInt(split1[1]);
+
+        int numerator2 = Integer.parseInt(split2[0]);
+        int denominator2 = Integer.parseInt(split2[1]);
+
+        return getFractionString(numerator1 * denominator2 + numerator2 * denominator1, denominator1 * denominator2);
+    }
+
+    private static String mergeDecimals(String numberString1, String numberString2) {
+        float number1 = Float.parseFloat(numberString1);
+        float number2 = Float.parseFloat(numberString2);
+        return formatNumber(number1 + number2);
+    }
+
+    private static String mergeFractionAndDecimal(String fraction, String decimalString) {
+        String[] split = fraction.split("/");
+        float fractionDecimal = Float.parseFloat(split[0]) / Float.parseFloat(split[1]);
+        return mergeDecimals(Float.toString(fractionDecimal), decimalString);
     }
 
     public static String multiplyAmount(String amount, int recipePersons, int newPersons) {
         amount = amount.replaceAll(",", ".");
 
-        float factor = (float) newPersons / (float) recipePersons;
         Matcher numberMatcher = NUMBER_PATTERN.matcher(amount);
 
         StringBuilder newAmount = new StringBuilder();
@@ -104,25 +133,38 @@ public final class StringTools {
             String numberString = amount.substring(start, end);
 
             if (numberString.contains("/")) {
-                String[] split = numberString.split("/");
-                int numerator = Integer.parseInt(split[0]);
-                int denominator = Integer.parseInt(split[1]);
-                numerator *= newPersons;
-                denominator *= recipePersons;
-
-                if (numerator == denominator) {
-                    newAmount.append(1);
-                } else {
-                    int gcd = euclideanGCD(numerator, denominator);
-                    newAmount.append(numerator / gcd).append('/').append(denominator / gcd);
-                }
+                newAmount.append(multiplyFraction(numberString, newPersons, recipePersons));
             } else {
-                float number = Float.parseFloat(numberString);
-                newAmount.append(NUMBER_FORMAT.format(factor * number));
+                newAmount.append(multiplyDecimal(numberString, newPersons, recipePersons));
             }
         }
         newAmount.append(amount.substring(end, amount.length()));
         return newAmount.toString().replaceAll("\\.", ",");
+    }
+
+    private static String multiplyDecimal(String numberString, float newFactor, float oldFactor) {
+        float factor = newFactor / oldFactor;
+        float number = Float.parseFloat(numberString);
+        return formatNumber(factor * number);
+    }
+
+    private static String multiplyFraction(String fraction, int newFactor, int oldFactor) {
+        String[] split = fraction.split("/");
+        int numerator = Integer.parseInt(split[0]);
+        int denominator = Integer.parseInt(split[1]);
+        numerator *= newFactor;
+        denominator *= oldFactor;
+
+        return getFractionString(numerator, denominator);
+    }
+
+    private static String getFractionString(int numerator, int denominator) {
+        int gcd = euclideanGCD(numerator, denominator);
+        numerator /= gcd;
+        denominator /= gcd;
+
+        if (denominator == 1) { return Integer.toString(numerator); }
+        return String.format("%d/%d", numerator, denominator);
     }
 
     private static int euclideanGCD(int a, int b) {
@@ -136,5 +178,9 @@ public final class StringTools {
             }
         }
         return a;
+    }
+
+    private static String formatNumber(float number) {
+        return NUMBER_FORMAT.format(number).replace('.', ',');
     }
 }
