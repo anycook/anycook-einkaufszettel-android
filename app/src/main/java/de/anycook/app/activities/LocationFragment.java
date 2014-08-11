@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import com.noveogroup.android.log.Log;
 import de.anycook.app.R;
-import de.anycook.app.util.GPSTracker;
 import de.anycook.app.adapter.RecipeRowArrayAdapter;
 import de.anycook.app.model.RecipeResponse;
 import de.anycook.app.tasks.LoadNearbyRecipesTask;
+import de.anycook.app.util.GPSTracker;
 
 /**
  * @author Cladia Sichting
@@ -21,7 +21,7 @@ import de.anycook.app.tasks.LoadNearbyRecipesTask;
  */
 public class LocationFragment extends ListFragment {
 
-    private static final String URL_PATTERN = "https://api.anycook.de/discover/near?latitude=%s&" +
+    private static   String URL_PATTERN = "https://api.anycook.de/discover/near?latitude=%s&" +
             "longitude=%s&maxRadius=50&recipeNumber=20";
 
     @Override
@@ -34,7 +34,7 @@ public class LocationFragment extends ListFragment {
             RecipeRowArrayAdapter adapter = new RecipeRowArrayAdapter(getActivity());
             setListAdapter(adapter);
             String url = String.format(URL_PATTERN, location.getLatitude(), location.getLongitude());
-            LoadNearbyRecipesTask loadNearbyRecipesTask = new LoadNearbyRecipesTask(adapter);
+            LoadNearbyRecipesTask loadNearbyRecipesTask = new LoadNearbyRecipesTask(adapter, this.getActivity());
             loadNearbyRecipesTask.execute(url);
 
         } catch (GPSTracker.UnableToRetrieveLocationException e) {

@@ -16,7 +16,6 @@
 
         <ProgressBar
                 android:id="@+id/pbHeaderProgress"
-                style="@style/Widget.AppCompat.Light.Base.Spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
         </ProgressBar>

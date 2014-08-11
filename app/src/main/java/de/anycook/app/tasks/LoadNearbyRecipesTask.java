@@ -1,10 +1,13 @@
 package de.anycook.app.tasks;
 
+import android.app.Activity;
 import android.os.AsyncTask;
+import android.view.View;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
+import de.anycook.app.R;
 import de.anycook.app.adapter.RecipeRowArrayAdapter;
 import de.anycook.app.model.RecipeResponse;
 
@@ -24,9 +27,11 @@ public class LoadNearbyRecipesTask extends AsyncTask<String, Void, List<RecipeRe
     private static final Logger LOGGER = LoggerManager.getLogger();
 
     private final RecipeRowArrayAdapter adapter;
+    private final Activity activity;
 
-    public LoadNearbyRecipesTask(RecipeRowArrayAdapter adapter) {
+    public LoadNearbyRecipesTask(RecipeRowArrayAdapter adapter, Activity activity) {
         this.adapter = adapter;
+        this.activity = activity;
     }
 
     @Override
@@ -55,6 +60,8 @@ public class LoadNearbyRecipesTask extends AsyncTask<String, Void, List<RecipeRe
     protected void onPostExecute(final List<RecipeResponse> recipeResponses) {
         if (recipeResponses.size() == 0) {
             LOGGER.i("Didn't find any nearby recipes");
+            activity.findViewById(R.id.nothing_found).setVisibility(View.VISIBLE);
+            activity.findViewById(android.R.id.empty).setVisibility(View.GONE);
         } else {
             LOGGER.d(String.format("Found %d different recipes", recipeResponses.size()));
             adapter.addAll(recipeResponses);

@@ -7,6 +7,20 @@
         android:layout_height="match_parent"
         tools:context=".RecipeSearch">
 
+    <LinearLayout
+            android:id="@android:id/empty"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+        <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+        </ProgressBar>
+    </LinearLayout>
+
     <ListView
             android:id="@android:id/list"
             android:layout_width="fill_parent"
@@ -14,16 +28,12 @@
     </ListView>
 
     <TextView
-            android:id="@android:id/empty"
+            android:id="@+id/nothing_found"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/nothing_found"
             android:layout_centerHorizontal="true"
-            android:padding="16dp"/>
-
-    <ImageView
-            android:id="@+id/recipe_list_imageview"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
+            android:padding="16dp"
+            android:visibility="gone"/>
 
 </RelativeLayout>
