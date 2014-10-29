@@ -16,7 +16,7 @@ import de.anycook.app.tasks.LoadNearbyRecipesTask;
 import de.anycook.app.util.GPSTracker;
 
 /**
- * @author Cladia Sichting
+ * @author Claudia Sichting
  * @author Jan Graßegger
  */
 public class LocationFragment extends ListFragment {

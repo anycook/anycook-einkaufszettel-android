@@ -26,5 +26,4 @@
                     android:value="de.anycook.app.activities.MainActivity"/>
         </activity>
     </application>
-
 </manifest>
