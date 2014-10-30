@@ -18,22 +18,21 @@ repositories {
 }
 
 android {
+    signingConfigs {
+    }
     compileSdkVersion 19
     buildToolsVersion '19.1.0'
-
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 19
         versionCode 1
-        versionName "0.1.1"
-        testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
+        versionName '0.1.1'
+        testInstrumentationRunner 'com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner'
     }
-
     lintOptions {
         abortOnError true
         disable 'InvalidPackage'
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
@@ -44,17 +43,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
-
     sourceSets {
         androidTest {
             setRoot('src/test')
         }
     }
-
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/NOTICE'
+    }
+    productFlavors {
     }
 }
 
