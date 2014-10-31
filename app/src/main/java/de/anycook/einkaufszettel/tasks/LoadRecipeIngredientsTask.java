@@ -1,0 +1,88 @@
+package de.anycook.einkaufszettel.tasks;
+
+import android.app.Activity;
+import android.os.AsyncTask;
+import android.view.View;
+import android.widget.LinearLayout;
+import com.google.common.net.UrlEscapers;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.noveogroup.android.log.Logger;
+import com.noveogroup.android.log.LoggerManager;
+import de.anycook.einkaufszettel.R;
+import de.anycook.einkaufszettel.adapter.IngredientRowAdapter;
+import de.anycook.einkaufszettel.model.Ingredient;
+import de.anycook.einkaufszettel.util.Properties;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+/**
+ * @author Jan Graßegger<jan@anycook.de>
+ */
+public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingredient>> {
+
+    private static final String URL_PATTERN;
+    private static final Logger LOGGER;
+
+    static {
+        URL_PATTERN = "https://api.anycook.de/recipe/%s/ingredients";
+        LOGGER = LoggerManager.getLogger();
+    }
+
+    private final IngredientRowAdapter ingredientRowAdapter;
+    private final LinearLayout ingredientListProgress;
+
+    public LoadRecipeIngredientsTask(IngredientRowAdapter ingredientRowAdapter, Activity activity) {
+        this.ingredientRowAdapter = ingredientRowAdapter;
+        this.ingredientListProgress = (LinearLayout) activity.findViewById(R.id.ingredient_list_progress);
+    }
+
+    @Override
+    protected void onPreExecute() {
+        ingredientListProgress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected List<Ingredient> doInBackground(String... recipeNames) {
+        try {
+            String urlString = String.format(URL_PATTERN, UrlEscapers.urlPathSegmentEscaper().escape(recipeNames[0]));
+            URL url = new URL(urlString);
+            LOGGER.d("Loading ingredients from %s", url);
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            if (httpURLConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                throw new IOException(httpURLConnection.getResponseMessage());
+            }
+            Reader reader = new InputStreamReader(httpURLConnection.getInputStream());
+            Gson gson = new Gson();
+            Type collectionType = new TypeToken<ArrayList<Ingredient>>() { } .getType();
+            return gson.fromJson(reader, collectionType);
+        } catch (IOException e) {
+            LOGGER.e("Failed to load recipe ingredients", e);
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
+    protected void onPostExecute(List<Ingredient> ingredients) {
+        ingredientListProgress.setVisibility(View.GONE);
+        Properties properties = new Properties(ingredientRowAdapter.getContext());
+        Set<String> blacklistedIngredients = properties.getBlacklistedIngredients();
+
+        for (Ingredient ingredient : ingredients) {
+            if (blacklistedIngredients.contains(ingredient.getName())) {
+                ingredient.setChecked(false);
+            }
+
+            ingredientRowAdapter.add(ingredient);
+        }
+    }
+}

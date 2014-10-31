@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="de.anycook.app">
+          package="de.anycook.einkaufszettel">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -12,18 +12,18 @@
             android:logo="@drawable/anycook_transparent"
             android:theme="@style/AnycookTheme">
 
-        <activity android:name=".activities.MainActivity" android:label="@string/app_name">
+        <activity android:name="de.anycook.einkaufszettel.activities.MainActivity" android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.AddIngredientsActivity"
-                  android:parentActivityName=".activities.MainActivity">
+        <activity android:name="de.anycook.einkaufszettel.activities.AddIngredientsActivity"
+                  android:parentActivityName="de.anycook.einkaufszettel.activities.MainActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="de.anycook.app.activities.MainActivity"/>
+                    android:value="de.anycook.einkaufszettel.activities.MainActivity"/>
         </activity>
     </application>
 </manifest>
