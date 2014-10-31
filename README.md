@@ -4,6 +4,10 @@ anycook-einkaufszettel-android
 
 mobile grocery list for anycook
 
+![App Screenshots](https://s3-eu-west-1.amazonaws.com/images.anycook.de/miscellaneous/141031_screenshot_github.png)
+
+[![Get it on Google Play](http://developer.android.com/images/brand/en_generic_rgb_wo_45.png)](https://play.google.com/store/apps/details?id=de.anycook.einkaufszettel)
+
 ## Core Idea
 
 Which anycook recipes are favorites around my location?
