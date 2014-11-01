@@ -45,5 +45,7 @@
             android:gravity="right"
             android:clickable="false"
             android:focusable="false"
-            android:layout_marginLeft="3dp"/>
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginRight="2dp"/>
 </LinearLayout>
