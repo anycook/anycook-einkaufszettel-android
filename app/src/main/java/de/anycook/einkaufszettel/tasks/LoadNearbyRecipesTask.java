@@ -1,6 +1,6 @@
 /*
  * This file is part of anycook Einkaufszettel
- * Copyright (C) 2014 Jan Graßegger
+ * Copyright (C) 2014 Jan Graßegger, Claudia Sichting
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
