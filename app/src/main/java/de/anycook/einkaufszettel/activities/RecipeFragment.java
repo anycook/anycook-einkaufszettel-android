@@ -21,6 +21,7 @@ package de.anycook.einkaufszettel.activities;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -54,7 +55,7 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recipe_list, container, false);
         setHasOptionsMenu(true);
         RecipeRowCursorAdapter recipeRowCursorAdapter = new RecipeRowCursorAdapter(getActivity());
@@ -68,6 +69,8 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
             onQueryTextChange(savedInstanceState.getString("query"));
+        } else {
+            onQueryTextChange("");
         }
     }
 

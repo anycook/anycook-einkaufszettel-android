@@ -7,7 +7,7 @@ buildscript {
         classpath 'org.robolectric:robolectric-gradle-plugin:0.13.1'
     }
 }
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 apply plugin: 'robolectric'
 /*
  * This file is part of anycook Einkaufszettel
@@ -38,11 +38,11 @@ repositories {
 android {
     signingConfigs {
     }
-    compileSdkVersion 19
-    buildToolsVersion '19.1.0'
+    compileSdkVersion 21
+    buildToolsVersion '21.1'
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 19
+        minSdkVersion 11
+        targetSdkVersion 21
         versionCode 2
         versionName '0.1.2'
         testInstrumentationRunner 'com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner'
@@ -78,7 +78,7 @@ android {
 dependencies {
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.google.guava:guava:17.0'
-    compile 'com.android.support:appcompat-v7:19.+'
+    compile 'com.android.support:appcompat-v7:21.0.0'
     compile 'com.noveogroup.android:android-logger:1.3.1'
     compile 'org.apache.httpcomponents:httpmime:4.0.1'
     androidTestCompile 'junit:junit:4.11'

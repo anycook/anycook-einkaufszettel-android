@@ -34,12 +34,9 @@ import de.anycook.einkaufszettel.R;
  * @author Claudia Sichting <claudia.sichting@uni-weimar.de>
  */
 public class DrawerRowAdapter extends ArrayAdapter<String> {
-    private final TypedArray icons;
-
 
     public DrawerRowAdapter(Context context, String[] resource) {
         super(context, R.layout.drawer_list, resource);
-        icons = context.getResources().obtainTypedArray(R.array.menu_icons);
     }
 
     @Override
@@ -56,7 +53,11 @@ public class DrawerRowAdapter extends ArrayAdapter<String> {
         String item = getItem(position);
         ViewHolder viewHolder = (ViewHolder) convertView.getTag();
         viewHolder.textViewName.setText(item);
+
+        TypedArray icons = getContext().getResources().obtainTypedArray(R.array.menu_icons);
         viewHolder.imageViewIcon.setImageDrawable(icons.getDrawable(position));
+        icons.recycle();
+
         return convertView;
     }
 

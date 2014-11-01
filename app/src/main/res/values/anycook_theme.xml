@@ -18,16 +18,18 @@
   -->
 
 <resources>
-    <style name="AnycookTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.AnycookTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/any_white_gray</item>
+        <item name="colorPrimaryDark">@color/any_gray_dark_font_color</item>
         <item name="android:actionBarStyle">@style/ActionBarAnycook</item>
-        <item name="android:actionBarWidgetTheme">@style/AnycookActionBarWidgetTheme</item>
         <item name="android:textAppearance">@style/TextAppearanceAnycook</item>
         <item name="android:textAppearanceSmall">@style/TextAppearanceAnycook.Small</item>
         <item name="android:textAppearanceMedium">@style/TextAppearanceAnycook.Medium</item>
         <item name="android:textAppearanceLarge">@style/TextAppearanceAnycook.Large</item>
         <item name="android:editTextStyle">@style/TextAppearanceAnycook.EditText</item>
         <item name="android:activatedBackgroundIndicator">@drawable/list_activated_background</item>
-        <item name="searchViewSearchIcon">@drawable/ic_action_search</item>
+        <item name="windowActionBar">false</item>
+        <!--<item name="searchViewSearchIcon">@drawable/ic_action_search</item>-->
     </style>
 
     <style name="AnycookActionBarWidgetTheme">
@@ -61,21 +63,21 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="ActionBarAnycook" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">@drawable/bg_texture</item>
+    <style name="ActionBarAnycook" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:background">@color/any_green_header</item>
         <item name="android:textColor">@color/any_white_gray</item>
         <item name="android:textColorHint">@color/any_white_gray</item>
         <item name="android:titleTextStyle">@style/ActionBarTitleTextAnycook</item>
     </style>
 
-    <style name="ActionBarTitleTextAnycook"
-           parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+    <style name="ActionBarTitleTextAnycook">
         <item name="android:textColor">@color/any_white_gray</item>
         <item name="android:textStyle">bold</item>
-    </style>
+    </style> -->
 
     <style name="DrawerStyle">
-        <item name="android:activatedBackgroundIndicator">@color/any_green_header</item>
+        <item name="android:background">@drawable/list_activated_background</item>
+        <item name="android:padding">5dp</item>
     </style>
 
 </resources>

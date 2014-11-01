@@ -18,18 +18,15 @@
   -->
 
 <resources>
-    <string name="app_label">anycook</string>
     <string name="app_name">Einkaufszettel</string>
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
     <string name="search">suchen</string>
-    <string name="search_hint">"Suche Gerichte"</string>
     <string name="amount_hint">Wieviel?</string>
 
     <string name="cancel">abbrechen</string>
-    <string name="accept">speichern</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
 

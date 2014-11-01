@@ -23,6 +23,7 @@ import com.noveogroup.android.log.LoggerManager;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -182,7 +183,7 @@ public final class StringTools {
         denominator /= gcd;
 
         if (denominator == 1) { return Integer.toString(numerator); }
-        return String.format("%d/%d", numerator, denominator);
+        return String.format(Locale.GERMAN, "%d/%d", numerator, denominator);
     }
 
     private static int euclideanGCD(int a, int b) {

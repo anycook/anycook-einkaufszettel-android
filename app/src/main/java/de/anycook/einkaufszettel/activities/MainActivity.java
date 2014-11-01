@@ -25,10 +25,11 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -58,12 +59,17 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.anycook_toolbar);
+        toolbar.setLogo(R.drawable.anycook_transparent);
+
+        setSupportActionBar(toolbar);
+
         // menu button
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
-        }
+        //ActionBar actionBar = getSupportActionBar();
+        /*if (toolbar != null) {
+            toolbar.setDisplayHomeAsUpEnabled(true);
+            toolbar.setHomeButtonEnabled(true);
+        } */
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -74,7 +80,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         drawerList.setAdapter(new DrawerRowAdapter(this, menuTitles));
         drawerList.setOnItemClickListener(this);
 
-        this.drawerToggle = getDrawerToggle();
+        this.drawerToggle = getDrawerToggle(toolbar);
         drawerLayout.setDrawerListener(drawerToggle);
 
         if (savedInstanceState == null) {
@@ -88,9 +94,11 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         }
     }
 
-    private ActionBarDrawerToggle getDrawerToggle() {
-        return new ActionBarDrawerToggle(this, drawerLayout,
-                R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
+    private ActionBarDrawerToggle getDrawerToggle(Toolbar toolbar) {
+        //return new ActionBarDrawerToggle(this, drawerLayout,
+        //        R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
+
+        return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);

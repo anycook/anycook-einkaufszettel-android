@@ -18,38 +18,51 @@
   ~ along with this program. If not, see [http://www.gnu.org/licenses/].
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:tag="front"
-                style="@style/AnycookTheme">
-    <LinearLayout
-            android:id="@+id/ingredient_list_progress"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-        <ProgressBar
-                android:id="@+id/pbHeaderProgress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-        </ProgressBar>
-    </LinearLayout>
-
-    <include
-            android:id="@+id/ingredient_list_include"
-            android:layout_width="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              style="@style/Theme.AnycookTheme">
+    <android.support.v7.widget.Toolbar
+            android:id="@+id/anycook_toolbar"
             android:layout_height="wrap_content"
-            layout="@layout/ingredient_list_add_people" />
-
-    <ListView
-            android:id="@+id/ingredient_list_listview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ingredient_list_include"
-            />
+            android:minHeight="?attr/actionBarSize"
+            app:theme="@style/ActionBarAnycook"
+            app:titleTextAppearance="@style/ActionBarTitleTextAnycook"/>
+    <RelativeLayout android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:tag="front"
+                    style="@style/Theme.AnycookTheme">
+        <LinearLayout
+                android:id="@+id/ingredient_list_progress"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-</RelativeLayout>
+            <ProgressBar
+                    android:id="@+id/pbHeaderProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+            </ProgressBar>
+        </LinearLayout>
+
+        <include
+                android:id="@+id/ingredient_list_include"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                layout="@layout/ingredient_list_add_people" />
+
+        <ListView
+                android:id="@+id/ingredient_list_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ingredient_list_include"
+                />
+
+    </RelativeLayout>
+</LinearLayout>
