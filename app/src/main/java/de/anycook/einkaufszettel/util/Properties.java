@@ -43,4 +43,9 @@ public class Properties {
         String ingredientString = preferences.getString("blacklisted_ingredients", null);
         return new HashSet<>(Arrays.asList(ingredientString.split("[, ]+")));
     }
+
+    public int getUpdateInterval() {
+        String intervalString = preferences.getString("update_interval", "86400");
+        return Integer.parseInt(intervalString);
+    }
 }

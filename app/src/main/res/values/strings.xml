@@ -19,6 +19,7 @@
 
 <resources>
     <string name="app_name">Einkaufszettel</string>
+    <string name="anycook">anycook</string>
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
@@ -47,5 +48,6 @@
     <string name="persons">Personen:</string>
     <string name="for_x_people">Für wie viele Personen?</string>
     <string name="set">OK</string>
+    <string name="reacipe_loading">Aktualisiere Rezepte- und Zutatendatenbank</string>
 </resources>
 

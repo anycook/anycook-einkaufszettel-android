@@ -24,7 +24,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
-import de.anycook.einkaufszettel.activities.LoadingActivity;
+import de.anycook.einkaufszettel.activities.StartupActivity;
 import de.anycook.einkaufszettel.model.Ingredient;
 import de.anycook.einkaufszettel.store.IngredientNameStore;
 
@@ -56,9 +56,9 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<Ingredient>>
     }
 
     private final Context context;
-    private final LoadingActivity.Callback callback;
+    private final StartupActivity.Callback callback;
 
-    public LoadIngredientsTask(Context context, LoadingActivity.Callback callback) {
+    public LoadIngredientsTask(Context context, StartupActivity.Callback callback) {
         this.context = context;
         this.callback = callback;
     }
