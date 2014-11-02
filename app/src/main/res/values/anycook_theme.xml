@@ -22,6 +22,8 @@
         <item name="colorPrimary">@color/any_white_gray</item>
         <item name="colorPrimaryDark">@color/any_gray_dark_font_color</item>
         <item name="android:actionBarStyle">@style/ActionBarAnycook</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListViewAnycook</item>
+        <item name="android:dropDownItemStyle">@style/DropDownItemAnycook</item>
         <item name="android:textAppearance">@style/TextAppearanceAnycook</item>
         <item name="android:textAppearanceSmall">@style/TextAppearanceAnycook.Small</item>
         <item name="android:textAppearanceMedium">@style/TextAppearanceAnycook.Medium</item>
@@ -39,8 +41,16 @@
     </style>
 
     <style name="TextAppearanceAnycook" parent="@android:style/TextAppearance">
-        <item name="android:typeface">serif</item>
+        <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textColor">@color/any_gray_dark</item>
+    </style>
+    
+    <style name="DropDownListViewAnycook">
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="DropDownItemAnycook">
+        <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
     <style name="TextAppearanceAnycook.Small" parent="@style/TextAppearanceAnycook">
@@ -64,7 +74,7 @@
     </style>
 
     <style name="ActionBarAnycook" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:background">@color/any_green_header</item>
+        <item name="android:background">@color/any_green</item>
         <item name="android:textColor">@color/any_white_gray</item>
         <item name="android:textColorHint">@color/any_white_gray</item>
         <item name="android:titleTextStyle">@style/ActionBarTitleTextAnycook</item>
@@ -72,8 +82,8 @@
 
     <style name="ActionBarTitleTextAnycook">
         <item name="android:textColor">@color/any_white_gray</item>
-        <item name="android:textStyle">bold</item>
-    </style> -->
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
 
     <style name="DrawerStyle">
         <item name="android:background">@drawable/list_activated_background</item>
