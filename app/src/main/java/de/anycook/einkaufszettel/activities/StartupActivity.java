@@ -61,7 +61,7 @@ public class StartupActivity extends Activity {
 
             SharedPreferences.Editor editor = sharedPrefs.edit();
             editor.putLong("last_update", System.currentTimeMillis());
-            editor.commit();
+            editor.apply();
         } else {
             startMainActivity();
         }
