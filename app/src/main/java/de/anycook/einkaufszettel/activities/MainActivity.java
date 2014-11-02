@@ -38,8 +38,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.adapter.DrawerRowAdapter;
-import de.anycook.einkaufszettel.tasks.LoadIngredientsTask;
-import de.anycook.einkaufszettel.tasks.LoadRecipesTask;
 
 
 /**
@@ -53,6 +51,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     private ListView drawerList;
     private String title;
     private String[] menuTitles;
+    private boolean reloadData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +62,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         toolbar.setLogo(R.drawable.anycook_transparent);
 
         setSupportActionBar(toolbar);
+
 
         // menu button
         //ActionBar actionBar = getSupportActionBar();
@@ -84,14 +84,29 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         drawerLayout.setDrawerListener(drawerToggle);
 
         if (savedInstanceState == null) {
+
             selectMenuItem(0);
-            LoadIngredientsTask loadIngredientsTask = new LoadIngredientsTask(this);
+            reloadData = true;
+
+            Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
+            startActivity(intent);
+            /*LoadIngredientsTask loadIngredientsTask = new LoadIngredientsTask(this);
             loadIngredientsTask.execute();
             LoadRecipesTask loadRecipesTask = new LoadRecipesTask(this);
-            loadRecipesTask.execute();
+            loadRecipesTask.execute();*/
         } else {
             selectMenuItem(savedInstanceState.getInt("fragment"));
+            reloadData = false;
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (reloadData) {
+
+        }
+
     }
 
     private ActionBarDrawerToggle getDrawerToggle(Toolbar toolbar) {

@@ -29,6 +29,7 @@
     <string name="cancel">abbrechen</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
+    <string name="loading">Lade</string>
 
     <string name="image_description">bild</string>
     <string name="grocery_item_hint">Was brauchst du?</string>

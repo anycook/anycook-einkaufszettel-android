@@ -43,5 +43,7 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="de.anycook.einkaufszettel.activities.MainActivity"/>
         </activity>
+        <activity android:name=".activities.LoadingActivity"
+                  android:screenOrientation="portrait" />
     </application>
 </manifest>
