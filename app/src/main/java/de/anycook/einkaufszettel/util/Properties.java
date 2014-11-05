@@ -48,4 +48,8 @@ public class Properties {
         String intervalString = preferences.getString("update_interval", "86400");
         return Integer.parseInt(intervalString);
     }
+
+    public boolean isMobileDataAllowed() {
+        return preferences.getBoolean("load_mobile", false);
+    }
 }

@@ -24,9 +24,12 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ProgressBar;
+import com.noveogroup.android.log.Logger;
+import com.noveogroup.android.log.LoggerManager;
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.tasks.LoadIngredientsTask;
 import de.anycook.einkaufszettel.tasks.LoadRecipesTask;
+import de.anycook.einkaufszettel.util.ConnectionStatus;
 import de.anycook.einkaufszettel.util.Properties;
 
 /**
@@ -34,7 +37,9 @@ import de.anycook.einkaufszettel.util.Properties;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class StartupActivity extends Activity {
+    private Logger logger = LoggerManager.getLogger();
     private ProgressBar progressBar;
+
 
 
     @Override
@@ -49,27 +54,17 @@ public class StartupActivity extends Activity {
 
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastUpdate > updateInterval * 1000) {
-            setContentView(R.layout.load_screen);
-
-            progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-            progressBar.setMax(2);
-
-            LoadIngredientsTask loadIngredientsTask = new LoadIngredientsTask(this, new IncrementCallback());
-            loadIngredientsTask.execute();
-            LoadRecipesTask loadRecipesTask = new LoadRecipesTask(this, new IncrementCallback());
-            loadRecipesTask.execute();
-
-            SharedPreferences.Editor editor = sharedPrefs.edit();
-            editor.putLong("last_update", System.currentTimeMillis());
-            editor.apply();
-        } else {
-            startMainActivity();
+            if (ConnectionStatus.isConnected(this)) {
+                updateData(sharedPrefs);
+                return;
+            }
         }
+        startMainActivity();
     }
 
     @Override
     public void onBackPressed() {
-
+        // Do nothing
     }
 
     private class IncrementCallback implements Callback {
@@ -87,6 +82,24 @@ public class StartupActivity extends Activity {
         startActivity(intent);
         finish();
     }
+
+    private void updateData(SharedPreferences sharedPrefs) {
+        setContentView(R.layout.load_screen);
+
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        progressBar.setMax(2);
+
+        LoadIngredientsTask loadIngredientsTask = new LoadIngredientsTask(this, new IncrementCallback());
+        loadIngredientsTask.execute();
+        LoadRecipesTask loadRecipesTask = new LoadRecipesTask(this, new IncrementCallback());
+        loadRecipesTask.execute();
+
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.putLong("last_update", System.currentTimeMillis());
+        editor.apply();
+    }
+
+
 
     public static interface Callback {
         public void call(AsyncTask.Status status);

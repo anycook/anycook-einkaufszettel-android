@@ -31,9 +31,13 @@ nicht markiert"
         android:title="Updateintervall"
         android:summary="Gibt an, wie oft die Rezepte- und Zutatendatenbank aktualisiert werden soll"
         android:defaultValue="86400"
-
         android:entries="@array/update_interval"
         android:entryValues="@array/update_interval_values" />
+    <CheckBoxPreference
+        android:key="load_mobile"
+        android:title="Mobile Datenverbindung"
+        android:summary="Datenbanken auch über mobile Datenverbindung aktuallisieren"
+        android:defaultValue="false" />
 
 
 </PreferenceScreen>
