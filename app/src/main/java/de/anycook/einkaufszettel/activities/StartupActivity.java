@@ -58,6 +58,7 @@ public class StartupActivity extends Activity {
                 updateData(sharedPrefs);
                 return;
             }
+            logger.i("no active internet connection found");
         }
         startMainActivity();
     }
