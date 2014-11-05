@@ -19,12 +19,14 @@
 
 <resources>
     <string-array name="update_interval">
+        <item name="0">Immer</item>
         <item name="3600">1 Stunde</item>
         <item name="86400">1 Tag</item>
         <item name="604800">1 Woche</item>
         <item name="2419200">1 Monat</item>
     </string-array>
     <string-array name="update_interval_values">
+        <item name="0">0</item>
         <item name="3600">3600</item>
         <item name="86400">86400</item>
         <item name="604800">604800</item>
