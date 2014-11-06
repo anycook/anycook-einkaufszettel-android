@@ -18,7 +18,9 @@
 
 package de.anycook.einkaufszettel.util;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
@@ -41,5 +43,12 @@ public class ConnectionStatus {
             return networkInfo != null && networkInfo.isConnectedOrConnecting();
         }
         return false;
+    }
+
+    public static void showNoConnectionDialog(Context context, DialogInterface.OnClickListener clickListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("Keine Verbindung zum Internet");
+        builder.setNeutralButton("OK", clickListener);
+        builder.create().show();
     }
 }

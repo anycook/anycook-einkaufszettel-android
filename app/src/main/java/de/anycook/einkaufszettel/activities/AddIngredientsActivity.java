@@ -44,6 +44,7 @@ import de.anycook.einkaufszettel.store.GroceryItemStore;
 import de.anycook.einkaufszettel.store.ItemNotFoundException;
 import de.anycook.einkaufszettel.store.RecipeStore;
 import de.anycook.einkaufszettel.tasks.LoadRecipeIngredientsTask;
+import de.anycook.einkaufszettel.util.ConnectionStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,8 +101,17 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         personsEditText.setText(Integer.toString(recipe.getPersons()));
         personsEditText.setOnClickListener(this);
 
-        LoadRecipeIngredientsTask loadRecipeIngredientsTask = new LoadRecipeIngredientsTask(adapter, this);
-        loadRecipeIngredientsTask.execute(item);
+        if(!ConnectionStatus.isConnected(this)) {
+            ConnectionStatus.showNoConnectionDialog(this, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+        } else {
+            LoadRecipeIngredientsTask loadRecipeIngredientsTask = new LoadRecipeIngredientsTask(adapter, this);
+            loadRecipeIngredientsTask.execute(item);
+        }
     }
 
     @Override
