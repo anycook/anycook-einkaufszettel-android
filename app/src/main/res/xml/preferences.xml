@@ -22,12 +22,14 @@
     <EditTextPreference
         android:key="blacklisted_ingredients"
         android:title="Standardzutaten"
+        android:layout="@layout/preference_layout"
         android:summary="Diese Zutaten sind standardmäßig nicht markiert"
         android:dialogMessage="Zutaten, die man normalerweise nicht einkaufen muss. Diese Zutaten sind standartmäßig
 nicht markiert"
         android:defaultValue="Salz,Pfeffer,Öl"/>
     <ListPreference
         android:key="update_interval"
+        android:layout="@layout/preference_layout"
         android:title="Updateintervall"
         android:summary="Gibt an, wie oft die Rezepte- und Zutatendatenbank aktualisiert werden soll"
         android:defaultValue="86400"
@@ -35,6 +37,7 @@ nicht markiert"
         android:entryValues="@array/update_interval_values" />
     <CheckBoxPreference
         android:key="load_mobile"
+        android:layout="@layout/preference_layout"
         android:title="Mobile Datenverbindung"
         android:summary="Datenbanken auch über mobile Datenverbindung aktuallisieren"
         android:defaultValue="false" />
