@@ -16,7 +16,7 @@
  * along with this program. If not, see [http://www.gnu.org/licenses/].
  */
 
-package de.anycook.einkaufszettel.activities;
+package de.anycook.einkaufszettel.activities.fragments;
 
 import android.app.AlertDialog;
 import android.app.ListFragment;

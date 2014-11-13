@@ -37,6 +37,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import de.anycook.einkaufszettel.R;
+import de.anycook.einkaufszettel.activities.fragments.GroceryListFragment;
+import de.anycook.einkaufszettel.activities.fragments.LocationFragment;
+import de.anycook.einkaufszettel.activities.fragments.RecipeFragment;
+import de.anycook.einkaufszettel.activities.fragments.SettingsFragment;
 import de.anycook.einkaufszettel.adapter.DrawerRowAdapter;
 
 

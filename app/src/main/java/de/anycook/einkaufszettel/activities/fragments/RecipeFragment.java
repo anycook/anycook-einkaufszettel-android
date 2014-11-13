@@ -16,7 +16,7 @@
  * along with this program. If not, see [http://www.gnu.org/licenses/].
  */
 
-package de.anycook.einkaufszettel.activities;
+package de.anycook.einkaufszettel.activities.fragments;
 
 import android.app.ListFragment;
 import android.content.Intent;
@@ -33,6 +33,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.noveogroup.android.log.Log;
 import de.anycook.einkaufszettel.R;
+import de.anycook.einkaufszettel.activities.AddIngredientsActivity;
 import de.anycook.einkaufszettel.adapter.RecipeRowCursorAdapter;
 import de.anycook.einkaufszettel.store.RecipeStore;
 
