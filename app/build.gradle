@@ -4,7 +4,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.13.0'
-        classpath 'org.robolectric:robolectric-gradle-plugin:0.13.1'
+        classpath 'org.robolectric:robolectric-gradle-plugin:0.13.2'
     }
 }
 apply plugin: 'com.android.application'
@@ -32,7 +32,6 @@ apply from: 'config/quality.gradle'
 
 repositories {
     mavenCentral()
-    maven { url 'http://clinker.47deg.com/nexus/content/groups/public' }
 }
 
 android {
