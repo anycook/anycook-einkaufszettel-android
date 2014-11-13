@@ -41,7 +41,6 @@ public class StartupActivity extends Activity {
     private ProgressBar progressBar;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,16 +67,6 @@ public class StartupActivity extends Activity {
         // Do nothing
     }
 
-    private class IncrementCallback implements Callback {
-        @Override
-        public void call(AsyncTask.Status status) {
-            progressBar.incrementProgressBy(1);
-            if (progressBar.getProgress() == progressBar.getMax()) {
-                startMainActivity();
-            }
-        }
-    }
-
     private void startMainActivity() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
@@ -100,9 +89,19 @@ public class StartupActivity extends Activity {
         editor.apply();
     }
 
+    public interface Callback {
+        void call(AsyncTask.Status status);
+    }
 
-
-    public static interface Callback {
-        public void call(AsyncTask.Status status);
+    private class IncrementCallback implements Callback {
+        @Override
+        public void call(AsyncTask.Status status) {
+            progressBar.incrementProgressBy(1);
+            if (progressBar.getProgress() == progressBar.getMax()) {
+                startMainActivity();
+            }
+        }
     }
 }
+
+

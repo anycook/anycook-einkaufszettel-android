@@ -70,16 +70,11 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
 
         Bundle b = getIntent().getExtras();
         String item = b.getString("item");
-
-        RecipeStore recipeStore = new RecipeStore(this);
         try {
-            recipeStore.open();
-            recipe = recipeStore.getRecipe(item);
+            recipe = getRecipe(item);
         } catch (ItemNotFoundException e) {
             LOGGER.e("Failed load recipe", e);
             return;
-        } finally {
-            recipeStore.close();
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.anycook_toolbar);
@@ -101,17 +96,31 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         personsEditText.setText(Integer.toString(recipe.getPersons()));
         personsEditText.setOnClickListener(this);
 
-        if(!ConnectionStatus.isConnected(this)) {
-            ConnectionStatus.showNoConnectionDialog(this, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    finish();
-                }
-            });
+        if (!ConnectionStatus.isConnected(this)) {
+            showNoConnectionDialog();
         } else {
             LoadRecipeIngredientsTask loadRecipeIngredientsTask = new LoadRecipeIngredientsTask(adapter, this);
             loadRecipeIngredientsTask.execute(item);
         }
+    }
+
+    private RecipeResponse getRecipe(String recipeName) throws ItemNotFoundException {
+        RecipeStore recipeStore = new RecipeStore(this);
+        try {
+            recipeStore.open();
+            return recipeStore.getRecipe(recipeName);
+        } finally {
+            recipeStore.close();
+        }
+    }
+
+    private void showNoConnectionDialog() {
+        ConnectionStatus.showNoConnectionDialog(this, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
     }
 
     @Override

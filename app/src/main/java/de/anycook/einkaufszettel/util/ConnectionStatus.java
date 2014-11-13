@@ -27,8 +27,10 @@ import android.net.NetworkInfo;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class ConnectionStatus {
-    private ConnectionStatus() {}
+public final class ConnectionStatus {
+    private ConnectionStatus() {
+
+    }
 
     public static boolean isConnected(Context context) {
         Properties properties = new Properties(context);
