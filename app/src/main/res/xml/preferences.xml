@@ -40,7 +40,7 @@ nicht markiert"
         android:layout="@layout/preference_layout"
         android:title="Mobile Datenverbindung"
         android:summary="Datenbanken auch über mobile Datenverbindung aktuallisieren"
-        android:defaultValue="false" />
+        android:defaultValue="true" />
 
 
 </PreferenceScreen>

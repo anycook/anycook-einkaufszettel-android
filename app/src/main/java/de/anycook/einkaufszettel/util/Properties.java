@@ -50,6 +50,6 @@ public class Properties {
     }
 
     public boolean isMobileDataAllowed() {
-        return preferences.getBoolean("load_mobile", false);
+        return preferences.getBoolean("load_mobile", true);
     }
 }
