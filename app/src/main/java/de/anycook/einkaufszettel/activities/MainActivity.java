@@ -37,6 +37,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import de.anycook.einkaufszettel.R;
+import de.anycook.einkaufszettel.activities.fragments.DiscoverFragment;
 import de.anycook.einkaufszettel.activities.fragments.GroceryListFragment;
 import de.anycook.einkaufszettel.activities.fragments.RecipeFragment;
 import de.anycook.einkaufszettel.activities.fragments.SettingsFragment;
@@ -129,6 +130,8 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
     private void selectMenuItem(int position) {
         title = menuTitles[position];
+        Bundle bundle = new Bundle();
+
         Fragment fragment;
         switch (position) {
             case 0:
@@ -138,24 +141,32 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 fragment = new RecipeFragment();
                 break;
             case 2:
+                fragment = new DiscoverFragment();
+                bundle.putString("type", "new");
+                break;
+            case 3:
+                fragment = new DiscoverFragment();
+                bundle.putString("type", "tasty");
+                break;
+            case 4:
                 startBrowser();
                 return;
-            case 3:
+            case 5:
                 fragment = new SettingsFragment();
                 break;
             default:
                 return;
         }
+        fragment.setArguments(bundle);
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment)
-                .addToBackStack(title)
-                .commit();
+            .addToBackStack(title)
+            .commit();
         // update selected item and title, then close the drawer
         drawerList.setItemChecked(position, true);
         drawerLayout.closeDrawer(drawerList);
         invalidateOptionsMenu();
-
     }
 
     private void startBrowser() {

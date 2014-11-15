@@ -41,13 +41,13 @@ import java.util.List;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class LoadNearbyRecipesTask extends AsyncTask<String, Void, List<RecipeResponse>> {
+public class LoadDiscoverRecipesTask extends AsyncTask<String, Void, List<RecipeResponse>> {
     private static final Logger LOGGER = LoggerManager.getLogger();
 
     private final RecipeRowArrayAdapter adapter;
     private final Activity activity;
 
-    public LoadNearbyRecipesTask(RecipeRowArrayAdapter adapter, Activity activity) {
+    public LoadDiscoverRecipesTask(RecipeRowArrayAdapter adapter, Activity activity) {
         this.adapter = adapter;
         this.activity = activity;
     }
