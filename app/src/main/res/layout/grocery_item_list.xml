@@ -26,12 +26,13 @@
 
     <AutoCompleteTextView
             android:id="@+id/grocery_item_list_autocompletetextview_grocery_item"
+            android:layout_toStartOf="@+id/grocery_item_list_textview_amount"
             android:layout_toLeftOf="@+id/grocery_item_list_textview_amount"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="@string/grocery_item_hint"
             android:singleLine="true"
-            android:gravity="left"
+            android:gravity="start"
             android:nextFocusForward="@+id/grocery_item_list_textview_amount"
             android:imeOptions="actionNext"
             style="@style/TextAppearanceAnycook" />
@@ -40,10 +41,11 @@
             android:id="@+id/grocery_item_list_textview_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:singleLine="true"
             android:hint="@string/amount_hint"
-            android:gravity="right"
+            android:gravity="end"
             android:inputType="textNoSuggestions"
             android:imeOptions="actionDone"
             style="@style/TextAppearanceAnycook" />

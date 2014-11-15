@@ -21,7 +21,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="10dp"
                 android:paddingLeft="10dp"
+                android:paddingEnd="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp">
@@ -32,6 +34,7 @@
             android:layout_height="60dp"
             android:src="@drawable/anycook"
             android:scaleType="centerCrop"
+            android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
             android:contentDescription="@string/image_description"/>
 
@@ -39,7 +42,9 @@
             android:id="@+id/recipe_row_textview_recipe_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:layout_toEndOf="@id/recipe_row_imageview"
             android:layout_toRightOf="@id/recipe_row_imageview"
             android:maxLines="1"
             android:ellipsize="end"/>
@@ -48,7 +53,9 @@
             android:id="@+id/recipe_row_textview_recipe_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:layout_toEndOf="@id/recipe_row_imageview"
             android:layout_toRightOf="@id/recipe_row_imageview"
             android:layout_below="@id/recipe_row_textview_recipe_name"
             android:maxLines="2"
