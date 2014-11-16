@@ -4,7 +4,7 @@ anycook-einkaufszettel-android
 
 mobile grocery list for anycook
 
-![App Screenshots](https://s3-eu-west-1.amazonaws.com/images.anycook.de/miscellaneous/141031_screenshot_github.png)
+![App Screenshots](https://s3-eu-west-1.amazonaws.com/images.anycook.de/miscellaneous/141116-android-screenshots.png)
 
 [![Get it on Google Play](http://developer.android.com/images/brand/en_generic_rgb_wo_45.png)](https://play.google.com/store/apps/details?id=de.anycook.einkaufszettel)
 
@@ -34,8 +34,8 @@ With the ingredients anycook Einkaufszettel (anycook shopping list) you can add 
   - Extras: Android Support Library
 
 ### Libraries (automatically installed by Gradle) 
-- [Google GSON 2.2.4](https://code.google.com/p/google-gson/)
-- [Google Guava 17.0](https://code.google.com/p/guava-libraries/)
+- [Google GSON 2.3](https://code.google.com/p/google-gson/)
+- [Google Guava 18.0](https://code.google.com/p/guava-libraries/)
 - [Android-Logger 1.3.1](http://noveogroup.github.io/android-logger/)
 
 ### Test Libraries
@@ -43,9 +43,7 @@ With the ingredients anycook Einkaufszettel (anycook shopping list) you can add 
 - [JUnit 4.11](http://junit.org) 
 
 ## Development environment
-- [Android Studio](https://developer.android.com/sdk/installing/studio.html)
-- USB Debugging
-- Samsung Galaxy S
+- [IntelliJ](https://www.jetbrains.com/idea/)
 
 ## Running Unit Tests in IntelliJ
 If you see the following exception when you try to run tests, you have to make some configuration changes.
