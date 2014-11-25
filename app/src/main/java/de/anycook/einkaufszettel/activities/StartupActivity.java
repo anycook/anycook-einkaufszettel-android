@@ -32,18 +32,25 @@ import de.anycook.einkaufszettel.tasks.LoadRecipesTask;
 import de.anycook.einkaufszettel.util.ConnectionStatus;
 import de.anycook.einkaufszettel.util.Properties;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 /**
  * First activity on application startup. Loads recipe and ingredient database data
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class StartupActivity extends Activity {
-    private Logger logger = LoggerManager.getLogger();
+    private final Logger logger = LoggerManager.getLogger();
     private ProgressBar progressBar;
+    private ExecutorService executor;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        executor = Executors.newFixedThreadPool(2);
 
         SharedPreferences sharedPrefs = getPreferences(MODE_PRIVATE);
         long lastUpdate = sharedPrefs.getLong("last_update", 0);
@@ -55,9 +62,9 @@ public class StartupActivity extends Activity {
         if (currentTime - lastUpdate > updateInterval * 1000) {
             if (ConnectionStatus.isConnected(this)) {
                 updateData(sharedPrefs);
-                return;
+            } else {
+                logger.i("no active internet connection found");
             }
-            logger.i("no active internet connection found");
         }
         startMainActivity();
     }
@@ -80,13 +87,21 @@ public class StartupActivity extends Activity {
         progressBar.setMax(2);
 
         LoadIngredientsTask loadIngredientsTask = new LoadIngredientsTask(this, new IncrementCallback());
-        loadIngredientsTask.execute();
+        loadIngredientsTask.executeOnExecutor(executor);
         LoadRecipesTask loadRecipesTask = new LoadRecipesTask(this, new IncrementCallback());
-        loadRecipesTask.execute();
+        loadRecipesTask.executeOnExecutor(executor);
 
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putLong("last_update", System.currentTimeMillis());
         editor.apply();
+
+        executor.shutdown();
+
+        try {
+            executor.awaitTermination(1, TimeUnit.MINUTES);
+        } catch (InterruptedException e) {
+            logger.e("timeout when trying ot load init data", e);
+        }
     }
 
     public interface Callback {
@@ -97,9 +112,6 @@ public class StartupActivity extends Activity {
         @Override
         public void call(AsyncTask.Status status) {
             progressBar.incrementProgressBy(1);
-            if (progressBar.getProgress() == progressBar.getMax()) {
-                startMainActivity();
-            }
         }
     }
 }
