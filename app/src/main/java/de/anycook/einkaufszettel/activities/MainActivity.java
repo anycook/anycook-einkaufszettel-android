@@ -170,7 +170,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     }
 
     private void startBrowser() {
-        Uri uri = Uri.parse("http://www.anycook.de/");
+        Uri uri = Uri.parse("http://anycook.de/");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         // Create and start the chooser
         Intent chooser = Intent.createChooser(intent, "Open with");
