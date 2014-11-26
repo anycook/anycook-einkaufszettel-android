@@ -60,6 +60,12 @@ public class RecipeStore implements Closeable {
         return database.rawQuery(query , new String[]{"%" + like + "%"});
     }
 
+    public boolean checkRecipe(String name) {
+        Cursor cursor = database.query(SQLiteDB.RECIPE_TABLE, new String[]{"name"}, "name = ?",
+            new String[]{name}, null, null, null, "1");
+        return cursor.getCount() == 1;
+    }
+
     public RecipeResponse getRecipe(String name) throws ItemNotFoundException {
         RecipeResponse recipe = new RecipeResponse();
         String query = String.format("SELECT name AS _id, description, image, persons FROM %s WHERE _id = ?",
@@ -76,14 +82,22 @@ public class RecipeStore implements Closeable {
 
     public void replaceRecipes(List<RecipeResponse> recipeResponses) {
         LOGGER.d("Replacing recipes in DB");
-        database.delete(SQLiteDB.RECIPE_TABLE, null, null);
+        //database.delete(SQLiteDB.RECIPE_TABLE, null, null);
         for (RecipeResponse recipeResponse : recipeResponses) {
-            ContentValues values = new ContentValues();
-            values.put("name", recipeResponse.getName());
-            values.put("description", recipeResponse.getDescription());
-            values.put("image", recipeResponse.getImage());
-            values.put("persons", recipeResponse.getPersons());
-            database.insert(SQLiteDB.RECIPE_TABLE, null, values);
+            if (!checkRecipe(recipeResponse.getName())) {
+                ContentValues values = new ContentValues();
+                values.put("name", recipeResponse.getName());
+                values.put("description", recipeResponse.getDescription());
+                values.put("image", recipeResponse.getImage());
+                values.put("persons", recipeResponse.getPersons());
+                database.insert(SQLiteDB.RECIPE_TABLE, null, values);
+            } else {
+                ContentValues values = new ContentValues();
+                values.put("description", recipeResponse.getDescription());
+                values.put("image", recipeResponse.getImage());
+                values.put("persons", recipeResponse.getPersons());
+                database.update(SQLiteDB.RECIPE_TABLE, values, "name = ?", new String[]{recipeResponse.getName()});
+            }
         }
     }
 }

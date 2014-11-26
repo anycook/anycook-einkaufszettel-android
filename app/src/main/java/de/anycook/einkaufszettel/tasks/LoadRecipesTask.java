@@ -19,6 +19,7 @@
 package de.anycook.einkaufszettel.tasks;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -55,10 +56,12 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
     }
 
     private final Context context;
+    private final SharedPreferences sharedPreferences;
     private final StartupActivity.Callback callback;
 
-    public LoadRecipesTask(Context context, StartupActivity.Callback callback) {
+    public LoadRecipesTask(Context context, SharedPreferences sharedPreferences, StartupActivity.Callback callback) {
         this.context = context;
+        this.sharedPreferences = sharedPreferences;
         this.callback = callback;
     }
 
@@ -68,8 +71,22 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
             LOGGER.d("Trying to load recipes from %s", url);
 
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+            if (sharedPreferences.contains("last-modified-recipes")) {
+                httpURLConnection.setRequestProperty("If-Modified-Since",
+                    sharedPreferences.getString("last-modified-recipes", null));
+            }
+
             if (httpURLConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new IOException(httpURLConnection.getResponseMessage());
+            }
+
+
+            String newLastModified = httpURLConnection.getHeaderField("last-modified");
+            if (newLastModified != null ) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("last-modified-recipes", newLastModified);
+                editor.apply();
             }
 
             Reader reader = new InputStreamReader(httpURLConnection.getInputStream());
@@ -88,6 +105,7 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
 
         if (recipeResponses == null || recipeResponses.size() == 0) {
             LOGGER.v("Didn't find any nearby recipes");
+            callback.call(getStatus());
         } else {
             LOGGER.d(String.format("Found %d different recipes", recipeResponses.size()));
             RecipeStore recipeStore = new RecipeStore(context);

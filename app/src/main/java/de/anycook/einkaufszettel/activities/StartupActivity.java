@@ -56,7 +56,7 @@ public class StartupActivity extends Activity {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastUpdate > updateInterval * 1000) {
             if (ConnectionStatus.isConnected(this)) {
-                updateData(sharedPrefs);
+                updateData(sharedPrefs, lastUpdate == 0);
                 return;
             }
 
@@ -76,14 +76,15 @@ public class StartupActivity extends Activity {
         finish();
     }
 
-    private void updateData(SharedPreferences sharedPrefs) {
+    private void updateData(SharedPreferences sharedPrefs, boolean newData) {
         setContentView(R.layout.load_screen);
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        if (newData) { findViewById(R.id.skip).setVisibility(View.INVISIBLE); }
 
         loadIngredientsTask = new LoadIngredientsTask(this, new IncrementCallback());
         loadIngredientsTask.execute();
-        loadRecipesTask = new LoadRecipesTask(this, new IncrementCallback());
+        loadRecipesTask = new LoadRecipesTask(this, sharedPrefs, new IncrementCallback());
         loadRecipesTask.execute();
 
         SharedPreferences.Editor editor = sharedPrefs.edit();
