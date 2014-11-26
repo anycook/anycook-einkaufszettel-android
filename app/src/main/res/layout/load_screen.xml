@@ -65,7 +65,6 @@
         android:layout_height="wrap_content"
         android:textColor="@color/any_white_gray"
         android:layout_marginTop="100sp"
-        android:text="Überspringen >>"
-        android:textSize="14sp"
-        android:text/>
+        android:text="@string/skip_button"
+        android:textSize="14sp" />
 </LinearLayout>

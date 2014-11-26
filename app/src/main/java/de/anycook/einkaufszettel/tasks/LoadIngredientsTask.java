@@ -82,7 +82,7 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<Ingredient>>
 
     @Override
     protected void onPostExecute(List<Ingredient> ingredients) {
-        if (isCancelled()) return;
+        if (isCancelled()) { return; }
 
         IngredientNameStore ingredientDatabase = new IngredientNameStore(context);
         try {
