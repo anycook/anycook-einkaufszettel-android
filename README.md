@@ -22,9 +22,8 @@ With the ingredients anycook Einkaufszettel (anycook shopping list) you can add 
 - add/check/delete groceries
 - add ingredients of anycook recipes
 - change amount of ingredients depending on the number of guests
-- Location overview: map of favorite recipes
-- Location-based information access: find nearest recipes
 - Level-of-detail approach: detailed recipe view on demand
+- If-Modified-Since: Uses modified since header to save traffic
 
 ## Required dependencies
 - [Java7 JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
