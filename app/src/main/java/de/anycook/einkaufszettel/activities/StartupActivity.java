@@ -34,7 +34,6 @@ import de.anycook.einkaufszettel.util.Properties;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 /**
  * First activity on application startup. Loads recipe and ingredient database data
@@ -51,7 +50,6 @@ public class StartupActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         executor = Executors.newFixedThreadPool(2);
-
         SharedPreferences sharedPrefs = getPreferences(MODE_PRIVATE);
         long lastUpdate = sharedPrefs.getLong("last_update", 0);
 
@@ -62,9 +60,10 @@ public class StartupActivity extends Activity {
         if (currentTime - lastUpdate > updateInterval * 1000) {
             if (ConnectionStatus.isConnected(this)) {
                 updateData(sharedPrefs);
-            } else {
-                logger.i("no active internet connection found");
+                return;
             }
+
+            logger.i("no active internet connection found");
         }
         startMainActivity();
     }
@@ -96,12 +95,6 @@ public class StartupActivity extends Activity {
         editor.apply();
 
         executor.shutdown();
-
-        try {
-            executor.awaitTermination(1, TimeUnit.MINUTES);
-        } catch (InterruptedException e) {
-            logger.e("timeout when trying ot load init data", e);
-        }
     }
 
     public interface Callback {
@@ -112,6 +105,10 @@ public class StartupActivity extends Activity {
         @Override
         public void call(AsyncTask.Status status) {
             progressBar.incrementProgressBy(1);
+
+            if (progressBar.getProgress() == progressBar.getMax()) {
+                startMainActivity();
+            }
         }
     }
 }

@@ -35,6 +35,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -67,7 +68,6 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
             LOGGER.d("Trying to load recipes from %s", url);
 
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-
             if (httpURLConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new IOException(httpURLConnection.getResponseMessage());
             }
@@ -78,7 +78,7 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
             return gson.fromJson(reader, typeToken.getType());
         } catch (IOException e) {
             LOGGER.e("failed to load recipes from " + url, e);
-            return null;
+            return Collections.emptyList();
         }
     }
 
