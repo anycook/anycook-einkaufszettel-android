@@ -83,7 +83,7 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
 
 
             String newLastModified = httpURLConnection.getHeaderField("last-modified");
-            if (newLastModified != null ) {
+            if (newLastModified != null) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("last-modified-recipes", newLastModified);
                 editor.apply();
