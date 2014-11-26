@@ -84,6 +84,8 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
 
     @Override
     protected void onPostExecute(final List<RecipeResponse> recipeResponses) {
+        if (isCancelled()) return;
+
         if (recipeResponses == null || recipeResponses.size() == 0) {
             LOGGER.v("Didn't find any nearby recipes");
         } else {

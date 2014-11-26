@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ProgressBar;
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
@@ -32,9 +33,6 @@ import de.anycook.einkaufszettel.tasks.LoadRecipesTask;
 import de.anycook.einkaufszettel.util.ConnectionStatus;
 import de.anycook.einkaufszettel.util.Properties;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 /**
  * First activity on application startup. Loads recipe and ingredient database data
  * @author Jan Graßegger<jan@anycook.de>
@@ -42,14 +40,13 @@ import java.util.concurrent.Executors;
 public class StartupActivity extends Activity {
     private final Logger logger = LoggerManager.getLogger();
     private ProgressBar progressBar;
-    private ExecutorService executor;
+    private LoadIngredientsTask loadIngredientsTask;
+    private LoadRecipesTask loadRecipesTask;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        executor = Executors.newFixedThreadPool(2);
         SharedPreferences sharedPrefs = getPreferences(MODE_PRIVATE);
         long lastUpdate = sharedPrefs.getLong("last_update", 0);
 
@@ -83,18 +80,21 @@ public class StartupActivity extends Activity {
         setContentView(R.layout.load_screen);
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        progressBar.setMax(2);
 
-        LoadIngredientsTask loadIngredientsTask = new LoadIngredientsTask(this, new IncrementCallback());
-        loadIngredientsTask.executeOnExecutor(executor);
-        LoadRecipesTask loadRecipesTask = new LoadRecipesTask(this, new IncrementCallback());
-        loadRecipesTask.executeOnExecutor(executor);
+        loadIngredientsTask = new LoadIngredientsTask(this, new IncrementCallback());
+        loadIngredientsTask.execute();
+        loadRecipesTask = new LoadRecipesTask(this, new IncrementCallback());
+        loadRecipesTask.execute();
 
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putLong("last_update", System.currentTimeMillis());
         editor.apply();
+    }
 
-        executor.shutdown();
+    public void onSkipClick(View view) {
+        loadIngredientsTask.cancel(true);
+        loadRecipesTask.cancel(true);
+        startMainActivity();
     }
 
     public interface Callback {
