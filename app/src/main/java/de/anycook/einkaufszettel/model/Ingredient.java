@@ -27,7 +27,7 @@ import de.anycook.einkaufszettel.util.StringTools;
  */
 public class Ingredient {
     private String name;
-    private String menge;
+    private String amount;
     private boolean checked;
 
     // empty constructor needed for api access in LoadRecipeIngredientsTask
@@ -45,7 +45,7 @@ public class Ingredient {
 
     public Ingredient(Ingredient ingredient) {
         this.name = ingredient.name;
-        this.menge = ingredient.menge;
+        this.amount = ingredient.amount;
         this.checked = ingredient.checked;
     }
 
@@ -54,7 +54,7 @@ public class Ingredient {
     }
 
     public String getAmount() {
-        return menge;
+        return amount;
     }
 
 
@@ -68,7 +68,7 @@ public class Ingredient {
     }
 
     public void setAmount(String desc) {
-        this.menge = desc;
+        this.amount = desc;
     }
 
     public void setChecked(boolean stroked) {
@@ -77,11 +77,11 @@ public class Ingredient {
 
     public void multiplyAmount(int recipePersons, int newPersons) {
         if (recipePersons == newPersons) { return; }
-        menge = StringTools.multiplyAmount(menge, recipePersons, newPersons);
+        amount = StringTools.multiplyAmount(amount, recipePersons, newPersons);
     }
 
     @Override
     public String toString() {
-        return name + "\t" + menge;
+        return name + "\t" + amount;
     }
 }
