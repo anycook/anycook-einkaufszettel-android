@@ -38,6 +38,7 @@
     <string name="autocomplete">Komplette Zutat</string>
     <string name="clear_ingredients">Alle Zutaten löschen?</string>
     <string name="clear">Aufräumen</string>
+    <string name="ingredients">Zutaten</string>
     <string name="ingredient_amount">Menge</string>
     <string name="ingredient_name">Zutat</string>
     <string name="nothing_found">Leider nichts gefunden. :-(</string>
@@ -49,5 +50,6 @@
     <string name="set">OK</string>
     <string name="reacipe_loading">Aktualisiere Rezepte- und Zutatendatenbank</string>
     <string name="skip_button"><![CDATA[Überspringen >>]]></string>
+    <string name="recipe_image_content_description">Bild des Rezepts</string>
 </resources>
 

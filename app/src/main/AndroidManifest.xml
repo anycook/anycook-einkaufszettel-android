@@ -48,5 +48,12 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="de.anycook.einkaufszettel.activities.MainActivity"/>
         </activity>
+        <activity android:name=".activities.RecipeDetailActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/Theme.AppCompat.Translucent">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.anycook.einkaufszettel.activities.AddIngredientsActivity"/>
+                  </activity>
     </application>
 </manifest>

@@ -51,6 +51,6 @@ public class RecipeRowCursorAdapter extends ResourceCursorAdapter {
         descriptionView.setText(cursor.getString(SQLiteDB.TableFields.RECIPE_DESCRIPTION));
 
         ImageView imageView = (ImageView) view.findViewById(R.id.recipe_row_imageview);
-        new DownloadImageTask(imageView).execute(cursor.getString(SQLiteDB.TableFields.RECIPE_IMAGE));
+        new DownloadImageTask(imageView).execute(cursor.getString(SQLiteDB.TableFields.RECIPE_IMAGE_SMALL));
     }
 }

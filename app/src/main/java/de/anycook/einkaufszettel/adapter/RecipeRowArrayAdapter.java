@@ -68,7 +68,7 @@ public class RecipeRowArrayAdapter extends ArrayAdapter<RecipeResponse> {
         viewHolder.textViewName.setText(recipeResponse.getName());
         viewHolder.textViewDescription.setText(recipeResponse.getDescription());
 
-        new DownloadImageTask(viewHolder.imageView).execute(recipeResponse.getImage());
+        new DownloadImageTask(viewHolder.imageView).execute(recipeResponse.getImage().getSmall());
 
         return convertView;
 

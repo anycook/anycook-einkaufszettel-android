@@ -20,7 +20,7 @@
 <resources>
     <style name="Theme.AnycookTheme" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/any_white_gray</item>
-        <item name="colorPrimaryDark">@color/any_gray_dark_font_color</item>
+        <item name="colorPrimaryDark">@color/any_green_dark</item>
         <item name="android:actionBarStyle">@style/ActionBarAnycook</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListViewAnycook</item>
         <item name="android:dropDownItemStyle">@style/DropDownItemAnycook</item>
@@ -44,13 +44,17 @@
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textColor">@color/any_gray_dark</item>
     </style>
-    
+
     <style name="DropDownListViewAnycook">
         <item name="android:padding">5dp</item>
     </style>
 
     <style name="DropDownItemAnycook">
         <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="TextAppearanceAnycook.XSmall" parent="@style/TextAppearanceAnycook">
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="TextAppearanceAnycook.Small" parent="@style/TextAppearanceAnycook">
@@ -90,4 +94,16 @@
         <item name="android:padding">5dp</item>
     </style>
 
+    <style name="Theme.AppCompat.Translucent" parent="Theme.AnycookTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@style/Animation.TransparentActivity</item>
+    </style>
+
+    <style name="Animation.TransparentActivity" parent="android:Animation.Activity">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
 </resources>

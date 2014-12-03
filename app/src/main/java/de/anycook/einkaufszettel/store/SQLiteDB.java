@@ -18,7 +18,9 @@
 
 package de.anycook.einkaufszettel.store;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -35,15 +37,18 @@ public class SQLiteDB extends SQLiteOpenHelper {
 
     static {
         DB_NAME = "einkaufszettel.db";
-        DB_VERSION = 4;
+        DB_VERSION = 5;
 
         INGREDIENT_NAME_TABLE = "Ingredient";
         GROCERY_ITEM_TABLE = "GroceryList";
         RECIPE_TABLE = "Recipe";
     }
 
+    public Context context;
+
     public SQLiteDB(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+        this.context = context;
     }
 
 
@@ -61,10 +66,12 @@ public class SQLiteDB extends SQLiteOpenHelper {
             "FOREIGN KEY(name) REFERENCES %s(name));", GROCERY_ITEM_TABLE, INGREDIENT_NAME_TABLE));
         db.execSQL(String.format("CREATE TABLE %s(name VARCHAR(45) PRIMARY KEY, " +
                 "description TEXT," +
-                "image VARCHAR(100)," +
+                "smallImage VARCHAR(100)," +
+                "bigImage VARCHAR(100)," +
                 "persons INTEGER NOT NULL);", RECIPE_TABLE));
     }
 
+    @SuppressLint("CommitPrefEdits")
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String dropTablePattern = "DROP TABLE IF EXISTS %s";
@@ -72,16 +79,21 @@ public class SQLiteDB extends SQLiteOpenHelper {
         db.execSQL(String.format(dropTablePattern, INGREDIENT_NAME_TABLE));
         db.execSQL(String.format(dropTablePattern, RECIPE_TABLE));
         onCreate(db);
+
+        SharedPreferences sharedPrefs = context.getSharedPreferences("update_data", Context.MODE_PRIVATE);
+        sharedPrefs.edit().putLong("last_update", 0).commit();
+
     }
 
     public static class TableFields {
-        public static final int GROCERY_ITEM_NAME = 0;
-        public static final int GROCERY_ITEM_AMOUNT = 1;
-        public static final int GROCERY_ITEM_STROKE = 2;
-        public static final int RECIPE_NAME = 0;
-        public static final int RECIPE_DESCRIPTION = 1;
-        public static final int RECIPE_IMAGE = 2;
-        public static final int RECIPE_PERSONS = 3;
+        public static final int GROCERY_ITEM_NAME = 0,
+            GROCERY_ITEM_AMOUNT = 1,
+            GROCERY_ITEM_STROKE = 2;
+        public static final int RECIPE_NAME = 0,
+            RECIPE_DESCRIPTION = 1,
+            RECIPE_IMAGE_SMALL = 2,
+            RECIPE_IMAGE_BIG = 3,
+            RECIPE_PERSONS = 4;
 
     }
 }

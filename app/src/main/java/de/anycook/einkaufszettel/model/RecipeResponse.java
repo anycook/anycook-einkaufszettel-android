@@ -18,14 +18,32 @@
 
 package de.anycook.einkaufszettel.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * @author Claudia Sichting <claudia.sichting@uni-weimar.de>
  */
-public class RecipeResponse {
+public class RecipeResponse implements Parcelable{
     private String name;
     private String description;
     private RecipeImage image;
     private int persons;
+
+    public RecipeResponse() {
+
+    }
+
+    public RecipeResponse(Parcel parcel) {
+        this.name = parcel.readString();
+        this.description = parcel.readString();
+
+        this.image = new RecipeImage();
+        image.setBig(parcel.readString());
+        image.setSmall(parcel.readString());
+
+        this.persons = parcel.readInt();
+    }
 
 
     public String getName() {
@@ -40,8 +58,8 @@ public class RecipeResponse {
         return description;
     }
 
-    public String getImage() {
-        return this.image.getSmallImage();
+    public RecipeImage getImage() {
+        return this.image;
     }
 
     public void setDescription(String description) {
@@ -65,14 +83,51 @@ public class RecipeResponse {
         return name;
     }
 
-    private static class RecipeImage {
-        protected String small;
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-        public String getSmallImage() {
-            return this.small;
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeString(name);
+        parcel.writeString(description);
+        parcel.writeString(image.big);
+        parcel.writeString(image.small);
+        parcel.writeInt(persons);
+    }
+
+    public static class RecipeImage {
+        protected String small;
+        protected String big;
+
+
+        public String getSmall() {
+            return small;
         }
 
+        public void setSmall(String small) {
+            this.small = small;
+        }
+
+        public String getBig() {
+            return big;
+        }
+
+        public void setBig(String big) {
+            this.big = big;
+        }
     }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public RecipeResponse createFromParcel(Parcel in) {
+            return new RecipeResponse(in);
+        }
+
+        public RecipeResponse[] newArray(int size) {
+            return new RecipeResponse[size];
+        }
+    };
 
 }
 

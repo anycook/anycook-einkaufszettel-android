@@ -47,7 +47,7 @@ public class StartupActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPrefs = getPreferences(MODE_PRIVATE);
+        SharedPreferences sharedPrefs = getSharedPreferences("update_data", MODE_PRIVATE);
         long lastUpdate = sharedPrefs.getLong("last_update", 0);
 
         Properties properties = new Properties(this);

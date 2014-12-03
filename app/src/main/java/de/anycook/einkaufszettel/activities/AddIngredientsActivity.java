@@ -22,6 +22,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -32,8 +34,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 import de.anycook.einkaufszettel.R;
@@ -43,6 +47,7 @@ import de.anycook.einkaufszettel.model.RecipeResponse;
 import de.anycook.einkaufszettel.store.GroceryItemStore;
 import de.anycook.einkaufszettel.store.ItemNotFoundException;
 import de.anycook.einkaufszettel.store.RecipeStore;
+import de.anycook.einkaufszettel.tasks.DownloadImageTask;
 import de.anycook.einkaufszettel.tasks.LoadRecipeIngredientsTask;
 import de.anycook.einkaufszettel.util.ConnectionStatus;
 
@@ -60,8 +65,11 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
     private static final int MAX_PERSONS = 99;
     private static final int MIN_PERSONS = 1;
 
+    private RecipeResponse recipe;
     private ListView ingredientListView;
-    protected RecipeResponse recipe;
+    private ImageView recipeImageView;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,13 +92,21 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(recipe.getName());
+            actionBar.setTitle(R.string.ingredients);
         }
 
         this.ingredientListView = (ListView) findViewById(R.id.ingredient_list_listview);
         IngredientRowAdapter adapter = new IngredientRowAdapter(this, recipe.getPersons());
         ingredientListView.setAdapter(adapter);
         ingredientListView.setOnItemClickListener(this);
+
+        this.recipeImageView = (ImageView) findViewById(R.id.recipe_image);
+
+        DownloadImageTask downloadImageTask = new DownloadImageTask(recipeImageView);
+        downloadImageTask.execute(recipe.getImage().getBig());
+
+        TextView titleView = (TextView) findViewById(R.id.recipe_title_text);
+        titleView.setText(recipe.getName());
 
         EditText personsEditText = (EditText) findViewById(R.id.ingredient_list_persons);
         personsEditText.setText(Integer.toString(recipe.getPersons()));
@@ -213,5 +229,20 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+
     }
+
+    public void cardViewClick(View view) {
+
+        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(this.recipeImageView,
+            (int) recipeImageView.getX(),
+            (int) recipeImageView.getY(),
+            recipeImageView.getWidth(),
+            recipeImageView.getHeight());
+        Intent intent = new Intent(this, RecipeDetailActivity.class);
+        intent.putExtra("recipe", recipe);
+
+        ActivityCompat.startActivity(this, intent, optionsCompat.toBundle());
+    }
+
 }

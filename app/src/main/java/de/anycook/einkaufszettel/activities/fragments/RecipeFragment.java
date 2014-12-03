@@ -96,10 +96,13 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
     @Override
     public void onListItemClick(ListView l, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), AddIngredientsActivity.class);
-        Bundle b = new Bundle();
+
+        Bundle bundle = new Bundle();
         String item = ((TextView) view.findViewById(R.id.recipe_row_textview_recipe_name)).getText().toString();
-        b.putString("item", item); //Your id
-        intent.putExtras(b); //Put your id to your next Intent
+
+        bundle.putString("item", item); //Your id
+        intent.putExtras(bundle); //Put your id to your next Intent
+
         startActivity(intent);
     }
 

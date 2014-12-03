@@ -26,11 +26,37 @@
               style="@style/Theme.AnycookTheme">
     <android.support.v7.widget.Toolbar
             android:id="@+id/anycook_toolbar"
+            android:title="@string/ingredients"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:minHeight="?attr/actionBarSize"
             app:theme="@style/ActionBarAnycook"
             app:titleTextAppearance="@style/ActionBarTitleTextAnycook"/>
+    <android.support.v7.widget.CardView
+        xmlns:android.support.v7.cardview="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android.support.v7.cardview:cardElevation="10dp"
+        android:onClick="cardViewClick">
+        <ImageView
+            android:id="@+id/recipe_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/recipe_image_content_description"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"/>
+        <TextView
+            style="TextAppearanceAnycook.Large"
+            android:id="@+id/recipe_title_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent_background_dark"
+            android:layout_gravity="bottom"
+            android:textColor="@color/any_white_gray"
+            android:padding="5dp"/>
+    </android.support.v7.widget.CardView>
+
     <RelativeLayout android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
