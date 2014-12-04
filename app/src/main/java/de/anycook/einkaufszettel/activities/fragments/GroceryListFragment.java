@@ -154,6 +154,7 @@ public class GroceryListFragment extends ListFragment {
         switch (item.getItemId()) {
             case R.id.grocery_menu_action_clear:
                 clickedClearButton();
+                refreshMenuIcon();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
