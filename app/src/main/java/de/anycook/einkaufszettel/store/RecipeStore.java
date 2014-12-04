@@ -55,8 +55,8 @@ public class RecipeStore implements Closeable {
     }
 
     public Cursor getRecipesForQuery(String like) {
-        String query = String.format("SELECT name AS _id, description, smallImage, bigImage, persons, timeStd, timeMin, " +
-                "lastChange FROM %s WHERE _id LIKE ?", SQLiteDB.RECIPE_TABLE);
+        String query = String.format("SELECT name AS _id, description, smallImage, bigImage, persons, timeStd, " +
+            "timeMin, lastChange FROM %s WHERE _id LIKE ?", SQLiteDB.RECIPE_TABLE);
         return database.rawQuery(query , new String[]{"%" + like + "%"});
     }
 
@@ -68,8 +68,8 @@ public class RecipeStore implements Closeable {
 
     public RecipeResponse getRecipe(String name) throws ItemNotFoundException {
         RecipeResponse recipe = new RecipeResponse();
-        String query = String.format("SELECT name AS _id, description, smallImage, bigImage, persons, timeStd, timeMin, " +
-                "lastChange FROM %s WHERE _id = ?", SQLiteDB.RECIPE_TABLE);
+        String query = String.format("SELECT name AS _id, description, smallImage, bigImage, persons, timeStd, " +
+            "timeMin, lastChange FROM %s WHERE _id = ?", SQLiteDB.RECIPE_TABLE);
         Cursor cursor = database.rawQuery(query, new String[]{name});
         if (!cursor.moveToNext()) { throw new ItemNotFoundException(name); }
 

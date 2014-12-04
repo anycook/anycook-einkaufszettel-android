@@ -100,8 +100,18 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         ingredientListView.setAdapter(adapter);
         ingredientListView.setOnItemClickListener(this);
 
-        this.recipeImageView = (ImageView) findViewById(R.id.recipe_image);
+        fillViews();
 
+        if (!ConnectionStatus.isConnected(this)) {
+            showNoConnectionDialog();
+        } else {
+            LoadRecipeIngredientsTask loadRecipeIngredientsTask = new LoadRecipeIngredientsTask(adapter, this);
+            loadRecipeIngredientsTask.execute(item);
+        }
+    }
+
+    private void fillViews() {
+        this.recipeImageView = (ImageView) findViewById(R.id.recipe_image);
         DownloadImageTask downloadImageTask = new DownloadImageTask(recipeImageView);
         downloadImageTask.execute(recipe.getImage().getBig());
 
@@ -111,13 +121,6 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         EditText personsEditText = (EditText) findViewById(R.id.ingredient_list_persons);
         personsEditText.setText(Integer.toString(recipe.getPersons()));
         personsEditText.setOnClickListener(this);
-
-        if (!ConnectionStatus.isConnected(this)) {
-            showNoConnectionDialog();
-        } else {
-            LoadRecipeIngredientsTask loadRecipeIngredientsTask = new LoadRecipeIngredientsTask(adapter, this);
-            loadRecipeIngredientsTask.execute(item);
-        }
     }
 
     private RecipeResponse getRecipe(String recipeName) throws ItemNotFoundException {

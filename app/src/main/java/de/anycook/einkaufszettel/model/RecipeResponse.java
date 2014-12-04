@@ -25,7 +25,18 @@ import android.os.Parcelable;
  * @author Claudia Sichting <claudia.sichting@uni-weimar.de>
  * @author Jan Graßegger <jan@anycook.de>>
  */
-public class RecipeResponse implements Parcelable{
+public class RecipeResponse implements Parcelable {
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public RecipeResponse createFromParcel(Parcel in) {
+            return new RecipeResponse(in);
+        }
+
+        public RecipeResponse[] newArray(int size) {
+            return new RecipeResponse[size];
+        }
+    };
+
     private String name;
     private String description;
     private Image image;
@@ -167,17 +178,6 @@ public class RecipeResponse implements Parcelable{
             this.min = min;
         }
     }
-
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-        public RecipeResponse createFromParcel(Parcel in) {
-            return new RecipeResponse(in);
-        }
-
-        public RecipeResponse[] newArray(int size) {
-            return new RecipeResponse[size];
-        }
-    };
-
 }
 
 

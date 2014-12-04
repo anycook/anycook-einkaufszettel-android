@@ -30,7 +30,7 @@ import de.anycook.einkaufszettel.tasks.DownloadImageTask;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class RecipeDetailActivity extends ActionBarActivity{
+public class RecipeDetailActivity extends ActionBarActivity {
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -39,19 +39,20 @@ public class RecipeDetailActivity extends ActionBarActivity{
 
         RecipeResponse recipeResponse = getIntent().getParcelableExtra("recipe");
 
-        ImageView imageView = (ImageView)findViewById(R.id.recipe_image);
+        ImageView imageView = (ImageView) findViewById(R.id.recipe_image);
         DownloadImageTask downloadImageTask = new DownloadImageTask(imageView);
         downloadImageTask.execute(recipeResponse.getImage().getBig());
 
-        TextView recipeTitleView = (TextView)findViewById(R.id.recipe_title_text);
+        TextView recipeTitleView = (TextView) findViewById(R.id.recipe_title_text);
         recipeTitleView.setText(recipeResponse.getName());
 
-        TextView recipeDescriptionView = (TextView)findViewById(R.id.recipe_description_text);
+        TextView recipeDescriptionView = (TextView) findViewById(R.id.recipe_description_text);
         recipeDescriptionView.setText(recipeResponse.getDescription());
 
-        TextView recipeTimeView = (TextView)findViewById(R.id.recipe_time_text);
+        TextView recipeTimeView = (TextView) findViewById(R.id.recipe_time_text);
         RecipeResponse.Time time = recipeResponse.getTime();
-        recipeTimeView.setText(String.format("%s: %d:%02d h", getString(R.string.duration), time.getStd(), time.getMin()));
+        recipeTimeView.setText(String.format("%s: %d:%02d h",
+            getString(R.string.duration), time.getStd(), time.getMin()));
     }
 
     public void onClick(View view) {
