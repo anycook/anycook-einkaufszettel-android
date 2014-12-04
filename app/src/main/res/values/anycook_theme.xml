@@ -94,6 +94,8 @@
         <item name="android:padding">5dp</item>
     </style>
 
+
+
     <style name="Theme.AppCompat.Translucent" parent="Theme.AnycookTheme">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -105,5 +107,14 @@
     <style name="Animation.TransparentActivity" parent="android:Animation.Activity">
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+
+    <style name="Animation.SlideInOut" parent="android:Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/slide_in</item>
+        <item name="android:windowExitAnimation">@anim/slide_out</item>
+    </style>
+
+    <style name="Theme.AppCompat.AddIngredientsView" parent="Theme.AnycookTheme">
+        <item name="android:windowAnimationStyle">@style/Animation.SlideInOut</item>
     </style>
 </resources>
