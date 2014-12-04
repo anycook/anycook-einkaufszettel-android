@@ -55,12 +55,6 @@ public class RecipeIngredientsStore implements Closeable {
         database.close();
     }
 
-    public Cursor getIngredientsCursor(String recipeName) {
-        return database.query(SQLiteDB.RECIPE_INGREDIENTS_TABLE,
-            new String[]{"recipeName", "ingredientName", "ingredientAmount"},
-            "recipeName = ?", new String[]{recipeName}, null, null, "orderId");
-    }
-
     public List<Ingredient> getIngredients(String recipeName) {
         Cursor cursor = database.query(SQLiteDB.RECIPE_INGREDIENTS_TABLE,
             new String[]{"recipeName", "ingredientName", "ingredientAmount"},
