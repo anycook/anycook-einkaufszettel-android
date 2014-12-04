@@ -23,12 +23,15 @@ import android.os.Parcelable;
 
 /**
  * @author Claudia Sichting <claudia.sichting@uni-weimar.de>
+ * @author Jan Graßegger <jan@anycook.de>>
  */
 public class RecipeResponse implements Parcelable{
     private String name;
     private String description;
-    private RecipeImage image;
+    private Image image;
     private int persons;
+    private Time time;
+    private long lastChange;
 
     public RecipeResponse() {
 
@@ -38,11 +41,17 @@ public class RecipeResponse implements Parcelable{
         this.name = parcel.readString();
         this.description = parcel.readString();
 
-        this.image = new RecipeImage();
+        this.image = new Image();
         image.setBig(parcel.readString());
         image.setSmall(parcel.readString());
 
         this.persons = parcel.readInt();
+
+        this.time = new Time();
+        time.setStd(parcel.readInt());
+        time.setMin(parcel.readInt());
+
+        this.lastChange = parcel.readLong();
     }
 
 
@@ -58,7 +67,7 @@ public class RecipeResponse implements Parcelable{
         return description;
     }
 
-    public RecipeImage getImage() {
+    public Image getImage() {
         return this.image;
     }
 
@@ -66,7 +75,7 @@ public class RecipeResponse implements Parcelable{
         this.description = description;
     }
 
-    public void setImage(RecipeImage image) {
+    public void setImage(Image image) {
         this.image = image;
     }
 
@@ -76,6 +85,22 @@ public class RecipeResponse implements Parcelable{
 
     public void setPersons(int persons) {
         this.persons = persons;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
+    }
+
+    public long getLastChange() {
+        return lastChange;
+    }
+
+    public void setLastChange(long lastChange) {
+        this.lastChange = lastChange;
     }
 
     @Override
@@ -95,9 +120,12 @@ public class RecipeResponse implements Parcelable{
         parcel.writeString(image.big);
         parcel.writeString(image.small);
         parcel.writeInt(persons);
+        parcel.writeInt(time.getStd());
+        parcel.writeInt(time.getMin());
+        parcel.writeLong(lastChange);
     }
 
-    public static class RecipeImage {
+    public static class Image {
         protected String small;
         protected String big;
 
@@ -116,6 +144,27 @@ public class RecipeResponse implements Parcelable{
 
         public void setBig(String big) {
             this.big = big;
+        }
+    }
+
+    public static class Time {
+        private int std;
+        private int min;
+
+        public int getStd() {
+            return std;
+        }
+
+        public void setStd(int std) {
+            this.std = std;
+        }
+
+        public int getMin() {
+            return min;
+        }
+
+        public void setMin(int min) {
+            this.min = min;
         }
     }
 

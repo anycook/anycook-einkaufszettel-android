@@ -43,14 +43,28 @@
         android:adjustViewBounds="true"
         android:contentDescription="@string/recipe_image_content_description"/>
 
-    <TextView
-        android:id="@+id/recipe_description_text"
-        style="@style/TextAppearanceAnycook.XSmall"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/any_white_gray"
-        android:layout_alignParentBottom="true"
         android:background="@color/transparent_background_dark"
-        android:padding="5dp"/>
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:paddingBottom="10dp"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            style="@style/TextAppearanceAnycook.XSmall"
+            android:id="@+id/recipe_description_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/any_white_gray"/>
+        <TextView
+            style="@style/TextAppearanceAnycook.XSmall"
+            android:id="@+id/recipe_time_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/any_white_gray"/>
+    </LinearLayout>
 
 </RelativeLayout>

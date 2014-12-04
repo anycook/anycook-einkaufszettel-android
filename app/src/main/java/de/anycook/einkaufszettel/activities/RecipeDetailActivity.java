@@ -48,6 +48,10 @@ public class RecipeDetailActivity extends ActionBarActivity{
 
         TextView recipeDescriptionView = (TextView)findViewById(R.id.recipe_description_text);
         recipeDescriptionView.setText(recipeResponse.getDescription());
+
+        TextView recipeTimeView = (TextView)findViewById(R.id.recipe_time_text);
+        RecipeResponse.Time time = recipeResponse.getTime();
+        recipeTimeView.setText(String.format("%s: %d:%02d h", getString(R.string.duration), time.getStd(), time.getMin()));
     }
 
     public void onClick(View view) {

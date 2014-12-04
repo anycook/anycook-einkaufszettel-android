@@ -65,10 +65,13 @@ public class SQLiteDB extends SQLiteOpenHelper {
             "orderId INTEGER NOT NULL," +
             "FOREIGN KEY(name) REFERENCES %s(name));", GROCERY_ITEM_TABLE, INGREDIENT_NAME_TABLE));
         db.execSQL(String.format("CREATE TABLE %s(name VARCHAR(45) PRIMARY KEY, " +
-                "description TEXT," +
-                "smallImage VARCHAR(100)," +
-                "bigImage VARCHAR(100)," +
-                "persons INTEGER NOT NULL);", RECIPE_TABLE));
+            "description TEXT," +
+            "smallImage VARCHAR(100)," +
+            "bigImage VARCHAR(100)," +
+            "persons INTEGER NOT NULL," +
+            "timeStd INTEGER," +
+            "timeMin INTEGER," +
+            "lastChange INTEGER);", RECIPE_TABLE));
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -81,7 +84,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
         onCreate(db);
 
         SharedPreferences sharedPrefs = context.getSharedPreferences("update_data", Context.MODE_PRIVATE);
-        sharedPrefs.edit().putLong("last_update", 0).commit();
+        sharedPrefs.edit().putLong("last_update", 0).putString("last-modified-recipes", null).commit();
 
     }
 
@@ -93,7 +96,10 @@ public class SQLiteDB extends SQLiteOpenHelper {
             RECIPE_DESCRIPTION = 1,
             RECIPE_IMAGE_SMALL = 2,
             RECIPE_IMAGE_BIG = 3,
-            RECIPE_PERSONS = 4;
+            RECIPE_PERSONS = 4,
+            RECIPE_TIME_STD = 5,
+            RECIPE_TIME_MIN = 6,
+            RECIPE_LAST_CHANGE = 7;
 
     }
 }

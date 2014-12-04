@@ -55,8 +55,8 @@ public class RecipeStore implements Closeable {
     }
 
     public Cursor getRecipesForQuery(String like) {
-        String query = String.format("SELECT name AS _id, description, smallImage, bigImage, persons FROM %s WHERE _id LIKE ?",
-                SQLiteDB.RECIPE_TABLE);
+        String query = String.format("SELECT name AS _id, description, smallImage, bigImage, persons, timeStd, timeMin, " +
+                "lastChange FROM %s WHERE _id LIKE ?", SQLiteDB.RECIPE_TABLE);
         return database.rawQuery(query , new String[]{"%" + like + "%"});
     }
 
@@ -68,8 +68,8 @@ public class RecipeStore implements Closeable {
 
     public RecipeResponse getRecipe(String name) throws ItemNotFoundException {
         RecipeResponse recipe = new RecipeResponse();
-        String query = String.format("SELECT name AS _id, description, smallImage, bigImage, persons FROM %s WHERE _id = ?",
-                SQLiteDB.RECIPE_TABLE);
+        String query = String.format("SELECT name AS _id, description, smallImage, bigImage, persons, timeStd, timeMin, " +
+                "lastChange FROM %s WHERE _id = ?", SQLiteDB.RECIPE_TABLE);
         Cursor cursor = database.rawQuery(query, new String[]{name});
         if (!cursor.moveToNext()) { throw new ItemNotFoundException(name); }
 
@@ -77,33 +77,38 @@ public class RecipeStore implements Closeable {
         recipe.setDescription(cursor.getString(SQLiteDB.TableFields.RECIPE_DESCRIPTION));
         recipe.setPersons(cursor.getInt(SQLiteDB.TableFields.RECIPE_PERSONS));
 
-        RecipeResponse.RecipeImage image = new RecipeResponse.RecipeImage();
+        RecipeResponse.Image image = new RecipeResponse.Image();
         image.setSmall(cursor.getString(SQLiteDB.TableFields.RECIPE_IMAGE_SMALL));
         image.setBig(cursor.getString(SQLiteDB.TableFields.RECIPE_IMAGE_BIG));
-
         recipe.setImage(image);
+
+        RecipeResponse.Time time = new RecipeResponse.Time();
+        time.setStd(cursor.getInt(SQLiteDB.TableFields.RECIPE_TIME_STD));
+        time.setMin(cursor.getInt(SQLiteDB.TableFields.RECIPE_TIME_MIN));
+        recipe.setTime(time);
+
+        recipe.setLastChange(cursor.getLong(SQLiteDB.TableFields.RECIPE_LAST_CHANGE));
 
         return recipe;
     }
 
     public void replaceRecipes(List<RecipeResponse> recipeResponses) {
         LOGGER.d("Replacing recipes in DB");
-        //database.delete(SQLiteDB.RECIPE_TABLE, null, null);
         for (RecipeResponse recipeResponse : recipeResponses) {
+
+            ContentValues values = new ContentValues();
+            values.put("description", recipeResponse.getDescription());
+            values.put("smallImage", recipeResponse.getImage().getSmall());
+            values.put("bigImage", recipeResponse.getImage().getBig());
+            values.put("persons", recipeResponse.getPersons());
+            values.put("timeStd", recipeResponse.getTime().getStd());
+            values.put("timeMin", recipeResponse.getTime().getMin());
+            values.put("lastChange", recipeResponse.getLastChange());
+
             if (!checkRecipe(recipeResponse.getName())) {
-                ContentValues values = new ContentValues();
                 values.put("name", recipeResponse.getName());
-                values.put("description", recipeResponse.getDescription());
-                values.put("smallImage", recipeResponse.getImage().getSmall());
-                values.put("bigImage", recipeResponse.getImage().getBig());
-                values.put("persons", recipeResponse.getPersons());
                 database.insert(SQLiteDB.RECIPE_TABLE, null, values);
             } else {
-                ContentValues values = new ContentValues();
-                values.put("description", recipeResponse.getDescription());
-                values.put("smallImage", recipeResponse.getImage().getSmall());
-                values.put("bigImage", recipeResponse.getImage().getBig());
-                values.put("persons", recipeResponse.getPersons());
                 database.update(SQLiteDB.RECIPE_TABLE, values, "name = ?", new String[]{recipeResponse.getName()});
             }
         }

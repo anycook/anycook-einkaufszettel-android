@@ -28,6 +28,7 @@ import android.widget.ProgressBar;
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 import de.anycook.einkaufszettel.R;
+import de.anycook.einkaufszettel.store.RecipeStore;
 import de.anycook.einkaufszettel.tasks.LoadIngredientsTask;
 import de.anycook.einkaufszettel.tasks.LoadRecipesTask;
 import de.anycook.einkaufszettel.util.ConnectionStatus;
@@ -47,6 +48,12 @@ public class StartupActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //open DB to trigger new version event
+        RecipeStore recipeStore = new RecipeStore(this);
+        recipeStore.open();
+        recipeStore.close();
+
         SharedPreferences sharedPrefs = getSharedPreferences("update_data", MODE_PRIVATE);
         long lastUpdate = sharedPrefs.getLong("last_update", 0);
 
