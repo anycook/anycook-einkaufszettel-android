@@ -19,10 +19,10 @@
   -->
 <set xmlns:android="http://schemas.android.com/apk/res/android" android:shareInterpolator="false">
     <translate
-           android:toXDelta="100%p"
-           android:fromXDelta="0%p"
-           android:duration="400"
-           android:fillAfter="true"/>
+        android:fromXDelta="0%p"
+        android:toXDelta="100%p"
+        android:duration="400"
+        android:fillAfter="true"/>
 </set>
 
 

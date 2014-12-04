@@ -124,10 +124,27 @@ public class GroceryListFragment extends ListFragment {
         return cursorAdapter;
     }
 
+    private boolean isGroceryItemStroked() {
+        Cursor strokedItemCursor = groceryItemStore.getStrokedGroceryItems();
+        try {
+            return strokedItemCursor.getCount() > 0;
+        } finally {
+            strokedItemCursor.close();
+        }
+    }
+
+    private void refreshMenuIcon() {
+        getActivity().invalidateOptionsMenu();
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
         menu.clear();
         menuInflater.inflate(R.menu.grocery_menu, menu);
+
+        if (!isGroceryItemStroked()) {
+            menu.getItem(0).setIcon(R.drawable.ic_action_discard);
+        }
 
         super.onCreateOptionsMenu(menu, menuInflater);
     }
@@ -149,6 +166,7 @@ public class GroceryListFragment extends ListFragment {
         groceryItemStore.changeStrokeVisibilityOfGroceryItem(groceryName.getText());
         GroceryItemRowAdapter listAdapter = (GroceryItemRowAdapter) getListAdapter();
         listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
+        refreshMenuIcon();
     }
 
     @Override
