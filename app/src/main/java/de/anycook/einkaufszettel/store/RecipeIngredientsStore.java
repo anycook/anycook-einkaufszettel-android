@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class RecipeIngredientsStore implements Closeable{
+public class RecipeIngredientsStore implements Closeable {
     private static final Logger LOGGER = LoggerManager.getLogger();
 
     private final Context context;
