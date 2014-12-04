@@ -31,9 +31,11 @@ public class SQLiteDB extends SQLiteOpenHelper {
     private static final String DB_NAME;
     private static final int DB_VERSION;
 
-    public static final String INGREDIENT_NAME_TABLE;
-    public static final String GROCERY_ITEM_TABLE;
-    public static final String RECIPE_TABLE;
+    public static final String INGREDIENT_NAME_TABLE,
+        GROCERY_ITEM_TABLE,
+        RECIPE_TABLE,
+        RECIPE_INGREDIENTS_TABLE;
+
 
     static {
         DB_NAME = "einkaufszettel.db";
@@ -42,6 +44,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
         INGREDIENT_NAME_TABLE = "Ingredient";
         GROCERY_ITEM_TABLE = "GroceryList";
         RECIPE_TABLE = "Recipe";
+        RECIPE_INGREDIENTS_TABLE = "RecipeIngredients";
     }
 
     public Context context;
@@ -60,7 +63,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
                         "local INTEGER(1) NOT NULL DEFAULT 0);",
                 INGREDIENT_NAME_TABLE));
         db.execSQL(String.format("CREATE TABLE %s(name VARCHAR(45) PRIMARY KEY, " +
-            "amount INTEGER NOT NULL, " +
+            "amount VARCHAR(45) NOT NULL, " +
             "stroke INTEGER(1) NOT NULL DEFAULT 0," +
             "orderId INTEGER NOT NULL," +
             "FOREIGN KEY(name) REFERENCES %s(name));", GROCERY_ITEM_TABLE, INGREDIENT_NAME_TABLE));
@@ -72,6 +75,13 @@ public class SQLiteDB extends SQLiteOpenHelper {
             "timeStd INTEGER," +
             "timeMin INTEGER," +
             "lastChange INTEGER);", RECIPE_TABLE));
+        db.execSQL(String.format("CREATE TABLE %s(recipeName VARCHAR(45)," +
+            "ingredientName VARCHAR(45)," +
+            "ingredientAmount VARCHAR(45), orderId INTEGER," +
+            "FOREIGN KEY(recipeName) REFERENCES %s(name)," +
+            "FOREIGN KEY(ingredientName) REFERENCES %s(name)," +
+            "PRIMARY KEY(recipeName, ingredientName));",
+            RECIPE_INGREDIENTS_TABLE, RECIPE_TABLE, INGREDIENT_NAME_TABLE));
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -81,6 +91,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
         db.execSQL(String.format(dropTablePattern, GROCERY_ITEM_TABLE));
         db.execSQL(String.format(dropTablePattern, INGREDIENT_NAME_TABLE));
         db.execSQL(String.format(dropTablePattern, RECIPE_TABLE));
+        db.execSQL(String.format(dropTablePattern, RECIPE_INGREDIENTS_TABLE));
         onCreate(db);
 
         SharedPreferences sharedPrefs = context.getSharedPreferences("update_data", Context.MODE_PRIVATE);
@@ -100,6 +111,10 @@ public class SQLiteDB extends SQLiteOpenHelper {
             RECIPE_TIME_STD = 5,
             RECIPE_TIME_MIN = 6,
             RECIPE_LAST_CHANGE = 7;
+        public static final int RECIPE_INGREDIENTS_RECIPE_NAME = 0,
+            RECIPE_INGREDIENTS_NAME = 1,
+            RECIPE_INGREDIENTS_AMOUNT = 2,
+            RECIPE_INGREDIENTS_ORDER_ID = 3;
 
     }
 }

@@ -19,6 +19,7 @@
 package de.anycook.einkaufszettel.tasks;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -30,6 +31,7 @@ import com.noveogroup.android.log.LoggerManager;
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.adapter.IngredientRowAdapter;
 import de.anycook.einkaufszettel.model.Ingredient;
+import de.anycook.einkaufszettel.store.RecipeIngredientsStore;
 import de.anycook.einkaufszettel.util.Properties;
 
 import java.io.IOException;
@@ -58,10 +60,12 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
 
     private final IngredientRowAdapter ingredientRowAdapter;
     private final LinearLayout ingredientListProgress;
+    private final Context context;
 
     public LoadRecipeIngredientsTask(IngredientRowAdapter ingredientRowAdapter, Activity activity) {
         this.ingredientRowAdapter = ingredientRowAdapter;
         this.ingredientListProgress = (LinearLayout) activity.findViewById(R.id.ingredient_list_progress);
+        this.context = activity;
     }
 
     @Override
@@ -71,8 +75,19 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
 
     @Override
     protected List<Ingredient> doInBackground(String... recipeNames) {
+        String recipeName = recipeNames[0];
+        RecipeIngredientsStore recipeIngredientsStore = new RecipeIngredientsStore(context);
+        recipeIngredientsStore.open();
         try {
-            String urlString = String.format(URL_PATTERN, UrlEscapers.urlPathSegmentEscaper().escape(recipeNames[0]));
+            //check DB first
+            List<Ingredient> ingredients = recipeIngredientsStore.getIngredients(recipeName);
+
+            if (ingredients.size() > 0) {
+                return ingredients;
+            }
+
+
+            String urlString = String.format(URL_PATTERN, UrlEscapers.urlPathSegmentEscaper().escape(recipeName));
             URL url = new URL(urlString);
             LOGGER.d("Loading ingredients from %s", url);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -82,10 +97,16 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
             Reader reader = new InputStreamReader(httpURLConnection.getInputStream());
             Gson gson = new Gson();
             Type collectionType = new TypeToken<ArrayList<Ingredient>>() { } .getType();
-            return gson.fromJson(reader, collectionType);
+            ingredients =  gson.fromJson(reader, collectionType);
+
+            //add ingredients to DB
+            recipeIngredientsStore.addIngredients(recipeName, ingredients);
+            return ingredients;
         } catch (IOException e) {
             LOGGER.e("Failed to load recipe ingredients", e);
             return Collections.emptyList();
+        } finally {
+            recipeIngredientsStore.close();
         }
     }
 

@@ -94,23 +94,33 @@ public class RecipeStore implements Closeable {
 
     public void replaceRecipes(List<RecipeResponse> recipeResponses) {
         LOGGER.d("Replacing recipes in DB");
-        for (RecipeResponse recipeResponse : recipeResponses) {
 
-            ContentValues values = new ContentValues();
-            values.put("description", recipeResponse.getDescription());
-            values.put("smallImage", recipeResponse.getImage().getSmall());
-            values.put("bigImage", recipeResponse.getImage().getBig());
-            values.put("persons", recipeResponse.getPersons());
-            values.put("timeStd", recipeResponse.getTime().getStd());
-            values.put("timeMin", recipeResponse.getTime().getMin());
-            values.put("lastChange", recipeResponse.getLastChange());
+        RecipeIngredientsStore recipeIngredientsStore = new RecipeIngredientsStore(context);
+        recipeIngredientsStore.open();
 
-            if (!checkRecipe(recipeResponse.getName())) {
-                values.put("name", recipeResponse.getName());
-                database.insert(SQLiteDB.RECIPE_TABLE, null, values);
-            } else {
-                database.update(SQLiteDB.RECIPE_TABLE, values, "name = ?", new String[]{recipeResponse.getName()});
+        try {
+            for (RecipeResponse recipeResponse : recipeResponses) {
+                recipeIngredientsStore.removeIngredients(recipeResponse.getName());
+
+                ContentValues values = new ContentValues();
+                values.put("description", recipeResponse.getDescription());
+                values.put("smallImage", recipeResponse.getImage().getSmall());
+                values.put("bigImage", recipeResponse.getImage().getBig());
+                values.put("persons", recipeResponse.getPersons());
+                values.put("timeStd", recipeResponse.getTime().getStd());
+                values.put("timeMin", recipeResponse.getTime().getMin());
+                values.put("lastChange", recipeResponse.getLastChange());
+
+                if (!checkRecipe(recipeResponse.getName())) {
+                    values.put("name", recipeResponse.getName());
+                    database.insert(SQLiteDB.RECIPE_TABLE, null, values);
+                } else {
+                    database.update(SQLiteDB.RECIPE_TABLE, values, "name = ?", new String[]{recipeResponse.getName()});
+                }
             }
+        } finally {
+            recipeIngredientsStore.close();
         }
+
     }
 }
