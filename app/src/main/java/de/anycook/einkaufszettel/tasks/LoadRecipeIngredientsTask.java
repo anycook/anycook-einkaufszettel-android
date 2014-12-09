@@ -19,7 +19,7 @@
 package de.anycook.einkaufszettel.tasks;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -32,6 +32,7 @@ import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.adapter.IngredientRowAdapter;
 import de.anycook.einkaufszettel.model.Ingredient;
 import de.anycook.einkaufszettel.store.RecipeIngredientsStore;
+import de.anycook.einkaufszettel.util.ConnectionStatus;
 import de.anycook.einkaufszettel.util.Properties;
 
 import java.io.IOException;
@@ -60,7 +61,7 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
 
     private final IngredientRowAdapter ingredientRowAdapter;
     private final LinearLayout ingredientListProgress;
-    private final Context context;
+    private final Activity context;
 
     public LoadRecipeIngredientsTask(IngredientRowAdapter ingredientRowAdapter, Activity activity) {
         this.ingredientRowAdapter = ingredientRowAdapter;
@@ -81,11 +82,16 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
         try {
             //check DB first
             List<Ingredient> ingredients = recipeIngredientsStore.getIngredients(recipeName);
-
             if (ingredients.size() > 0) {
                 return ingredients;
             }
 
+            // if ingredient not in db check if internet connection is available
+            // if not stop activity
+            if (!ConnectionStatus.isConnected(context)) {
+                shownOfflineMessage();
+                return ingredients;
+            }
 
             String urlString = String.format(URL_PATTERN, UrlEscapers.urlPathSegmentEscaper().escape(recipeName));
             URL url = new URL(urlString);
@@ -123,5 +129,19 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
 
             ingredientRowAdapter.add(ingredient);
         }
+    }
+
+    private void shownOfflineMessage() {
+        context.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ConnectionStatus.showNoConnectionDialog(context, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        context.finish();
+                    }
+                });
+            }
+        });
     }
 }
