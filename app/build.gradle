@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.13.0'
+        classpath 'com.android.tools.build:gradle:0.14.2'
         classpath 'org.robolectric:robolectric-gradle-plugin:0.13.2'
     }
 }
@@ -38,7 +38,7 @@ android {
     signingConfigs {
     }
     compileSdkVersion 21
-    buildToolsVersion '21.1'
+    buildToolsVersion '21.1.1'
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 21
