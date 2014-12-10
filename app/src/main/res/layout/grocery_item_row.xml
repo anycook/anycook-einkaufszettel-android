@@ -33,7 +33,8 @@
             android:gravity="end"
             android:maxLines="1"
             android:singleLine="true"
-            android:textStyle="italic"/>
+            android:textStyle="italic"
+            style="@style/TextAppearanceAnycook.Medium"/>
     <TextView
             android:id="@+id/grocery_item_row_textview_grocery_item"
             android:layout_width="fill_parent"
@@ -43,7 +44,8 @@
             android:layout_toLeftOf="@id/grocery_item_row_textview_amount"
             android:maxLines="1"
             android:singleLine="true"
-            android:textStyle="italic"/>
+            android:textStyle="italic"
+            style="@style/TextAppearanceAnycook.Medium"/>
     <View
             android:id="@+id/grocery_item_row_view_stroke"
             android:layout_width="fill_parent"

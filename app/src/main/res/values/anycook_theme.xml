@@ -25,7 +25,7 @@
         <item name="android:dropDownListViewStyle">@style/DropDownListViewAnycook</item>
         <item name="android:dropDownItemStyle">@style/DropDownItemAnycook</item>
         <item name="android:textAppearance">@style/TextAppearanceAnycook</item>
-        <item name="android:textAppearanceSmall">@style/TextAppearanceAnycook.Small</item>
+        <item name="android:textAppearanceSmall">@style/TextAppearanceAnycook.Body1</item>
         <item name="android:textAppearanceMedium">@style/TextAppearanceAnycook.Medium</item>
         <item name="android:textAppearanceLarge">@style/TextAppearanceAnycook.Large</item>
         <item name="android:editTextStyle">@style/TextAppearanceAnycook.EditText</item>
@@ -53,20 +53,29 @@
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
-    <style name="TextAppearanceAnycook.XSmall" parent="@style/TextAppearanceAnycook">
-        <item name="android:textSize">15sp</item>
-    </style>
-
-    <style name="TextAppearanceAnycook.Small" parent="@style/TextAppearanceAnycook">
-        <item name="android:textSize">20sp</item>
+    <style name="TextAppearanceAnycook.Body1" parent="@style/TextAppearanceAnycook">
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="TextAppearanceAnycook.Medium" parent="@style/TextAppearanceAnycook">
-        <item name="android:textSize">25sp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="TextAppearanceAnycook.Large" parent="@style/TextAppearanceAnycook">
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="TextAppearanceAnycook.Body2" parent="@style/TextAppearanceAnycook.Body1">
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="TextAppearanceAnycook.Display1" parent="@style/TextAppearanceAnycook">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">34sp</item>
+    </style>
+
+    <style name="TextAppearanceAnycook.Display1.Light" parent="@style/TextAppearanceAnycook.Display1">
+        <item name="android:textColor">@color/any_white_gray</item>
     </style>
 
     <style name="TextAppearanceGuideText" parent="@style/TextAppearanceAnycook">
@@ -87,6 +96,8 @@
     <style name="ActionBarTitleTextAnycook">
         <item name="android:textColor">@color/any_white_gray</item>
         <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="DrawerStyle">
@@ -94,10 +105,20 @@
         <item name="android:padding">5dp</item>
     </style>
 
+    <style name="Theme.AnycookTheme.TransparentStatusBar" parent="Theme.AppCompat.Light">
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+    </style>
+
+    <style name="ActionBarAnycook.Translucent" parent="ActionBarAnycook">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
 
 
     <style name="Theme.AppCompat.Translucent" parent="Theme.AnycookTheme">
         <item name="android:windowNoTitle">true</item>
+        <item name="android:actionBarStyle">@style/ActionBarAnycook</item>
+        <item name="colorPrimaryDark">@color/dark_headline</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowIsTranslucent">true</item>

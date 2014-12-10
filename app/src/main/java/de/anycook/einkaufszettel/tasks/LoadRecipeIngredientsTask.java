@@ -109,7 +109,7 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
             recipeIngredientsStore.addIngredients(recipeName, ingredients);
             return ingredients;
         } catch (IOException e) {
-            LOGGER.e("Failed to load recipe ingredients", e);
+            LOGGER.e(e, "Failed to load recipe ingredients");
             return Collections.emptyList();
         } finally {
             recipeIngredientsStore.close();

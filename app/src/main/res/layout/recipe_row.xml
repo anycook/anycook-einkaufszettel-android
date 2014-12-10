@@ -47,7 +47,8 @@
             android:layout_toEndOf="@id/recipe_row_imageview"
             android:layout_toRightOf="@id/recipe_row_imageview"
             android:maxLines="1"
-            android:ellipsize="end"/>
+            android:ellipsize="end"
+            android:textAppearance="@style/TextAppearanceAnycook.Body2"/>
 
     <TextView
             android:id="@+id/recipe_row_textview_recipe_description"

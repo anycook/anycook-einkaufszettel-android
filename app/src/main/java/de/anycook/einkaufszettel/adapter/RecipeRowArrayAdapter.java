@@ -27,7 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.model.RecipeResponse;
-import de.anycook.einkaufszettel.tasks.DownloadImageTask;
+import de.anycook.einkaufszettel.tasks.DownloadImageViewTask;
 
 import java.util.ArrayList;
 
@@ -68,7 +68,7 @@ public class RecipeRowArrayAdapter extends ArrayAdapter<RecipeResponse> {
         viewHolder.textViewName.setText(recipeResponse.getName());
         viewHolder.textViewDescription.setText(recipeResponse.getDescription());
 
-        new DownloadImageTask(viewHolder.imageView).execute(recipeResponse.getImage().getSmall());
+        new DownloadImageViewTask(viewHolder.imageView, true).execute(recipeResponse.getImage().getSmall());
 
         return convertView;
 

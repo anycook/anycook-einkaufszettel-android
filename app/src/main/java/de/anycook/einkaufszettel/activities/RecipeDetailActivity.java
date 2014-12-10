@@ -25,7 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.model.RecipeResponse;
-import de.anycook.einkaufszettel.tasks.DownloadImageTask;
+import de.anycook.einkaufszettel.tasks.DownloadImageViewTask;
 
 /**
  * @author Jan Graßegger<jan@anycook.de>
@@ -40,7 +40,7 @@ public class RecipeDetailActivity extends ActionBarActivity {
         RecipeResponse recipeResponse = getIntent().getParcelableExtra("recipe");
 
         ImageView imageView = (ImageView) findViewById(R.id.recipe_image);
-        DownloadImageTask downloadImageTask = new DownloadImageTask(imageView);
+        DownloadImageViewTask downloadImageTask = new DownloadImageViewTask(imageView);
         downloadImageTask.execute(recipeResponse.getImage().getBig());
 
         TextView recipeTitleView = (TextView) findViewById(R.id.recipe_title_text);

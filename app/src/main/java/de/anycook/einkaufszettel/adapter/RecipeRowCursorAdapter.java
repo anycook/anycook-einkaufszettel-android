@@ -26,7 +26,7 @@ import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.store.SQLiteDB;
-import de.anycook.einkaufszettel.tasks.DownloadImageTask;
+import de.anycook.einkaufszettel.tasks.DownloadImageViewTask;
 
 /**
  * Custom ArrayAdapter to fill EditMode with amount and ingredients
@@ -51,6 +51,6 @@ public class RecipeRowCursorAdapter extends ResourceCursorAdapter {
         descriptionView.setText(cursor.getString(SQLiteDB.TableFields.RECIPE_DESCRIPTION));
 
         ImageView imageView = (ImageView) view.findViewById(R.id.recipe_row_imageview);
-        new DownloadImageTask(imageView).execute(cursor.getString(SQLiteDB.TableFields.RECIPE_IMAGE_SMALL));
+        new DownloadImageViewTask(imageView, true).execute(cursor.getString(SQLiteDB.TableFields.RECIPE_IMAGE_SMALL));
     }
 }

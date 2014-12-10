@@ -28,7 +28,7 @@
     <TextView
         android:id="@+id/recipe_title_text"
         android:layout_width="match_parent"
-        style="@style/TextAppearanceAnycook.Small"
+        style="@style/TextAppearanceAnycook.Medium"
         android:layout_height="wrap_content"
         android:textColor="@color/any_white_gray"
         android:layout_alignParentTop="true"
@@ -58,13 +58,13 @@
         android:gravity="top">
 
         <TextView
-            style="@style/TextAppearanceAnycook.XSmall"
+            style="@style/TextAppearanceAnycook.Body1"
             android:id="@+id/recipe_description_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/any_white_gray"/>
         <TextView
-            style="@style/TextAppearanceAnycook.XSmall"
+            style="@style/TextAppearanceAnycook.Body1"
             android:id="@+id/recipe_time_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

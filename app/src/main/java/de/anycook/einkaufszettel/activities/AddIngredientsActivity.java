@@ -48,6 +48,7 @@ import de.anycook.einkaufszettel.store.GroceryItemStore;
 import de.anycook.einkaufszettel.store.ItemNotFoundException;
 import de.anycook.einkaufszettel.store.RecipeStore;
 import de.anycook.einkaufszettel.tasks.DownloadImageTask;
+import de.anycook.einkaufszettel.tasks.DownloadToolbarBackgroundTask;
 import de.anycook.einkaufszettel.tasks.LoadRecipeIngredientsTask;
 
 import java.util.ArrayList;
@@ -85,13 +86,13 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.anycook_toolbar);
-        toolbar.setLogo(R.drawable.anycook_transparent);
+        toolbar.setContentInsetsAbsolute(0, 0);
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(R.string.ingredients);
+            //actionBar.setTitle(R.string.ingredients);
         }
 
         this.ingredientListView = (ListView) findViewById(R.id.ingredient_list_listview);
@@ -99,15 +100,15 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         ingredientListView.setAdapter(adapter);
         ingredientListView.setOnItemClickListener(this);
 
-        fillViews();
+        fillViews(actionBar);
 
         LoadRecipeIngredientsTask loadRecipeIngredientsTask = new LoadRecipeIngredientsTask(adapter, this);
         loadRecipeIngredientsTask.execute(item);
     }
 
-    private void fillViews() {
+    private void fillViews(ActionBar actionBar) {
         this.recipeImageView = (ImageView) findViewById(R.id.recipe_image);
-        DownloadImageTask downloadImageTask = new DownloadImageTask(recipeImageView);
+        DownloadImageTask downloadImageTask = new DownloadToolbarBackgroundTask(actionBar, this);
         downloadImageTask.execute(recipe.getImage().getBig());
 
         TextView titleView = (TextView) findViewById(R.id.recipe_title_text);

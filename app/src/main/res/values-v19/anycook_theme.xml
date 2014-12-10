@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ This file is part of anycook Einkaufszettel
   ~ Copyright (C) 2014 Jan Graßegger, Claudia Sichting
@@ -19,19 +18,13 @@
   -->
 
 <resources>
-    <color name="any_white_img_inner_border_color">#f9f8f6</color>
-    <color name="any_white_gray">#f7f4f1</color>
-    <color name="any_white_background_right">#ece9e3</color>
-
-    <color name="any_gray_shaddow">#878787</color>
-    <color name="any_gray_dark">#5a5a5a</color>
-    <color name="any_gray_dark_font_color">#404040</color>
-
-    <color name="any_green_light">@color/any_green_active_button_background</color>
-    <color name="any_green_active_button_background">#d7e8b5</color>
-    <color name="any_green">#a1bd4f</color>
-    <color name="any_green_dark">#4d6605</color>
-
-    <color name="transparent_background_dark">#A0000000</color>
-    <color name="dark_headline">#C0000000</color>
+    <style name="Theme.AppCompat.Translucent" parent="Theme.AnycookTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:actionBarStyle">@style/ActionBarAnycook</item>
+        <item name="colorPrimaryDark">@color/dark_headline</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@style/Animation.TransparentActivity</item>
+    </style>
 </resources>

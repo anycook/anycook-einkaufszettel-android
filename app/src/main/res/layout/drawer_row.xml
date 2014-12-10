@@ -39,10 +39,10 @@
             android:layout_toRightOf="@id/drawer_list_item_imageview"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:textSize="17sp"
             android:text="@string/drawer_text"
             android:maxLines="1"
-            android:ellipsize="end"/>
+            android:ellipsize="end"
+            android:textAppearance="@style/TextAppearanceAnycook.Body1"/>
 
 </RelativeLayout>
 

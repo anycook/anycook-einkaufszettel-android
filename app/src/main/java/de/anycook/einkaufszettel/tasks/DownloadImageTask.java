@@ -18,10 +18,10 @@
 
 package de.anycook.einkaufszettel.tasks;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.widget.ImageView;
 import com.google.common.io.ByteStreams;
 import com.noveogroup.android.log.Log;
 
@@ -35,12 +35,13 @@ import java.net.URL;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-    private final ImageView imageView;
+public abstract class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    protected final Context context;
 
-    public DownloadImageTask(ImageView imageView) {
-        this.imageView = imageView;
+    public DownloadImageTask(Context context) {
+        this.context = context;
     }
+
 
     @Override
     protected Bitmap doInBackground(String... urls) {
@@ -49,7 +50,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
             //Check if image is already cached
             String imagePath = url.getPath();
-            File cacheDir = imageView.getContext().getCacheDir();
+            File cacheDir = context.getCacheDir();
             File imageFile = new File(cacheDir, imagePath);
             File imageDirectory = imageFile.getParentFile();
 
@@ -66,7 +67,5 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     }
 
     @Override
-    protected void onPostExecute(Bitmap bitmap) {
-        if (bitmap != null) { imageView.setImageBitmap(bitmap); }
-    }
+    protected abstract void onPostExecute(Bitmap bitmap);
 }
