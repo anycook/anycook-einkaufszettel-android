@@ -92,6 +92,25 @@ public class RecipeStore implements Closeable {
         return recipe;
     }
 
+    public int getVibrantColor(String name) {
+        Cursor cursor = database.query(SQLiteDB.RECIPE_TABLE, new String[]{"vibrantColor"},
+                "name = ?", new String[]{name}, null, null, null);
+        if (cursor.moveToNext()) {
+            return cursor.getInt(0);
+        }
+
+        return -1;
+    }
+
+    public void putVibrantColor(String name, int color) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("vibrantColor", color);
+
+        database.update(SQLiteDB.RECIPE_TABLE, contentValues, "name = ?", new String[]{name});
+    }
+
+
+
     public void replaceRecipes(List<RecipeResponse> recipeResponses) {
         LOGGER.d("Replacing recipes in DB");
 

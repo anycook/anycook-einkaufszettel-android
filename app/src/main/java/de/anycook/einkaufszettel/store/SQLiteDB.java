@@ -39,7 +39,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
 
     static {
         DB_NAME = "einkaufszettel.db";
-        DB_VERSION = 5;
+        DB_VERSION = 6;
 
         INGREDIENT_NAME_TABLE = "Ingredient";
         GROCERY_ITEM_TABLE = "GroceryList";
@@ -59,44 +59,67 @@ public class SQLiteDB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //enable foreign key support
         db.execSQL("PRAGMA foreign_keys = ON;");
-        db.execSQL(String.format("CREATE TABLE %s(name VARCHAR(45) PRIMARY KEY, " +
-                        "local INTEGER(1) NOT NULL DEFAULT 0);",
-                INGREDIENT_NAME_TABLE));
-        db.execSQL(String.format("CREATE TABLE %s(name VARCHAR(45) PRIMARY KEY, " +
-            "amount VARCHAR(45) NOT NULL, " +
-            "stroke INTEGER(1) NOT NULL DEFAULT 0," +
-            "orderId INTEGER NOT NULL," +
-            "FOREIGN KEY(name) REFERENCES %s(name));", GROCERY_ITEM_TABLE, INGREDIENT_NAME_TABLE));
-        db.execSQL(String.format("CREATE TABLE %s(name VARCHAR(45) PRIMARY KEY, " +
-            "description TEXT," +
-            "smallImage VARCHAR(100)," +
-            "bigImage VARCHAR(100)," +
-            "persons INTEGER NOT NULL," +
-            "timeStd INTEGER," +
-            "timeMin INTEGER," +
-            "lastChange INTEGER);", RECIPE_TABLE));
-        db.execSQL(String.format("CREATE TABLE %s(recipeName VARCHAR(45)," +
-            "ingredientName VARCHAR(45)," +
-            "ingredientAmount VARCHAR(45), orderId INTEGER," +
-            "FOREIGN KEY(recipeName) REFERENCES %s(name)," +
-            "FOREIGN KEY(ingredientName) REFERENCES %s(name)," +
-            "PRIMARY KEY(recipeName, ingredientName));",
-            RECIPE_INGREDIENTS_TABLE, RECIPE_TABLE, INGREDIENT_NAME_TABLE));
+        createIngredientNameTable(db);
+        createGroceryItemTable(db);
+        createRecipeTable(db);
+        createRecipeIngredientsTable(db);
     }
 
     @SuppressLint("CommitPrefEdits")
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String dropTablePattern = "DROP TABLE IF EXISTS %s";
-        db.execSQL(String.format(dropTablePattern, GROCERY_ITEM_TABLE));
-        db.execSQL(String.format(dropTablePattern, INGREDIENT_NAME_TABLE));
+
+        if (oldVersion < 4) {
+            db.execSQL(String.format(dropTablePattern, INGREDIENT_NAME_TABLE));
+            db.execSQL(String.format(dropTablePattern, GROCERY_ITEM_TABLE));
+            createIngredientNameTable(db);
+            createGroceryItemTable(db);
+        }
         db.execSQL(String.format(dropTablePattern, RECIPE_TABLE));
         db.execSQL(String.format(dropTablePattern, RECIPE_INGREDIENTS_TABLE));
-        onCreate(db);
+        createRecipeTable(db);
+        createRecipeIngredientsTable(db);
 
         SharedPreferences sharedPrefs = context.getSharedPreferences("update_data", Context.MODE_PRIVATE);
         sharedPrefs.edit().putLong("last_update", 0).putString("last-modified-recipes", null).commit();
 
+    }
+
+    private void createIngredientNameTable(SQLiteDatabase db) {
+        db.execSQL(String.format("CREATE TABLE %s(name VARCHAR(45) PRIMARY KEY, " +
+                        "local INTEGER(1) NOT NULL DEFAULT 0);",
+                INGREDIENT_NAME_TABLE));
+    }
+
+    private void createGroceryItemTable(SQLiteDatabase db) {
+        db.execSQL(String.format("CREATE TABLE %s(name VARCHAR(45) PRIMARY KEY, " +
+                "amount VARCHAR(45) NOT NULL, " +
+                "stroke INTEGER(1) NOT NULL DEFAULT 0," +
+                "orderId INTEGER NOT NULL," +
+                "FOREIGN KEY(name) REFERENCES %s(name));", GROCERY_ITEM_TABLE, INGREDIENT_NAME_TABLE));
+    }
+
+    private void createRecipeTable(SQLiteDatabase db) {
+        db.execSQL(String.format("CREATE TABLE %s(name VARCHAR(45) PRIMARY KEY, " +
+                "description TEXT," +
+                "smallImage VARCHAR(100)," +
+                "bigImage VARCHAR(100)," +
+                "persons INTEGER NOT NULL," +
+                "timeStd INTEGER," +
+                "timeMin INTEGER," +
+                "vibrantColor INTEGER DEFAULT -1," +
+                "lastChange INTEGER);", RECIPE_TABLE));
+    }
+
+    private void createRecipeIngredientsTable(SQLiteDatabase db) {
+        db.execSQL(String.format("CREATE TABLE %s(recipeName VARCHAR(45)," +
+                        "ingredientName VARCHAR(45)," +
+                        "ingredientAmount VARCHAR(45), orderId INTEGER," +
+                        "FOREIGN KEY(recipeName) REFERENCES %s(name)," +
+                        "FOREIGN KEY(ingredientName) REFERENCES %s(name)," +
+                        "PRIMARY KEY(recipeName, ingredientName));",
+                RECIPE_INGREDIENTS_TABLE, RECIPE_TABLE, INGREDIENT_NAME_TABLE));
     }
 
     public static class TableFields {
@@ -110,11 +133,11 @@ public class SQLiteDB extends SQLiteOpenHelper {
             RECIPE_PERSONS = 4,
             RECIPE_TIME_STD = 5,
             RECIPE_TIME_MIN = 6,
-            RECIPE_LAST_CHANGE = 7;
+            RECIPE_LAST_CHANGE = 7,
+            RECIPE_VIBRANT_COLOR = 8;
         public static final int RECIPE_INGREDIENTS_RECIPE_NAME = 0,
             RECIPE_INGREDIENTS_NAME = 1,
-            RECIPE_INGREDIENTS_AMOUNT = 2,
-            RECIPE_INGREDIENTS_ORDER_ID = 3;
+            RECIPE_INGREDIENTS_AMOUNT = 2;
 
     }
 }

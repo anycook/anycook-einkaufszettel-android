@@ -43,8 +43,8 @@ public final class ImageHelper {
         final Paint paint = new Paint();
         final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
         final RectF rectF = new RectF(rect);
-        final float rx = bitmap.getWidth()/2;
-        final float ry = bitmap.getHeight()/2;
+        final float rx = bitmap.getWidth() / 2;
+        final float ry = bitmap.getHeight() / 2;
 
         paint.setAntiAlias(true);
         canvas.drawARGB(0, 0, 0, 0);

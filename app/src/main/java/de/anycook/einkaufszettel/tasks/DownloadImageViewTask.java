@@ -19,7 +19,12 @@
 package de.anycook.einkaufszettel.tasks;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.GradientDrawable;
+import android.support.v7.graphics.Palette;
+import android.view.View;
 import android.widget.ImageView;
+import de.anycook.einkaufszettel.R;
+import de.anycook.einkaufszettel.store.RecipeStore;
 import de.anycook.einkaufszettel.util.ImageHelper;
 
 /**
@@ -27,6 +32,7 @@ import de.anycook.einkaufszettel.util.ImageHelper;
  */
 public class DownloadImageViewTask extends DownloadImageTask {
     private final ImageView imageView;
+    private final View buttonView;
     private final boolean round;
 
     public DownloadImageViewTask(ImageView imageView) {
@@ -34,13 +40,48 @@ public class DownloadImageViewTask extends DownloadImageTask {
     }
 
     public DownloadImageViewTask(ImageView imageView, boolean round) {
-        super(imageView.getContext());
+        this(imageView, null, null, round);
+    }
+
+    public DownloadImageViewTask(ImageView imageView, View buttonView, String recipeName) {
+        this(imageView, buttonView, recipeName, false);
+    }
+
+    public DownloadImageViewTask(ImageView imageView, View buttonView, String recipeName, boolean round) {
+        super(imageView.getContext(), recipeName);
         this.imageView = imageView;
+        this.buttonView = buttonView;
         this.round = round;
     }
 
     @Override
     protected void onPostExecute(Bitmap bitmap) {
-        imageView.setImageBitmap(round ? ImageHelper.getRoundedCornerBitmap(bitmap) : bitmap);
+        if (bitmap != null) {
+            imageView.setImageBitmap(round ? ImageHelper.getRoundedCornerBitmap(bitmap) : bitmap);
+
+            if (buttonView != null) {
+                RecipeStore recipeStore = new RecipeStore(context);
+                try {
+                    recipeStore.open();
+
+                    int buttonBackgroundColor = recipeStore.getVibrantColor(recipeName);
+
+                    if (buttonBackgroundColor == -1) {
+                        Palette palette = Palette.generate(bitmap);
+
+                        buttonBackgroundColor = palette.getVibrantColor(R.color.any_green);
+                        recipeStore.putVibrantColor(recipeName, buttonBackgroundColor);
+                    }
+
+                    GradientDrawable drawable = new GradientDrawable();
+                    drawable.setCornerRadius(56);
+                    drawable.setColor(buttonBackgroundColor);
+                    buttonView.setBackground(drawable);
+                    buttonView.setVisibility(View.VISIBLE);
+                } finally {
+                    recipeStore.close();
+                }
+            }
+        }
     }
 }

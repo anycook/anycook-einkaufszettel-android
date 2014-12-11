@@ -21,6 +21,7 @@ package de.anycook.einkaufszettel.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -28,8 +29,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -48,7 +47,7 @@ import de.anycook.einkaufszettel.store.GroceryItemStore;
 import de.anycook.einkaufszettel.store.ItemNotFoundException;
 import de.anycook.einkaufszettel.store.RecipeStore;
 import de.anycook.einkaufszettel.tasks.DownloadImageTask;
-import de.anycook.einkaufszettel.tasks.DownloadToolbarBackgroundTask;
+import de.anycook.einkaufszettel.tasks.DownloadImageViewTask;
 import de.anycook.einkaufszettel.tasks.LoadRecipeIngredientsTask;
 
 import java.util.ArrayList;
@@ -86,13 +85,12 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.anycook_toolbar);
-        toolbar.setContentInsetsAbsolute(0, 0);
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            //actionBar.setTitle(R.string.ingredients);
+            actionBar.setDisplayShowTitleEnabled(false);
         }
 
         this.ingredientListView = (ListView) findViewById(R.id.ingredient_list_listview);
@@ -100,15 +98,21 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         ingredientListView.setAdapter(adapter);
         ingredientListView.setOnItemClickListener(this);
 
-        fillViews(actionBar);
+        fillViews();
 
         LoadRecipeIngredientsTask loadRecipeIngredientsTask = new LoadRecipeIngredientsTask(adapter, this);
         loadRecipeIngredientsTask.execute(item);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            int statusBarHeight = getStatusBarHeight();
+            findViewById(R.id.anycook_toolbar).setPadding(0, statusBarHeight, 0, 0);
+        }
     }
 
-    private void fillViews(ActionBar actionBar) {
+    private void fillViews() {
         this.recipeImageView = (ImageView) findViewById(R.id.recipe_image);
-        DownloadImageTask downloadImageTask = new DownloadToolbarBackgroundTask(actionBar, this);
+        DownloadImageTask downloadImageTask = new DownloadImageViewTask(recipeImageView,
+                findViewById(R.id.add_ingredients_button), recipe.getName());
         downloadImageTask.execute(recipe.getImage().getBig());
 
         TextView titleView = (TextView) findViewById(R.id.recipe_title_text);
@@ -130,18 +134,18 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.ingredient_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         IngredientRowAdapter adapter = (IngredientRowAdapter) ingredientListView.getAdapter();
         Ingredient ingredient = (Ingredient) ingredientListView.getItemAtPosition(position);
         ingredient.setChecked(!ingredient.isChecked());
         adapter.notifyDataSetChanged();
+    }
+
+    public void onAddIngredientsClick(View view) {
+        includeCheckedIngredientsToGroceryList();
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     @Override
@@ -150,13 +154,6 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
             case android.R.id.home:
                 finish();
                 return true;
-            case R.id.ingredient_menu_action_add:
-
-                includeCheckedIngredientsToGroceryList();
-
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
             default:
         }
         return super.onOptionsItemSelected(item);
@@ -178,11 +175,6 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         } finally {
             groceryItemStore.close();
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 
     @Override
@@ -233,6 +225,15 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         intent.putExtra("recipe", recipe);
 
         ActivityCompat.startActivity(this, intent, optionsCompat.toBundle());
+    }
+
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 
 }

@@ -36,10 +36,13 @@ import java.net.URL;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public abstract class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-    protected final Context context;
 
-    public DownloadImageTask(Context context) {
+    protected final Context context;
+    protected final String recipeName;
+
+    public DownloadImageTask(Context context, String recipeName) {
         this.context = context;
+        this.recipeName = recipeName;
     }
 
 
