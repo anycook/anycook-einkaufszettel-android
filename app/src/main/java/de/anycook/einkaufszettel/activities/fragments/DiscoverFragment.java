@@ -46,7 +46,7 @@ public class DiscoverFragment extends Fragment {
 
         String url = String.format(URL_PATTERN, getArguments().getString("type"));
 
-        recyclerView = (RecyclerView)view.findViewById(R.id.discover_recycler_view);
+        recyclerView = (RecyclerView) view.findViewById(R.id.discover_recycler_view);
 
         adapter = new RecipeRowArrayAdapter();
         recyclerView.setAdapter(adapter);
