@@ -28,17 +28,11 @@
     <RelativeLayout
             android:id="@+id/head_layout"
             android:layout_width="fill_parent"
-            android:layout_height="250dp"
+            android:layout_height="260dp"
             android:orientation="vertical">
 
-        <ImageView
-                android:id="@+id/recipe_image"
-                android:layout_width="fill_parent"
-                android:layout_height="210dp"
-                android:layout_alignParentTop="true"
-                android:contentDescription="@string/recipe_image_content_description"
-                android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"/>
+        <include layout="@layout/recipe_header"
+                 android:onClick="titleViewClick"/>
 
         <View
                 android:layout_width="match_parent"
@@ -54,23 +48,10 @@
                 android:layout_alignParentTop="true"
                 app:titleTextAppearance="@style/ActionBarTitleTextAnycook"/>
 
-        <TextView
-                android:id="@+id/recipe_title_text"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:textAppearance="@style/TextAppearanceAnycook.Display1.Light"
-                android:layout_alignParentBottom="true"
-                android:paddingBottom="15dp"
-                android:layout_marginBottom="40dp"
-                android:background="@drawable/typo_gradient_background"
-                android:onClick="titleViewClick"/>
-
         <ImageButton android:layout_width="56dp"
                      android:layout_height="56dp"
                      android:id="@+id/add_ingredients_button"
                      android:onClick="onAddIngredientsClick"
-                     android:elevation="10dp"
                      android:src="@drawable/ic_action_new"
                      android:contentDescription="@string/add_ingredients"
                      android:layout_alignParentRight="true"
