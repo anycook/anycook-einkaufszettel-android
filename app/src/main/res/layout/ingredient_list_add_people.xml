@@ -47,7 +47,8 @@
             android:layout_toEndOf="@id/ingredient_list_ingredient_label"
             android:layout_toRightOf="@id/ingredient_list_ingredient_label"
             android:focusable="false"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:onClick="onNumberPickerClick"/>
 
     <TextView
             android:id="@+id/ingredient_list_persons_label"

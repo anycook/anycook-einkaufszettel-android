@@ -120,12 +120,14 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
                 findViewById(R.id.add_ingredients_button), recipe.getName());
         downloadImageTask.execute(recipe.getImage().getBig());
 
+        findViewById(R.id.recipe_header).setOnClickListener(this);
+
         TextView titleView = (TextView) findViewById(R.id.recipe_title_text);
         titleView.setText(recipe.getName());
 
         EditText personsEditText = (EditText) findViewById(R.id.ingredient_list_persons);
         personsEditText.setText(Integer.toString(recipe.getPersons()));
-        personsEditText.setOnClickListener(this);
+        //personsEditText.setOnClickListener(this);
     }
 
     private RecipeResponse getRecipe(String recipeName) throws ItemNotFoundException {
@@ -221,8 +223,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         }
     }
 
-    @Override
-    public void onClick(View view) {
+    public void onNumberPickerClick(View view) {
 
         final EditText personsEditText = (EditText) view;
         int numPersons = Integer.parseInt(personsEditText.getText().toString());
@@ -258,7 +259,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
 
     }
 
-    public void titleViewClick(View view) {
+    public void onClick(View view) {
 
         ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(this.recipeImageView,
             (int) recipeImageView.getX(),

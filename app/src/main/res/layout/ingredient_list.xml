@@ -32,7 +32,7 @@
             android:orientation="vertical">
 
         <include layout="@layout/recipe_header"
-                 android:onClick="titleViewClick"/>
+                 android:clickable="true"/>
 
         <View
                 android:layout_width="match_parent"
