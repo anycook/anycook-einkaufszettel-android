@@ -36,11 +36,15 @@
                 android:layout_width="fill_parent"
                 android:layout_height="210dp"
                 android:layout_alignParentTop="true"
-                android:background="@drawable/toolbar_gradient_background"
                 android:contentDescription="@string/recipe_image_content_description"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 android:transitionName="@string/recipe_transition"/>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="@drawable/toolbar_gradient_background"/>
 
         <android.support.v7.widget.Toolbar
                 android:id="@+id/anycook_toolbar"
