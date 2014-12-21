@@ -166,7 +166,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
                 finish();
                 return true;
             case R.id.ingredient_menu_open_recipe:
-                Uri uri = Uri.parse("http://anycook.de#/recipe/"+recipe.getName());
+                Uri uri = Uri.parse("http://anycook.de#/recipe/" + recipe.getName());
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 // Create and start the chooser
                 Intent chooser = Intent.createChooser(intent, "Open with");
