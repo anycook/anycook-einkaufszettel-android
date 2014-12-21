@@ -37,18 +37,15 @@ import de.anycook.einkaufszettel.tasks.LoadDiscoverRecipesTask;
 public class DiscoverFragment extends Fragment {
     private static final String URL_PATTERN = "https://api.anycook.de/discover/%s?recipeNumber=20";
 
-    private RecyclerView recyclerView;
-    private RecipeRowArrayAdapter adapter;
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.discover_list, container, false);
 
         String url = String.format(URL_PATTERN, getArguments().getString("type"));
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.discover_recycler_view);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.discover_recycler_view);
 
-        adapter = new RecipeRowArrayAdapter();
+        RecipeRowArrayAdapter adapter = new RecipeRowArrayAdapter(getActivity());
         recyclerView.setAdapter(adapter);
 
 

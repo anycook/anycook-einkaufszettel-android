@@ -18,8 +18,11 @@
 
 package de.anycook.einkaufszettel.adapter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,13 +42,15 @@ import java.util.List;
  */
 public class RecipeRowArrayAdapter extends RecyclerView.Adapter<RecipeRowArrayAdapter.RecipeViewHolder> {
     private List<RecipeResponse> recipes;
+    private Activity activity;
 
-    public RecipeRowArrayAdapter() {
-        this(new ArrayList<RecipeResponse>());
+    public RecipeRowArrayAdapter(Activity activity) {
+        this(activity, new ArrayList<RecipeResponse>());
     }
 
-    public RecipeRowArrayAdapter(List<RecipeResponse> recipes) {
+    public RecipeRowArrayAdapter(Activity activity, List<RecipeResponse> recipes) {
         this.recipes = recipes;
+        this.activity = activity;
     }
 
     public List<RecipeResponse> getRecipes() {
@@ -65,7 +70,7 @@ public class RecipeRowArrayAdapter extends RecyclerView.Adapter<RecipeRowArrayAd
     public RecipeViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.discover_row, viewGroup, false);
 
-        return new RecipeViewHolder(view);
+        return new RecipeViewHolder(view, activity);
     }
 
     @Override
@@ -83,13 +88,16 @@ public class RecipeRowArrayAdapter extends RecyclerView.Adapter<RecipeRowArrayAd
         private ImageView imageView;
 
         private RecipeResponse recipeResponse;
+        private Activity activity;
 
-        public RecipeViewHolder(View view) {
+        public RecipeViewHolder(View view, Activity activity) {
             super(view);
             view.setOnClickListener(this);
 
             textViewName = (TextView) view.findViewById(R.id.recipe_row_textview_recipe_name);
             imageView = (ImageView) view.findViewById(R.id.recipe_row_imageview);
+
+            this.activity = activity;
         }
 
         public void setRecipeResponse(RecipeResponse recipeResponse) {
@@ -106,7 +114,19 @@ public class RecipeRowArrayAdapter extends RecyclerView.Adapter<RecipeRowArrayAd
             Bundle b = new Bundle();
             b.putString("item", recipeResponse.getName());
             intent.putExtras(b);
-            v.getContext().startActivity(intent);
+
+            ActivityOptionsCompat options =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
+                            v.findViewById(R.id.recipe_row_imageview),   // The view which starts the transition
+                            activity.getString(R.string.recipe_transition)
+                    );
+
+            if (options == null) {
+                v.getContext().startActivity(intent);
+            } else {
+                ActivityCompat.startActivity(activity, intent, options.toBundle());
+            }
+
         }
     }
 }

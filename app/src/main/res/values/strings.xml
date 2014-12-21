@@ -20,6 +20,7 @@
 <resources>
     <string name="app_name">Einkaufszettel</string>
     <string name="anycook">anycook</string>
+    <string name="recipe_transition">recipe_transition</string>
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
