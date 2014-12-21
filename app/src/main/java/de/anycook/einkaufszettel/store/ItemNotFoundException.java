@@ -25,4 +25,8 @@ public class ItemNotFoundException extends Exception {
     public ItemNotFoundException(String name) {
         super(String.format("Item %s does not exist", name));
     }
+
+    public ItemNotFoundException(int position) {
+        super(String.format("Item on position %d does not exist", position));
+    }
 }

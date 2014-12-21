@@ -32,6 +32,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
@@ -43,17 +44,20 @@ import android.widget.Toast;
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 import de.anycook.einkaufszettel.R;
-import de.anycook.einkaufszettel.util.StringTools;
+import de.anycook.einkaufszettel.activities.dialogs.ChangeIngredientDialog;
 import de.anycook.einkaufszettel.adapter.GroceryItemRowAdapter;
+import de.anycook.einkaufszettel.model.Ingredient;
 import de.anycook.einkaufszettel.store.GroceryItemStore;
 import de.anycook.einkaufszettel.store.IngredientNameStore;
 import de.anycook.einkaufszettel.store.SQLiteDB;
+import de.anycook.einkaufszettel.util.StringTools;
+
 
 /**
  * @author Jan Graßegger
  * @author Claudia Sichting
  */
-public class GroceryListFragment extends ListFragment {
+public class GroceryListFragment extends ListFragment implements AdapterView.OnItemLongClickListener {
     private static final Logger LOGGER = LoggerManager.getLogger();
 
     private AutoCompleteTextView groceryNameTextView;
@@ -89,6 +93,12 @@ public class GroceryListFragment extends ListFragment {
         groceryNameTextView.setAdapter(getAutocompleteCursorAdapter());
 
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getListView().setOnItemLongClickListener(this);
     }
 
     private void addItem(String name, String amount) {
@@ -168,6 +178,28 @@ public class GroceryListFragment extends ListFragment {
         GroceryItemRowAdapter listAdapter = (GroceryItemRowAdapter) getListAdapter();
         listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
         refreshMenuIcon();
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        TextView groceryName = (TextView) view.findViewById(R.id.grocery_item_row_textview_grocery_item);
+        TextView groceryAmount = (TextView) view.findViewById(R.id.grocery_item_row_textview_amount);
+        final Ingredient ingredient = new Ingredient(groceryName.getText().toString(),
+                groceryAmount.getText().toString());
+
+        ChangeIngredientDialog dialog = new ChangeIngredientDialog(this.getActivity(), ingredient,
+                new ChangeIngredientDialog.Callback() {
+                    @Override
+                    public void ingredientChanged(Ingredient newIngredient) {
+                        newIngredient.setChecked(false);
+                        groceryItemStore.update(ingredient.getName(), newIngredient);
+                        GroceryItemRowAdapter listAdapter = (GroceryItemRowAdapter) getListAdapter();
+                        listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
+                    }
+                });
+        dialog.showDialog();
+
+        return true;
     }
 
     @Override

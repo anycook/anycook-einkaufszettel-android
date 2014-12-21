@@ -32,15 +32,17 @@ public class Ingredient {
 
     // empty constructor needed for api access in LoadRecipeIngredientsTask
     public Ingredient() {
-        setName("");
-        setAmount("");
-        setChecked(true);
+        this("", "");
     }
 
     public Ingredient(String name, String amount) {
+        this(name, amount, true);
+    }
+
+    public Ingredient(String name, String amount, boolean checked) {
         setName(name);
         setAmount(amount);
-        setChecked(true);
+        setChecked(checked);
     }
 
     public Ingredient(Ingredient ingredient) {

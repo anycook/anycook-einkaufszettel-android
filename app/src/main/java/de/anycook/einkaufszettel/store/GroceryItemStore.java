@@ -24,9 +24,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
-import de.anycook.einkaufszettel.util.StringTools;
-import de.anycook.einkaufszettel.model.GroceryItem;
 import de.anycook.einkaufszettel.model.Ingredient;
+import de.anycook.einkaufszettel.util.StringTools;
 
 import java.io.Closeable;
 import java.util.List;
@@ -65,8 +64,8 @@ public class GroceryItemStore implements Closeable {
                 ingredientNameStore.addIngredient(new Ingredient(name, amount));
             } else {
                 try {
-                    GroceryItem oldGroceryItem = getGroceryItem(name);
-                    if (!oldGroceryItem.isStroked()) {
+                    Ingredient oldGroceryItem = getGroceryItem(name);
+                    if (!oldGroceryItem.isChecked()) {
                         amount = StringTools.mergeAmounts(amount, oldGroceryItem.getAmount());
                     }
                 } catch (ItemNotFoundException e) {
@@ -85,15 +84,15 @@ public class GroceryItemStore implements Closeable {
         database.insertWithOnConflict(SQLiteDB.GROCERY_ITEM_TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
     }
 
-    public GroceryItem getGroceryItem(String name) throws ItemNotFoundException {
+    public Ingredient getGroceryItem(String name) throws ItemNotFoundException {
         String[] columns = new String[]{"name", "amount", "stroke"};
         Cursor cursor = database.query(SQLiteDB.GROCERY_ITEM_TABLE, columns, "name=?", new String[]{name},
                 null, null, null);
         if (cursor.moveToNext()) {
-            GroceryItem item = new GroceryItem();
+            Ingredient item = new Ingredient();
             item.setName(cursor.getString(SQLiteDB.TableFields.GROCERY_ITEM_NAME));
             item.setAmount(cursor.getString(SQLiteDB.TableFields.GROCERY_ITEM_AMOUNT));
-            item.setStroked(cursor.getInt(SQLiteDB.TableFields.GROCERY_ITEM_STROKE) > 0);
+            item.setChecked(cursor.getInt(SQLiteDB.TableFields.GROCERY_ITEM_STROKE) > 0);
             return item;
         }
 
@@ -103,7 +102,7 @@ public class GroceryItemStore implements Closeable {
     public void changeStrokeVisibilityOfGroceryItem(CharSequence groceryItemName) {
         ContentValues values = new ContentValues();
         try {
-            values.put("stroke", !getGroceryItem((String) groceryItemName).isStroked());
+            values.put("stroke", !getGroceryItem((String) groceryItemName).isChecked());
         } catch (ItemNotFoundException e) {
             LOGGER.d(e, "User wanted to stroke \"%s\" but it's not in the database.", groceryItemName);
         }
@@ -142,7 +141,7 @@ public class GroceryItemStore implements Closeable {
         int orderId = getMinOrderId() - ingredients.size();
         for (Ingredient ingredient : ingredients) {
             try {
-                GroceryItem oldGroceryItem = getGroceryItem(ingredient.getName());
+                Ingredient oldGroceryItem = getGroceryItem(ingredient.getName());
                 ingredient.setAmount(StringTools.mergeAmounts(ingredient.getAmount(), oldGroceryItem.getAmount()));
             } catch (ItemNotFoundException e) {
                 LOGGER.d("%s is a new ingredient", ingredient.getName());
@@ -156,4 +155,12 @@ public class GroceryItemStore implements Closeable {
         }
     }
 
+    public void update(String name, Ingredient newIngredient) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name", newIngredient.getName());
+        contentValues.put("amount", newIngredient.getAmount());
+        contentValues.put("stroke", newIngredient.isChecked());
+
+        database.update(SQLiteDB.GROCERY_ITEM_TABLE, contentValues, "name = ?", new String[]{name});
+    }
 }

@@ -128,5 +128,6 @@ public class RecipeRowArrayAdapter extends RecyclerView.Adapter<RecipeRowArrayAd
             }
 
         }
+
     }
 }

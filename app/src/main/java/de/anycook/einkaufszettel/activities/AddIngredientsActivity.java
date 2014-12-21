@@ -43,6 +43,7 @@ import android.widget.TextView;
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 import de.anycook.einkaufszettel.R;
+import de.anycook.einkaufszettel.activities.dialogs.ChangeIngredientDialog;
 import de.anycook.einkaufszettel.adapter.IngredientRowAdapter;
 import de.anycook.einkaufszettel.model.Ingredient;
 import de.anycook.einkaufszettel.model.RecipeResponse;
@@ -62,7 +63,7 @@ import java.util.List;
  * @author Jan Graßegger
  */
 public class AddIngredientsActivity extends ActionBarActivity implements AdapterView.OnItemClickListener,
-        View.OnClickListener {
+        View.OnClickListener, AdapterView.OnItemLongClickListener {
     private static final Logger LOGGER = LoggerManager.getLogger();
     private static final int MAX_PERSONS = 99;
     private static final int MIN_PERSONS = 1;
@@ -100,6 +101,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         IngredientRowAdapter adapter = new IngredientRowAdapter(this, recipe.getPersons());
         ingredientListView.setAdapter(adapter);
         ingredientListView.setOnItemClickListener(this);
+        ingredientListView.setOnItemLongClickListener(this);
 
         fillViews();
 
@@ -142,6 +144,25 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         Ingredient ingredient = (Ingredient) ingredientListView.getItemAtPosition(position);
         ingredient.setChecked(!ingredient.isChecked());
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        final Ingredient ingredient = (Ingredient) ingredientListView.getItemAtPosition(position);
+        ChangeIngredientDialog dialog = new ChangeIngredientDialog(this, ingredient,
+                new ChangeIngredientDialog.Callback() {
+            @Override
+            public void ingredientChanged(Ingredient newIngredient) {
+                ingredient.setName(newIngredient.getName());
+                ingredient.setAmount(newIngredient.getAmount());
+                IngredientRowAdapter adapter = (IngredientRowAdapter) ingredientListView.getAdapter();
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        dialog.showDialog();
+
+        return true;
     }
 
     public void onAddIngredientsClick(View view) {
@@ -258,5 +279,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         }
         return result;
     }
+
+
 
 }
