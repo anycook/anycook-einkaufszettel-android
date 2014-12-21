@@ -36,6 +36,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="230dp"
                 android:layout_alignParentTop="true"
+                android:background="@drawable/toolbar_gradient_background"
                 android:contentDescription="@string/recipe_image_content_description"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"/>
@@ -58,7 +59,8 @@
                 android:layout_alignParentBottom="true"
                 android:paddingBottom="15dp"
                 android:layout_marginBottom="40dp"
-                android:background="@drawable/typo_gradient_background"/>
+                android:background="@drawable/typo_gradient_background"
+                android:onClick="titleViewClick"/>
 
         <ImageButton android:layout_width="56dp"
                      android:layout_height="56dp"

@@ -33,7 +33,7 @@
         <item>@drawable/anycook_transparent_dark</item>
         <item>@drawable/ic_action_important</item>
         <item>@drawable/ic_action_favorite</item>
-        <item>@drawable/ic_action_web_site</item>
+        <item>@drawable/ic_action_web_site_dark</item>
         <item>@drawable/ic_action_settings</item>
     </array>
 </resources>

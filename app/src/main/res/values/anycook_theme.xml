@@ -110,7 +110,8 @@
     </style>
 
     <style name="ActionBarAnycook.Translucent" parent="ActionBarAnycook">
-        <item name="android:background">@drawable/toolbar_gradient_background</item>
+        <item name="android:background">@android:color/transparent</item>
+        <!--<item name="android:background">@drawable/toolbar_gradient_background</item>-->
     </style>
 
 
