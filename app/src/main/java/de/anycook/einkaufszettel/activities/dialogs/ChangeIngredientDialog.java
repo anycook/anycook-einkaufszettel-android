@@ -38,7 +38,7 @@ public class ChangeIngredientDialog {
     private Ingredient ingredient;
 
 
-    public ChangeIngredientDialog (Activity activity, Ingredient ingredient, Callback callback) {
+    public ChangeIngredientDialog(Activity activity, Ingredient ingredient, Callback callback) {
         this.activity = activity;
         this.callback = callback;
         this.ingredient = ingredient;
@@ -83,6 +83,6 @@ public class ChangeIngredientDialog {
     }
 
     public interface Callback {
-        public void ingredientChanged(Ingredient newIngredient);
+        void ingredientChanged(Ingredient newIngredient);
     }
 }
