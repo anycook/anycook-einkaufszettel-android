@@ -163,7 +163,11 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                    finish();
+                } else {
+                    finishAfterTransition();
+                }
                 return true;
             case R.id.ingredient_menu_open_recipe:
                 Uri uri = Uri.parse("http://anycook.de#/recipe/" + recipe.getName());
