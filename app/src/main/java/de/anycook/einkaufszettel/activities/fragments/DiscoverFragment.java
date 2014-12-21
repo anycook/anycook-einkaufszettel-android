@@ -18,48 +18,46 @@
 
 package de.anycook.einkaufszettel.activities.fragments;
 
-import android.app.ListFragment;
-import android.content.Intent;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import de.anycook.einkaufszettel.R;
-import de.anycook.einkaufszettel.activities.AddIngredientsActivity;
 import de.anycook.einkaufszettel.adapter.RecipeRowArrayAdapter;
-import de.anycook.einkaufszettel.model.RecipeResponse;
 import de.anycook.einkaufszettel.tasks.LoadDiscoverRecipesTask;
 
 /**
  * @author Claudia Sichting
  * @author Jan Graßegger
  */
-public class DiscoverFragment extends ListFragment {
+public class DiscoverFragment extends Fragment {
     private static final String URL_PATTERN = "https://api.anycook.de/discover/%s?recipeNumber=20";
+
+    private RecyclerView recyclerView;
+    private RecipeRowArrayAdapter adapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.recipe_list, container, false);
+        View view = inflater.inflate(R.layout.discover_list, container, false);
 
         String url = String.format(URL_PATTERN, getArguments().getString("type"));
 
-        RecipeRowArrayAdapter adapter = new RecipeRowArrayAdapter(getActivity());
-        setListAdapter(adapter);
+        recyclerView = (RecyclerView)view.findViewById(R.id.discover_recycler_view);
+
+        adapter = new RecipeRowArrayAdapter();
+        recyclerView.setAdapter(adapter);
+
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
         LoadDiscoverRecipesTask loadDiscoverRecipesTask = new LoadDiscoverRecipesTask(adapter, this.getActivity());
         loadDiscoverRecipesTask.execute(url);
 
         return view;
-    }
-
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        Intent intent = new Intent(getActivity(), AddIngredientsActivity.class);
-        Bundle b = new Bundle();
-        RecipeResponse recipeResponse = (RecipeResponse) getListAdapter().getItem(position);
-        b.putString("item", recipeResponse.getName());
-        intent.putExtras(b);
-        startActivity(intent);
     }
 }

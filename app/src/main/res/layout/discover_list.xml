@@ -39,14 +39,14 @@
         </ProgressBar>
     </LinearLayout>
 
-    <ListView
-            android:id="@android:id/list"
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/discover_recycler_view"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:divider="@drawable/list_divider"
             android:dividerHeight="1px"
             android:scrollbars="vertical">
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
 
     <TextView
             android:id="@+id/nothing_found"

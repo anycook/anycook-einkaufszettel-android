@@ -23,6 +23,6 @@
     </style>
 
     <style name="Theme.AppCompat.AddIngredientsView" parent="Theme.AnycookTheme.TransparentStatusBar">
-        <item name="android:windowAnimationStyle">@style/Animation.SlideInOut</item>
+        <!--<item name="android:windowAnimationStyle">@style/Animation.SlideInOut</item>-->
     </style>
 </resources>

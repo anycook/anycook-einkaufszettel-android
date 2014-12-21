@@ -18,65 +18,95 @@
 
 package de.anycook.einkaufszettel.adapter;
 
-import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import de.anycook.einkaufszettel.R;
+import de.anycook.einkaufszettel.activities.AddIngredientsActivity;
 import de.anycook.einkaufszettel.model.RecipeResponse;
 import de.anycook.einkaufszettel.tasks.DownloadImageViewTask;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class RecipeRowArrayAdapter extends ArrayAdapter<RecipeResponse> {
+public class RecipeRowArrayAdapter extends RecyclerView.Adapter<RecipeRowArrayAdapter.RecipeViewHolder> {
+    private List<RecipeResponse> recipes;
 
-    public RecipeRowArrayAdapter(Context context) {
-        super(context, R.layout.recipe_row, new ArrayList<RecipeResponse>());
+    public RecipeRowArrayAdapter() {
+        this(new ArrayList<RecipeResponse>());
     }
 
-    /**
-     * Improved getView thanks to ViewHolder (findViewById is and expensive function)
-     *
-     * @param position    where is the view
-     * @param convertView what is visible
-     * @param parent      which is the parent view
-     * @return the view
-     */
+    public RecipeRowArrayAdapter(List<RecipeResponse> recipes) {
+        this.recipes = recipes;
+    }
+
+    public List<RecipeResponse> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(List<RecipeResponse> recipes) {
+        this.recipes = recipes;
+        notifyDataSetChanged();
+    }
+
+    public RecipeResponse getItem(int i) {
+        return recipes.get(i);
+    }
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) getContext()
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.recipe_row, parent, false);
-            ViewHolder viewHolder = new ViewHolder();
-            viewHolder.textViewName = (TextView) convertView.findViewById(R.id.recipe_row_textview_recipe_name);
-            viewHolder.textViewDescription =
-                    (TextView) convertView.findViewById(R.id.recipe_row_textview_recipe_description);
-            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.recipe_row_imageview);
-            convertView.setTag(viewHolder);
+    public RecipeViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.discover_row, viewGroup, false);
+
+        return new RecipeViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(RecipeViewHolder recipeViewHolder, int i) {
+        recipeViewHolder.setRecipeResponse(recipes.get(i));
+    }
+
+    @Override
+    public int getItemCount() {
+        return recipes.size();
+    }
+
+    public static class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView textViewName;
+        private ImageView imageView;
+
+        private RecipeResponse recipeResponse;
+
+        public RecipeViewHolder(View view) {
+            super(view);
+            view.setOnClickListener(this);
+
+            textViewName = (TextView) view.findViewById(R.id.recipe_row_textview_recipe_name);
+            imageView = (ImageView) view.findViewById(R.id.recipe_row_imageview);
         }
 
-        RecipeResponse recipeResponse = getItem(position);
+        public void setRecipeResponse(RecipeResponse recipeResponse) {
+            this.recipeResponse = recipeResponse;
 
-        ViewHolder viewHolder = (ViewHolder) convertView.getTag();
-        viewHolder.textViewName.setText(recipeResponse.getName());
-        viewHolder.textViewDescription.setText(recipeResponse.getDescription());
+            textViewName.setText(recipeResponse.getName());
+            //textViewDescription.setText(recipeResponse.getDescription());
+            new DownloadImageViewTask(imageView).execute(recipeResponse.getImage().getBig());
+        }
 
-        new DownloadImageViewTask(viewHolder.imageView, true).execute(recipeResponse.getImage().getSmall());
-
-        return convertView;
-
-    }
-
-    static class ViewHolder {
-        TextView textViewName;
-        TextView textViewDescription;
-        ImageView imageView;
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(v.getContext(), AddIngredientsActivity.class);
+            Bundle b = new Bundle();
+            b.putString("item", recipeResponse.getName());
+            intent.putExtras(b);
+            v.getContext().startActivity(intent);
+        }
     }
 }

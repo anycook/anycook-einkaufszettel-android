@@ -47,7 +47,8 @@ public class LoadDiscoverRecipesTask extends AsyncTask<String, Void, List<Recipe
     private final RecipeRowArrayAdapter adapter;
     private final Activity activity;
 
-    public LoadDiscoverRecipesTask(RecipeRowArrayAdapter adapter, Activity activity) {
+    public LoadDiscoverRecipesTask(RecipeRowArrayAdapter adapter,
+                                   Activity activity) {
         this.adapter = adapter;
         this.activity = activity;
     }
@@ -82,7 +83,7 @@ public class LoadDiscoverRecipesTask extends AsyncTask<String, Void, List<Recipe
             activity.findViewById(android.R.id.empty).setVisibility(View.GONE);
         } else {
             LOGGER.d(String.format("Found %d different recipes", recipeResponses.size()));
-            adapter.addAll(recipeResponses);
+            adapter.setRecipes(recipeResponses);
         }
 
     }
