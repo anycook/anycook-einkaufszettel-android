@@ -43,7 +43,7 @@
             </intent-filter>
         </activity>
         <activity android:name="de.anycook.einkaufszettel.activities.AddIngredientsActivity"
-                  android:theme="@style/Theme.AppCompat.AddIngredientsView"
+                  android:theme="@style/Theme.AnycookTheme.TransparentStatusBar"
                   android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"

@@ -94,11 +94,11 @@
     </style>
 
     <style name="ActionBarTitleTextAnycook" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@color/any_white_gray</item>
         <item name="android:textColor">@color/any_white_gray</item>
         <item name="android:textColorHint">@color/any_white_gray</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:titleTextStyle">@style/ActionBarTitleTextAnycook</item>
     </style>
 
     <style name="DrawerStyle">
@@ -135,7 +135,4 @@
         <item name="android:windowExitAnimation">@anim/slide_out</item>
     </style>
 
-    <style name="Theme.AppCompat.AddIngredientsView" parent="Theme.AnycookTheme.TransparentStatusBar">
-        <!--<item name="android:windowAnimationStyle">@style/Animation.SlideInOut</item>-->
-    </style>
 </resources>

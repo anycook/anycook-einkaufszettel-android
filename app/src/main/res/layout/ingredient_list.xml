@@ -19,7 +19,6 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
@@ -40,13 +39,13 @@
                 android:background="@drawable/toolbar_gradient_background"/>
 
         <android.support.v7.widget.Toolbar
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/anycook_toolbar"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:minHeight="?attr/actionBarSize"
-                android:theme="@style/ActionBarAnycook.Translucent"
-                android:layout_alignParentTop="true"
-                app:titleTextAppearance="@style/ActionBarTitleTextAnycook"/>
+                app:theme="@style/ActionBarAnycook.Translucent"
+                android:layout_alignParentTop="true"/>
 
         <ImageButton android:layout_width="56dp"
                      android:layout_height="56dp"

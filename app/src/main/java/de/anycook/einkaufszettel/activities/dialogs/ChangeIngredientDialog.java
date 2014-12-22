@@ -56,14 +56,14 @@ public class ChangeIngredientDialog {
         ((TextView) dialogView.findViewById(R.id.dialog_amount)).setText(ingredient.getAmount());
         builder.setView(dialogView);
 
-        builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
         });
 
-        builder.setPositiveButton("Ändern", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.change, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String newName = ((TextView) dialogView.findViewById(R.id.dialog_name)).getText().toString();
