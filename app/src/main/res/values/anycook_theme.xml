@@ -31,7 +31,6 @@
         <item name="android:editTextStyle">@style/TextAppearanceAnycook.EditText</item>
         <item name="android:activatedBackgroundIndicator">@drawable/list_activated_background</item>
         <item name="windowActionBar">false</item>
-        <!--<item name="searchViewSearchIcon">@drawable/ic_action_search</item>-->
     </style>
 
     <style name="AnycookActionBarWidgetTheme">
@@ -112,8 +111,6 @@
     <style name="ActionBarAnycook.Translucent" parent="ActionBarAnycook">
         <item name="android:background">@android:color/transparent</item>
     </style>
-
-
 
     <style name="Theme.AppCompat.Translucent" parent="Theme.AnycookTheme">
         <item name="android:windowNoTitle">true</item>

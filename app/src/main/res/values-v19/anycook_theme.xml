@@ -21,5 +21,4 @@
     <style name="Theme.AnycookTheme.TransparentStatusBar" parent="Theme.AnycookTheme">
         <item name="android:windowTranslucentStatus">true</item>
     </style>
-
 </resources>
