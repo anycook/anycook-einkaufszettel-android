@@ -58,11 +58,14 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
     private final Context context;
     private final SharedPreferences sharedPreferences;
     private final StartupActivity.Callback callback;
+    private final boolean emptyRecipes;
 
-    public LoadRecipesTask(Context context, SharedPreferences sharedPreferences, StartupActivity.Callback callback) {
+    public LoadRecipesTask(Context context, SharedPreferences sharedPreferences,
+                           StartupActivity.Callback callback, boolean emptyRecipes) {
         this.context = context;
         this.sharedPreferences = sharedPreferences;
         this.callback = callback;
+        this.emptyRecipes = emptyRecipes;
     }
 
     @Override
@@ -72,7 +75,7 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
 
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
-            if (sharedPreferences.contains("last-modified-recipes")) {
+            if (sharedPreferences.contains("last-modified-recipes") && !emptyRecipes) {
                 httpURLConnection.setRequestProperty("If-Modified-Since",
                     sharedPreferences.getString("last-modified-recipes", null));
             }

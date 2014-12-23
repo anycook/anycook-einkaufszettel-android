@@ -51,25 +51,31 @@ public class StartupActivity extends Activity {
 
         //open DB to trigger new version event
         RecipeStore recipeStore = new RecipeStore(this);
-        recipeStore.open();
-        recipeStore.close();
+        try {
+            recipeStore.open();
 
-        SharedPreferences sharedPrefs = getSharedPreferences("update_data", MODE_PRIVATE);
-        long lastUpdate = sharedPrefs.getLong("last_update", 0);
+            SharedPreferences sharedPrefs = getSharedPreferences("update_data", MODE_PRIVATE);
+            long lastUpdate = sharedPrefs.getLong("last_update", 0);
 
-        Properties properties = new Properties(this);
-        int updateInterval = properties.getUpdateInterval();
+            boolean emptyRecipes = recipeStore.empty();
 
-        long currentTime = System.currentTimeMillis();
-        if (currentTime - lastUpdate > updateInterval * 1000) {
-            if (ConnectionStatus.isConnected(this)) {
-                updateData(sharedPrefs, lastUpdate == 0);
-                return;
+            Properties properties = new Properties(this);
+            int updateInterval = properties.getUpdateInterval();
+
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - lastUpdate > updateInterval * 1000 || emptyRecipes) {
+                if (ConnectionStatus.isConnected(this)) {
+                    updateData(sharedPrefs, lastUpdate == 0, emptyRecipes);
+                    return;
+                }
+
+                logger.i("no active internet connection found");
             }
-
-            logger.i("no active internet connection found");
+            startMainActivity();
+        } finally {
+            recipeStore.close();
         }
-        startMainActivity();
+
     }
 
     @Override
@@ -83,15 +89,15 @@ public class StartupActivity extends Activity {
         finish();
     }
 
-    private void updateData(SharedPreferences sharedPrefs, boolean newData) {
+    private void updateData(SharedPreferences sharedPrefs, boolean newData, boolean emptyRecipes) {
         setContentView(R.layout.load_screen);
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        if (newData) { findViewById(R.id.skip).setVisibility(View.INVISIBLE); }
+        if (newData || emptyRecipes) { findViewById(R.id.skip).setVisibility(View.INVISIBLE); }
 
         loadIngredientsTask = new LoadIngredientsTask(this, new IncrementCallback());
         loadIngredientsTask.execute();
-        loadRecipesTask = new LoadRecipesTask(this, sharedPrefs, new IncrementCallback());
+        loadRecipesTask = new LoadRecipesTask(this, sharedPrefs, new IncrementCallback(), emptyRecipes);
         loadRecipesTask.execute();
 
         SharedPreferences.Editor editor = sharedPrefs.edit();

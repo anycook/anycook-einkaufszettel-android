@@ -54,6 +54,11 @@ public class RecipeStore implements Closeable {
         database.close();
     }
 
+    public boolean empty() {
+        Cursor cursor = database.query(SQLiteDB.RECIPE_TABLE, new String[]{"name"}, null, null, null, null, null, "1");
+        return !cursor.moveToNext();
+    }
+
     public Cursor getRecipesForQuery(String like) {
         String query = String.format("SELECT name AS _id, description, smallImage, bigImage, persons, timeStd, " +
             "timeMin, lastChange FROM %s WHERE _id LIKE ?", SQLiteDB.RECIPE_TABLE);
