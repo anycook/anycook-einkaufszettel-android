@@ -43,11 +43,15 @@ public class StartupActivity extends Activity {
     private ProgressBar progressBar;
     private LoadIngredientsTask loadIngredientsTask;
     private LoadRecipesTask loadRecipesTask;
+    private boolean reload;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        String action = getIntent().getAction();
+        reload = action.equals("de.anycook.einkaufszettel.action.LOAD_DATA");
 
         //open DB to trigger new version event
         RecipeStore recipeStore = new RecipeStore(this);
@@ -63,7 +67,7 @@ public class StartupActivity extends Activity {
             int updateInterval = properties.getUpdateInterval();
 
             long currentTime = System.currentTimeMillis();
-            if (currentTime - lastUpdate > updateInterval * 1000 || emptyRecipes) {
+            if (currentTime - lastUpdate > updateInterval * 1000 || emptyRecipes || reload) {
                 if (ConnectionStatus.isConnected(this)) {
                     updateData(sharedPrefs, lastUpdate == 0, emptyRecipes);
                     return;
@@ -71,11 +75,11 @@ public class StartupActivity extends Activity {
 
                 logger.i("no active internet connection found");
             }
-            startMainActivity();
+
+            startActivity();
         } finally {
             recipeStore.close();
         }
-
     }
 
     @Override
@@ -83,9 +87,11 @@ public class StartupActivity extends Activity {
         // Do nothing
     }
 
-    private void startMainActivity() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
+    private void startActivity() {
+        if (!reload) {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+        }
         finish();
     }
 
@@ -108,7 +114,7 @@ public class StartupActivity extends Activity {
     public void onSkipClick(View view) {
         loadIngredientsTask.cancel(true);
         loadRecipesTask.cancel(true);
-        startMainActivity();
+        startActivity();
     }
 
     public interface Callback {
@@ -121,7 +127,7 @@ public class StartupActivity extends Activity {
             progressBar.incrementProgressBy(1);
 
             if (progressBar.getProgress() == progressBar.getMax()) {
-                startMainActivity();
+                startActivity();
             }
         }
     }

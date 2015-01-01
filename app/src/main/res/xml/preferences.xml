@@ -25,7 +25,7 @@
         android:layout="@layout/preference_layout"
         android:summary="Diese Zutaten sind standardmäßig nicht markiert"
         android:dialogMessage="Zutaten, die man normalerweise nicht einkaufen muss. Diese Zutaten sind standartmäßig
-nicht markiert"
+nicht markiert."
         android:defaultValue="Salz,Pfeffer,Öl"/>
     <ListPreference
         android:key="update_interval"
@@ -39,8 +39,6 @@ nicht markiert"
         android:key="load_mobile"
         android:layout="@layout/preference_layout"
         android:title="Mobile Datenverbindung"
-        android:summary="Datenbanken auch über mobile Datenverbindung aktuallisieren"
+        android:summary="Datenbanken auch über mobile Datenverbindung aktualisieren."
         android:defaultValue="true" />
-
-
 </PreferenceScreen>

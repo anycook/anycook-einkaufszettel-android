@@ -92,6 +92,10 @@
         <item name="android:titleTextStyle">@style/ActionBarTitleTextAnycook</item>
     </style>
 
+    <style name="ActionBarAnycook.PopupMenu" parent="android:style/Widget.Holo.Light.ListPopupWindow">
+        <item name="android:popupBackground">@color/any_white_gray</item>
+    </style>
+
     <style name="ActionBarTitleTextAnycook" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textColorPrimary">@color/any_white_gray</item>
         <item name="android:textColor">@color/any_white_gray</item>

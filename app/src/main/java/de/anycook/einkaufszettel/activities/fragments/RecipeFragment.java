@@ -90,7 +90,14 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.recipe_menu_search:
+                return super.onOptionsItemSelected(item);
+            case R.id.recipe_menu_reload_db:
+                Intent intent = new Intent("de.anycook.einkaufszettel.action.LOAD_DATA");
+                startActivity(intent);
+        }
+        return true;
     }
 
     @Override
