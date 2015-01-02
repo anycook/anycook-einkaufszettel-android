@@ -36,9 +36,7 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
-import android.widget.FilterQueryProvider;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.noveogroup.android.log.Logger;
@@ -46,9 +44,9 @@ import com.noveogroup.android.log.LoggerManager;
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.activities.dialogs.ChangeIngredientDialog;
 import de.anycook.einkaufszettel.adapter.GroceryItemRowAdapter;
+import de.anycook.einkaufszettel.adapter.IngredientAutocompleteAdapter;
 import de.anycook.einkaufszettel.model.Ingredient;
 import de.anycook.einkaufszettel.store.GroceryItemStore;
-import de.anycook.einkaufszettel.store.IngredientNameStore;
 import de.anycook.einkaufszettel.store.SQLiteDB;
 import de.anycook.einkaufszettel.util.StringTools;
 
@@ -113,25 +111,7 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
     }
 
     private CursorAdapter getAutocompleteCursorAdapter() {
-        final IngredientNameStore ingredientNameStore = new IngredientNameStore(this.groceryNameTextView.getContext());
-        ingredientNameStore.open();
-        SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(getActivity().getBaseContext(),
-                R.layout.autocomplete_row, null,
-                new String[]{"_id"}, new int[]{android.R.id.text1}, 0);
-        cursorAdapter.setFilterQueryProvider(new FilterQueryProvider() {
-            @Override
-            public Cursor runQuery(CharSequence constraint) {
-                return ingredientNameStore.autocompleteIngredients(constraint);
-            }
-        });
-
-        cursorAdapter.setCursorToStringConverter(new SimpleCursorAdapter.CursorToStringConverter() {
-            @Override
-            public CharSequence convertToString(Cursor cursor) {
-                return cursor.getString(SQLiteDB.TableFields.GROCERY_ITEM_NAME);
-            }
-        });
-        return cursorAdapter;
+        return new IngredientAutocompleteAdapter(getActivity());
     }
 
     private boolean isGroceryItemStroked() {
