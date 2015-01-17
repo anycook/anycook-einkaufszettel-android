@@ -107,6 +107,9 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
 
             GroceryItemRowAdapter listAdapter = (GroceryItemRowAdapter) getListAdapter();
             listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
+
+            // set focus back to name field after adding ingredient
+            groceryNameTextView.requestFocus();
         }
     }
 
