@@ -26,7 +26,7 @@
         android:summary="Diese Zutaten sind standardmäßig nicht markiert"
         android:dialogMessage="Zutaten, die man normalerweise nicht einkaufen muss. Diese Zutaten sind standartmäßig
 nicht markiert."
-        android:defaultValue="Salz,Pfeffer,Öl"/>
+        android:defaultValue="Salz,Pfeffer,Öl,Wasser"/>
     <ListPreference
         android:key="update_interval"
         android:layout="@layout/preference_layout"
