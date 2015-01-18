@@ -42,8 +42,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 12
-        versionName '0.3.3'
+        versionCode 13
+        versionName '0.3.4'
         testInstrumentationRunner 'com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner'
     }
     lintOptions {
