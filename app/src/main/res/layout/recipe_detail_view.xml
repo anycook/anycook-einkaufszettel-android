@@ -28,7 +28,7 @@
     <TextView
         android:id="@+id/recipe_title_text"
         android:layout_width="match_parent"
-        style="@style/TextAppearanceAnycook.Medium"
+        style="@style/TextAppearanceAnycook.Title"
         android:layout_height="wrap_content"
         android:textColor="@color/any_white_gray"
         android:layout_alignParentTop="true"

@@ -27,7 +27,7 @@
         <item name="android:dropDownItemStyle">@style/DropDownItemAnycook</item>
         <item name="android:textAppearance">@style/TextAppearanceAnycook</item>
         <item name="android:textAppearanceSmall">@style/TextAppearanceAnycook.Body1</item>
-        <item name="android:textAppearanceMedium">@style/TextAppearanceAnycook.Medium</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearanceAnycook.Title</item>
         <item name="android:textAppearanceLarge">@style/TextAppearanceAnycook.Large</item>
         <item name="android:editTextStyle">@style/TextAppearanceAnycook.EditText</item>
         <item name="android:activatedBackgroundIndicator">@drawable/list_activated_background</item>
@@ -58,7 +58,7 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="TextAppearanceAnycook.Medium" parent="@style/TextAppearanceAnycook">
+    <style name="TextAppearanceAnycook.Title" parent="@style/TextAppearanceAnycook">
         <item name="android:textSize">20sp</item>
     </style>
 

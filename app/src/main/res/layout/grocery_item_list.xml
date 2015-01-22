@@ -35,7 +35,7 @@
             android:gravity="start"
             android:nextFocusForward="@+id/grocery_item_list_textview_amount"
             android:imeOptions="actionNext"
-            style="@style/TextAppearanceAnycook.Medium" />
+            style="@style/TextAppearanceAnycook.Title" />
 
     <EditText
             android:id="@+id/grocery_item_list_textview_amount"
@@ -48,7 +48,7 @@
             android:gravity="end"
             android:inputType="textNoSuggestions"
             android:imeOptions="actionDone"
-            style="@style/TextAppearanceAnycook.Medium" />
+            style="@style/TextAppearanceAnycook.Title" />
 
     <ListView
             android:id="@android:id/list"
