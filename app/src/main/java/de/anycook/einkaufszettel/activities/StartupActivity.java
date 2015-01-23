@@ -99,7 +99,7 @@ public class StartupActivity extends Activity {
         setContentView(R.layout.load_screen);
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        if (newData || emptyRecipes) { findViewById(R.id.skip).setVisibility(View.INVISIBLE); }
+        if (newData || emptyRecipes) { findViewById(R.id.load_screen_skip).setVisibility(View.INVISIBLE); }
 
         loadIngredientsTask = new LoadIngredientsTask(this, new IncrementCallback());
         loadIngredientsTask.execute();

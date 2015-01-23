@@ -58,7 +58,7 @@
             android:textSize="14sp"/>
 
     <TextView
-        android:id="@+id/skip"
+        android:id="@+id/load_screen_skip"
         android:clickable="true"
         android:onClick="onSkipClick"
         android:layout_width="wrap_content"

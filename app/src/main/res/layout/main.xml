@@ -24,7 +24,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <android.support.v7.widget.Toolbar
-            android:id="@+id/anycook_toolbar"
+            android:id="@+id/recipe_ingredient_list_anycook_toolbar"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:minHeight="?attr/actionBarSize"
@@ -33,16 +33,16 @@
 
     <android.support.v4.widget.DrawerLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/drawer_layout"
+            android:id="@+id/main_drawer_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         <!-- The main content view -->
         <FrameLayout
-                android:id="@+id/content_frame"
+                android:id="@+id/main_drawer_layout_content_frame"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         <!-- The navigation drawer -->
-        <ListView android:id="@+id/left_drawer"
+        <ListView android:id="@+id/main_drawer_layout_left"
                   android:layout_width="240dp"
                   android:layout_height="match_parent"
                   android:layout_gravity="start"

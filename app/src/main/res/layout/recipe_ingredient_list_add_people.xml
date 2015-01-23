@@ -30,7 +30,7 @@
                 android:focusableInTouchMode="true">
 
     <TextView
-            android:id="@+id/ingredient_list_ingredient_label"
+            android:id="@+id/recipe_ingredient_list_add_people_textview_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
@@ -40,23 +40,23 @@
             style="@style/GuideTextAnycook"/>
 
     <EditText
-            android:id="@+id/ingredient_list_persons"
+            android:id="@+id/recipe_ingredient_list_add_people_edittext_persons"
             android:layout_width="44dp"
             android:maxLength="2"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/ingredient_list_ingredient_label"
-            android:layout_toRightOf="@id/ingredient_list_ingredient_label"
+            android:layout_toEndOf="@id/recipe_ingredient_list_add_people_textview_label"
+            android:layout_toRightOf="@id/recipe_ingredient_list_add_people_textview_label"
             android:focusable="false"
             android:inputType="number"
             android:onClick="onNumberPickerClick"/>
 
     <TextView
-            android:id="@+id/ingredient_list_persons_label"
+            android:id="@+id/recipe_ingredient_list_add_people_textview_persons_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/ingredient_list_persons"
-            android:layout_toRightOf="@id/ingredient_list_persons"
-            android:layout_alignBottom="@+id/ingredient_list_ingredient_label"
+            android:layout_toEndOf="@id/recipe_ingredient_list_add_people_edittext_persons"
+            android:layout_toRightOf="@id/recipe_ingredient_list_add_people_edittext_persons"
+            android:layout_alignBottom="@+id/recipe_ingredient_list_add_people_textview_label"
             android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp"
             android:paddingTop="4dp"

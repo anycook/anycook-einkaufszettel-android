@@ -61,7 +61,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.anycook_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.recipe_ingredient_list_anycook_toolbar);
         toolbar.setLogo(R.drawable.anycook_transparent);
 
         setSupportActionBar(toolbar);
@@ -69,8 +69,8 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         // create Drawer
-        this.drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        this.drawerList = (ListView) findViewById(R.id.left_drawer);
+        this.drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+        this.drawerList = (ListView) findViewById(R.id.main_drawer_layout_left);
         this.menuTitles = getResources().getStringArray(R.array.menu_names);
         drawerList.setAdapter(new DrawerRowAdapter(this, menuTitles));
         drawerList.setOnItemClickListener(this);
@@ -160,7 +160,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         fragment.setArguments(bundle);
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment)
+        fragmentManager.beginTransaction().replace(R.id.main_drawer_layout_content_frame, fragment)
             .addToBackStack(title)
             .commit();
         // update selected item and title, then close the drawer

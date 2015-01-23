@@ -25,7 +25,7 @@
 
 
     <RelativeLayout
-            android:id="@+id/head_layout"
+            android:id="@+id/recipe_ingredient_list_relativelayout"
             android:layout_width="fill_parent"
             android:layout_height="260dp"
             android:orientation="vertical">
@@ -63,7 +63,7 @@
                 android:visibility="invisible"/>
 
         <include
-                android:id="@+id/ingredient_list_include"
+                android:id="@+id/recipe_ingredient_list_include"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -76,7 +76,7 @@
                     android:tag="front"
                     style="@style/Theme.AnycookTheme">
         <LinearLayout
-                android:id="@+id/ingredient_list_progress"
+                android:id="@+id/recipe_ingredient_list_relativelayout_linearlayout_progress"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center"
@@ -84,14 +84,14 @@
                 android:visibility="gone">
 
             <ProgressBar
-                    android:id="@+id/pbHeaderProgress"
+                    android:id="@+id/recipe_ingredient_list_relativelayout_linearlayout_progressbar_header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
             </ProgressBar>
         </LinearLayout>
 
         <ListView
-                android:id="@+id/ingredient_list_listview"
+                android:id="@+id/recipe_ingredient_list_listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

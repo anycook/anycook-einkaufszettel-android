@@ -79,7 +79,7 @@ public class LoadDiscoverRecipesTask extends AsyncTask<String, Void, List<Recipe
     protected void onPostExecute(final List<RecipeResponse> recipeResponses) {
         if (recipeResponses.size() == 0) {
             LOGGER.i("Didn't find any nearby recipes");
-            activity.findViewById(R.id.nothing_found).setVisibility(View.VISIBLE);
+            activity.findViewById(R.id.recipe_list_textview_nothing_found).setVisibility(View.VISIBLE);
             activity.findViewById(android.R.id.empty).setVisibility(View.GONE);
         } else {
             LOGGER.d(String.format("Found %d different recipes", recipeResponses.size()));

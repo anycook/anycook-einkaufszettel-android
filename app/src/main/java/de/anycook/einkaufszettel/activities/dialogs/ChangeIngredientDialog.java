@@ -52,8 +52,8 @@ public class ChangeIngredientDialog {
         final LayoutInflater inflater = activity.getLayoutInflater();
 
         final View dialogView = inflater.inflate(R.layout.change_ingredient_dialog, null);
-        ((TextView) dialogView.findViewById(R.id.dialog_name)).setText(ingredient.getName());
-        ((TextView) dialogView.findViewById(R.id.dialog_amount)).setText(ingredient.getAmount());
+        ((TextView) dialogView.findViewById(R.id.change_ingredient_dialog_edittext_name)).setText(ingredient.getName());
+        ((TextView) dialogView.findViewById(R.id.change_ingredient_dialog_edittext_amount)).setText(ingredient.getAmount());
         builder.setView(dialogView);
 
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -66,8 +66,8 @@ public class ChangeIngredientDialog {
         builder.setPositiveButton(R.string.change, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String newName = ((TextView) dialogView.findViewById(R.id.dialog_name)).getText().toString();
-                String newAmount = ((TextView) dialogView.findViewById(R.id.dialog_amount)).getText().toString();
+                String newName = ((TextView) dialogView.findViewById(R.id.change_ingredient_dialog_edittext_name)).getText().toString();
+                String newAmount = ((TextView) dialogView.findViewById(R.id.change_ingredient_dialog_edittext_amount)).getText().toString();
                 Ingredient newIngredient = new Ingredient();
 
                 newIngredient.setName(newName);

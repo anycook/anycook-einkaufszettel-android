@@ -26,7 +26,7 @@
               android:onClick="onClick">
 
     <TextView
-        android:id="@+id/recipe_title_text"
+        android:id="@+id/recipe_detail_view_textview_title"
         android:layout_width="match_parent"
         style="@style/TextAppearanceAnycook.Title"
         android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
         android:paddingBottom="15dp"/>
 
     <ImageView
-        android:id="@+id/recipe_image"
+        android:id="@+id/recipe_detail_view_imageview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
@@ -59,13 +59,13 @@
 
         <TextView
             style="@style/TextAppearanceAnycook.Body1"
-            android:id="@+id/recipe_description_text"
+            android:id="@+id/recipe_detail_view_textview_description_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/any_white_gray"/>
         <TextView
             style="@style/TextAppearanceAnycook.Body1"
-            android:id="@+id/recipe_time_text"
+            android:id="@+id/recipe_detail_view_textview_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/any_white_gray"/>

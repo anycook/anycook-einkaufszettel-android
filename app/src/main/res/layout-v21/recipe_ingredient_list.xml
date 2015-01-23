@@ -26,13 +26,13 @@
 
 
     <RelativeLayout
-            android:id="@+id/head_layout"
+            android:id="@+id/recipe_ingredient_list_relativelayout"
             android:layout_width="fill_parent"
             android:layout_height="260dp"
             android:orientation="vertical">
 
         <include layout="@layout/recipe_header"
-                android:clickable="true"/>
+                 android:clickable="true"/>
 
         <View
                 android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                 android:background="@drawable/toolbar_gradient_background"/>
 
         <android.support.v7.widget.Toolbar
-                android:id="@+id/anycook_toolbar"
+                android:id="@+id/recipe_ingredient_list_anycook_toolbar"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:minHeight="?attr/actionBarSize"
@@ -48,25 +48,26 @@
                 android:layout_alignParentTop="true"
                 app:titleTextAppearance="@style/ActionBarTitleTextAnycook"/>
 
-        <ImageButton android:layout_width="56dp"
-                     android:layout_height="56dp"
-                     android:id="@+id/add_ingredients_button"
-                     android:onClick="onAddIngredientsClick"
-                     android:elevation="10dp"
-                     android:src="@drawable/ic_action_new"
-                     android:contentDescription="@string/add_ingredients"
-                     android:layout_alignParentEnd="true"
-                     android:layout_alignParentBottom="true"
-                     android:layout_marginEnd="16dp"
-                     android:layout_marginBottom="12dp"
-                     android:visibility="invisible"/>
+        <ImageButton
+                android:id="@+id/recipe_ingredient_list_imagebutton_add_ingredients"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:onClick="onAddIngredientsClick"
+                android:elevation="10dp"
+                android:src="@drawable/ic_action_new"
+                android:contentDescription="@string/add_ingredients"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="12dp"
+                android:visibility="invisible"/>
 
         <include
-                android:id="@+id/ingredient_list_include"
+                android:id="@+id/recipe_ingredient_list_include"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                layout="@layout/recipe_ingredient_list_add_people" />
+                layout="@layout/recipe_ingredient_list_add_people"/>
     </RelativeLayout>
 
     <RelativeLayout android:orientation="vertical"
@@ -75,7 +76,7 @@
                     android:tag="front"
                     style="@style/Theme.AnycookTheme">
         <LinearLayout
-                android:id="@+id/ingredient_list_progress"
+                android:id="@+id/recipe_ingredient_list_relativelayout_linearlayout_progress"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center"
@@ -83,14 +84,14 @@
                 android:visibility="gone">
 
             <ProgressBar
-                    android:id="@+id/pbHeaderProgress"
+                    android:id="@+id/recipe_ingredient_list_relativelayout_linearlayout_progressbar_header"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content">
             </ProgressBar>
         </LinearLayout>
 
         <ListView
-                android:id="@+id/ingredient_list_listview"
+                android:id="@+id/recipe_ingredient_list_listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

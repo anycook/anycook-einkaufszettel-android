@@ -32,7 +32,7 @@
             android:contentDescription="@string/icon"/>
 
     <TextView
-            android:id="@+id/drawer_list_item_textview"
+            android:id="@+id/drawer_row_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/drawer_row_imageview"

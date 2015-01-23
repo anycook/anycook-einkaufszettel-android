@@ -77,7 +77,7 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
         // load views
         this.groceryNameTextView =
                 (AutoCompleteTextView) view.findViewById(R.id.grocery_list_autocompletetextview_grocery);
-        this.groceryAmountTextView = (EditText) view.findViewById(R.id.grocery_list_textview_amount);
+        this.groceryAmountTextView = (EditText) view.findViewById(R.id.grocery_list_edittext_amount);
 
         // load and set grocery list data
         this.groceryItemStore = new GroceryStore(view.getContext());
