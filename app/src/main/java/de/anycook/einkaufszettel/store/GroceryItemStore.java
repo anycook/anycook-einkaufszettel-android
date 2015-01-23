@@ -116,7 +116,11 @@ public class GroceryItemStore implements Closeable {
     }
 
     public Cursor getStrokedGroceryItems() {
-        return database.query(SQLiteDB.GROCERY_ITEM_TABLE, new String[]{"name"}, "stroke=1", null, null, null, null);
+        return database.query(SQLiteDB.GROCERY_ITEM_TABLE, new String[]{"name", "amount"}, "stroke=1", null, null, null, null);
+    }
+
+    public Cursor getNonStrokedGroceryItems() {
+        return database.query(SQLiteDB.GROCERY_ITEM_TABLE, new String[]{"name", "amount"}, "stroke=0", null, null, null, null);
     }
 
     public Cursor getAllGroceryItemsCursor() {

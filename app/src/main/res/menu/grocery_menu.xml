@@ -24,4 +24,8 @@
           android:icon="@drawable/ic_action_accept"
           android:title="@string/clear"
           app:showAsAction="ifRoom" />
+    <item android:id="@+id/grocery_menu_action_share"
+          android:icon="@drawable/ic_action_share"
+          android:title="@string/share"
+          app:showAsAction="ifRoom" />
 </menu>

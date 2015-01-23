@@ -26,6 +26,7 @@
     <string name="drawer_close">Close navigation drawer</string>
 
     <string name="search">suchen</string>
+    <string name="share">teilen</string>
     <string name="amount_hint">Wieviel?</string>
 
     <string name="cancel">abbrechen</string>

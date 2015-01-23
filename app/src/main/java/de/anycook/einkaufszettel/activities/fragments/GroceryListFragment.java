@@ -21,6 +21,7 @@ package de.anycook.einkaufszettel.activities.fragments;
 import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -149,6 +150,9 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
                 clickedClearButton();
                 refreshMenuIcon();
                 return true;
+            case R.id.grocery_menu_action_share:
+                clickedShareButton();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -199,7 +203,7 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
         groceryItemStore.open();
     }
 
-    public void clickedClearButton() {
+    private void clickedClearButton() {
         Cursor strokedItemCursor = groceryItemStore.getStrokedGroceryItems();
         if (getListView().getCount() == 0) { return; }
         if (strokedItemCursor.getCount() == 0) {
@@ -233,6 +237,35 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
             listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
         }
     }
+
+    private void clickedShareButton() {
+        Cursor cursor = groceryItemStore.getNonStrokedGroceryItems();
+        StringBuilder builder = new StringBuilder();
+
+        while (cursor.moveToNext()) {
+            String groceryName = cursor.getString(SQLiteDB.TableFields.GROCERY_ITEM_NAME);
+            String groceryAmount = cursor.getString(SQLiteDB.TableFields.GROCERY_ITEM_AMOUNT);
+
+            if (groceryAmount != null && groceryAmount.length() > 0) {
+                builder.append(groceryAmount).append(' ');
+            }
+            builder.append(groceryName);
+
+
+
+            if (!cursor.isLast()) {
+                builder.append('\n');
+            }
+        }
+
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, builder.toString());
+        startActivity(shareIntent);
+    }
+
+
 
     private class AmountOnEditorActionListener implements TextView.OnEditorActionListener {
 
