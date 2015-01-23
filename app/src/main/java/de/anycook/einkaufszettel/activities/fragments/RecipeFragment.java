@@ -33,7 +33,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.noveogroup.android.log.Log;
 import de.anycook.einkaufszettel.R;
-import de.anycook.einkaufszettel.activities.AddIngredientsActivity;
+import de.anycook.einkaufszettel.activities.RecipeActivity;
 import de.anycook.einkaufszettel.adapter.RecipeRowCursorAdapter;
 import de.anycook.einkaufszettel.store.RecipeStore;
 
@@ -102,7 +102,8 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
 
     @Override
     public void onListItemClick(ListView l, View view, int position, long id) {
-        Intent intent = new Intent(getActivity(), AddIngredientsActivity.class);
+//        Intent intent = new Intent(getActivity(), AddIngredientsActivity.class);
+        Intent intent = new Intent(getActivity(), RecipeActivity.class);
 
         Bundle bundle = new Bundle();
         String item = ((TextView) view.findViewById(R.id.recipe_row_textview_recipe_name)).getText().toString();
