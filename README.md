@@ -66,5 +66,8 @@ Copy the text that's in 'Output path', paste into 'Test output path', but change
 
 (Source: [robolectric/deckard-gradle](https://github.com/robolectric/deckard-gradle))
 
+## Issues
+We are using [JIRA](https://jira.anycook.de) for issue tracking. Mail to [support@anycook.de](mailto:support@anycook.de) to submit an issue.
+
 ### Thanks to
 [**lemaxm**](https://github.com/lemaxm) for the test device
