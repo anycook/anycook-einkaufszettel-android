@@ -47,7 +47,7 @@ public class DrawerRowAdapter extends ArrayAdapter<String> {
             convertView = inflater.inflate(R.layout.drawer_row, parent, false);
             ViewHolder viewHolder = new ViewHolder();
             viewHolder.textViewName = (TextView) convertView.findViewById(R.id.drawer_list_item_textview);
-            viewHolder.imageViewIcon = (ImageView) convertView.findViewById(R.id.drawer_list_item_imageview);
+            viewHolder.imageViewIcon = (ImageView) convertView.findViewById(R.id.drawer_row_imageview);
             convertView.setTag(viewHolder);
         }
         String item = getItem(position);

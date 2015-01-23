@@ -44,10 +44,10 @@ import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.activities.dialogs.ChangeIngredientDialog;
-import de.anycook.einkaufszettel.adapter.IngredientRowAdapter;
+import de.anycook.einkaufszettel.adapter.RecipeIngredientRowAdapter;
 import de.anycook.einkaufszettel.model.Ingredient;
 import de.anycook.einkaufszettel.model.RecipeResponse;
-import de.anycook.einkaufszettel.store.GroceryItemStore;
+import de.anycook.einkaufszettel.store.GroceryStore;
 import de.anycook.einkaufszettel.store.ItemNotFoundException;
 import de.anycook.einkaufszettel.store.RecipeStore;
 import de.anycook.einkaufszettel.tasks.DownloadImageTask;
@@ -77,7 +77,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ingredient_list);
+        setContentView(R.layout.recipe_ingredient_list);
 
         Bundle b = getIntent().getExtras();
         String item = b.getString("item");
@@ -98,7 +98,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
         }
 
         this.ingredientListView = (ListView) findViewById(R.id.ingredient_list_listview);
-        IngredientRowAdapter adapter = new IngredientRowAdapter(this, recipe.getPersons());
+        RecipeIngredientRowAdapter adapter = new RecipeIngredientRowAdapter(this, recipe.getPersons());
         ingredientListView.setAdapter(adapter);
         ingredientListView.setOnItemClickListener(this);
         ingredientListView.setOnItemLongClickListener(this);
@@ -142,7 +142,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        IngredientRowAdapter adapter = (IngredientRowAdapter) ingredientListView.getAdapter();
+        RecipeIngredientRowAdapter adapter = (RecipeIngredientRowAdapter) ingredientListView.getAdapter();
         Ingredient ingredient = (Ingredient) ingredientListView.getItemAtPosition(position);
         ingredient.setChecked(!ingredient.isChecked());
         adapter.notifyDataSetChanged();
@@ -157,7 +157,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
             public void ingredientChanged(Ingredient newIngredient) {
                 ingredient.setName(newIngredient.getName());
                 ingredient.setAmount(newIngredient.getAmount());
-                IngredientRowAdapter adapter = (IngredientRowAdapter) ingredientListView.getAdapter();
+                RecipeIngredientRowAdapter adapter = (RecipeIngredientRowAdapter) ingredientListView.getAdapter();
                 adapter.notifyDataSetChanged();
             }
         });
@@ -206,14 +206,14 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
     }
 
     private void includeCheckedIngredientsToGroceryList() {
-        GroceryItemStore groceryItemStore = new GroceryItemStore(this);
+        GroceryStore groceryItemStore = new GroceryStore(this);
         try {
             groceryItemStore.open();
             int ingredientsCount = ingredientListView.getAdapter().getCount();
             List<Ingredient> ingredients = new ArrayList<>(ingredientsCount);
             for (int i = 0; i < ingredientsCount; i++) {
                 Ingredient ingredient =
-                        ((IngredientRowAdapter) ingredientListView.getAdapter()).getMultipliedItem(i);
+                        ((RecipeIngredientRowAdapter) ingredientListView.getAdapter()).getMultipliedItem(i);
                 if (!ingredient.isChecked()) { continue; }
                 ingredients.add(ingredient);
             }
@@ -249,7 +249,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
                 personsEditText.setText(personsString);
                 if (personsString.length() == 0) { return; }
                 int numPersons = Integer.parseInt(personsEditText.getText().toString());
-                ((IngredientRowAdapter) ingredientListView.getAdapter()).setCurrentPersons(numPersons);
+                ((RecipeIngredientRowAdapter) ingredientListView.getAdapter()).setCurrentPersons(numPersons);
             }
         });
         alertDialogBuilder.setNegativeButton(R.string.cancel, null);

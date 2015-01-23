@@ -31,13 +31,13 @@ import java.io.Closeable;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class IngredientNameStore implements Closeable {
+public class RecipeIngredientNameStore implements Closeable {
     private static final Logger LOGGER = LoggerManager.getLogger();
 
     private final Context context;
     private SQLiteDatabase database;
 
-    public IngredientNameStore(Context context) {
+    public RecipeIngredientNameStore(Context context) {
         this.context = context;
     }
 

@@ -18,7 +18,7 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/grocery_item_row_relativelayout_front"
+                android:id="@+id/grocery_row_relativelayout_front"
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp">
     <TextView
-            android:id="@+id/grocery_item_row_textview_amount"
+            android:id="@+id/grocery_row_textview_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -38,18 +38,18 @@
             android:textStyle="italic"
             style="@style/TextAppearanceAnycook.Title"/>
     <TextView
-            android:id="@+id/grocery_item_row_textview_grocery_item"
+            android:id="@+id/grocery_row_textview_grocery"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:layout_toStartOf="@id/grocery_item_row_textview_amount"
-            android:layout_toLeftOf="@id/grocery_item_row_textview_amount"
+            android:layout_toStartOf="@id/grocery_row_textview_amount"
+            android:layout_toLeftOf="@id/grocery_row_textview_amount"
             android:maxLines="1"
             android:singleLine="true"
             android:textStyle="italic"
             style="@style/TextAppearanceAnycook.Title"/>
     <View
-            android:id="@+id/grocery_item_row_view_stroke"
+            android:id="@+id/grocery_row_view_stroke"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:background="@color/any_gray_dark"

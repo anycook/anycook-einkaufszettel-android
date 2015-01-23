@@ -44,10 +44,10 @@ import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.activities.dialogs.ChangeIngredientDialog;
-import de.anycook.einkaufszettel.adapter.GroceryItemRowAdapter;
-import de.anycook.einkaufszettel.adapter.IngredientAutocompleteAdapter;
+import de.anycook.einkaufszettel.adapter.GroceryRowAdapter;
+import de.anycook.einkaufszettel.adapter.RecipeIngredientAutocompleteAdapter;
 import de.anycook.einkaufszettel.model.Ingredient;
-import de.anycook.einkaufszettel.store.GroceryItemStore;
+import de.anycook.einkaufszettel.store.GroceryStore;
 import de.anycook.einkaufszettel.store.SQLiteDB;
 import de.anycook.einkaufszettel.util.StringTools;
 
@@ -62,7 +62,7 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
     private AutoCompleteTextView groceryNameTextView;
     private EditText groceryAmountTextView;
 
-    private GroceryItemStore groceryItemStore;
+    private GroceryStore groceryItemStore;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,16 +73,16 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view =  inflater.inflate(R.layout.grocery_item_list, container, false);
+        View view =  inflater.inflate(R.layout.grocery_list, container, false);
         // load views
         this.groceryNameTextView =
-                (AutoCompleteTextView) view.findViewById(R.id.grocery_item_list_autocompletetextview_grocery_item);
-        this.groceryAmountTextView = (EditText) view.findViewById(R.id.grocery_item_list_textview_amount);
+                (AutoCompleteTextView) view.findViewById(R.id.grocery_list_autocompletetextview_grocery);
+        this.groceryAmountTextView = (EditText) view.findViewById(R.id.grocery_list_textview_amount);
 
         // load and set grocery list data
-        this.groceryItemStore = new GroceryItemStore(view.getContext());
+        this.groceryItemStore = new GroceryStore(view.getContext());
         groceryItemStore.open();
-        GroceryItemRowAdapter listAdapter = new GroceryItemRowAdapter(view.getContext(), R.layout.grocery_item_row,
+        GroceryRowAdapter listAdapter = new GroceryRowAdapter(view.getContext(), R.layout.grocery_row,
                 groceryItemStore.getAllGroceryItemsCursor(), 0);
 
         //init data source adapter
@@ -106,7 +106,7 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
         } else {
             groceryItemStore.addGroceryItem(name, amount);
 
-            GroceryItemRowAdapter listAdapter = (GroceryItemRowAdapter) getListAdapter();
+            GroceryRowAdapter listAdapter = (GroceryRowAdapter) getListAdapter();
             listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
 
             // set focus back to name field after adding ingredient
@@ -115,7 +115,7 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
     }
 
     private CursorAdapter getAutocompleteCursorAdapter() {
-        return new IngredientAutocompleteAdapter(getActivity());
+        return new RecipeIngredientAutocompleteAdapter(getActivity());
     }
 
     private boolean isGroceryItemStroked() {
@@ -160,17 +160,17 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
 
     @Override
     public void onListItemClick(ListView l, View view, int position, long id) {
-        TextView groceryName = (TextView) view.findViewById(R.id.grocery_item_row_textview_grocery_item);
+        TextView groceryName = (TextView) view.findViewById(R.id.grocery_row_textview_grocery);
         groceryItemStore.changeStrokeVisibilityOfGroceryItem(groceryName.getText());
-        GroceryItemRowAdapter listAdapter = (GroceryItemRowAdapter) getListAdapter();
+        GroceryRowAdapter listAdapter = (GroceryRowAdapter) getListAdapter();
         listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
         refreshMenuIcon();
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        TextView groceryName = (TextView) view.findViewById(R.id.grocery_item_row_textview_grocery_item);
-        TextView groceryAmount = (TextView) view.findViewById(R.id.grocery_item_row_textview_amount);
+        TextView groceryName = (TextView) view.findViewById(R.id.grocery_row_textview_grocery);
+        TextView groceryAmount = (TextView) view.findViewById(R.id.grocery_row_textview_amount);
         final Ingredient ingredient = new Ingredient(groceryName.getText().toString(),
                 groceryAmount.getText().toString());
 
@@ -180,7 +180,7 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
                     public void ingredientChanged(Ingredient newIngredient) {
                         newIngredient.setChecked(false);
                         groceryItemStore.update(ingredient.getName(), newIngredient);
-                        GroceryItemRowAdapter listAdapter = (GroceryItemRowAdapter) getListAdapter();
+                        GroceryRowAdapter listAdapter = (GroceryRowAdapter) getListAdapter();
                         listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
                     }
                 });
@@ -220,7 +220,7 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     groceryItemStore.deleteAllGroceryItems();
-                    GroceryItemRowAdapter listAdapter = (GroceryItemRowAdapter) getListAdapter();
+                    GroceryRowAdapter listAdapter = (GroceryRowAdapter) getListAdapter();
                     listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
                     dialog.dismiss();
                 }
@@ -231,9 +231,9 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
         } else {
             while (strokedItemCursor.moveToNext()) {
                 groceryItemStore.removeGroceryItem(
-                        strokedItemCursor.getString(SQLiteDB.TableFields.GROCERY_ITEM_NAME));
+                        strokedItemCursor.getString(SQLiteDB.TableFields.GROCERY_NAME));
             }
-            GroceryItemRowAdapter listAdapter = (GroceryItemRowAdapter) getListAdapter();
+            GroceryRowAdapter listAdapter = (GroceryRowAdapter) getListAdapter();
             listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
         }
     }
@@ -243,8 +243,8 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
         StringBuilder builder = new StringBuilder();
 
         while (cursor.moveToNext()) {
-            String groceryName = cursor.getString(SQLiteDB.TableFields.GROCERY_ITEM_NAME);
-            String groceryAmount = cursor.getString(SQLiteDB.TableFields.GROCERY_ITEM_AMOUNT);
+            String groceryName = cursor.getString(SQLiteDB.TableFields.GROCERY_NAME);
+            String groceryAmount = cursor.getString(SQLiteDB.TableFields.GROCERY_AMOUNT);
 
             if (groceryAmount != null && groceryAmount.length() > 0) {
                 builder.append(groceryAmount).append(' ');

@@ -26,7 +26,7 @@ import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 import de.anycook.einkaufszettel.activities.StartupActivity;
 import de.anycook.einkaufszettel.model.Ingredient;
-import de.anycook.einkaufszettel.store.IngredientNameStore;
+import de.anycook.einkaufszettel.store.RecipeIngredientNameStore;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -84,7 +84,7 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<Ingredient>>
     protected void onPostExecute(List<Ingredient> ingredients) {
         if (isCancelled()) { return; }
 
-        IngredientNameStore ingredientDatabase = new IngredientNameStore(context);
+        RecipeIngredientNameStore ingredientDatabase = new RecipeIngredientNameStore(context);
         try {
             ingredientDatabase.open();
             for (Ingredient ingredient : ingredients) { ingredientDatabase.addIngredient(ingredient); }

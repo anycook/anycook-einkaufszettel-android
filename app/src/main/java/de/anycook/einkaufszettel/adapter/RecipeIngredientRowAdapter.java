@@ -33,13 +33,13 @@ import java.util.ArrayList;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class IngredientRowAdapter extends ArrayAdapter<Ingredient> {
+public class RecipeIngredientRowAdapter extends ArrayAdapter<Ingredient> {
 
     private final int recipePersons;
     private int currentPersons;
 
-    public IngredientRowAdapter(Context context, int recipePersons) {
-        super(context, R.layout.ingredient_list_row, new ArrayList<Ingredient>());
+    public RecipeIngredientRowAdapter(Context context, int recipePersons) {
+        super(context, R.layout.recipe_ingredient_list_row, new ArrayList<Ingredient>());
         this.recipePersons = recipePersons;
         this.currentPersons = recipePersons;
     }
@@ -50,7 +50,7 @@ public class IngredientRowAdapter extends ArrayAdapter<Ingredient> {
         if (convertView == null) {
             final LayoutInflater inflater =
                     (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.ingredient_list_row, parent, false);
+            convertView = inflater.inflate(R.layout.recipe_ingredient_list_row, parent, false);
             holder = new IngredientHolder();
             holder.nameTextView = (TextView) convertView.findViewById(R.id.ingredient_list_row_name);
             holder.amountTextView = (TextView) convertView.findViewById(R.id.ingredient_list_row_amount);

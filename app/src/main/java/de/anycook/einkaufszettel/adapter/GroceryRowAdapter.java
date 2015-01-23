@@ -32,22 +32,23 @@ import de.anycook.einkaufszettel.store.SQLiteDB;
  * @author Jan Grassegger <jan@anycook.de>
  * @author Claudia Sichting <claudia.sichting@uni-weimar.de>
  */
-public class GroceryItemRowAdapter extends ResourceCursorAdapter {
+public class GroceryRowAdapter extends ResourceCursorAdapter {
 
-    public GroceryItemRowAdapter(Context context, int layout, Cursor c, int flags) {
+    public GroceryRowAdapter(Context context, int layout, Cursor c, int flags) {
         super(context, layout, c, flags);
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView groceryName = (TextView) view.findViewById(R.id.grocery_item_row_textview_grocery_item);
-        groceryName.setText(cursor.getString(SQLiteDB.TableFields.GROCERY_ITEM_NAME));
+        //TextView groceryName = (TextView) view.findViewById(R.id.grocery_item_row_textview_grocery_item);
+        TextView groceryName = (TextView) view.findViewById(R.id.grocery_row_textview_grocery);
+        groceryName.setText(cursor.getString(SQLiteDB.TableFields.GROCERY_NAME));
 
-        TextView groceryAmount = (TextView) view.findViewById(R.id.grocery_item_row_textview_amount);
-        groceryAmount.setText(cursor.getString(SQLiteDB.TableFields.GROCERY_ITEM_AMOUNT));
+        TextView groceryAmount = (TextView) view.findViewById(R.id.grocery_row_textview_amount);
+        groceryAmount.setText(cursor.getString(SQLiteDB.TableFields.GROCERY_AMOUNT));
 
-        View strokeView = view.findViewById(R.id.grocery_item_row_view_stroke);
-        boolean isVisible = cursor.getInt(SQLiteDB.TableFields.GROCERY_ITEM_STROKE) > 0;
+        View strokeView = view.findViewById(R.id.grocery_row_view_stroke);
+        boolean isVisible = cursor.getInt(SQLiteDB.TableFields.GROCERY_STROKE) > 0;
         strokeView.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
     }
 

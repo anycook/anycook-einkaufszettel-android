@@ -35,7 +35,7 @@
     <string name="change">ändern</string>
 
     <string name="image_description">bild</string>
-    <string name="grocery_item_hint">Was brauchst du?</string>
+    <string name="grocery_hint">Was brauchst du?</string>
     <string name="add_ingredients">Zutaten hinzufügen</string>
 
     <string name="autocomplete">Komplette Zutat</string>

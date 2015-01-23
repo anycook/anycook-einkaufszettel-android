@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content">
 
     <ImageView
-            android:id="@+id/drawer_list_item_imageview"
+            android:id="@+id/drawer_row_imageview"
             android:layout_width="27dp"
             android:layout_height="27dp"
             android:layout_marginEnd="5dp"
@@ -35,8 +35,8 @@
             android:id="@+id/drawer_list_item_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/drawer_list_item_imageview"
-            android:layout_toRightOf="@id/drawer_list_item_imageview"
+            android:layout_toEndOf="@id/drawer_row_imageview"
+            android:layout_toRightOf="@id/drawer_row_imageview"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginTop="3dp"

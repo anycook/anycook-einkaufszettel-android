@@ -23,7 +23,7 @@ import android.database.Cursor;
 import android.view.View;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
-import de.anycook.einkaufszettel.store.IngredientNameStore;
+import de.anycook.einkaufszettel.store.RecipeIngredientNameStore;
 import de.anycook.einkaufszettel.store.SQLiteDB;
 
 import java.io.Closeable;
@@ -32,12 +32,12 @@ import java.io.IOException;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class IngredientAutocompleteAdapter extends ResourceCursorAdapter implements Closeable {
-    private final IngredientNameStore ingredientNameStore;
+public class RecipeIngredientAutocompleteAdapter extends ResourceCursorAdapter implements Closeable {
+    private final RecipeIngredientNameStore ingredientNameStore;
 
-    public IngredientAutocompleteAdapter(Context context) {
+    public RecipeIngredientAutocompleteAdapter(Context context) {
         super(context, android.R.layout.simple_dropdown_item_1line, null, true);
-        ingredientNameStore = new IngredientNameStore(context);
+        ingredientNameStore = new RecipeIngredientNameStore(context);
         ingredientNameStore.open();
     }
 
@@ -54,7 +54,7 @@ public class IngredientAutocompleteAdapter extends ResourceCursorAdapter impleme
 
     @Override
     public CharSequence convertToString(Cursor cursor) {
-        return cursor.getString(SQLiteDB.TableFields.GROCERY_ITEM_NAME);
+        return cursor.getString(SQLiteDB.TableFields.GROCERY_NAME);
     }
 
     @Override

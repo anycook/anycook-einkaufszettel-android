@@ -35,12 +35,12 @@ import java.util.List;
  *
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class GroceryItemStore implements Closeable {
+public class GroceryStore implements Closeable {
     private static final Logger LOGGER = LoggerManager.getLogger();
     private final Context context;
     private SQLiteDatabase database;
 
-    public GroceryItemStore(Context context) {
+    public GroceryStore(Context context) {
         this.context = context;
     }
 
@@ -57,7 +57,7 @@ public class GroceryItemStore implements Closeable {
     }
 
     public void addGroceryItem(String name, String amount) {
-        IngredientNameStore ingredientNameStore = new IngredientNameStore(this.context);
+        RecipeIngredientNameStore ingredientNameStore = new RecipeIngredientNameStore(this.context);
         try {
             ingredientNameStore.open();
             if (!ingredientNameStore.ingredientExists(name)) {
@@ -81,18 +81,18 @@ public class GroceryItemStore implements Closeable {
         values.put("amount", amount);
         values.put("orderId", getMinOrderId() - 1);
 
-        database.insertWithOnConflict(SQLiteDB.GROCERY_ITEM_TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+        database.insertWithOnConflict(SQLiteDB.GROCERY_TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
     }
 
     public Ingredient getGroceryItem(String name) throws ItemNotFoundException {
         String[] columns = new String[]{"name", "amount", "stroke"};
-        Cursor cursor = database.query(SQLiteDB.GROCERY_ITEM_TABLE, columns, "name=?", new String[]{name},
+        Cursor cursor = database.query(SQLiteDB.GROCERY_TABLE, columns, "name=?", new String[]{name},
                 null, null, null);
         if (cursor.moveToNext()) {
             Ingredient item = new Ingredient();
-            item.setName(cursor.getString(SQLiteDB.TableFields.GROCERY_ITEM_NAME));
-            item.setAmount(cursor.getString(SQLiteDB.TableFields.GROCERY_ITEM_AMOUNT));
-            item.setChecked(cursor.getInt(SQLiteDB.TableFields.GROCERY_ITEM_STROKE) > 0);
+            item.setName(cursor.getString(SQLiteDB.TableFields.GROCERY_NAME));
+            item.setAmount(cursor.getString(SQLiteDB.TableFields.GROCERY_AMOUNT));
+            item.setChecked(cursor.getInt(SQLiteDB.TableFields.GROCERY_STROKE) > 0);
             return item;
         }
 
@@ -107,36 +107,36 @@ public class GroceryItemStore implements Closeable {
             LOGGER.d(e, "User wanted to stroke \"%s\" but it's not in the database.", groceryItemName);
         }
 
-        database.update(SQLiteDB.GROCERY_ITEM_TABLE, values,
+        database.update(SQLiteDB.GROCERY_TABLE, values,
                 String.format("name=\"%s\"", groceryItemName), null);
     }
 
     public void removeGroceryItem(String groceryItemName) {
-        database.delete(SQLiteDB.GROCERY_ITEM_TABLE, "name=?", new String[]{groceryItemName});
+        database.delete(SQLiteDB.GROCERY_TABLE, "name=?", new String[]{groceryItemName});
     }
 
     public Cursor getStrokedGroceryItems() {
-        return database.query(SQLiteDB.GROCERY_ITEM_TABLE,
+        return database.query(SQLiteDB.GROCERY_TABLE,
                 new String[]{"name", "amount"}, "stroke=1", null, null, null, null);
     }
 
     public Cursor getNonStrokedGroceryItems() {
-        return database.query(SQLiteDB.GROCERY_ITEM_TABLE,
+        return database.query(SQLiteDB.GROCERY_TABLE,
                 new String[]{"name", "amount"}, "stroke=0", null, null, null, null);
     }
 
     public Cursor getAllGroceryItemsCursor() {
         String query = String.format("SELECT name AS _id, amount, stroke FROM %s ORDER BY orderId",
-                SQLiteDB.GROCERY_ITEM_TABLE);
+                SQLiteDB.GROCERY_TABLE);
         return database.rawQuery(query, null);
     }
 
     public void deleteAllGroceryItems() {
-        database.delete(SQLiteDB.GROCERY_ITEM_TABLE, null, null);
+        database.delete(SQLiteDB.GROCERY_TABLE, null, null);
     }
 
     private int getMinOrderId() {
-        Cursor cursor = database.query(true, SQLiteDB.GROCERY_ITEM_TABLE, new String[]{"MIN(orderId)"}, null ,
+        Cursor cursor = database.query(true, SQLiteDB.GROCERY_TABLE, new String[]{"MIN(orderId)"}, null ,
                 null, null, null, null, "1");
         if (cursor.getCount() == 0) { return 100000; }
         cursor.moveToNext();
@@ -157,7 +157,7 @@ public class GroceryItemStore implements Closeable {
             values.put("name", ingredient.getName());
             values.put("amount", ingredient.getAmount());
             values.put("orderId", orderId++);
-            database.insertWithOnConflict(SQLiteDB.GROCERY_ITEM_TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            database.insertWithOnConflict(SQLiteDB.GROCERY_TABLE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
         }
     }
 
@@ -167,6 +167,6 @@ public class GroceryItemStore implements Closeable {
         contentValues.put("amount", newIngredient.getAmount());
         contentValues.put("stroke", newIngredient.isChecked());
 
-        database.update(SQLiteDB.GROCERY_ITEM_TABLE, contentValues, "name = ?", new String[]{name});
+        database.update(SQLiteDB.GROCERY_TABLE, contentValues, "name = ?", new String[]{name});
     }
 }

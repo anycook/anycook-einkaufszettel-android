@@ -29,7 +29,7 @@ import com.google.gson.reflect.TypeToken;
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 import de.anycook.einkaufszettel.R;
-import de.anycook.einkaufszettel.adapter.IngredientRowAdapter;
+import de.anycook.einkaufszettel.adapter.RecipeIngredientRowAdapter;
 import de.anycook.einkaufszettel.model.Ingredient;
 import de.anycook.einkaufszettel.store.RecipeIngredientsStore;
 import de.anycook.einkaufszettel.util.ConnectionStatus;
@@ -59,11 +59,11 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
         LOGGER = LoggerManager.getLogger();
     }
 
-    private final IngredientRowAdapter ingredientRowAdapter;
+    private final RecipeIngredientRowAdapter ingredientRowAdapter;
     private final LinearLayout ingredientListProgress;
     private final Activity context;
 
-    public LoadRecipeIngredientsTask(IngredientRowAdapter ingredientRowAdapter, Activity activity) {
+    public LoadRecipeIngredientsTask(RecipeIngredientRowAdapter ingredientRowAdapter, Activity activity) {
         this.ingredientRowAdapter = ingredientRowAdapter;
         this.ingredientListProgress = (LinearLayout) activity.findViewById(R.id.ingredient_list_progress);
         this.context = activity;
