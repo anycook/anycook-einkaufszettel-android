@@ -19,6 +19,8 @@
 package de.anycook.einkaufszettel.activities;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -26,6 +28,9 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.noveogroup.android.log.Logger;
@@ -89,6 +94,37 @@ public class RecipeActivity extends ActionBarActivity {
     @Override
     protected void onStart() {
         super.onStart();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.ingredient_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                    finish();
+                } else {
+                    finishAfterTransition();
+                }
+                return true;
+            case R.id.ingredient_menu_open_recipe:
+                Uri uri = Uri.parse("http://anycook.de#/recipe/" + recipe.getName());
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                // Create and start the chooser
+                Intent chooser = Intent.createChooser(intent, "Open with");
+                startActivity(chooser);
+                return true;
+
+            default:
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void fillViews() {
