@@ -62,11 +62,13 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
     private final IngredientRowAdapter ingredientRowAdapter;
     private final LinearLayout ingredientListProgress;
     private final Activity context;
+    private final View view;
 
-    public LoadRecipeIngredientsTask(IngredientRowAdapter ingredientRowAdapter, Activity activity) {
+    public LoadRecipeIngredientsTask(IngredientRowAdapter ingredientRowAdapter, View view, Activity context) {
         this.ingredientRowAdapter = ingredientRowAdapter;
-        this.ingredientListProgress = (LinearLayout) activity.findViewById(R.id.ingredient_list_progress);
-        this.context = activity;
+        this.ingredientListProgress = (LinearLayout) view.findViewById(R.id.ingredient_list_progress);
+        this.context = context;
+        this.view = view;
     }
 
     @Override

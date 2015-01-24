@@ -31,6 +31,7 @@ import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.model.RecipeResponse;
+import de.anycook.einkaufszettel.util.PagerItem;
 import de.anycook.einkaufszettel.view.SlidingTabLayout;
 
 import java.util.ArrayList;
@@ -59,9 +60,9 @@ public class SlidingTabsColorsFragment extends Fragment {
     private ViewPager mViewPager;
 
     /**
-     * List of {@link SamplePagerItem} which represent this sample's tabs.
+     * List of {@link PagerItem} which represent this sample's tabs.
      */
-    private List<SamplePagerItem> mTabs = new ArrayList<SamplePagerItem>();
+    private List<PagerItem> mTabs = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,14 +72,20 @@ public class SlidingTabsColorsFragment extends Fragment {
          * Populate our tab list with tabs. Each item contains a title, indicator color and divider
          * color, which are used by {@link SlidingTabLayout}.
          */
-        mTabs.add(new SamplePagerItem(
+        mTabs.add(new PagerItem(
                 "Zutaten", // Title
                 getResources().getColor(R.color.any_white_gray), // Indicator color
                 Color.GRAY // Divider color
         ));
 
-        mTabs.add(new SamplePagerItem(
-                "Beschreibung & Schritte", // Title
+        mTabs.add(new PagerItem(
+                "Details", // Title
+                getResources().getColor(R.color.any_white_gray), // Indicator color
+                Color.GRAY // Divider color
+        ));
+
+        mTabs.add(new PagerItem(
+                "Schritte", // Title
                 getResources().getColor(R.color.any_white_gray), // Indicator color
                 Color.GRAY // Divider color
         ));
@@ -136,7 +143,7 @@ public class SlidingTabsColorsFragment extends Fragment {
     /**
      * The {@link FragmentPagerAdapter} used to display pages in this sample. The individual pages
      * are instances of {@link ContentFragment} which just display three lines of text. Each page is
-     * created by the relevant {@link SamplePagerItem} for the requested position.
+     * created by the relevant {@link de.anycook.einkaufszettel.util.PagerItem} for the requested position.
      * <p>
      * The important section of this class is the {@link #getPageTitle(int)} method which controls
      * what is displayed in the {@link SlidingTabLayout}.
@@ -150,7 +157,7 @@ public class SlidingTabsColorsFragment extends Fragment {
         /**
          * Return the {@link android.support.v4.app.Fragment} to be displayed at {@code position}.
          * <p>
-         * Here we return the value returned from {@link SamplePagerItem#createFragment()}.
+         * Here we return the value returned from {@link PagerItem#createFragment()}.
          */
         @Override
         public Fragment getItem(int i) {
@@ -166,58 +173,12 @@ public class SlidingTabsColorsFragment extends Fragment {
          * Return the title of the item at {@code position}. This is important as what this method
          * returns is what is displayed in the {@link SlidingTabLayout}.
          * <p>
-         * Here we return the value returned from {@link SamplePagerItem#getTitle()}.
+         * Here we return the value returned from {@link PagerItem#getTitle()}.
          */
         @Override
         public CharSequence getPageTitle(int position) {
             return mTabs.get(position).getTitle();
         }
 
-    }
-
-
-    /**
-     * This class represents a tab to be displayed by {@link ViewPager} and it's associated
-     * {@link SlidingTabLayout}.
-     */
-    static class SamplePagerItem {
-        private final CharSequence mTitle;
-        private final int mIndicatorColor;
-        private final int mDividerColor;
-
-        SamplePagerItem(CharSequence title, int indicatorColor, int dividerColor) {
-            mTitle = title;
-            mIndicatorColor = indicatorColor;
-            mDividerColor = dividerColor;
-        }
-
-        /**
-         * @return A new {@link Fragment} to be displayed by a {@link ViewPager}
-         */
-        Fragment createFragment() {
-            return ContentFragment.newInstance(mTitle, mIndicatorColor, mDividerColor);
-        }
-
-        /**
-         * @return the title which represents this tab. In this sample this is used directly by
-         * {@link android.support.v4.view.PagerAdapter#getPageTitle(int)}
-         */
-        CharSequence getTitle() {
-            return mTitle;
-        }
-
-        /**
-         * @return the color to be used for indicator on the {@link SlidingTabLayout}
-         */
-        int getIndicatorColor() {
-            return mIndicatorColor;
-        }
-
-        /**
-         * @return the color to be used for right divider on the {@link SlidingTabLayout}
-         */
-        int getDividerColor() {
-            return mDividerColor;
-        }
     }
 }

@@ -18,9 +18,11 @@
 
 package de.anycook.einkaufszettel.activities;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -53,7 +55,7 @@ public class RecipeActivity extends ActionBarActivity {
         Bundle b = getIntent().getExtras();
         String item = b.getString("item");
         try {
-            recipe = getRecipe(item);
+            recipe = getRecipe(this, item);
         } catch (ItemNotFoundException e) {
             LOGGER.e("Failed load recipe", e);
             return;
@@ -61,6 +63,7 @@ public class RecipeActivity extends ActionBarActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.anycook_toolbar);
         setSupportActionBar(toolbar);
+        ViewCompat.setElevation(toolbar, 8);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -94,24 +97,10 @@ public class RecipeActivity extends ActionBarActivity {
                 findViewById(R.id.add_ingredients_button), recipe.getName());
         downloadImageTask.execute(recipe.getImage().getBig());
 
-        //findViewById(R.id.recipe_header).setOnClickListener(this);
+        ViewCompat.setElevation(findViewById(R.id.add_ingredients_button), 12);
 
         TextView titleView = (TextView) findViewById(R.id.recipe_title_text);
         titleView.setText(recipe.getName());
-
-//        EditText personsEditText = (EditText) findViewById(R.id.ingredient_list_persons);
-//        personsEditText.setText(Integer.toString(recipe.getPersons()));
-        //personsEditText.setOnClickListener(this);
-    }
-
-    private RecipeResponse getRecipe(String recipeName) throws ItemNotFoundException {
-        RecipeStore recipeStore = new RecipeStore(this);
-        try {
-            recipeStore.open();
-            return recipeStore.getRecipe(recipeName);
-        } finally {
-            recipeStore.close();
-        }
     }
 
     public int getStatusBarHeight() {
@@ -123,5 +112,13 @@ public class RecipeActivity extends ActionBarActivity {
         return result;
     }
 
-
+    public static RecipeResponse getRecipe(Context context, String recipeName) throws ItemNotFoundException {
+        RecipeStore recipeStore = new RecipeStore(context);
+        try {
+            recipeStore.open();
+            return recipeStore.getRecipe(recipeName);
+        } finally {
+            recipeStore.close();
+        }
+    }
 }

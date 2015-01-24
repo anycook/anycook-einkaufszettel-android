@@ -38,9 +38,8 @@
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:paddingBottom="35dp"
+            android:paddingBottom="40dp"
             android:textAppearance="@style/TextAppearanceAnycook.Display1.Light"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40dp"
             android:background="@drawable/typo_gradient_background"/>
 </RelativeLayout>
