@@ -37,6 +37,7 @@ import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.activities.fragments.SlidingTabsColorsFragment;
+import de.anycook.einkaufszettel.adapter.IngredientRowAdapter;
 import de.anycook.einkaufszettel.model.RecipeResponse;
 import de.anycook.einkaufszettel.store.ItemNotFoundException;
 import de.anycook.einkaufszettel.store.RecipeStore;
@@ -50,6 +51,7 @@ public class RecipeActivity extends ActionBarActivity {
     private static final Logger LOGGER = LoggerManager.getLogger();
 
     private RecipeResponse recipe;
+    private IngredientRowAdapter ingredientRowAdapter;
     private ImageView recipeImageView;
 
     @Override
@@ -75,6 +77,8 @@ public class RecipeActivity extends ActionBarActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
         }
+
+        ingredientRowAdapter = new IngredientRowAdapter(this, recipe.getPersons());
 
         fillViews();
 
@@ -125,6 +129,14 @@ public class RecipeActivity extends ActionBarActivity {
             default:
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public RecipeResponse getRecipe() {
+        return recipe;
+    }
+
+    public IngredientRowAdapter getIngredientRowAdapter() {
+        return ingredientRowAdapter;
     }
 
     private void fillViews() {

@@ -85,7 +85,7 @@ public class SlidingTabsColorsFragment extends Fragment {
         ));
 
         mTabs.add(new PagerItem(
-                "Schritte", // Title
+                "Zubereitung", // Title
                 getResources().getColor(R.color.any_white_gray), // Indicator color
                 Color.GRAY // Divider color
         ));

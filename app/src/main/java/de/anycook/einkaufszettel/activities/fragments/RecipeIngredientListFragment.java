@@ -37,20 +37,20 @@ import de.anycook.einkaufszettel.activities.dialogs.ChangeIngredientDialog;
 import de.anycook.einkaufszettel.adapter.IngredientRowAdapter;
 import de.anycook.einkaufszettel.model.Ingredient;
 import de.anycook.einkaufszettel.model.RecipeResponse;
-import de.anycook.einkaufszettel.store.ItemNotFoundException;
 import de.anycook.einkaufszettel.tasks.LoadRecipeIngredientsTask;
 
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class RecipeIngredientListFragment extends Fragment implements AdapterView.OnItemClickListener,
-        AdapterView.OnItemLongClickListener {
+        AdapterView.OnItemLongClickListener, View.OnClickListener {
 
     private static final Logger LOGGER = LoggerManager.getLogger();
     private static final int MAX_PERSONS = 99;
     private static final int MIN_PERSONS = 1;
 
-    private RecipeResponse recipe;
+
+    private RecipeActivity recipeActivity;
     private ListView ingredientListView;
 
 
@@ -58,22 +58,18 @@ public class RecipeIngredientListFragment extends Fragment implements AdapterVie
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle b = getActivity().getIntent().getExtras();
-        String item = b.getString("item");
-        try {
-            recipe = RecipeActivity.getRecipe(getActivity(), item);
-        } catch (ItemNotFoundException e) {
-            LOGGER.e("Failed load recipe", e);
-        }
+        recipeActivity = (RecipeActivity) getActivity();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.ingredient_list, container, false);
 
+        RecipeResponse recipe = recipeActivity.getRecipe();
+
         this.ingredientListView = (ListView) view.findViewById(R.id.ingredient_list_listview);
-        IngredientRowAdapter adapter = new IngredientRowAdapter(getActivity(), recipe.getPersons());
-        ingredientListView.setAdapter(adapter);
+
+        ingredientListView.setAdapter(recipeActivity.getIngredientRowAdapter());
         ingredientListView.setOnItemClickListener(this);
         ingredientListView.setOnItemLongClickListener(this);
 
@@ -81,11 +77,13 @@ public class RecipeIngredientListFragment extends Fragment implements AdapterVie
         personsEditText.setText(Integer.toString(recipe.getPersons()));
 
         LoadRecipeIngredientsTask loadRecipeIngredientsTask =
-        new LoadRecipeIngredientsTask(adapter, view, getActivity());
-        loadRecipeIngredientsTask.execute(getActivity().getIntent().getExtras().getString("item"));
+        new LoadRecipeIngredientsTask(recipeActivity.getIngredientRowAdapter(), view, recipeActivity);
+        loadRecipeIngredientsTask.execute(recipe.getName());
+
+
+        view.findViewById(R.id.ingredient_list_persons).setOnClickListener(this);
 
         return view;
-
     }
 
     @Override
@@ -140,8 +138,8 @@ public class RecipeIngredientListFragment extends Fragment implements AdapterVie
         }
     } */
 
-    public void onNumberPickerClick(View view) {
-
+    @Override
+    public void onClick(View view) {
         final EditText personsEditText = (EditText) view;
         int numPersons = Integer.parseInt(personsEditText.getText().toString());
 
@@ -166,13 +164,12 @@ public class RecipeIngredientListFragment extends Fragment implements AdapterVie
                 personsEditText.setText(personsString);
                 if (personsString.length() == 0) { return; }
                 int numPersons = Integer.parseInt(personsEditText.getText().toString());
-                ((IngredientRowAdapter) ingredientListView.getAdapter()).setCurrentPersons(numPersons);
+                recipeActivity.getIngredientRowAdapter().setCurrentPersons(numPersons);
             }
         });
         alertDialogBuilder.setNegativeButton(R.string.cancel, null);
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-
     }
 }
