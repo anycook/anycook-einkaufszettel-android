@@ -74,7 +74,7 @@ public class RecipeStore implements Closeable {
     public RecipeResponse getRecipe(String name) throws ItemNotFoundException {
         RecipeResponse recipe = new RecipeResponse();
         String query = String.format("SELECT name AS _id, description, smallImage, bigImage, persons, timeStd, " +
-            "timeMin, lastChange FROM %s WHERE _id = ?", SQLiteDB.RECIPE_TABLE);
+            "timeMin, category, skill, calorie, lastChange FROM %s WHERE _id = ?", SQLiteDB.RECIPE_TABLE);
         Cursor cursor = database.rawQuery(query, new String[]{name});
         if (!cursor.moveToNext()) { throw new ItemNotFoundException(name); }
 
@@ -91,6 +91,10 @@ public class RecipeStore implements Closeable {
         time.setStd(cursor.getInt(SQLiteDB.TableFields.RECIPE_TIME_STD));
         time.setMin(cursor.getInt(SQLiteDB.TableFields.RECIPE_TIME_MIN));
         recipe.setTime(time);
+
+        recipe.setCategory(cursor.getString(SQLiteDB.TableFields.RECIPE_CATEGORY));
+        recipe.setSkill(cursor.getInt(SQLiteDB.TableFields.RECIPE_SKILL));
+        recipe.setCalorie(cursor.getInt(SQLiteDB.TableFields.RECIPE_CALORIE));
 
         recipe.setLastChange(cursor.getLong(SQLiteDB.TableFields.RECIPE_LAST_CHANGE));
 
@@ -133,6 +137,9 @@ public class RecipeStore implements Closeable {
                 values.put("persons", recipeResponse.getPersons());
                 values.put("timeStd", recipeResponse.getTime().getStd());
                 values.put("timeMin", recipeResponse.getTime().getMin());
+                values.put("category", recipeResponse.getCategory());
+                values.put("skill", recipeResponse.getSkill());
+                values.put("calorie", recipeResponse.getCalorie());
                 values.put("lastChange", recipeResponse.getLastChange());
 
                 if (!checkRecipe(recipeResponse.getName())) {

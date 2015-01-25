@@ -39,7 +39,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
 
     static {
         DB_NAME = "einkaufszettel.db";
-        DB_VERSION = 6;
+        DB_VERSION = 7;
 
         INGREDIENT_NAME_TABLE = "Ingredient";
         GROCERY_ITEM_TABLE = "GroceryList";
@@ -108,6 +108,9 @@ public class SQLiteDB extends SQLiteOpenHelper {
                 "persons INTEGER NOT NULL," +
                 "timeStd INTEGER," +
                 "timeMin INTEGER," +
+                "category VARCHAR(45)," +
+                "skill INTEGER," +
+                "calorie INTEGER," +
                 "vibrantColor INTEGER DEFAULT -1," +
                 "lastChange INTEGER);", RECIPE_TABLE));
     }
@@ -133,8 +136,11 @@ public class SQLiteDB extends SQLiteOpenHelper {
             RECIPE_PERSONS = 4,
             RECIPE_TIME_STD = 5,
             RECIPE_TIME_MIN = 6,
-            RECIPE_LAST_CHANGE = 7,
-            RECIPE_VIBRANT_COLOR = 8;
+            RECIPE_CATEGORY = 7,
+            RECIPE_SKILL = 8,
+            RECIPE_CALORIE = 9,
+            RECIPE_LAST_CHANGE = 10,
+            RECIPE_VIBRANT_COLOR = 11;
         public static final int RECIPE_INGREDIENTS_RECIPE_NAME = 0,
             RECIPE_INGREDIENTS_NAME = 1,
             RECIPE_INGREDIENTS_AMOUNT = 2;

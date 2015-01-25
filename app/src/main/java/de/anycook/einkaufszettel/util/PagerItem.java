@@ -20,6 +20,7 @@ package de.anycook.einkaufszettel.util;
 
 import android.support.v4.app.Fragment;
 import de.anycook.einkaufszettel.activities.fragments.ContentFragment;
+import de.anycook.einkaufszettel.activities.fragments.RecipeDetailFragment;
 import de.anycook.einkaufszettel.activities.fragments.RecipeIngredientListFragment;
 
 /**
@@ -44,6 +45,8 @@ public class PagerItem {
     public Fragment createFragment() {
         if (title.equals("Zutaten")) {
             return new RecipeIngredientListFragment();
+        } else if (title.equals("Details")) {
+            return new RecipeDetailFragment();
         }
 
         return ContentFragment.newInstance(title, indicatorColor, dividerColor);

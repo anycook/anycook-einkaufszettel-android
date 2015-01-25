@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="@string/reacipe_loading"
+            android:text="@string/recipe_loading"
             android:textColor="@color/any_white_gray"
             android:textSize="14sp"/>
 

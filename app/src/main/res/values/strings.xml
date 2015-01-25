@@ -51,7 +51,7 @@
     <string name="persons">Personen:</string>
     <string name="for_x_people">Für wie viele Personen?</string>
     <string name="set">OK</string>
-    <string name="reacipe_loading">Aktualisiere Rezepte- und Zutatendatenbank</string>
+    <string name="recipe_loading">Aktualisiere Rezepte- und Zutatendatenbank</string>
     <string name="skip_button"><![CDATA[Überspringen >>]]></string>
     <string name="recipe_image_content_description">Bild des Rezepts</string>
     <string name="duration">Dauer</string>

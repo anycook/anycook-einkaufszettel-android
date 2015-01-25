@@ -49,7 +49,7 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
 
     static {
         try {
-            url = new URL("https://api.anycook.de/recipe");
+            url = new URL("https://api.anycook.de/recipe?detailed=true");
         } catch (MalformedURLException e) {
             LOGGER.e("Failed to init url", e);
         }
