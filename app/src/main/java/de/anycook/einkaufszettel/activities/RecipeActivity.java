@@ -31,6 +31,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.noveogroup.android.log.Logger;
@@ -38,11 +39,16 @@ import com.noveogroup.android.log.LoggerManager;
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.activities.fragments.SlidingTabsColorsFragment;
 import de.anycook.einkaufszettel.adapter.IngredientRowAdapter;
+import de.anycook.einkaufszettel.model.Ingredient;
 import de.anycook.einkaufszettel.model.RecipeResponse;
+import de.anycook.einkaufszettel.store.GroceryItemStore;
 import de.anycook.einkaufszettel.store.ItemNotFoundException;
 import de.anycook.einkaufszettel.store.RecipeStore;
 import de.anycook.einkaufszettel.tasks.DownloadImageTask;
 import de.anycook.einkaufszettel.tasks.DownloadImageViewTask;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jan Graßegger<jan@anycook.de>
@@ -158,6 +164,30 @@ public class RecipeActivity extends ActionBarActivity {
             result = getResources().getDimensionPixelSize(resourceId);
         }
         return result;
+    }
+
+    public void onAddIngredientsClick(View view) {
+        includeCheckedIngredientsToGroceryList();
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    private void includeCheckedIngredientsToGroceryList() {
+        GroceryItemStore groceryItemStore = new GroceryItemStore(this);
+        try {
+            groceryItemStore.open();
+            int ingredientsCount = ingredientRowAdapter.getCount();
+            List<Ingredient> ingredients = new ArrayList<>(ingredientsCount);
+            for (int i = 0; i < ingredientsCount; i++) {
+                Ingredient ingredient = ingredientRowAdapter.getMultipliedItem(i);
+                if (!ingredient.isChecked()) { continue; }
+                ingredients.add(ingredient);
+            }
+            groceryItemStore.addIngredientsToGroceryList(ingredients);
+        } finally {
+            groceryItemStore.close();
+        }
     }
 
     public static RecipeResponse getRecipe(Context context, String recipeName) throws ItemNotFoundException {

@@ -113,31 +113,6 @@ public class RecipeIngredientListFragment extends Fragment implements AdapterVie
         return true;
     }
 
-    /*public void onAddIngredientsClick(View view) {
-        includeCheckedIngredientsToGroceryList();
-        Intent intent = new Intent(getActivity(), MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
-
-    private void includeCheckedIngredientsToGroceryList() {
-        GroceryItemStore groceryItemStore = new GroceryItemStore(getActivity());
-        try {
-            groceryItemStore.open();
-            int ingredientsCount = ingredientListView.getAdapter().getCount();
-            List<Ingredient> ingredients = new ArrayList<>(ingredientsCount);
-            for (int i = 0; i < ingredientsCount; i++) {
-                Ingredient ingredient =
-                        ((IngredientRowAdapter) ingredientListView.getAdapter()).getMultipliedItem(i);
-                if (!ingredient.isChecked()) { continue; }
-                ingredients.add(ingredient);
-            }
-            groceryItemStore.addIngredientsToGroceryList(ingredients);
-        } finally {
-            groceryItemStore.close();
-        }
-    } */
-
     @Override
     public void onClick(View view) {
         final EditText personsEditText = (EditText) view;
