@@ -39,7 +39,7 @@ import android.widget.ListView;
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.activities.fragments.DiscoverFragment;
 import de.anycook.einkaufszettel.activities.fragments.GroceryListFragment;
-import de.anycook.einkaufszettel.activities.fragments.RecipeFragment;
+import de.anycook.einkaufszettel.activities.fragments.RecipesFragment;
 import de.anycook.einkaufszettel.activities.fragments.SettingsFragment;
 import de.anycook.einkaufszettel.adapter.DrawerRowAdapter;
 
@@ -138,7 +138,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 fragment = new GroceryListFragment();
                 break;
             case 1:
-                fragment = new RecipeFragment();
+                fragment = new RecipesFragment();
                 break;
             case 2:
                 fragment = new DiscoverFragment();

@@ -43,7 +43,7 @@ import de.anycook.einkaufszettel.store.RecipeStore;
  * @author Jan Grassegger <jan@anycook.de>
  * @author Claudia Sichting <claudia.sichting@uni-weimar.de>
  */
-public class RecipeFragment extends ListFragment implements SearchView.OnQueryTextListener {
+public class RecipesFragment extends ListFragment implements SearchView.OnQueryTextListener {
 
     private RecipeStore recipeDatabase;
     private SearchView searchView;
@@ -123,7 +123,7 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
 
     @Override
     public boolean onQueryTextChange(String query) {
-        Log.v(RecipeFragment.class.getSimpleName(), "Searching for " + query);
+        Log.v(RecipesFragment.class.getSimpleName(), "Searching for " + query);
         RecipeRowCursorAdapter adapter = (RecipeRowCursorAdapter) getListAdapter();
         adapter.changeCursor(recipeDatabase.getRecipesForQuery(query));
         return false;

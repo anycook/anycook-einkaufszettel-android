@@ -16,7 +16,7 @@
  * along with this program. If not, see [http://www.gnu.org/licenses/].
  */
 
-package de.anycook.einkaufszettel.activities.fragments;
+package de.anycook.einkaufszettel.activities.fragments.recipe;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
