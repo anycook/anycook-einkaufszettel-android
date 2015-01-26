@@ -34,7 +34,8 @@ public class SQLiteDB extends SQLiteOpenHelper {
     public static final String INGREDIENT_NAME_TABLE,
         GROCERY_ITEM_TABLE,
         RECIPE_TABLE,
-        RECIPE_INGREDIENTS_TABLE;
+        RECIPE_INGREDIENTS_TABLE,
+        RECIPE_STEPS_TABLE;
 
 
     static {
@@ -45,6 +46,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
         GROCERY_ITEM_TABLE = "GroceryList";
         RECIPE_TABLE = "Recipe";
         RECIPE_INGREDIENTS_TABLE = "RecipeIngredients";
+        RECIPE_STEPS_TABLE = "RecipeSteps";
     }
 
     public Context context;
@@ -63,6 +65,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
         createGroceryItemTable(db);
         createRecipeTable(db);
         createRecipeIngredientsTable(db);
+        createRecipeStepsTable(db);
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -78,8 +81,10 @@ public class SQLiteDB extends SQLiteOpenHelper {
         }
         db.execSQL(String.format(dropTablePattern, RECIPE_TABLE));
         db.execSQL(String.format(dropTablePattern, RECIPE_INGREDIENTS_TABLE));
+        db.execSQL(String.format(dropTablePattern, RECIPE_STEPS_TABLE));
         createRecipeTable(db);
         createRecipeIngredientsTable(db);
+        createRecipeStepsTable(db);
 
         SharedPreferences sharedPrefs = context.getSharedPreferences("update_data", Context.MODE_PRIVATE);
         sharedPrefs.edit().putLong("last_update", 0).putString("last-modified-recipes", null).commit();
@@ -125,6 +130,15 @@ public class SQLiteDB extends SQLiteOpenHelper {
                 RECIPE_INGREDIENTS_TABLE, RECIPE_TABLE, INGREDIENT_NAME_TABLE));
     }
 
+    private void createRecipeStepsTable(SQLiteDatabase db) {
+        db.execSQL(String.format("CREATE TABLE %s(recipeName VARCHAR(45)," +
+                "id INTEGER," +
+                "text TEXT," +
+                "FOREIGN KEY(recipeName) REFERENCES %s(name)," +
+                "PRIMARY KEY(recipeName, id));",
+                RECIPE_STEPS_TABLE, RECIPE_TABLE));
+    }
+
     public static class TableFields {
         public static final int GROCERY_ITEM_NAME = 0,
             GROCERY_ITEM_AMOUNT = 1,
@@ -144,6 +158,9 @@ public class SQLiteDB extends SQLiteOpenHelper {
         public static final int RECIPE_INGREDIENTS_RECIPE_NAME = 0,
             RECIPE_INGREDIENTS_NAME = 1,
             RECIPE_INGREDIENTS_AMOUNT = 2;
+        public static final int RECIPE_STEPS_RECIPE_NAME = 0,
+            RECIPE_STEPS_ID = 1,
+            RECIPE_STEPS_TEXT = 2;
 
     }
 }

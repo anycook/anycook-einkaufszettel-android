@@ -19,9 +19,9 @@
 package de.anycook.einkaufszettel.util;
 
 import android.support.v4.app.Fragment;
-import de.anycook.einkaufszettel.activities.fragments.ContentFragment;
 import de.anycook.einkaufszettel.activities.fragments.RecipeDetailFragment;
 import de.anycook.einkaufszettel.activities.fragments.RecipeIngredientListFragment;
+import de.anycook.einkaufszettel.activities.fragments.RecipeStepListFragment;
 
 /**
  * This class represents a tab to be displayed by {@link android.support.v4.view.ViewPager} and it's associated
@@ -49,7 +49,7 @@ public class PagerItem {
             return new RecipeDetailFragment();
         }
 
-        return ContentFragment.newInstance(title, indicatorColor, dividerColor);
+        return new RecipeStepListFragment();
     }
 
     /**
