@@ -29,7 +29,7 @@
                 android:paddingBottom="5dp">
 
     <ImageView
-            android:id="@+id/recipe_row_imageview"
+            android:id="@+id/recipe_imageview"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/anycook"
@@ -39,26 +39,26 @@
             android:contentDescription="@string/image_description"/>
 
     <TextView
-            android:id="@+id/recipe_row_textview_recipe_name"
+            android:id="@+id/textview_recipe_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_toEndOf="@id/recipe_row_imageview"
-            android:layout_toRightOf="@id/recipe_row_imageview"
+            android:layout_toEndOf="@id/recipe_imageview"
+            android:layout_toRightOf="@id/recipe_imageview"
             android:maxLines="1"
             android:ellipsize="end"
             android:textAppearance="@style/TextAppearanceAnycook.Body2"/>
 
     <TextView
-            android:id="@+id/recipe_row_textview_recipe_description"
+            android:id="@+id/textview_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_toEndOf="@id/recipe_row_imageview"
-            android:layout_toRightOf="@id/recipe_row_imageview"
-            android:layout_below="@id/recipe_row_textview_recipe_name"
+            android:layout_toEndOf="@id/recipe_imageview"
+            android:layout_toRightOf="@id/recipe_imageview"
+            android:layout_below="@id/textview_recipe_name"
             android:maxLines="2"
             android:textSize="12sp"
             android:ellipsize="end"/>

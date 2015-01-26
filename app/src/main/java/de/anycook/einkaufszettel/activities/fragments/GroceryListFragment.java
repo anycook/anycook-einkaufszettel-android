@@ -77,7 +77,7 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
         // load views
         this.groceryNameTextView =
                 (AutoCompleteTextView) view.findViewById(R.id.grocery_list_autocompletetextview_grocery);
-        this.groceryAmountTextView = (EditText) view.findViewById(R.id.grocery_list_edittext_amount);
+        this.groceryAmountTextView = (EditText) view.findViewById(R.id.edittext_amount);
 
         // load and set grocery list data
         this.groceryItemStore = new GroceryStore(view.getContext());
@@ -160,7 +160,7 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
 
     @Override
     public void onListItemClick(ListView l, View view, int position, long id) {
-        TextView groceryName = (TextView) view.findViewById(R.id.grocery_row_textview_grocery);
+        TextView groceryName = (TextView) view.findViewById(R.id.textview_grocery);
         groceryItemStore.changeStrokeVisibilityOfGroceryItem(groceryName.getText());
         GroceryRowAdapter listAdapter = (GroceryRowAdapter) getListAdapter();
         listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
@@ -169,8 +169,8 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        TextView groceryName = (TextView) view.findViewById(R.id.grocery_row_textview_grocery);
-        TextView groceryAmount = (TextView) view.findViewById(R.id.grocery_row_textview_amount);
+        TextView groceryName = (TextView) view.findViewById(R.id.textview_grocery);
+        TextView groceryAmount = (TextView) view.findViewById(R.id.textview_amount);
         final Ingredient ingredient = new Ingredient(groceryName.getText().toString(),
                 groceryAmount.getText().toString());
 

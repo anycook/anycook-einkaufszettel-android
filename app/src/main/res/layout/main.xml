@@ -24,7 +24,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <android.support.v7.widget.Toolbar
-            android:id="@+id/recipe_ingredient_list_anycook_toolbar"
+            android:id="@+id/anycook_toolbar"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:minHeight="?attr/actionBarSize"

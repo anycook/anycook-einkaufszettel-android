@@ -105,7 +105,7 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
         Intent intent = new Intent(getActivity(), AddIngredientsActivity.class);
 
         Bundle bundle = new Bundle();
-        String item = ((TextView) view.findViewById(R.id.recipe_row_textview_recipe_name)).getText().toString();
+        String item = ((TextView) view.findViewById(R.id.textview_recipe_name)).getText().toString();
 
         bundle.putString("item", item); //Your id
         intent.putExtras(bundle); //Put your id to your next Intent

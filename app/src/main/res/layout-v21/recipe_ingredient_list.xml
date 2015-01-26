@@ -26,7 +26,6 @@
 
 
     <RelativeLayout
-            android:id="@+id/recipe_ingredient_list_relativelayout"
             android:layout_width="fill_parent"
             android:layout_height="260dp"
             android:orientation="vertical">
@@ -40,7 +39,7 @@
                 android:background="@drawable/toolbar_gradient_background"/>
 
         <android.support.v7.widget.Toolbar
-                android:id="@+id/recipe_ingredient_list_anycook_toolbar"
+                android:id="@+id/anycook_toolbar"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:minHeight="?attr/actionBarSize"
@@ -49,7 +48,7 @@
                 app:titleTextAppearance="@style/ActionBarTitleTextAnycook"/>
 
         <ImageButton
-                android:id="@+id/recipe_ingredient_list_imagebutton_add_ingredients"
+                android:id="@+id/imagebutton_add_ingredients"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:onClick="onAddIngredientsClick"
@@ -63,7 +62,6 @@
                 android:visibility="invisible"/>
 
         <include
-                android:id="@+id/recipe_ingredient_list_include"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -76,7 +74,7 @@
                     android:tag="front"
                     style="@style/Theme.AnycookTheme">
         <LinearLayout
-                android:id="@+id/recipe_ingredient_list_relativelayout_linearlayout_progress"
+                android:id="@+id/progress"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center"
@@ -84,14 +82,13 @@
                 android:visibility="gone">
 
             <ProgressBar
-                    android:id="@+id/recipe_ingredient_list_relativelayout_linearlayout_progressbar_header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
             </ProgressBar>
         </LinearLayout>
 
         <ListView
-                android:id="@+id/recipe_ingredient_list_listview"
+                android:id="@+id/ingredient_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

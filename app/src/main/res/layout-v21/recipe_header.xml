@@ -24,7 +24,7 @@
               android:layout_height="match_parent">
 
     <ImageView
-            android:id="@+id/recipe_detail_view_imageview"
+            android:id="@+id/imageview"
             android:layout_width="fill_parent"
             android:layout_height="220dp"
             android:layout_alignParentTop="true"
@@ -34,7 +34,7 @@
             android:transitionName="@string/recipe_transition"/>
 
     <TextView
-            android:id="@+id/recipe_detail_view_textview_title"
+            android:id="@+id/textview_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"

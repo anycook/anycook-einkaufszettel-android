@@ -88,7 +88,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
             return;
         }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.recipe_ingredient_list_anycook_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.anycook_toolbar);
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
@@ -97,7 +97,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
             actionBar.setDisplayShowTitleEnabled(false);
         }
 
-        this.ingredientListView = (ListView) findViewById(R.id.recipe_ingredient_list_listview);
+        this.ingredientListView = (ListView) findViewById(R.id.ingredient_list);
         RecipeIngredientRowAdapter adapter = new RecipeIngredientRowAdapter(this, recipe.getPersons());
         ingredientListView.setAdapter(adapter);
         ingredientListView.setOnItemClickListener(this);
@@ -110,22 +110,22 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             int statusBarHeight = getStatusBarHeight();
-            findViewById(R.id.recipe_ingredient_list_anycook_toolbar).setPadding(0, statusBarHeight, 0, 0);
+            findViewById(R.id.anycook_toolbar).setPadding(0, statusBarHeight, 0, 0);
         }
     }
 
     private void fillViews() {
-        this.recipeImageView = (ImageView) findViewById(R.id.recipe_detail_view_imageview);
+        this.recipeImageView = (ImageView) findViewById(R.id.imageview);
         DownloadImageTask downloadImageTask = new DownloadImageViewTask(recipeImageView,
-                findViewById(R.id.recipe_ingredient_list_imagebutton_add_ingredients), recipe.getName());
+                findViewById(R.id.imagebutton_add_ingredients), recipe.getName());
         downloadImageTask.execute(recipe.getImage().getBig());
 
         findViewById(R.id.recipe_header).setOnClickListener(this);
 
-        TextView titleView = (TextView) findViewById(R.id.recipe_detail_view_textview_title);
+        TextView titleView = (TextView) findViewById(R.id.textview_title);
         titleView.setText(recipe.getName());
 
-        EditText personsEditText = (EditText) findViewById(R.id.recipe_ingredient_list_add_people_edittext_persons);
+        EditText personsEditText = (EditText) findViewById(R.id.edittext_persons);
         personsEditText.setText(Integer.toString(recipe.getPersons()));
         //personsEditText.setOnClickListener(this);
     }
@@ -235,7 +235,7 @@ public class AddIngredientsActivity extends ActionBarActivity implements Adapter
                 .inflate(R.layout.number_picker_dialog, this.ingredientListView, false);
 
         final NumberPicker numberPicker = (NumberPicker) alertDialogContent
-                .findViewById(R.id.number_picker_dialog_numberpicker);
+                .findViewById(R.id.number_picker);
         numberPicker.setMaxValue(MAX_PERSONS);
         numberPicker.setValue(numPersons);
         numberPicker.setMinValue(MIN_PERSONS);

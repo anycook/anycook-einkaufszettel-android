@@ -26,5 +26,5 @@
           app:actionViewClass="android.support.v7.widget.SearchView"
           app:showAsAction="ifRoom" />
     <item android:id="@+id/recipe_menu_reload_db"
-          android:title="Datenbank aktualisieren"/>
+          android:title="@string/reload_database"/>
 </menu>

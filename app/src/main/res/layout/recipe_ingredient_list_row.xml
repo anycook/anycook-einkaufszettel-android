@@ -24,7 +24,7 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp">
     <CheckBox
-            android:id="@+id/recipe_ingredient_list_row_checkbox"
+            android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
@@ -37,7 +37,7 @@
             android:layout_marginRight="3dp"
             android:layout_marginBottom="6dp"/>
     <TextView
-            android:id="@+id/recipe_ingredient_list_row_textview_name"
+            android:id="@+id/textview_name"
             android:layout_width="wrap_content"
             android:layout_weight=".7"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
             android:text="@string/ingredient_name"
             android:layout_marginTop="6dp"/>
     <TextView
-            android:id="@+id/recipe_ingredient_list_row_textview_amount"
+            android:id="@+id/textview_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight=".3"

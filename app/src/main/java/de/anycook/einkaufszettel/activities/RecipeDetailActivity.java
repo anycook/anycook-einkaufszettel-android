@@ -39,17 +39,17 @@ public class RecipeDetailActivity extends ActionBarActivity {
 
         RecipeResponse recipeResponse = getIntent().getParcelableExtra("recipe");
 
-        ImageView imageView = (ImageView) findViewById(R.id.recipe_detail_view_imageview);
+        ImageView imageView = (ImageView) findViewById(R.id.imageview);
         DownloadImageViewTask downloadImageTask = new DownloadImageViewTask(imageView);
         downloadImageTask.execute(recipeResponse.getImage().getBig());
 
-        TextView recipeTitleView = (TextView) findViewById(R.id.recipe_detail_view_textview_title);
+        TextView recipeTitleView = (TextView) findViewById(R.id.textview_title);
         recipeTitleView.setText(recipeResponse.getName());
 
-        TextView recipeDescriptionView = (TextView) findViewById(R.id.recipe_detail_view_textview_description_text);
+        TextView recipeDescriptionView = (TextView) findViewById(R.id.textview_description);
         recipeDescriptionView.setText(recipeResponse.getDescription());
 
-        TextView recipeTimeView = (TextView) findViewById(R.id.recipe_detail_view_textview_time);
+        TextView recipeTimeView = (TextView) findViewById(R.id.textview_time);
         RecipeResponse.Time time = recipeResponse.getTime();
         recipeTimeView.setText(String.format("%s: %d:%02d h",
             getString(R.string.duration), time.getStd(), time.getMin()));

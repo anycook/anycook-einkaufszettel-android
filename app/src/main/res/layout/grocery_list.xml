@@ -26,19 +26,19 @@
 
     <AutoCompleteTextView
             android:id="@+id/grocery_list_autocompletetextview_grocery"
-            android:layout_toStartOf="@+id/grocery_list_edittext_amount"
-            android:layout_toLeftOf="@+id/grocery_list_edittext_amount"
+            android:layout_toStartOf="@+id/edittext_amount"
+            android:layout_toLeftOf="@+id/edittext_amount"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="@string/grocery_hint"
             android:singleLine="true"
             android:gravity="start"
-            android:nextFocusForward="@+id/grocery_list_edittext_amount"
+            android:nextFocusForward="@+id/edittext_amount"
             android:imeOptions="actionNext"
             style="@style/TextAppearanceAnycook.Title" />
 
     <EditText
-            android:id="@+id/grocery_list_edittext_amount"
+            android:id="@+id/edittext_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -54,6 +54,6 @@
             android:id="@android:id/list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/grocery_list_edittext_amount"/>
+            android:layout_below="@id/edittext_amount"/>
 
 </RelativeLayout>

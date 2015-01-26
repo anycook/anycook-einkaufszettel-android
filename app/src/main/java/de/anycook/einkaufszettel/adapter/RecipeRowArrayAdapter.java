@@ -94,8 +94,8 @@ public class RecipeRowArrayAdapter extends RecyclerView.Adapter<RecipeRowArrayAd
             super(view);
             view.setOnClickListener(this);
 
-            textViewName = (TextView) view.findViewById(R.id.recipe_detail_view_textview_title);
-            imageView = (ImageView) view.findViewById(R.id.recipe_detail_view_imageview);
+            textViewName = (TextView) view.findViewById(R.id.textview_title);
+            imageView = (ImageView) view.findViewById(R.id.imageview);
 
             this.activity = activity;
         }
@@ -117,7 +117,7 @@ public class RecipeRowArrayAdapter extends RecyclerView.Adapter<RecipeRowArrayAd
 
             ActivityOptionsCompat options =
                     ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
-                            v.findViewById(R.id.recipe_detail_view_imageview),   // The view which starts the transition
+                            v.findViewById(R.id.imageview),   // The view which starts the transition
                             activity.getString(R.string.recipe_transition)
                     );
 

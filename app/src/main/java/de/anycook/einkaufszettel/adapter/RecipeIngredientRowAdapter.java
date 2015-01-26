@@ -52,9 +52,9 @@ public class RecipeIngredientRowAdapter extends ArrayAdapter<Ingredient> {
                     (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.recipe_ingredient_list_row, parent, false);
             holder = new IngredientHolder();
-            holder.nameTextView = (TextView) convertView.findViewById(R.id.recipe_ingredient_list_row_textview_name);
-            holder.amountTextView = (TextView) convertView.findViewById(R.id.recipe_ingredient_list_row_textview_amount);
-            holder.checkBox = (CheckBox) convertView.findViewById(R.id.recipe_ingredient_list_row_checkbox);
+            holder.nameTextView = (TextView) convertView.findViewById(R.id.textview_name);
+            holder.amountTextView = (TextView) convertView.findViewById(R.id.textview_amount);
+            holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
             convertView.setTag(holder);
         } else {
             holder = (IngredientHolder) convertView.getTag();

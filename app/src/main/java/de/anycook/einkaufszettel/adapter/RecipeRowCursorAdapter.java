@@ -44,13 +44,13 @@ public class RecipeRowCursorAdapter extends ResourceCursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView name = (TextView) view.findViewById(R.id.recipe_row_textview_recipe_name);
+        TextView name = (TextView) view.findViewById(R.id.textview_recipe_name);
         name.setText(cursor.getString(SQLiteDB.TableFields.RECIPE_NAME));
 
-        TextView descriptionView =  (TextView) view.findViewById(R.id.recipe_row_textview_recipe_description);
+        TextView descriptionView =  (TextView) view.findViewById(R.id.textview_description);
         descriptionView.setText(cursor.getString(SQLiteDB.TableFields.RECIPE_DESCRIPTION));
 
-        ImageView imageView = (ImageView) view.findViewById(R.id.recipe_row_imageview);
+        ImageView imageView = (ImageView) view.findViewById(R.id.recipe_imageview);
         new DownloadImageViewTask(imageView, true).execute(cursor.getString(SQLiteDB.TableFields.RECIPE_IMAGE_SMALL));
     }
 }
