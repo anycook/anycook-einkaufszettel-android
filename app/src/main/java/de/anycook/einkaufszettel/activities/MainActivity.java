@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -63,6 +64,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.anycook_toolbar);
         toolbar.setLogo(R.drawable.anycook_transparent);
+        ViewCompat.setElevation(toolbar, 8);
 
         setSupportActionBar(toolbar);
 
