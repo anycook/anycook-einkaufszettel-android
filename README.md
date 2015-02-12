@@ -33,13 +33,13 @@ With the ingredients anycook Einkaufszettel (anycook shopping list) you can add 
   - Extras: Android Support Library
 
 ### Libraries (automatically installed by Gradle) 
-- [Google GSON 2.3](https://code.google.com/p/google-gson/)
+- [Google GSON 2.3.1](https://code.google.com/p/google-gson/)
 - [Google Guava 18.0](https://code.google.com/p/guava-libraries/)
 - [Android-Logger 1.3.1](http://noveogroup.github.io/android-logger/)
 
 ### Test Libraries
-- [Robolectric 2.3](https://github.com/robolectric/robolectric)
-- [JUnit 4.11](http://junit.org) 
+- [Robolectric 2.4](https://github.com/robolectric/robolectric)
+- [JUnit 4.12](http://junit.org)
 
 ## Development environment
 - [IntelliJ](https://www.jetbrains.com/idea/)
