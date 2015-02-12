@@ -47,8 +47,7 @@
             android:layout_toEndOf="@id/textview_label"
             android:layout_toRightOf="@id/textview_label"
             android:focusable="false"
-            android:inputType="number"
-            android:onClick="onNumberPickerClick"/>
+            android:inputType="number"/>
 
     <TextView
             android:id="@+id/textview_persons_label"

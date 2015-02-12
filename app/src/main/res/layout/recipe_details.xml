@@ -42,9 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/duration"
-                android:paddingStart="0sp"
                 android:paddingLeft="0sp"
-                android:paddingEnd="5sp"
                 android:paddingRight="5sp"/>
         <TextView
                 style="@style/TextAppearanceAnycook.Title"
@@ -60,10 +58,8 @@
                 style="@style/TextAppearanceAnycook.Title2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kategorie"
-                android:paddingStart="0sp"
+                android:text="@string/category"
                 android:paddingLeft="0sp"
-                android:paddingEnd="5sp"
                 android:paddingRight="5sp"/>
         <TextView
                 style="@style/TextAppearanceAnycook.Title"
@@ -79,10 +75,8 @@
                 style="@style/TextAppearanceAnycook.Title2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Schwierigkeit"
-                android:paddingStart="0sp"
+                android:text="@string/difficulty"
                 android:paddingLeft="0sp"
-                android:paddingEnd="5sp"
                 android:paddingRight="5sp"/>
         <TextView
                 style="@style/TextAppearanceAnycook.Title"
@@ -98,10 +92,8 @@
                 style="@style/TextAppearanceAnycook.Title2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kalorien"
-                android:paddingStart="0sp"
+                android:text="@string/calories"
                 android:paddingLeft="0sp"
-                android:paddingEnd="5sp"
                 android:paddingRight="5sp"/>
         <TextView
                 style="@style/TextAppearanceAnycook.Title"

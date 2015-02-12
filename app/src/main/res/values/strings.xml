@@ -54,5 +54,8 @@
     <string name="recipe_image_content_description">Bild des Rezepts</string>
     <string name="duration">Dauer</string>
     <string name="reload_database">Datenbank aktualisieren</string>
+    <string name="category">Kategorie</string>
+    <string name="difficulty">Schwierigkeit</string>
+    <string name="calories">Kalorien</string>
 </resources>
 
