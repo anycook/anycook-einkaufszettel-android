@@ -42,6 +42,9 @@ public class RecipeResponse implements Parcelable {
     private Image image;
     private int persons;
     private Time time;
+    private String category;
+    private int skill;
+    private int calorie;
     private long lastChange;
 
     public RecipeResponse() {
@@ -61,6 +64,10 @@ public class RecipeResponse implements Parcelable {
         this.time = new Time();
         time.setStd(parcel.readInt());
         time.setMin(parcel.readInt());
+
+        this.category = parcel.readString();
+        this.skill = parcel.readInt();
+        this.calorie = parcel.readInt();
 
         this.lastChange = parcel.readLong();
     }
@@ -106,6 +113,30 @@ public class RecipeResponse implements Parcelable {
         this.time = time;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public int getSkill() {
+        return skill;
+    }
+
+    public void setSkill(int skill) {
+        this.skill = skill;
+    }
+
+    public int getCalorie() {
+        return calorie;
+    }
+
+    public void setCalorie(int calorie) {
+        this.calorie = calorie;
+    }
+
     public long getLastChange() {
         return lastChange;
     }
@@ -133,6 +164,9 @@ public class RecipeResponse implements Parcelable {
         parcel.writeInt(persons);
         parcel.writeInt(time.getStd());
         parcel.writeInt(time.getMin());
+        parcel.writeString(category);
+        parcel.writeInt(skill);
+        parcel.writeInt(calorie);
         parcel.writeLong(lastChange);
     }
 

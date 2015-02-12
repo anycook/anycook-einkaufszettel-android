@@ -62,6 +62,10 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="TextAppearanceAnycook.Title2" parent="@style/TextAppearanceAnycook.Title">
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
     <style name="TextAppearanceAnycook.Large" parent="@style/TextAppearanceAnycook">
         <item name="android:textSize">24sp</item>
     </style>

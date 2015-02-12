@@ -33,7 +33,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.noveogroup.android.log.Log;
 import de.anycook.einkaufszettel.R;
-import de.anycook.einkaufszettel.activities.AddIngredientsActivity;
+import de.anycook.einkaufszettel.activities.RecipeActivity;
 import de.anycook.einkaufszettel.adapter.RecipeRowCursorAdapter;
 import de.anycook.einkaufszettel.store.RecipeStore;
 
@@ -43,7 +43,7 @@ import de.anycook.einkaufszettel.store.RecipeStore;
  * @author Jan Grassegger <jan@anycook.de>
  * @author Claudia Sichting <claudia.sichting@uni-weimar.de>
  */
-public class RecipeFragment extends ListFragment implements SearchView.OnQueryTextListener {
+public class RecipesFragment extends ListFragment implements SearchView.OnQueryTextListener {
 
     private RecipeStore recipeDatabase;
     private SearchView searchView;
@@ -102,7 +102,8 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
 
     @Override
     public void onListItemClick(ListView l, View view, int position, long id) {
-        Intent intent = new Intent(getActivity(), AddIngredientsActivity.class);
+//        Intent intent = new Intent(getActivity(), AddIngredientsActivity.class);
+        Intent intent = new Intent(getActivity(), RecipeActivity.class);
 
         Bundle bundle = new Bundle();
         String item = ((TextView) view.findViewById(R.id.textview_recipe_name)).getText().toString();
@@ -122,7 +123,7 @@ public class RecipeFragment extends ListFragment implements SearchView.OnQueryTe
 
     @Override
     public boolean onQueryTextChange(String query) {
-        Log.v(RecipeFragment.class.getSimpleName(), "Searching for " + query);
+        Log.v(RecipesFragment.class.getSimpleName(), "Searching for " + query);
         RecipeRowCursorAdapter adapter = (RecipeRowCursorAdapter) getListAdapter();
         adapter.changeCursor(recipeDatabase.getRecipesForQuery(query));
         return false;

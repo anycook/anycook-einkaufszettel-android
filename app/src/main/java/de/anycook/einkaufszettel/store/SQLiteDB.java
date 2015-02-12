@@ -32,19 +32,20 @@ public class SQLiteDB extends SQLiteOpenHelper {
     private static final int DB_VERSION;
 
     public static final String INGREDIENT_NAME_TABLE,
-            GROCERY_TABLE,
-            RECIPE_TABLE,
-            RECIPE_INGREDIENTS_TABLE;
-
+        GROCERY_TABLE,
+        RECIPE_TABLE,
+        RECIPE_INGREDIENTS_TABLE,
+        RECIPE_STEPS_TABLE;
 
     static {
         DB_NAME = "einkaufszettel.db";
-        DB_VERSION = 6;
+        DB_VERSION = 7;
 
         INGREDIENT_NAME_TABLE = "Ingredient";
         GROCERY_TABLE = "GroceryList";
         RECIPE_TABLE = "Recipe";
         RECIPE_INGREDIENTS_TABLE = "RecipeIngredients";
+        RECIPE_STEPS_TABLE = "RecipeSteps";
     }
 
     public Context context;
@@ -63,6 +64,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
         createGroceryItemTable(db);
         createRecipeTable(db);
         createRecipeIngredientsTable(db);
+        createRecipeStepsTable(db);
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -78,8 +80,10 @@ public class SQLiteDB extends SQLiteOpenHelper {
         }
         db.execSQL(String.format(dropTablePattern, RECIPE_TABLE));
         db.execSQL(String.format(dropTablePattern, RECIPE_INGREDIENTS_TABLE));
+        db.execSQL(String.format(dropTablePattern, RECIPE_STEPS_TABLE));
         createRecipeTable(db);
         createRecipeIngredientsTable(db);
+        createRecipeStepsTable(db);
 
         SharedPreferences sharedPrefs = context.getSharedPreferences("update_data", Context.MODE_PRIVATE);
         sharedPrefs.edit().putLong("last_update", 0).putString("last-modified-recipes", null).commit();
@@ -108,6 +112,9 @@ public class SQLiteDB extends SQLiteOpenHelper {
                 "persons INTEGER NOT NULL," +
                 "timeStd INTEGER," +
                 "timeMin INTEGER," +
+                "category VARCHAR(45)," +
+                "skill INTEGER," +
+                "calorie INTEGER," +
                 "vibrantColor INTEGER DEFAULT -1," +
                 "lastChange INTEGER);", RECIPE_TABLE));
     }
@@ -122,22 +129,36 @@ public class SQLiteDB extends SQLiteOpenHelper {
                 RECIPE_INGREDIENTS_TABLE, RECIPE_TABLE, INGREDIENT_NAME_TABLE));
     }
 
+    private void createRecipeStepsTable(SQLiteDatabase db) {
+        db.execSQL(String.format("CREATE TABLE %s(recipeName VARCHAR(45)," +
+                "id INTEGER," +
+                "text TEXT," +
+                "FOREIGN KEY(recipeName) REFERENCES %s(name)," +
+                "PRIMARY KEY(recipeName, id));",
+                RECIPE_STEPS_TABLE, RECIPE_TABLE));
+    }
+
     public static class TableFields {
         public static final int GROCERY_NAME = 0,
                 GROCERY_AMOUNT = 1,
                 GROCERY_STROKE = 2;
         public static final int RECIPE_NAME = 0,
-                RECIPE_DESCRIPTION = 1,
-                RECIPE_IMAGE_SMALL = 2,
-                RECIPE_IMAGE_BIG = 3,
-                RECIPE_PERSONS = 4,
-                RECIPE_TIME_STD = 5,
-                RECIPE_TIME_MIN = 6,
-                RECIPE_LAST_CHANGE = 7,
-                RECIPE_VIBRANT_COLOR = 8;
+            RECIPE_DESCRIPTION = 1,
+            RECIPE_IMAGE_SMALL = 2,
+            RECIPE_IMAGE_BIG = 3,
+            RECIPE_PERSONS = 4,
+            RECIPE_TIME_STD = 5,
+            RECIPE_TIME_MIN = 6,
+            RECIPE_CATEGORY = 7,
+            RECIPE_SKILL = 8,
+            RECIPE_CALORIE = 9,
+            RECIPE_LAST_CHANGE = 10,
+            RECIPE_VIBRANT_COLOR = 11;
         public static final int RECIPE_INGREDIENTS_RECIPE_NAME = 0,
-                RECIPE_INGREDIENTS_NAME = 1,
-                RECIPE_INGREDIENTS_AMOUNT = 2;
-
+            RECIPE_INGREDIENTS_NAME = 1,
+            RECIPE_INGREDIENTS_AMOUNT = 2;
+        public static final int RECIPE_STEPS_RECIPE_NAME = 0,
+            RECIPE_STEPS_ID = 1,
+            RECIPE_STEPS_TEXT = 2;
     }
 }

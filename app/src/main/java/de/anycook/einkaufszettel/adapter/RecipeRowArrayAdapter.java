@@ -30,7 +30,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import de.anycook.einkaufszettel.R;
-import de.anycook.einkaufszettel.activities.AddIngredientsActivity;
+import de.anycook.einkaufszettel.activities.RecipeActivity;
 import de.anycook.einkaufszettel.model.RecipeResponse;
 import de.anycook.einkaufszettel.tasks.DownloadImageViewTask;
 
@@ -110,7 +110,7 @@ public class RecipeRowArrayAdapter extends RecyclerView.Adapter<RecipeRowArrayAd
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(v.getContext(), AddIngredientsActivity.class);
+            Intent intent = new Intent(v.getContext(), RecipeActivity.class);
             Bundle b = new Bundle();
             b.putString("item", recipeResponse.getName());
             intent.putExtras(b);

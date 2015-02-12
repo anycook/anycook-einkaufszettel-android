@@ -46,19 +46,11 @@
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.AddIngredientsActivity"
-                  android:theme="@style/Theme.AnycookTheme.TransparentStatusBar"
-                  android:screenOrientation="portrait">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="de.anycook.einkaufszettel.activities.MainActivity"/>
-        </activity>
-        <activity android:name=".activities.RecipeDetailActivity"
-                  android:screenOrientation="portrait"
-                  android:theme="@style/Theme.AppCompat.Translucent">
+        <activity android:name=".activities.RecipeActivity"
+                  android:theme="@style/Theme.AnycookTheme.TransparentStatusBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.anycook.einkaufszettel.activities.AddIngredientsActivity"/>
-                  </activity>
+                android:value="de.anycook.einkaufszettel.activities.MainActivity"/>
+        </activity>
     </application>
 </manifest>

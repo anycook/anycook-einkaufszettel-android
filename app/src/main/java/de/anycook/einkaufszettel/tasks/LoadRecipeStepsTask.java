@@ -1,6 +1,6 @@
 /*
  * This file is part of anycook Einkaufszettel
- * Copyright (C) 2014 Jan Graßegger, Claudia Sichting
+ * Copyright (C) 2015 Jan Graßegger, Claudia Sichting
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,20 +19,18 @@
 package de.anycook.einkaufszettel.tasks;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.view.View;
-import android.widget.LinearLayout;
 import com.google.common.net.UrlEscapers;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
-import de.anycook.einkaufszettel.R;
-import de.anycook.einkaufszettel.adapter.RecipeIngredientRowAdapter;
-import de.anycook.einkaufszettel.model.Ingredient;
-import de.anycook.einkaufszettel.store.RecipeIngredientsStore;
+import de.anycook.einkaufszettel.adapter.StepRowAdapter;
+import de.anycook.einkaufszettel.model.Step;
+import de.anycook.einkaufszettel.store.RecipeStepsStore;
 import de.anycook.einkaufszettel.util.ConnectionStatus;
-import de.anycook.einkaufszettel.util.Properties;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -43,90 +41,88 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingredient>> {
+public class LoadRecipeStepsTask extends AsyncTask<String, Void, List<Step>> {
 
     private static final String URL_PATTERN;
     private static final Logger LOGGER;
 
     static {
-        URL_PATTERN = "https://api.anycook.de/recipe/%s/ingredients";
+        URL_PATTERN = "https://api.anycook.de/recipe/%s/steps";
         LOGGER = LoggerManager.getLogger();
     }
 
-    private final RecipeIngredientRowAdapter ingredientRowAdapter;
-    private final LinearLayout ingredientListProgress;
+    private final StepRowAdapter stepRowAdapter;
     private final Activity context;
 
-    public LoadRecipeIngredientsTask(RecipeIngredientRowAdapter ingredientRowAdapter, View view, Activity activity) {
-        this.ingredientRowAdapter = ingredientRowAdapter;
-        this.ingredientListProgress = (LinearLayout) view.findViewById(R.id.progress);
-        this.context = activity;
+    public LoadRecipeStepsTask(StepRowAdapter stepRowAdapter, View view, Activity context) {
+        this.stepRowAdapter = stepRowAdapter;
+        this.context = context;
     }
 
     @Override
-    protected void onPreExecute() {
-        ingredientListProgress.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    protected List<Ingredient> doInBackground(String... recipeNames) {
+    protected List<Step> doInBackground(String... recipeNames) {
         String recipeName = recipeNames[0];
-        RecipeIngredientsStore recipeIngredientsStore = new RecipeIngredientsStore(context);
-        recipeIngredientsStore.open();
+        RecipeStepsStore recipeStepsStore = new RecipeStepsStore(context);
+        recipeStepsStore.open();
         try {
             //check DB first
-            List<Ingredient> ingredients = recipeIngredientsStore.getIngredients(recipeName);
-            if (ingredients.size() > 0) {
-                return ingredients;
+            List<Step> steps = recipeStepsStore.getSteps(recipeName);
+            if (steps.size() > 0) {
+                return steps;
             }
 
             // if ingredient not in db check if internet connection is available
             // if not stop activity
             if (!ConnectionStatus.isConnected(context)) {
-                ConnectionStatus.showOfflineMessage(context);
-                return ingredients;
+                shownOfflineMessage();
+                return steps;
             }
 
             String urlString = String.format(URL_PATTERN, UrlEscapers.urlPathSegmentEscaper().escape(recipeName));
             URL url = new URL(urlString);
-            LOGGER.d("Loading ingredients from %s", url);
+            LOGGER.d("Loading steps from %s", url);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             if (httpURLConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new IOException(httpURLConnection.getResponseMessage());
             }
             Reader reader = new InputStreamReader(httpURLConnection.getInputStream());
             Gson gson = new Gson();
-            Type collectionType = new TypeToken<ArrayList<Ingredient>>() { } .getType();
-            ingredients =  gson.fromJson(reader, collectionType);
+            Type collectionType = new TypeToken<ArrayList<Step>>() { } .getType();
+            steps =  gson.fromJson(reader, collectionType);
 
             //add ingredients to DB
-            recipeIngredientsStore.addIngredients(recipeName, ingredients);
-            return ingredients;
+            recipeStepsStore.addSteps(recipeName, steps);
+            return steps;
         } catch (IOException e) {
             LOGGER.e(e, "Failed to load recipe ingredients");
             return Collections.emptyList();
         } finally {
-            recipeIngredientsStore.close();
+            recipeStepsStore.close();
         }
     }
 
     @Override
-    protected void onPostExecute(List<Ingredient> ingredients) {
-        ingredientListProgress.setVisibility(View.GONE);
-        Properties properties = new Properties(ingredientRowAdapter.getContext());
-        Set<String> blacklistedIngredients = properties.getBlacklistedIngredients();
-
-        for (Ingredient ingredient : ingredients) {
-            if (blacklistedIngredients.contains(ingredient.getName())) {
-                ingredient.setChecked(false);
-            }
-
-            ingredientRowAdapter.add(ingredient);
+    protected void onPostExecute(List<Step> steps) {
+        for (Step step : steps) {
+            stepRowAdapter.add(step);
         }
+    }
+
+    private void shownOfflineMessage() {
+        context.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ConnectionStatus.showNoConnectionDialog(context, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        context.finish();
+                    }
+                });
+            }
+        });
     }
 }

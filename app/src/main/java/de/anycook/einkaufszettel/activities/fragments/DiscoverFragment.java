@@ -48,7 +48,6 @@ public class DiscoverFragment extends Fragment {
         RecipeRowArrayAdapter adapter = new RecipeRowArrayAdapter(getActivity());
         recyclerView.setAdapter(adapter);
 
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
