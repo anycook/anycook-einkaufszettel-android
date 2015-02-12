@@ -28,6 +28,7 @@ import com.noveogroup.android.log.LoggerManager;
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.adapter.RecipeRowArrayAdapter;
 import de.anycook.einkaufszettel.model.RecipeResponse;
+import de.anycook.einkaufszettel.util.ConnectionStatus;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -36,6 +37,7 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -55,11 +57,16 @@ public class LoadDiscoverRecipesTask extends AsyncTask<String, Void, List<Recipe
 
     @Override
     protected List<RecipeResponse> doInBackground(String... url) {
+        if (!ConnectionStatus.isConnected(activity)) {
+            ConnectionStatus.showOfflineMessage(activity);
+            return Collections.emptyList();
+        }
+
         try {
-            URL nearRecipesUrl = new URL(url[0]);
+            URL recipesUrl = new URL(url[0]);
             LOGGER.v("Trying to load recipes from %s", url[0]);
 
-            HttpURLConnection httpURLConnection = (HttpURLConnection) nearRecipesUrl.openConnection();
+            HttpURLConnection httpURLConnection = (HttpURLConnection) recipesUrl.openConnection();
 
             if (httpURLConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new IOException(httpURLConnection.getResponseMessage());

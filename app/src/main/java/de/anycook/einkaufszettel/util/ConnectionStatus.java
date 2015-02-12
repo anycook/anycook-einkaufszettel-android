@@ -18,6 +18,7 @@
 
 package de.anycook.einkaufszettel.util;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -52,5 +53,19 @@ public final class ConnectionStatus {
         builder.setMessage("Keine Verbindung zum Internet");
         builder.setNeutralButton("OK", clickListener);
         builder.create().show();
+    }
+
+    public static void showOfflineMessage(final Activity activity) {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showNoConnectionDialog(activity, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        activity.finish();
+                    }
+                });
+            }
+        });
     }
 }

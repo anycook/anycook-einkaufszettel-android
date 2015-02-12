@@ -19,7 +19,6 @@
 package de.anycook.einkaufszettel.tasks;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -89,7 +88,7 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
             // if ingredient not in db check if internet connection is available
             // if not stop activity
             if (!ConnectionStatus.isConnected(context)) {
-                shownOfflineMessage();
+                ConnectionStatus.showOfflineMessage(context);
                 return ingredients;
             }
 
@@ -129,19 +128,5 @@ public class LoadRecipeIngredientsTask extends AsyncTask<String, Void, List<Ingr
 
             ingredientRowAdapter.add(ingredient);
         }
-    }
-
-    private void shownOfflineMessage() {
-        context.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ConnectionStatus.showNoConnectionDialog(context, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        context.finish();
-                    }
-                });
-            }
-        });
     }
 }
