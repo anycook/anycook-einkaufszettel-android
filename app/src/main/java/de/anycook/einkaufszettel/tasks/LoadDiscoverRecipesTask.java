@@ -19,6 +19,7 @@
 package de.anycook.einkaufszettel.tasks;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.view.View;
 import com.google.gson.Gson;
@@ -58,7 +59,8 @@ public class LoadDiscoverRecipesTask extends AsyncTask<String, Void, List<Recipe
     @Override
     protected List<RecipeResponse> doInBackground(String... url) {
         if (!ConnectionStatus.isConnected(activity)) {
-            ConnectionStatus.showOfflineMessage(activity);
+            LOGGER.d("failed to load recipes from %s", url[0]);
+            showOfflineMessage();
             return Collections.emptyList();
         }
 
@@ -74,7 +76,8 @@ public class LoadDiscoverRecipesTask extends AsyncTask<String, Void, List<Recipe
 
             Reader reader = new InputStreamReader(httpURLConnection.getInputStream());
             Gson gson = new Gson();
-            Type collectionType = new TypeToken<ArrayList<RecipeResponse>>() { } .getType();
+            Type collectionType = new TypeToken<ArrayList<RecipeResponse>>() {
+            }.getType();
             return gson.fromJson(reader, collectionType);
         } catch (IOException e) {
             LOGGER.e("failed to load recipes from " + url[0], e);
@@ -86,12 +89,26 @@ public class LoadDiscoverRecipesTask extends AsyncTask<String, Void, List<Recipe
     protected void onPostExecute(final List<RecipeResponse> recipeResponses) {
         if (recipeResponses.size() == 0) {
             LOGGER.i("Didn't find any nearby recipes");
-            activity.findViewById(R.id.recipe_list_textview_nothing_found).setVisibility(View.VISIBLE);
+            activity.findViewById(R.id.textview_nothing_found).setVisibility(View.VISIBLE);
             activity.findViewById(android.R.id.empty).setVisibility(View.GONE);
         } else {
             LOGGER.d(String.format("Found %d different recipes", recipeResponses.size()));
             adapter.setRecipes(recipeResponses);
         }
 
+    }
+
+    private void showOfflineMessage() {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ConnectionStatus.showNoConnectionDialog(activity, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
     }
 }
