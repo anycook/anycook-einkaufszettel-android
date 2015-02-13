@@ -76,8 +76,7 @@ public class LoadDiscoverRecipesTask extends AsyncTask<String, Void, List<Recipe
 
             Reader reader = new InputStreamReader(httpURLConnection.getInputStream());
             Gson gson = new Gson();
-            Type collectionType = new TypeToken<ArrayList<RecipeResponse>>() {
-            }.getType();
+            Type collectionType = new TypeToken<ArrayList<RecipeResponse>>() { } .getType();
             return gson.fromJson(reader, collectionType);
         } catch (IOException e) {
             LOGGER.e("failed to load recipes from " + url[0], e);
