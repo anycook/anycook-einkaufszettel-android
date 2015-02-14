@@ -105,11 +105,5 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
-
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="hjsadfkh sahdf lksahdf khsadfk jhaskjlfdh kjsahdf kjlhsa fdkjl hsakjlfh kljashf lkhsafkjl hasklfdh ksajlhf kjlsahdf jhaskjfd hakjlshf lkjhsaf kjlhaskjlf kjlashf kjlhasfkjl hasjkfdh lkashfdjkl dfshsalfk hsaf kjhsafd kjlhaskjlf hajkshdf jkhsf klah"/>
-
     </LinearLayout>
 </ScrollView>
