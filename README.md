@@ -4,7 +4,7 @@ anycook-einkaufszettel-android
 
 mobile grocery list for anycook
 
-![App Screenshots](https://s3-eu-west-1.amazonaws.com/images.anycook.de/miscellaneous/141116-android-screenshots.png)
+![App Screenshots](https://s3-eu-west-1.amazonaws.com/images.anycook.de/miscellaneous/150215-android-screenshots.png)
 
 [![Get it on Google Play](http://developer.android.com/images/brand/en_generic_rgb_wo_45.png)](https://play.google.com/store/apps/details?id=de.anycook.einkaufszettel)
 
