@@ -17,89 +17,99 @@
   ~ along with this program. If not, see [http://www.gnu.org/licenses/].
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:paddingTop="30sp"
-              android:paddingEnd="40sp"
-              android:paddingRight="40sp"
-              android:paddingBottom="16sp"
-              android:paddingStart="16sp"
-              android:paddingLeft="16sp">
-    <TextView
-            style="@style/TextAppearanceAnycook.Title"
-            android:id="@+id/recipe_description_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12sp">
-        <TextView
-                style="@style/TextAppearanceAnycook.Title2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/duration"
-                android:paddingLeft="0sp"
-                android:paddingRight="5sp"/>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:paddingTop="30sp"
+                  android:paddingEnd="40sp"
+                  android:paddingRight="40sp"
+                  android:paddingBottom="16sp"
+                  android:paddingStart="16sp"
+                  android:paddingLeft="16sp">
         <TextView
                 style="@style/TextAppearanceAnycook.Title"
-                android:id="@+id/recipe_time_text"
-                android:layout_width="wrap_content"
+                android:id="@+id/recipe_description_text"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-    </LinearLayout>
 
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <TextView
-                style="@style/TextAppearanceAnycook.Title2"
-                android:layout_width="wrap_content"
+        <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/category"
-                android:paddingLeft="0sp"
-                android:paddingRight="5sp"/>
-        <TextView
-                style="@style/TextAppearanceAnycook.Title"
-                android:id="@+id/recipe_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-    </LinearLayout>
+                android:layout_marginTop="12sp">
+            <TextView
+                    style="@style/TextAppearanceAnycook.Title2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/duration"
+                    android:paddingLeft="0sp"
+                    android:paddingRight="5sp"/>
+            <TextView
+                    style="@style/TextAppearanceAnycook.Title"
+                    android:id="@+id/recipe_time_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
 
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    style="@style/TextAppearanceAnycook.Title2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/category"
+                    android:paddingLeft="0sp"
+                    android:paddingRight="5sp"/>
+            <TextView
+                    style="@style/TextAppearanceAnycook.Title"
+                    android:id="@+id/recipe_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    style="@style/TextAppearanceAnycook.Title2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/difficulty"
+                    android:paddingLeft="0sp"
+                    android:paddingRight="5sp"/>
+            <TextView
+                    style="@style/TextAppearanceAnycook.Title"
+                    android:id="@+id/recipe_skill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    style="@style/TextAppearanceAnycook.Title2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/calories"
+                    android:paddingLeft="0sp"
+                    android:paddingRight="5sp"/>
+            <TextView
+                    style="@style/TextAppearanceAnycook.Title"
+                    android:id="@+id/recipe_calorie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
         <TextView
-                style="@style/TextAppearanceAnycook.Title2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/difficulty"
-                android:paddingLeft="0sp"
-                android:paddingRight="5sp"/>
-        <TextView
-                style="@style/TextAppearanceAnycook.Title"
-                android:id="@+id/recipe_skill"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-    </LinearLayout>
+                android:text="hjsadfkh sahdf lksahdf khsadfk jhaskjlfdh kjsahdf kjlhsa fdkjl hsakjlfh kljashf lkhsafkjl hasklfdh ksajlhf kjlsahdf jhaskjfd hakjlshf lkjhsaf kjlhaskjlf kjlashf kjlhasfkjl hasjkfdh lkashfdjkl dfshsalfk hsaf kjhsafd kjlhaskjlf hajkshdf jkhsf klah"/>
 
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <TextView
-                style="@style/TextAppearanceAnycook.Title2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/calories"
-                android:paddingLeft="0sp"
-                android:paddingRight="5sp"/>
-        <TextView
-                style="@style/TextAppearanceAnycook.Title"
-                android:id="@+id/recipe_calorie"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>
