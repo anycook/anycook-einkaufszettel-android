@@ -12,7 +12,7 @@ mobile grocery list for anycook
 
 Which anycook recipes are favorites around my location?
 What do I need to buy for a selected recipe?
-With the ingredients anycook Einkaufszettel (anycook shopping list) you can add to a shopping list. Favorite recipes in your location will be highlighted.
+With the anycook Einkaufszettel (anycook shopping list) you can add ingredients (of recipes from [anycook](anycook.de)) to a shopping list. Favorite recipes in your location will be highlighted.
 
 ![Sketch of view and edit mode for mobile grocery list.](https://dl.dropboxusercontent.com/u/1439361/sketch.png)
 
