@@ -20,6 +20,7 @@ package de.anycook.einkaufszettel.tasks;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.Palette;
 import android.view.View;
 import android.widget.ImageView;
@@ -69,7 +70,10 @@ public class DownloadImageViewTask extends DownloadImageTask {
                     if (buttonBackgroundColor == -1) {
                         Palette palette = Palette.generate(bitmap);
 
-                        buttonBackgroundColor = palette.getVibrantColor(R.color.any_green);
+                        final int anyGreenColor =
+                                ContextCompat.getColor(imageView.getContext(), R.color.any_green);
+
+                        buttonBackgroundColor = palette.getVibrantColor(anyGreenColor);
                         recipeStore.putVibrantColor(recipeName, buttonBackgroundColor);
                     }
 
