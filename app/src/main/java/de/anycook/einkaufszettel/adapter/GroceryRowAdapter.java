@@ -23,6 +23,7 @@ import android.database.Cursor;
 import android.view.View;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
+
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.store.SQLiteDB;
 
@@ -40,7 +41,6 @@ public class GroceryRowAdapter extends ResourceCursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        //TextView groceryName = (TextView) view.findViewById(R.id.grocery_item_row_textview_grocery_item);
         TextView groceryName = (TextView) view.findViewById(R.id.textview_grocery);
         groceryName.setText(cursor.getString(SQLiteDB.TableFields.GROCERY_NAME));
 

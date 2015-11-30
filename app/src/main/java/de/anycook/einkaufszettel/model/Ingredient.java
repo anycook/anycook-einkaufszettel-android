@@ -26,6 +26,7 @@ import de.anycook.einkaufszettel.util.StringTools;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class Ingredient {
+
     private String name;
     private String amount;
     private boolean checked;
@@ -60,7 +61,6 @@ public class Ingredient {
     }
 
 
-
     public boolean isChecked() {
         return checked;
     }
@@ -78,7 +78,9 @@ public class Ingredient {
     }
 
     public void multiplyAmount(int recipePersons, int newPersons) {
-        if (recipePersons == newPersons) { return; }
+        if (recipePersons == newPersons) {
+            return;
+        }
         amount = StringTools.multiplyAmount(amount, recipePersons, newPersons);
     }
 

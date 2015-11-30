@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public final class StringTools {
+
     private static final Logger LOGGER;
     private static final Pattern HAS_UNIT_PATTERN;
     private static final Pattern NUMBER_PATTERN;
@@ -44,20 +45,25 @@ public final class StringTools {
         NUMBER_FORMAT = new DecimalFormat("0.##");
     }
 
-    private StringTools() { }
+    private StringTools() {
+    }
 
     public static String formatAmount(String input) {
-        if (input.length() == 0) { return input; }
+        if (input.length() == 0) {
+            return input;
+        }
         StringBuilder output = new StringBuilder();
         output.append(input.charAt(0));
 
         for (int i = 0; i < input.length() - 1; i++) {
             char c = input.charAt(i);
-            if (Character.isDigit(c) && Character.isLetter(input.codePointAt(i + 1))) { output.append(' '); }
+            if (Character.isDigit(c) && Character.isLetter(input.codePointAt(i + 1))) {
+                output.append(' ');
+            }
 
             if (input.charAt(i + 1) == '.') {
                 output.append(',');
-            } else  {
+            } else {
                 output.append(input.charAt(i + 1));
             }
         }
@@ -68,8 +74,12 @@ public final class StringTools {
     }
 
     public static String mergeAmounts(String amount1, String amount2) {
-        if (amount1.length() == 0) { return amount2; }
-        if (amount2.length() == 0) { return amount1; }
+        if (amount1.length() == 0) {
+            return amount2;
+        }
+        if (amount2.length() == 0) {
+            return amount1;
+        }
 
         amount1 = amount1.replace(',', '.');
         amount2 = amount2.replace(',', '.');
@@ -85,7 +95,8 @@ public final class StringTools {
             String unit2 = amount2UnitMatcher.group(2);
 
             if (unit1.equals(unit2)) {
-                String newNumber = mergeNumbers(amount1UnitMatcher.group(1), amount2UnitMatcher.group(1));
+                String newNumber =
+                        mergeNumbers(amount1UnitMatcher.group(1), amount2UnitMatcher.group(1));
                 return String.format("%s %s", newNumber, unit1);
             }
         }
@@ -103,7 +114,7 @@ public final class StringTools {
         } else if (number1.contains("/")) {
             return mergeFractionAndDecimal(number1, number2);
         } else if (number2.contains("/")) {
-            return  mergeFractionAndDecimal(number2, number1);
+            return mergeFractionAndDecimal(number2, number1);
         }
         return mergeDecimals(number1, number2);
     }
@@ -118,7 +129,8 @@ public final class StringTools {
         int numerator2 = Integer.parseInt(split2[0]);
         int denominator2 = Integer.parseInt(split2[1]);
 
-        return getFractionString(numerator1 * denominator2 + numerator2 * denominator1, denominator1 * denominator2);
+        return getFractionString(numerator1 * denominator2 + numerator2 * denominator1,
+                                 denominator1 * denominator2);
     }
 
     private static String mergeDecimals(String numberString1, String numberString2) {
@@ -145,7 +157,9 @@ public final class StringTools {
             start = numberMatcher.start();
 
             // append non-matching
-            if (end < start) { newAmount.append(amount.substring(end, start)); }
+            if (end < start) {
+                newAmount.append(amount.substring(end, start));
+            }
 
             end = numberMatcher.end();
 
@@ -182,12 +196,16 @@ public final class StringTools {
         numerator /= gcd;
         denominator /= gcd;
 
-        if (denominator == 1) { return Integer.toString(numerator); }
+        if (denominator == 1) {
+            return Integer.toString(numerator);
+        }
         return String.format(Locale.GERMAN, "%d/%d", numerator, denominator);
     }
 
     private static int euclideanGCD(int a, int b) {
-        if (a == 0) { return b; }
+        if (a == 0) {
+            return b;
+        }
 
         while (b != 0) {
             if (a > b) {

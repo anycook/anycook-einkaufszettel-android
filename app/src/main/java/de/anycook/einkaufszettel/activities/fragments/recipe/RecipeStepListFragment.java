@@ -23,6 +23,7 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.activities.RecipeActivity;
 import de.anycook.einkaufszettel.adapter.StepRowAdapter;
@@ -33,6 +34,7 @@ import de.anycook.einkaufszettel.tasks.LoadRecipeStepsTask;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class RecipeStepListFragment extends ListFragment {
+
     private RecipeActivity recipeActivity;
 
     @Override
@@ -43,7 +45,8 @@ public class RecipeStepListFragment extends ListFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.step_list, container, false);
 
         RecipeResponse recipe = recipeActivity.getRecipe();
@@ -51,7 +54,8 @@ public class RecipeStepListFragment extends ListFragment {
         StepRowAdapter stepRowAdapter = new StepRowAdapter(recipeActivity);
         setListAdapter(stepRowAdapter);
 
-        LoadRecipeStepsTask recipeStepsTask = new LoadRecipeStepsTask(stepRowAdapter, view, recipeActivity);
+        LoadRecipeStepsTask recipeStepsTask =
+                new LoadRecipeStepsTask(stepRowAdapter, recipeActivity);
         recipeStepsTask.execute(recipe.getName());
 
         return view;

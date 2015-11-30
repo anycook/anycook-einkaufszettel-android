@@ -25,8 +25,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
+
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
+
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.store.RecipeStore;
 import de.anycook.einkaufszettel.tasks.LoadIngredientsTask;
@@ -36,9 +38,11 @@ import de.anycook.einkaufszettel.util.Properties;
 
 /**
  * First activity on application startup. Loads recipe and ingredient database data
+ *
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class StartupActivity extends Activity {
+
     private final Logger logger = LoggerManager.getLogger();
     private ProgressBar progressBar;
     private LoadIngredientsTask loadIngredientsTask;
@@ -99,11 +103,14 @@ public class StartupActivity extends Activity {
         setContentView(R.layout.load_screen);
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        if (newData || emptyRecipes) { findViewById(R.id.load_screen_skip).setVisibility(View.INVISIBLE); }
+        if (newData || emptyRecipes) {
+            findViewById(R.id.load_screen_skip).setVisibility(View.INVISIBLE);
+        }
 
         loadIngredientsTask = new LoadIngredientsTask(this, new IncrementCallback());
         loadIngredientsTask.execute();
-        loadRecipesTask = new LoadRecipesTask(this, sharedPrefs, new IncrementCallback(), emptyRecipes);
+        loadRecipesTask =
+                new LoadRecipesTask(this, sharedPrefs, new IncrementCallback(), emptyRecipes);
         loadRecipesTask.execute();
 
         SharedPreferences.Editor editor = sharedPrefs.edit();
@@ -118,10 +125,12 @@ public class StartupActivity extends Activity {
     }
 
     public interface Callback {
+
         void call(AsyncTask.Status status);
     }
 
     private class IncrementCallback implements Callback {
+
         @Override
         public void call(AsyncTask.Status status) {
             progressBar.incrementProgressBy(1);

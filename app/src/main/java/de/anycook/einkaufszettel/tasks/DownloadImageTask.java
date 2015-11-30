@@ -18,11 +18,13 @@
 
 package de.anycook.einkaufszettel.tasks;
 
+import com.google.common.io.ByteStreams;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import com.google.common.io.ByteStreams;
+
 import com.noveogroup.android.log.Log;
 
 import java.io.File;

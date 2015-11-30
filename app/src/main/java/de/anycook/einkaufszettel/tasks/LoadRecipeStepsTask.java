@@ -18,15 +18,17 @@
 
 package de.anycook.einkaufszettel.tasks;
 
-import android.app.Activity;
-import android.content.DialogInterface;
-import android.os.AsyncTask;
-import android.view.View;
 import com.google.common.net.UrlEscapers;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
+
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
+
 import de.anycook.einkaufszettel.adapter.StepRowAdapter;
 import de.anycook.einkaufszettel.model.Step;
 import de.anycook.einkaufszettel.store.RecipeStepsStore;
@@ -35,7 +37,6 @@ import de.anycook.einkaufszettel.util.ConnectionStatus;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -58,15 +59,15 @@ public class LoadRecipeStepsTask extends AsyncTask<String, Void, List<Step>> {
     private final StepRowAdapter stepRowAdapter;
     private final Activity context;
 
-    public LoadRecipeStepsTask(StepRowAdapter stepRowAdapter, View view, Activity context) {
+    public LoadRecipeStepsTask(StepRowAdapter stepRowAdapter, Activity context) {
         this.stepRowAdapter = stepRowAdapter;
         this.context = context;
     }
 
     @Override
     protected List<Step> doInBackground(String... recipeNames) {
-        String recipeName = recipeNames[0];
-        RecipeStepsStore recipeStepsStore = new RecipeStepsStore(context);
+        final String recipeName = recipeNames[0];
+        final RecipeStepsStore recipeStepsStore = new RecipeStepsStore(context);
         recipeStepsStore.open();
         try {
             //check DB first
@@ -76,13 +77,13 @@ public class LoadRecipeStepsTask extends AsyncTask<String, Void, List<Step>> {
             }
 
             // if ingredient not in db check if internet connection is available
-            // if not stop activity
             if (!ConnectionStatus.isConnected(context)) {
                 shownOfflineMessage();
                 return steps;
             }
 
-            String urlString = String.format(URL_PATTERN, UrlEscapers.urlPathSegmentEscaper().escape(recipeName));
+            final String escapedRecipeName = UrlEscapers.urlPathSegmentEscaper().escape(recipeName);
+            String urlString = String.format(URL_PATTERN, escapedRecipeName);
             URL url = new URL(urlString);
             LOGGER.d("Loading steps from %s", url);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -91,8 +92,8 @@ public class LoadRecipeStepsTask extends AsyncTask<String, Void, List<Step>> {
             }
             Reader reader = new InputStreamReader(httpURLConnection.getInputStream());
             Gson gson = new Gson();
-            Type collectionType = new TypeToken<ArrayList<Step>>() { } .getType();
-            steps =  gson.fromJson(reader, collectionType);
+            TypeToken<ArrayList<Step>> collectionTypeToken = new TypeToken<ArrayList<Step>>() { };
+            steps = gson.fromJson(reader, collectionTypeToken.getType());
 
             //add ingredients to DB
             recipeStepsStore.addSteps(recipeName, steps);
@@ -113,15 +114,18 @@ public class LoadRecipeStepsTask extends AsyncTask<String, Void, List<Step>> {
     }
 
     private void shownOfflineMessage() {
+
+        final DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                context.finish();
+            }
+        };
+
         context.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ConnectionStatus.showNoConnectionDialog(context, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        context.finish();
-                    }
-                });
+                ConnectionStatus.showNoConnectionDialog(context, listener);
             }
         });
     }

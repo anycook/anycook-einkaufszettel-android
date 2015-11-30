@@ -22,8 +22,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
+
 import de.anycook.einkaufszettel.model.Step;
 
 import java.io.Closeable;
@@ -34,6 +36,7 @@ import java.util.List;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class RecipeStepsStore implements Closeable {
+
     private static final Logger LOGGER = LoggerManager.getLogger();
 
     private final Context context;
@@ -57,8 +60,9 @@ public class RecipeStepsStore implements Closeable {
 
     public List<Step> getSteps(String recipeName) {
         Cursor cursor = database.query(SQLiteDB.RECIPE_STEPS_TABLE,
-                new String[]{"recipeName", "id", "text"},
-                "recipeName = ?", new String[]{recipeName}, null, null, "id");
+                                       new String[]{"recipeName", "id", "text"},
+                                       "recipeName = ?", new String[]{recipeName}, null, null,
+                                       "id");
 
         List<Step> steps = new LinkedList<>();
         while (cursor.moveToNext()) {

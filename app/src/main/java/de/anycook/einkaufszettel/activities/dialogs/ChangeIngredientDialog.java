@@ -24,6 +24,7 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.model.Ingredient;
 
@@ -66,8 +67,12 @@ public class ChangeIngredientDialog {
         builder.setPositiveButton(R.string.change, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String newName = ((TextView) dialogView.findViewById(R.id.edittext_name)).getText().toString();
-                String newAmount = ((TextView) dialogView.findViewById(R.id.edittext_amount)).getText().toString();
+                final String newName =
+                        ((TextView) dialogView.findViewById(R.id.edittext_name)).getText()
+                                .toString();
+                final String newAmount =
+                        ((TextView) dialogView.findViewById(R.id.edittext_amount)).getText()
+                                .toString();
                 Ingredient newIngredient = new Ingredient();
 
                 newIngredient.setName(newName);
@@ -83,6 +88,7 @@ public class ChangeIngredientDialog {
     }
 
     public interface Callback {
+
         void ingredientChanged(Ingredient newIngredient);
     }
 }

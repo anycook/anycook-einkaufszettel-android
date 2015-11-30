@@ -40,8 +40,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
+
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.activities.dialogs.ChangeIngredientDialog;
 import de.anycook.einkaufszettel.adapter.GroceryRowAdapter;
@@ -56,7 +58,9 @@ import de.anycook.einkaufszettel.util.StringTools;
  * @author Jan Graßegger
  * @author Claudia Sichting
  */
-public class GroceryListFragment extends ListFragment implements AdapterView.OnItemLongClickListener {
+public class GroceryListFragment extends ListFragment
+        implements AdapterView.OnItemLongClickListener {
+
     private static final Logger LOGGER = LoggerManager.getLogger();
 
     private AutoCompleteTextView groceryNameTextView;
@@ -71,19 +75,23 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        View view =  inflater.inflate(R.layout.grocery_list, container, false);
+        View view = inflater.inflate(R.layout.grocery_list, container, false);
         // load views
         this.groceryNameTextView =
-                (AutoCompleteTextView) view.findViewById(R.id.grocery_list_autocompletetextview_grocery);
+                (AutoCompleteTextView) view
+                        .findViewById(R.id.grocery_list_autocompletetextview_grocery);
         this.groceryAmountTextView = (EditText) view.findViewById(R.id.edittext_amount);
 
         // load and set grocery list data
         this.groceryItemStore = new GroceryStore(view.getContext());
         groceryItemStore.open();
-        GroceryRowAdapter listAdapter = new GroceryRowAdapter(view.getContext(), R.layout.grocery_row,
-                groceryItemStore.getAllGroceryItemsCursor(), 0);
+        GroceryRowAdapter
+                listAdapter =
+                new GroceryRowAdapter(view.getContext(), R.layout.grocery_row,
+                                      groceryItemStore.getAllGroceryItemsCursor(), 0);
 
         //init data source adapter
         setListAdapter(listAdapter);
@@ -102,7 +110,8 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
 
     private void addItem(String name, String amount) {
         if (name.equals("")) {
-            Toast.makeText(getActivity().getBaseContext(), "Wunschlos glücklich! ;-)", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getBaseContext(), "Wunschlos glücklich! ;-)",
+                           Toast.LENGTH_SHORT).show();
         } else {
             groceryItemStore.addGroceryItem(name, amount);
 
@@ -172,18 +181,20 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
         TextView groceryName = (TextView) view.findViewById(R.id.textview_grocery);
         TextView groceryAmount = (TextView) view.findViewById(R.id.textview_amount);
         final Ingredient ingredient = new Ingredient(groceryName.getText().toString(),
-                groceryAmount.getText().toString());
+                                                     groceryAmount.getText().toString());
 
-        ChangeIngredientDialog dialog = new ChangeIngredientDialog(this.getActivity(), ingredient,
-                new ChangeIngredientDialog.Callback() {
-                    @Override
-                    public void ingredientChanged(Ingredient newIngredient) {
-                        newIngredient.setChecked(false);
-                        groceryItemStore.update(ingredient.getName(), newIngredient);
-                        GroceryRowAdapter listAdapter = (GroceryRowAdapter) getListAdapter();
-                        listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
-                    }
-                });
+        final ChangeIngredientDialog.Callback callback = new ChangeIngredientDialog.Callback() {
+            @Override
+            public void ingredientChanged(Ingredient newIngredient) {
+                newIngredient.setChecked(false);
+                groceryItemStore.update(ingredient.getName(), newIngredient);
+                GroceryRowAdapter listAdapter = (GroceryRowAdapter) getListAdapter();
+                listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
+            }
+        };
+
+        final ChangeIngredientDialog dialog = new ChangeIngredientDialog(this.getActivity(),
+                                                                         ingredient, callback);
         dialog.showDialog();
 
         return true;
@@ -205,26 +216,30 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
 
     private void clickedClearButton() {
         Cursor strokedItemCursor = groceryItemStore.getStrokedGroceryItems();
-        if (getListView().getCount() == 0) { return; }
+        if (getListView().getCount() == 0) {
+            return;
+        }
         if (strokedItemCursor.getCount() == 0) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
             alertDialogBuilder.setMessage(R.string.clear_ingredients);
-            alertDialogBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
+            alertDialogBuilder
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
 
-            alertDialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    groceryItemStore.deleteAllGroceryItems();
-                    GroceryRowAdapter listAdapter = (GroceryRowAdapter) getListAdapter();
-                    listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
-                    dialog.dismiss();
-                }
-            });
+            alertDialogBuilder
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            groceryItemStore.deleteAllGroceryItems();
+                            GroceryRowAdapter listAdapter = (GroceryRowAdapter) getListAdapter();
+                            listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
+                            dialog.dismiss();
+                        }
+                    });
 
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
@@ -251,8 +266,6 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
             }
             builder.append(groceryName);
 
-
-
             if (!cursor.isLast()) {
                 builder.append('\n');
             }
@@ -266,19 +279,22 @@ public class GroceryListFragment extends ListFragment implements AdapterView.OnI
     }
 
 
-
     private class AmountOnEditorActionListener implements TextView.OnEditorActionListener {
 
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 String name = groceryNameTextView.getText().toString();
-                String amount = StringTools.formatAmount(groceryAmountTextView.getText().toString());
+                String
+                        amount =
+                        StringTools.formatAmount(groceryAmountTextView.getText().toString());
                 addItem(name, amount);
                 groceryNameTextView.setText("");
                 groceryAmountTextView.setText("");
                 return true;
-            } else { return false; }
+            } else {
+                return false;
+            }
         }
     }
 }

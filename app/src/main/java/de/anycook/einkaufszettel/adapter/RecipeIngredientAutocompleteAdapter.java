@@ -23,6 +23,7 @@ import android.database.Cursor;
 import android.view.View;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
+
 import de.anycook.einkaufszettel.store.RecipeIngredientNameStore;
 import de.anycook.einkaufszettel.store.SQLiteDB;
 
@@ -32,7 +33,9 @@ import java.io.IOException;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class RecipeIngredientAutocompleteAdapter extends ResourceCursorAdapter implements Closeable {
+public class RecipeIngredientAutocompleteAdapter extends ResourceCursorAdapter
+        implements Closeable {
+
     private final RecipeIngredientNameStore ingredientNameStore;
 
     public RecipeIngredientAutocompleteAdapter(Context context) {

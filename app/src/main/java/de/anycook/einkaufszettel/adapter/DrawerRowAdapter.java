@@ -26,10 +26,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import de.anycook.einkaufszettel.R;
 
 /**
  * adapter for drawer icons with menu name
+ *
  * @author Jan Grassegger <jan@anycook.de>
  * @author Claudia Sichting <claudia.sichting@uni-weimar.de>
  */
@@ -47,7 +49,8 @@ public class DrawerRowAdapter extends ArrayAdapter<String> {
             convertView = inflater.inflate(R.layout.drawer_row, parent, false);
             ViewHolder viewHolder = new ViewHolder();
             viewHolder.textViewName = (TextView) convertView.findViewById(R.id.drawer_row_textview);
-            viewHolder.imageViewIcon = (ImageView) convertView.findViewById(R.id.drawer_row_imageview);
+            viewHolder.imageViewIcon =
+                    (ImageView) convertView.findViewById(R.id.drawer_row_imageview);
             convertView.setTag(viewHolder);
         }
         String item = getItem(position);
@@ -62,6 +65,7 @@ public class DrawerRowAdapter extends ArrayAdapter<String> {
     }
 
     static class ViewHolder {
+
         TextView textViewName;
         ImageView imageViewIcon;
     }

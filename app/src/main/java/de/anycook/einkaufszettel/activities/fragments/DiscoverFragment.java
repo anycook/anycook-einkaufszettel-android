@@ -26,6 +26,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.adapter.RecipeRowArrayAdapter;
 import de.anycook.einkaufszettel.tasks.LoadDiscoverRecipesTask;
@@ -35,10 +36,12 @@ import de.anycook.einkaufszettel.tasks.LoadDiscoverRecipesTask;
  * @author Jan Graßegger
  */
 public class DiscoverFragment extends Fragment {
+
     private static final String URL_PATTERN = "https://api.anycook.de/discover/%s?recipeNumber=20";
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.discover_list, container, false);
 
         String url = String.format(URL_PATTERN, getArguments().getString("type"));
@@ -51,7 +54,9 @@ public class DiscoverFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        LoadDiscoverRecipesTask loadDiscoverRecipesTask = new LoadDiscoverRecipesTask(adapter, this.getActivity());
+        LoadDiscoverRecipesTask
+                loadDiscoverRecipesTask =
+                new LoadDiscoverRecipesTask(adapter, this.getActivity());
         loadDiscoverRecipesTask.execute(url);
 
         return view;

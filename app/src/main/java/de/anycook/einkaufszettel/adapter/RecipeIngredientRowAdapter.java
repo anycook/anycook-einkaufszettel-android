@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.model.Ingredient;
 
@@ -76,12 +77,15 @@ public class RecipeIngredientRowAdapter extends ArrayAdapter<Ingredient> {
     }
 
     public void setCurrentPersons(int currentPersons) {
-        if (currentPersons == 0) { return; }
+        if (currentPersons == 0) {
+            return;
+        }
         this.currentPersons = currentPersons;
         notifyDataSetChanged();
     }
 
     private static class IngredientHolder {
+
         TextView nameTextView;
         TextView amountTextView;
         CheckBox checkBox;

@@ -19,16 +19,19 @@
 package de.anycook.einkaufszettel.util;
 
 import android.support.v4.app.Fragment;
+
 import de.anycook.einkaufszettel.activities.fragments.recipe.RecipeDetailFragment;
 import de.anycook.einkaufszettel.activities.fragments.recipe.RecipeIngredientListFragment;
 import de.anycook.einkaufszettel.activities.fragments.recipe.RecipeStepListFragment;
 
 /**
- * This class represents a tab to be displayed by {@link android.support.v4.view.ViewPager} and it's associated
- * {@link de.anycook.einkaufszettel.view.SlidingTabLayout}.
+ * This class represents a tab to be displayed by {@link android.support.v4.view.ViewPager} and it's
+ * associated {@link de.anycook.einkaufszettel.view.SlidingTabLayout}.
+ *
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class PagerItem {
+
     private final CharSequence title;
     private final int indicatorColor;
     private final int dividerColor;
@@ -40,8 +43,8 @@ public class PagerItem {
     }
 
     /**
-     * @return A new {@link android.support.v4.app.Fragment} to be displayed by
-     * a {@link android.support.v4.view.ViewPager}
+     * @return A new {@link android.support.v4.app.Fragment} to be displayed by a {@link
+     * android.support.v4.view.ViewPager}
      */
     public Fragment createFragment() {
         if (title.equals("Zutaten")) {
@@ -62,14 +65,16 @@ public class PagerItem {
     }
 
     /**
-     * @return the color to be used for indicator on the {@link de.anycook.einkaufszettel.view.SlidingTabLayout}
+     * @return the color to be used for indicator on the
+     * {@link de.anycook.einkaufszettel.view.SlidingTabLayout}
      */
     public int getIndicatorColor() {
         return indicatorColor;
     }
 
     /**
-     * @return the color to be used for right divider on the {@link de.anycook.einkaufszettel.view.SlidingTabLayout}
+     * @return the color to be used for right divider on the
+     * {@link de.anycook.einkaufszettel.view.SlidingTabLayout}
      */
     public int getDividerColor() {
         return dividerColor;
