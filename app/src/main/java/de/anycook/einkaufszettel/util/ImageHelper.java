@@ -30,6 +30,7 @@ import android.graphics.RectF;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public final class ImageHelper {
+
     private ImageHelper() {
 
     }

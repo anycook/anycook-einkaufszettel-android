@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
+
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.store.SQLiteDB;
 import de.anycook.einkaufszettel.tasks.DownloadImageViewTask;
@@ -38,6 +39,7 @@ public class RecipeRowCursorAdapter extends ResourceCursorAdapter {
     public RecipeRowCursorAdapter(Context context) {
         this(context, null);
     }
+
     public RecipeRowCursorAdapter(Context context, Cursor cursor) {
         super(context, R.layout.recipe_row, cursor, false);
     }
@@ -47,10 +49,11 @@ public class RecipeRowCursorAdapter extends ResourceCursorAdapter {
         TextView name = (TextView) view.findViewById(R.id.textview_recipe_name);
         name.setText(cursor.getString(SQLiteDB.TableFields.RECIPE_NAME));
 
-        TextView descriptionView =  (TextView) view.findViewById(R.id.textview_description);
+        TextView descriptionView = (TextView) view.findViewById(R.id.textview_description);
         descriptionView.setText(cursor.getString(SQLiteDB.TableFields.RECIPE_DESCRIPTION));
 
         ImageView imageView = (ImageView) view.findViewById(R.id.recipe_imageview);
-        new DownloadImageViewTask(imageView, true).execute(cursor.getString(SQLiteDB.TableFields.RECIPE_IMAGE_SMALL));
+        new DownloadImageViewTask(imageView, true)
+                .execute(cursor.getString(SQLiteDB.TableFields.RECIPE_IMAGE_SMALL));
     }
 }

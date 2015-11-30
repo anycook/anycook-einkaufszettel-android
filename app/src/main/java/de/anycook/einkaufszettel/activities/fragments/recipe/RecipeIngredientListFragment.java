@@ -29,6 +29,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.NumberPicker;
+
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.activities.RecipeActivity;
 import de.anycook.einkaufszettel.activities.dialogs.ChangeIngredientDialog;
@@ -40,8 +41,9 @@ import de.anycook.einkaufszettel.tasks.LoadRecipeIngredientsTask;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class RecipeIngredientListFragment extends Fragment implements AdapterView.OnItemClickListener,
-        AdapterView.OnItemLongClickListener, View.OnClickListener {
+public class RecipeIngredientListFragment extends Fragment
+        implements AdapterView.OnItemClickListener,
+                   AdapterView.OnItemLongClickListener, View.OnClickListener {
 
     private static final int MAX_PERSONS = 99;
     private static final int MIN_PERSONS = 1;
@@ -59,7 +61,8 @@ public class RecipeIngredientListFragment extends Fragment implements AdapterVie
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recipe_ingredient_list, container, false);
 
         RecipeResponse recipe = recipeActivity.getRecipe();
@@ -74,9 +77,9 @@ public class RecipeIngredientListFragment extends Fragment implements AdapterVie
         personsEditText.setText(Integer.toString(recipe.getPersons()));
 
         LoadRecipeIngredientsTask loadRecipeIngredientsTask =
-        new LoadRecipeIngredientsTask(recipeActivity.getIngredientRowAdapter(), view, recipeActivity);
+                new LoadRecipeIngredientsTask(recipeActivity.getIngredientRowAdapter(), view,
+                                              recipeActivity);
         loadRecipeIngredientsTask.execute(recipe.getName());
-
 
         view.findViewById(R.id.edittext_persons).setOnClickListener(this);
 
@@ -85,7 +88,9 @@ public class RecipeIngredientListFragment extends Fragment implements AdapterVie
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        RecipeIngredientRowAdapter adapter = (RecipeIngredientRowAdapter) ingredientListView.getAdapter();
+        RecipeIngredientRowAdapter
+                adapter =
+                (RecipeIngredientRowAdapter) ingredientListView.getAdapter();
         Ingredient ingredient = (Ingredient) ingredientListView.getItemAtPosition(position);
         ingredient.setChecked(!ingredient.isChecked());
         adapter.notifyDataSetChanged();
@@ -94,17 +99,19 @@ public class RecipeIngredientListFragment extends Fragment implements AdapterVie
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         final Ingredient ingredient = (Ingredient) ingredientListView.getItemAtPosition(position);
-        ChangeIngredientDialog dialog = new ChangeIngredientDialog(getActivity(), ingredient,
-                new ChangeIngredientDialog.Callback() {
-                    @Override
-                    public void ingredientChanged(Ingredient newIngredient) {
-                        ingredient.setName(newIngredient.getName());
-                        ingredient.setAmount(newIngredient.getAmount());
-                        RecipeIngredientRowAdapter adapter =
-                                (RecipeIngredientRowAdapter) ingredientListView.getAdapter();
-                        adapter.notifyDataSetChanged();
-                    }
-                });
+        final ChangeIngredientDialog.Callback callback = new ChangeIngredientDialog.Callback() {
+            @Override
+            public void ingredientChanged(Ingredient newIngredient) {
+                ingredient.setName(newIngredient.getName());
+                ingredient.setAmount(newIngredient.getAmount());
+                final RecipeIngredientRowAdapter adapter =
+                        (RecipeIngredientRowAdapter) ingredientListView.getAdapter();
+                adapter.notifyDataSetChanged();
+            }
+        };
+
+        final ChangeIngredientDialog dialog = new ChangeIngredientDialog(getActivity(),
+                                                                         ingredient, callback);
 
         dialog.showDialog();
 
@@ -135,7 +142,9 @@ public class RecipeIngredientListFragment extends Fragment implements AdapterVie
             public void onClick(DialogInterface dialog, int which) {
                 String personsString = Integer.toString(numberPicker.getValue());
                 personsEditText.setText(personsString);
-                if (personsString.length() == 0) { return; }
+                if (personsString.length() == 0) {
+                    return;
+                }
                 int numPersons = Integer.parseInt(personsEditText.getText().toString());
                 recipeActivity.getIngredientRowAdapter().setCurrentPersons(numPersons);
             }

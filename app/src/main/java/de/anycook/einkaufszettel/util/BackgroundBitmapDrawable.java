@@ -30,6 +30,7 @@ import android.graphics.drawable.BitmapDrawable;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class BackgroundBitmapDrawable extends BitmapDrawable {
+
     private Matrix mMatrix = new Matrix();
     private int moldHeight;
     boolean simpleMapping = false;

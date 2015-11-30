@@ -37,6 +37,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.activities.fragments.DiscoverFragment;
 import de.anycook.einkaufszettel.activities.fragments.GroceryListFragment;
@@ -91,7 +92,8 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         //return new ActionBarDrawerToggle(this, drawerLayout,
         //        R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
 
-        return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
+        return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open,
+                                         R.string.drawer_close) {
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
@@ -101,11 +103,13 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 }
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
+
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 //hide keyboard
-                final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                final InputMethodManager imm =
+                        (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(drawerView.getWindowToken(), 0);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
@@ -163,8 +167,8 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_drawer_layout_content_frame, fragment)
-            .addToBackStack(title)
-            .commit();
+                .addToBackStack(title)
+                .commit();
         // update selected item and title, then close the drawer
         drawerList.setItemChecked(position, true);
         drawerLayout.closeDrawer(drawerList);

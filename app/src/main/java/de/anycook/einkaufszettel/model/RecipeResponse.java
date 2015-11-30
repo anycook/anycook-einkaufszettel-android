@@ -171,6 +171,7 @@ public class RecipeResponse implements Parcelable {
     }
 
     public static class Image {
+
         protected String small;
         protected String big;
 
@@ -193,6 +194,7 @@ public class RecipeResponse implements Parcelable {
     }
 
     public static class Time {
+
         private int std;
         private int min;
 

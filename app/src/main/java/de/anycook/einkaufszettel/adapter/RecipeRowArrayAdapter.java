@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.activities.RecipeActivity;
 import de.anycook.einkaufszettel.model.RecipeResponse;
@@ -40,7 +41,9 @@ import java.util.List;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class RecipeRowArrayAdapter extends RecyclerView.Adapter<RecipeRowArrayAdapter.RecipeViewHolder> {
+public class RecipeRowArrayAdapter
+        extends RecyclerView.Adapter<RecipeRowArrayAdapter.RecipeViewHolder> {
+
     private List<RecipeResponse> recipes;
     private Activity activity;
 
@@ -68,7 +71,10 @@ public class RecipeRowArrayAdapter extends RecyclerView.Adapter<RecipeRowArrayAd
 
     @Override
     public RecipeViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.discover_row, viewGroup, false);
+        View
+                view =
+                LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.discover_row, viewGroup, false);
 
         return new RecipeViewHolder(view, activity);
     }
@@ -83,7 +89,9 @@ public class RecipeRowArrayAdapter extends RecyclerView.Adapter<RecipeRowArrayAd
         return recipes.size();
     }
 
-    public static class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class RecipeViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener {
+
         private TextView textViewName;
         private ImageView imageView;
 
@@ -115,11 +123,11 @@ public class RecipeRowArrayAdapter extends RecyclerView.Adapter<RecipeRowArrayAd
             b.putString("item", recipeResponse.getName());
             intent.putExtras(b);
 
-            ActivityOptionsCompat options =
-                    ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
-                            v.findViewById(R.id.imageview),   // The view which starts the transition
-                            activity.getString(R.string.recipe_transition)
-                    );
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    activity, v.findViewById(R.id.imageview),
+                    // The view which starts the transition
+                    activity.getString(R.string.recipe_transition)
+            );
 
             if (options == null) {
                 v.getContext().startActivity(intent);

@@ -18,12 +18,15 @@
 
 package de.anycook.einkaufszettel.tasks;
 
-import android.content.Context;
-import android.os.AsyncTask;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import android.content.Context;
+import android.os.AsyncTask;
+
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
+
 import de.anycook.einkaufszettel.activities.StartupActivity;
 import de.anycook.einkaufszettel.model.Ingredient;
 import de.anycook.einkaufszettel.store.RecipeIngredientNameStore;
@@ -31,7 +34,6 @@ import de.anycook.einkaufszettel.store.RecipeIngredientNameStore;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -43,6 +45,7 @@ import java.util.List;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class LoadIngredientsTask extends AsyncTask<Void, Void, List<Ingredient>> {
+
     private static final Logger LOGGER = LoggerManager.getLogger();
 
     public static URL url;
@@ -72,8 +75,9 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<Ingredient>>
             }
             Reader reader = new InputStreamReader(httpURLConnection.getInputStream());
             Gson gson = new Gson();
-            Type collectionType = new TypeToken<ArrayList<Ingredient>>() { } .getType();
-            return gson.fromJson(reader, collectionType);
+            final TypeToken<ArrayList<Ingredient>> typeToken =
+                    new TypeToken<ArrayList<Ingredient>>() { };
+            return gson.fromJson(reader, typeToken.getType());
         } catch (IOException e) {
             LOGGER.e(e.getLocalizedMessage(), e);
             return Collections.emptyList();
@@ -82,12 +86,16 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<Ingredient>>
 
     @Override
     protected void onPostExecute(List<Ingredient> ingredients) {
-        if (isCancelled()) { return; }
+        if (isCancelled()) {
+            return;
+        }
 
         RecipeIngredientNameStore ingredientDatabase = new RecipeIngredientNameStore(context);
         try {
             ingredientDatabase.open();
-            for (Ingredient ingredient : ingredients) { ingredientDatabase.addIngredient(ingredient); }
+            for (Ingredient ingredient : ingredients) {
+                ingredientDatabase.addIngredient(ingredient);
+            }
         } finally {
             ingredientDatabase.close();
             callback.call(getStatus());

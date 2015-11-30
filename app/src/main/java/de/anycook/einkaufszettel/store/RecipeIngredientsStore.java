@@ -22,8 +22,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
+
 import de.anycook.einkaufszettel.model.Ingredient;
 
 import java.io.Closeable;
@@ -34,6 +36,7 @@ import java.util.List;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class RecipeIngredientsStore implements Closeable {
+
     private static final Logger LOGGER = LoggerManager.getLogger();
 
     private final Context context;
@@ -57,8 +60,10 @@ public class RecipeIngredientsStore implements Closeable {
 
     public List<Ingredient> getIngredients(String recipeName) {
         Cursor cursor = database.query(SQLiteDB.RECIPE_INGREDIENTS_TABLE,
-            new String[]{"recipeName", "ingredientName", "ingredientAmount"},
-            "recipeName = ?", new String[]{recipeName}, null, null, "orderId");
+                                       new String[]{"recipeName", "ingredientName",
+                                                    "ingredientAmount"},
+                                       "recipeName = ?", new String[]{recipeName}, null, null,
+                                       "orderId");
 
         List<Ingredient> ingredients = new LinkedList<>();
         while (cursor.moveToNext()) {
@@ -72,7 +77,8 @@ public class RecipeIngredientsStore implements Closeable {
     }
 
     public void removeIngredients(String recipeName) {
-        database.delete(SQLiteDB.RECIPE_INGREDIENTS_TABLE, "recipeName = ?", new String[]{recipeName});
+        database.delete(SQLiteDB.RECIPE_INGREDIENTS_TABLE, "recipeName = ?",
+                        new String[]{recipeName});
     }
 
     public void addIngredients(String recipeName, List<Ingredient> ingredients) {

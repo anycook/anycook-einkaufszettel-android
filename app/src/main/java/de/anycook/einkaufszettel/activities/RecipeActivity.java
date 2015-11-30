@@ -34,8 +34,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
+
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.activities.fragments.SlidingTabsColorsFragment;
 import de.anycook.einkaufszettel.adapter.RecipeIngredientRowAdapter;
@@ -54,6 +56,7 @@ import java.util.List;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class RecipeActivity extends ActionBarActivity {
+
     private static final Logger LOGGER = LoggerManager.getLogger();
 
     private RecipeResponse recipe;
@@ -147,8 +150,9 @@ public class RecipeActivity extends ActionBarActivity {
 
     private void fillViews() {
         this.recipeImageView = (ImageView) findViewById(R.id.recipe_image);
-        DownloadImageTask downloadImageTask = new DownloadImageViewTask(recipeImageView,
-                findViewById(R.id.add_ingredients_button), recipe.getName());
+        final DownloadImageTask downloadImageTask = new DownloadImageViewTask(
+                recipeImageView, findViewById(R.id.add_ingredients_button),
+                recipe.getName());
         downloadImageTask.execute(recipe.getImage().getBig());
 
         ViewCompat.setElevation(findViewById(R.id.add_ingredients_button), 12);
@@ -181,7 +185,9 @@ public class RecipeActivity extends ActionBarActivity {
             List<Ingredient> ingredients = new ArrayList<>(ingredientsCount);
             for (int i = 0; i < ingredientsCount; i++) {
                 Ingredient ingredient = ingredientRowAdapter.getMultipliedItem(i);
-                if (!ingredient.isChecked()) { continue; }
+                if (!ingredient.isChecked()) {
+                    continue;
+                }
                 ingredients.add(ingredient);
             }
             groceryItemStore.addIngredientsToGroceryList(ingredients);
@@ -190,7 +196,8 @@ public class RecipeActivity extends ActionBarActivity {
         }
     }
 
-    public static RecipeResponse getRecipe(Context context, String recipeName) throws ItemNotFoundException {
+    public static RecipeResponse getRecipe(Context context, String recipeName)
+            throws ItemNotFoundException {
         RecipeStore recipeStore = new RecipeStore(context);
         try {
             recipeStore.open();

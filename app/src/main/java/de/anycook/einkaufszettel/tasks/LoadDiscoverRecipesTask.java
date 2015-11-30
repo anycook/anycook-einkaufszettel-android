@@ -18,14 +18,17 @@
 
 package de.anycook.einkaufszettel.tasks;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.view.View;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
+
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.adapter.RecipeRowArrayAdapter;
 import de.anycook.einkaufszettel.model.RecipeResponse;
@@ -34,7 +37,6 @@ import de.anycook.einkaufszettel.util.ConnectionStatus;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -45,6 +47,7 @@ import java.util.List;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class LoadDiscoverRecipesTask extends AsyncTask<String, Void, List<RecipeResponse>> {
+
     private static final Logger LOGGER = LoggerManager.getLogger();
 
     private final RecipeRowArrayAdapter adapter;
@@ -76,8 +79,9 @@ public class LoadDiscoverRecipesTask extends AsyncTask<String, Void, List<Recipe
 
             Reader reader = new InputStreamReader(httpURLConnection.getInputStream());
             Gson gson = new Gson();
-            Type collectionType = new TypeToken<ArrayList<RecipeResponse>>() { } .getType();
-            return gson.fromJson(reader, collectionType);
+            final TypeToken<ArrayList<RecipeResponse>> typeToken =
+                    new TypeToken<ArrayList<RecipeResponse>>() { };
+            return gson.fromJson(reader, typeToken.getType());
         } catch (IOException e) {
             LOGGER.e("failed to load recipes from " + url[0], e);
             return null;
@@ -101,12 +105,13 @@ public class LoadDiscoverRecipesTask extends AsyncTask<String, Void, List<Recipe
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ConnectionStatus.showNoConnectionDialog(activity, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+                ConnectionStatus
+                        .showNoConnectionDialog(activity, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
             }
         });
     }

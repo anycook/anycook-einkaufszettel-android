@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.model.Step;
 
@@ -62,6 +63,7 @@ public class StepRowAdapter extends ArrayAdapter<Step> {
 
 
     private static class StepHolder {
+
         TextView idTextView;
         TextView textTextView;
     }

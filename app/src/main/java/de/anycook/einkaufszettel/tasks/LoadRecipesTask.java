@@ -18,13 +18,16 @@
 
 package de.anycook.einkaufszettel.tasks;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
+
 import de.anycook.einkaufszettel.activities.StartupActivity;
 import de.anycook.einkaufszettel.model.RecipeResponse;
 import de.anycook.einkaufszettel.store.RecipeStore;
@@ -43,6 +46,7 @@ import java.util.List;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>> {
+
     private static final Logger LOGGER = LoggerManager.getLogger();
 
     public static URL url;
@@ -76,14 +80,14 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
             if (sharedPreferences.contains("last-modified-recipes") && !emptyRecipes) {
-                httpURLConnection.setRequestProperty("If-Modified-Since",
-                    sharedPreferences.getString("last-modified-recipes", null));
+                final String lastModifiedRecipes =
+                        sharedPreferences.getString("last-modified-recipes", null);
+                httpURLConnection.setRequestProperty("If-Modified-Since", lastModifiedRecipes);
             }
 
             if (httpURLConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new IOException(httpURLConnection.getResponseMessage());
             }
-
 
             String newLastModified = httpURLConnection.getHeaderField("last-modified");
             if (newLastModified != null) {
@@ -94,7 +98,8 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
 
             Reader reader = new InputStreamReader(httpURLConnection.getInputStream());
             Gson gson = new Gson();
-            TypeToken<ArrayList<RecipeResponse>> typeToken = new TypeToken<ArrayList<RecipeResponse>>() { };
+            final TypeToken<ArrayList<RecipeResponse>> typeToken =
+                    new TypeToken<ArrayList<RecipeResponse>>() { };
             return gson.fromJson(reader, typeToken.getType());
         } catch (IOException e) {
             LOGGER.e("failed to load recipes from " + url, e);
@@ -104,7 +109,9 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
 
     @Override
     protected void onPostExecute(final List<RecipeResponse> recipeResponses) {
-        if (isCancelled()) { return; }
+        if (isCancelled()) {
+            return;
+        }
 
         if (recipeResponses == null || recipeResponses.size() == 0) {
             LOGGER.v("Didn't find any nearby recipes");

@@ -22,8 +22,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
+
 import de.anycook.einkaufszettel.model.RecipeResponse;
 
 import java.io.Closeable;
@@ -33,6 +35,7 @@ import java.util.List;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class RecipeStore implements Closeable {
+
     private static final Logger LOGGER = LoggerManager.getLogger();
 
     private final Context context;
@@ -55,28 +58,37 @@ public class RecipeStore implements Closeable {
     }
 
     public boolean empty() {
-        Cursor cursor = database.query(SQLiteDB.RECIPE_TABLE, new String[]{"name"}, null, null, null, null, null, "1");
+        final Cursor cursor =
+                database.query(SQLiteDB.RECIPE_TABLE, new String[]{"name"}, null, null, null, null,
+                               null, "1");
         return !cursor.moveToNext();
     }
 
     public Cursor getRecipesForQuery(String like) {
-        String query = String.format("SELECT name AS _id, description, smallImage, bigImage, persons, timeStd, " +
-            "timeMin, lastChange FROM %s WHERE _id LIKE ?", SQLiteDB.RECIPE_TABLE);
-        return database.rawQuery(query , new String[]{"%" + like + "%"});
+        final String query =
+                String.format("SELECT name AS _id, description, smallImage, bigImage, persons, "
+                              + "timeStd, timeMin, lastChange FROM %s WHERE _id LIKE ?",
+                              SQLiteDB.RECIPE_TABLE);
+        return database.rawQuery(query, new String[]{"%" + like + "%"});
     }
 
     public boolean checkRecipe(String name) {
         Cursor cursor = database.query(SQLiteDB.RECIPE_TABLE, new String[]{"name"}, "name = ?",
-            new String[]{name}, null, null, null, "1");
+                                       new String[]{name}, null, null, null, "1");
         return cursor.getCount() == 1;
     }
 
     public RecipeResponse getRecipe(String name) throws ItemNotFoundException {
         RecipeResponse recipe = new RecipeResponse();
-        String query = String.format("SELECT name AS _id, description, smallImage, bigImage, persons, timeStd, " +
-            "timeMin, category, skill, calorie, lastChange FROM %s WHERE _id = ?", SQLiteDB.RECIPE_TABLE);
+        final String query =
+                String.format(
+                        "SELECT name AS _id, description, smallImage, bigImage, persons, timeStd, "
+                        + "timeMin, category, skill, calorie, lastChange FROM %s WHERE _id = ?",
+                        SQLiteDB.RECIPE_TABLE);
         Cursor cursor = database.rawQuery(query, new String[]{name});
-        if (!cursor.moveToNext()) { throw new ItemNotFoundException(name); }
+        if (!cursor.moveToNext()) {
+            throw new ItemNotFoundException(name);
+        }
 
         recipe.setName(cursor.getString(SQLiteDB.TableFields.RECIPE_NAME));
         recipe.setDescription(cursor.getString(SQLiteDB.TableFields.RECIPE_DESCRIPTION));
@@ -103,7 +115,7 @@ public class RecipeStore implements Closeable {
 
     public int getVibrantColor(String name) {
         Cursor cursor = database.query(SQLiteDB.RECIPE_TABLE, new String[]{"vibrantColor"},
-                "name = ?", new String[]{name}, null, null, null);
+                                       "name = ?", new String[]{name}, null, null, null);
         if (cursor.moveToNext()) {
             return cursor.getInt(0);
         }
@@ -117,7 +129,6 @@ public class RecipeStore implements Closeable {
 
         database.update(SQLiteDB.RECIPE_TABLE, contentValues, "name = ?", new String[]{name});
     }
-
 
 
     public void replaceRecipes(List<RecipeResponse> recipeResponses) {
@@ -146,7 +157,8 @@ public class RecipeStore implements Closeable {
                     values.put("name", recipeResponse.getName());
                     database.insert(SQLiteDB.RECIPE_TABLE, null, values);
                 } else {
-                    database.update(SQLiteDB.RECIPE_TABLE, values, "name = ?", new String[]{recipeResponse.getName()});
+                    database.update(SQLiteDB.RECIPE_TABLE, values, "name = ?",
+                                    new String[]{recipeResponse.getName()});
                 }
             }
         } finally {

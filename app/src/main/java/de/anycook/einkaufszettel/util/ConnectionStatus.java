@@ -29,6 +29,7 @@ import android.net.NetworkInfo;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public final class ConnectionStatus {
+
     private ConnectionStatus() {
 
     }
@@ -36,7 +37,7 @@ public final class ConnectionStatus {
     public static boolean isConnected(Context context) {
         Properties properties = new Properties(context);
         ConnectivityManager cm =
-            (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
             return true;
@@ -48,7 +49,8 @@ public final class ConnectionStatus {
         return false;
     }
 
-    public static void showNoConnectionDialog(Context context, DialogInterface.OnClickListener clickListener) {
+    public static void showNoConnectionDialog(Context context,
+                                              DialogInterface.OnClickListener clickListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage("Keine Verbindung zum Internet");
         builder.setNeutralButton("OK", clickListener);

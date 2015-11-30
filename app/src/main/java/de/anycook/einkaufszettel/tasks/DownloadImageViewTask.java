@@ -24,6 +24,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.Palette;
 import android.view.View;
 import android.widget.ImageView;
+
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.store.RecipeStore;
 import de.anycook.einkaufszettel.util.ImageHelper;
@@ -32,6 +33,7 @@ import de.anycook.einkaufszettel.util.ImageHelper;
  * @author Jan Graßegger<jan@anycook.de>
  */
 public class DownloadImageViewTask extends DownloadImageTask {
+
     private final ImageView imageView;
     private final View buttonView;
     private final boolean round;
@@ -48,7 +50,8 @@ public class DownloadImageViewTask extends DownloadImageTask {
         this(imageView, buttonView, recipeName, false);
     }
 
-    public DownloadImageViewTask(ImageView imageView, View buttonView, String recipeName, boolean round) {
+    public DownloadImageViewTask(ImageView imageView, View buttonView, String recipeName,
+                                 boolean round) {
         super(imageView.getContext(), recipeName);
         this.imageView = imageView;
         this.buttonView = buttonView;

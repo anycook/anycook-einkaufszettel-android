@@ -31,7 +31,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.noveogroup.android.log.Log;
+
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.activities.RecipeActivity;
 import de.anycook.einkaufszettel.adapter.RecipeRowCursorAdapter;
@@ -56,7 +58,8 @@ public class RecipesFragment extends ListFragment implements SearchView.OnQueryT
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recipe_list, container, false);
         setHasOptionsMenu(true);
         RecipeRowCursorAdapter recipeRowCursorAdapter = new RecipeRowCursorAdapter(getActivity());
@@ -106,7 +109,9 @@ public class RecipesFragment extends ListFragment implements SearchView.OnQueryT
         Intent intent = new Intent(getActivity(), RecipeActivity.class);
 
         Bundle bundle = new Bundle();
-        String item = ((TextView) view.findViewById(R.id.textview_recipe_name)).getText().toString();
+        String
+                item =
+                ((TextView) view.findViewById(R.id.textview_recipe_name)).getText().toString();
 
         bundle.putString("item", item); //Your id
         intent.putExtras(bundle); //Put your id to your next Intent
