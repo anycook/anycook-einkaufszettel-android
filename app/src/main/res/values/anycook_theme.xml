@@ -18,7 +18,7 @@
   -->
 
 <resources>
-    <style name="Theme.AnycookTheme" parent="Theme.AppCompat.Light">
+    <style name="Theme.AnycookTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/any_white_gray</item>
         <item name="colorPrimaryDark">@color/any_green_dark</item>
         <item name="android:actionBarStyle">@style/ActionBarAnycook</item>
@@ -31,7 +31,6 @@
         <item name="android:textAppearanceLarge">@style/TextAppearanceAnycook.Large</item>
         <item name="android:editTextStyle">@style/TextAppearanceAnycook.EditText</item>
         <item name="android:activatedBackgroundIndicator">@drawable/list_activated_background</item>
-        <item name="windowActionBar">false</item>
     </style>
 
     <style name="AnycookActionBarWidgetTheme">
