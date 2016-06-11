@@ -27,6 +27,12 @@ node {
     sh './gradlew clean test'
 
     stage 'Build'
-    sh './gradlew build'
+    try {
+        sh './gradlew build'
+    } finally {
+        step([$class: 'LintPublisher'])
+        step([$class: 'CheckStylePublisher', pattern: 'app/build/reports/checkstyle/checkstyle.xml',
+              usePreviousBuildAsReference: true])
+    }
 }
 
