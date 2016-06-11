@@ -56,15 +56,6 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginRight="88dp"
                     android:layout_marginEnd="88dp"/>
-
-
-
-            <!--<include
-                    android:id="@+id/ingredient_list_include"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    layout="@layout/ingredient_list_add_people" />  -->
         </RelativeLayout>
 
         <FrameLayout

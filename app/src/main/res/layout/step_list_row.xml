@@ -28,11 +28,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/step_id"
-            style="@style/TextAppearanceAnycook.Title2"/>
+            style="@style/TextAppearanceAnycook.Strong"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/step_text"
             android:paddingLeft="10sp"
-            style="@style/TextAppearanceAnycook.Title"/>
+            style="@style/TextAppearanceAnycook"/>
 </LinearLayout>
