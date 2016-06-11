@@ -19,38 +19,43 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="de.anycook.einkaufszettel">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <application
-            android:supportsRtl="true"
-            android:allowBackup="true"
-            android:label="@string/app_name"
-            android:icon="@drawable/anycook"
-            android:logo="@drawable/anycook_transparent"
-            android:theme="@style/Theme.AnycookTheme">
-        <activity android:name=".activities.StartupActivity"
-                  android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="de.anycook.einkaufszettel.action.LOAD_DATA"/>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".activities.MainActivity"
-                  android:label="@string/app_name"
-                  android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH"/>
-            </intent-filter>
-        </activity>
-        <activity android:name=".activities.RecipeActivity"
-                  android:theme="@style/Theme.AnycookTheme.TransparentStatusBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.anycook.einkaufszettel.activities.MainActivity"/>
-        </activity>
-    </application>
+
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+  <application
+      android:supportsRtl="true"
+      android:allowBackup="true"
+      android:label="@string/app_name"
+      android:icon="@drawable/anycook"
+      android:logo="@drawable/anycook_transparent"
+      android:theme="@style/Theme.AnycookTheme">
+    <activity
+        android:name=".activities.StartupActivity"
+        android:screenOrientation="portrait">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+      <intent-filter>
+        <action android:name="de.anycook.einkaufszettel.action.LOAD_DATA"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
+    <activity
+        android:name=".activities.MainActivity"
+        android:label="@string/app_name"
+        android:screenOrientation="portrait">
+      <intent-filter>
+        <action android:name="android.intent.action.SEARCH"/>
+      </intent-filter>
+    </activity>
+    <activity
+        android:name=".activities.RecipeActivity"
+        android:theme="@style/Theme.AnycookTheme.TransparentStatusBar">
+      <meta-data
+          android:name="android.support.PARENT_ACTIVITY"
+          android:value="de.anycook.einkaufszettel.activities.MainActivity"/>
+    </activity>
+  </application>
 </manifest>

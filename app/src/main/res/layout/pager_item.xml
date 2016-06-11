@@ -23,22 +23,22 @@
               android:orientation="vertical"
               android:gravity="center">
 
-    <TextView
-            android:id="@+id/item_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/TextAppearanceAnycook.Title" />
+  <TextView
+      android:id="@+id/item_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      style="@style/TextAppearanceAnycook.Title"/>
 
-    <TextView
-            android:id="@+id/item_indicator_color"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+  <TextView
+      android:id="@+id/item_indicator_color"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-    <TextView
-            android:id="@+id/item_divider_color"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+  <TextView
+      android:id="@+id/item_divider_color"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textAppearance="?android:attr/textAppearanceLarge"/>
 
 </LinearLayout>

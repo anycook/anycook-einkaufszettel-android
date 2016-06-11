@@ -20,8 +20,9 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/ingredient_menu_open_recipe"
-          android:icon="@drawable/ic_action_web_site"
-          android:title="@string/add_ingredients"
-          app:showAsAction="ifRoom" />
+  <item
+      android:id="@+id/ingredient_menu_open_recipe"
+      android:icon="@drawable/ic_action_web_site"
+      android:title="@string/add_ingredients"
+      app:showAsAction="ifRoom"/>
 </menu>

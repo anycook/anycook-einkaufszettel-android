@@ -19,27 +19,27 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/recipe_header"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <ImageView
-            android:id="@+id/recipe_image"
-            android:layout_width="fill_parent"
-            android:layout_height="220dp"
-            android:layout_alignParentTop="true"
-            android:contentDescription="@string/recipe_image_content_description"
-            android:fitsSystemWindows="true"
-            android:scaleType="centerCrop"/>
+  <ImageView
+      android:id="@+id/recipe_image"
+      android:layout_width="fill_parent"
+      android:layout_height="220dp"
+      android:layout_alignParentTop="true"
+      android:contentDescription="@string/recipe_image_content_description"
+      android:fitsSystemWindows="true"
+      android:scaleType="centerCrop"/>
 
-    <TextView
-            android:id="@+id/recipe_title_text"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="40dp"
-            android:textAppearance="@style/TextAppearanceAnycook.Display1.Light"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/typo_gradient_background"/>
+  <TextView
+      android:id="@+id/recipe_title_text"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      android:paddingBottom="40dp"
+      android:textAppearance="@style/TextAppearanceAnycook.Display1.Light"
+      android:layout_alignParentBottom="true"
+      android:background="@drawable/typo_gradient_background"/>
 </RelativeLayout>

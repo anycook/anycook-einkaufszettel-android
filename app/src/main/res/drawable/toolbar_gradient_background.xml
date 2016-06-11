@@ -18,13 +18,13 @@
   ~ along with this program. If not, see [http://www.gnu.org/licenses/].
   -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <shape>
-            <gradient
-                android:angle="270"
-                android:startColor="#A0000000"
-                android:endColor="#00000000"
-                android:type="linear"/>
-        </shape>
-    </item>
+  <item>
+    <shape>
+      <gradient
+          android:angle="270"
+          android:startColor="#A0000000"
+          android:endColor="#00000000"
+          android:type="linear"/>
+    </shape>
+  </item>
 </selector>
