@@ -45,5 +45,5 @@ nicht markiert."
       android:key="delete_cache"
       android:layout="@layout/preference_layout"
       android:title="Lokale Daten löschen"
-      android:summary="Löscht alle lokalen Daten und lädt alle Daten erneut vom Server."/>
+      android:summary="Löscht alle lokalen Daten und lädt sie erneut vom Server."/>
 </PreferenceScreen>
