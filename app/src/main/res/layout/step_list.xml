@@ -42,6 +42,10 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:listSelector="@android:color/transparent"
+      android:layout_marginLeft="@dimen/list_side_margin"
+      android:layout_marginStart="@dimen/list_side_margin"
+      android:layout_marginRight="@dimen/list_side_margin"
+      android:layout_marginEnd="@dimen/list_side_margin"
       android:paddingTop="25sp"/>
 
 
