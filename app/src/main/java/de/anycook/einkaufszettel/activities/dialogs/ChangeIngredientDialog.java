@@ -23,6 +23,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import de.anycook.einkaufszettel.R;
@@ -51,8 +52,9 @@ public class ChangeIngredientDialog {
         builder.setTitle("Zutat und Menge ändern");
 
         final LayoutInflater inflater = activity.getLayoutInflater();
+        ViewGroup parent = (ViewGroup) activity.findViewById(R.id.grocery_list);
 
-        final View dialogView = inflater.inflate(R.layout.change_ingredient_dialog, null);
+        final View dialogView = inflater.inflate(R.layout.change_ingredient_dialog, parent, false);
         ((TextView) dialogView.findViewById(R.id.edittext_name)).setText(ingredient.getName());
         ((TextView) dialogView.findViewById(R.id.edittext_amount)).setText(ingredient.getAmount());
         builder.setView(dialogView);
@@ -74,7 +76,6 @@ public class ChangeIngredientDialog {
                         ((TextView) dialogView.findViewById(R.id.edittext_amount)).getText()
                                 .toString();
                 Ingredient newIngredient = new Ingredient();
-
                 newIngredient.setName(newName);
                 newIngredient.setAmount(newAmount);
                 newIngredient.setChecked(ingredient.isChecked());

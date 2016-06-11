@@ -88,19 +88,21 @@ public class GroceryStore implements Closeable {
 
     public Ingredient getGroceryItem(String name) throws ItemNotFoundException {
         String[] columns = new String[]{"name", "amount", "stroke"};
-        Cursor
-                cursor =
-                database.query(SQLiteDB.GROCERY_TABLE, columns, "name=?", new String[]{name},
-                               null, null, null);
-        if (cursor.moveToNext()) {
-            Ingredient item = new Ingredient();
-            item.setName(cursor.getString(SQLiteDB.TableFields.GROCERY_NAME));
-            item.setAmount(cursor.getString(SQLiteDB.TableFields.GROCERY_AMOUNT));
-            item.setChecked(cursor.getInt(SQLiteDB.TableFields.GROCERY_STROKE) > 0);
-            return item;
-        }
+        Cursor cursor = database.query(SQLiteDB.GROCERY_TABLE, columns, "name=?",
+                                       new String[]{name}, null, null, null);
+        try {
+            if (cursor.moveToNext()) {
+                Ingredient item = new Ingredient();
+                item.setName(cursor.getString(SQLiteDB.TableFields.GROCERY_NAME));
+                item.setAmount(cursor.getString(SQLiteDB.TableFields.GROCERY_AMOUNT));
+                item.setChecked(cursor.getInt(SQLiteDB.TableFields.GROCERY_STROKE) > 0);
+                return item;
+            }
 
-        throw new ItemNotFoundException(name);
+            throw new ItemNotFoundException(name);
+        } finally {
+            cursor.close();
+        }
     }
 
     public void changeStrokeVisibilityOfGroceryItem(CharSequence groceryItemName) {
@@ -141,15 +143,17 @@ public class GroceryStore implements Closeable {
     }
 
     private int getMinOrderId() {
-        Cursor
-                cursor =
-                database.query(true, SQLiteDB.GROCERY_TABLE, new String[]{"MIN(orderId)"}, null,
-                               null, null, null, null, "1");
-        if (cursor.getCount() == 0) {
-            return 100000;
+        Cursor cursor = database.query(true, SQLiteDB.GROCERY_TABLE, new String[]{"MIN(orderId)"},
+                                       null, null, null, null, null, "1");
+        try {
+            if (cursor.getCount() == 0) {
+                return 100000;
+            }
+            cursor.moveToNext();
+            return cursor.getInt(0);
+        } finally {
+            cursor.close();
         }
-        cursor.moveToNext();
-        return cursor.getInt(0);
     }
 
     public void addIngredientsToGroceryList(List<Ingredient> ingredients) {

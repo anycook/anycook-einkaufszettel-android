@@ -64,15 +64,19 @@ public class RecipeStepsStore implements Closeable {
                                        "recipeName = ?", new String[]{recipeName}, null, null,
                                        "id");
 
-        List<Step> steps = new LinkedList<>();
-        while (cursor.moveToNext()) {
-            Step step = new Step();
-            step.setId(cursor.getInt(SQLiteDB.TableFields.RECIPE_STEPS_ID));
-            step.setText(cursor.getString(SQLiteDB.TableFields.RECIPE_STEPS_TEXT));
-            steps.add(step);
-        }
+        try {
+            List<Step> steps = new LinkedList<>();
+            while (cursor.moveToNext()) {
+                Step step = new Step();
+                step.setId(cursor.getInt(SQLiteDB.TableFields.RECIPE_STEPS_ID));
+                step.setText(cursor.getString(SQLiteDB.TableFields.RECIPE_STEPS_TEXT));
+                steps.add(step);
+            }
 
-        return steps;
+            return steps;
+        } finally {
+            cursor.close();
+        }
     }
 
     public void removeSteps(String recipeName) {

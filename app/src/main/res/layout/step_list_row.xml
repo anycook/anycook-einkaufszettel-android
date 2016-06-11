@@ -35,9 +35,7 @@
       android:layout_width="wrap_content"
       android:layout_height="match_parent"
       android:id="@+id/step_text"
-      android:paddingLeft="10dp"
       android:paddingStart="10dp"
-      android:paddingRight="0dp"
       android:paddingEnd="0dp"
       style="@style/TextAppearanceAnycook"/>
 </LinearLayout>
