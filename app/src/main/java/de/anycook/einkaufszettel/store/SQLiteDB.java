@@ -40,7 +40,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
 
     static {
         DB_NAME = "einkaufszettel.db";
-        DB_VERSION = 7;
+        DB_VERSION = 8;
 
         INGREDIENT_NAME_TABLE = "Ingredient";
         GROCERY_TABLE = "GroceryList";
@@ -54,6 +54,10 @@ public class SQLiteDB extends SQLiteOpenHelper {
     public SQLiteDB(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
         this.context = context;
+    }
+
+    public void deleteDatabase() {
+        context.deleteDatabase(DB_NAME);
     }
 
 
