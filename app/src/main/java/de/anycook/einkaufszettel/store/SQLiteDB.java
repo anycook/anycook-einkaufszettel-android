@@ -56,6 +56,10 @@ public class SQLiteDB extends SQLiteOpenHelper {
         this.context = context;
     }
 
+    public void deleteDatabase() {
+        context.deleteDatabase(DB_NAME);
+    }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {

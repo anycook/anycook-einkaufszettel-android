@@ -18,10 +18,13 @@
 
 package de.anycook.einkaufszettel.activities.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import de.anycook.einkaufszettel.R;
+import de.anycook.einkaufszettel.store.SQLiteDB;
 
 /**
  * @author Jan Graßegger<jan@anycook.de>
@@ -33,5 +36,17 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.preferences);
+
+        findPreference("delete_cache").setOnPreferenceClickListener(
+                new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        SQLiteDB db = new SQLiteDB(getActivity());
+                        db.deleteDatabase();
+                        Intent intent = new Intent("de.anycook.einkaufszettel.action.LOAD_DATA");
+                        startActivity(intent);
+                        return true;
+                    }
+                });
     }
 }
