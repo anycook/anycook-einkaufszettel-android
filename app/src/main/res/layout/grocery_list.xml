@@ -54,6 +54,10 @@
       android:id="@android:id/list"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/list_side_margin"
+      android:layout_marginStart="@dimen/list_side_margin"
+      android:layout_marginRight="@dimen/list_side_margin"
+      android:layout_marginEnd="@dimen/list_side_margin"
       android:layout_below="@id/edittext_amount"/>
 
 </RelativeLayout>
