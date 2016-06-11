@@ -51,10 +51,10 @@
 
     <ListView
         android:id="@+id/ingredient_list"
-        android:layout_marginLeft="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginLeft="@dimen/list_side_margin"
+        android:layout_marginStart="@dimen/list_side_margin"
+        android:layout_marginRight="@dimen/list_side_margin"
+        android:layout_marginEnd="@dimen/list_side_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
