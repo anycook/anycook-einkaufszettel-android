@@ -36,10 +36,10 @@
       android:id="@+id/recipe_title_text"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:paddingLeft="16dp"
-      android:paddingRight="16dp"
+      android:paddingLeft="7dp"
+      android:paddingRight="7dp"
       android:paddingBottom="40dp"
-      android:textAppearance="@style/TextAppearanceAnycook.Display1.Light"
+      android:textAppearance="@style/TextAppearanceAnycook.Headline.Light"
       android:layout_alignParentBottom="true"
-      android:background="@drawable/typo_gradient_background"/>
+      android:background="#70000000"/>
 </RelativeLayout>
