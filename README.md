@@ -1,10 +1,8 @@
 anycook-einkaufszettel-android
 ===========
-[![Build Status](http://teamcity.anycook.de/app/rest/builds/buildType:(id:Anycook_Einkaufszettel_Build)/statusIcon)](http://teamcity.anycook.de/viewType.html?buildTypeId=Anycook_Einkaufszettel_Build&guest=1)
+[![Build Status](https://jenkins.gesundkrank.de/job/anycook/job/anycook-einkaufszettel-android/job/master/badge/icon)](https://jenkins.gesundkrank.de/job/anycook/job/anycook-einkaufszettel-android/job/master/)
 
 mobile grocery list for anycook
-
-![App Screenshots](https://s3-eu-west-1.amazonaws.com/images.anycook.de/miscellaneous/150215-android-screenshots.png)
 
 [![Get it on Google Play](http://developer.android.com/images/brand/en_generic_rgb_wo_45.png)](https://play.google.com/store/apps/details?id=de.anycook.einkaufszettel)
 
@@ -31,13 +29,13 @@ With the anycook Einkaufszettel (anycook shopping list) you can add ingredients 
   - Extras: Android Support Library
 
 ### Libraries (automatically installed by Gradle) 
-- [Google GSON 2.5](https://github.com/google/gson)
-- [Google Guava 18.0](https://github.com/google/guava)
-- [Android-Logger 1.3.5](http://noveogroup.github.io/android-logger/)
+- [Google GSON](https://github.com/google/gson)
+- [Google Guava](https://github.com/google/guava)
+- [Android-Logger](http://noveogroup.github.io/android-logger/)
 
 ### Test Libraries
-- [Robolectric 3.0](https://github.com/robolectric/robolectric)
-- [JUnit 4.12](http://junit.org)
+- [Robolectric](https://github.com/robolectric/robolectric)
+- [JUnit](http://junit.org)
 
 ## Development environment
 - [IntelliJ](https://www.jetbrains.com/idea/)
@@ -46,4 +44,4 @@ With the anycook Einkaufszettel (anycook shopping list) you can add ingredients 
 You have to [enable](https://www.bignerdranch.com/blog/triumph-android-studio-1-2-sneaks-in-full-testing-support/) unit testing in IntelliJ.
 
 ## Issues
-We are using [YouTrack](http://anycook.myjetbrains.com/youtrack) for issue tracking. Feel free to submit issues there.
+We are using GitHub issues for issue tracking. Feel free to add any observed issues [here](https://github.com/anycook/anycook-einkaufszettel-android/issues)
