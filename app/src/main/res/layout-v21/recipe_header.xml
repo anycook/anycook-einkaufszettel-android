@@ -26,7 +26,7 @@
   <ImageView
       android:id="@+id/imageview"
       android:layout_width="fill_parent"
-      android:layout_height="220dp"
+      android:layout_height="@dimen/recipe_header_height"
       android:layout_alignParentTop="true"
       android:contentDescription="@string/recipe_image_content_description"
       android:fitsSystemWindows="true"

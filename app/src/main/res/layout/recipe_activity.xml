@@ -31,7 +31,7 @@
     <RelativeLayout
         android:id="@+id/head_layout"
         android:layout_width="fill_parent"
-        android:layout_height="220dp"
+        android:layout_height="@dimen/recipe_header_height"
         android:orientation="vertical">
 
       <include layout="@layout/recipe_activity_header"/>
@@ -78,7 +78,7 @@
       android:layout_alignParentRight="true"
       android:layout_marginRight="16dp"
       android:layout_marginEnd="16dp"
-      android:layout_marginTop="192dp"
+      android:layout_marginTop="172dp"
       android:visibility="invisible"/>
 
 </RelativeLayout>
