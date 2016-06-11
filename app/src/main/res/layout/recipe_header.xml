@@ -37,7 +37,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:textAppearance="@style/TextAppearanceAnycook.Display1.Light"
+            android:textAppearance="@style/TextAppearanceAnycook.Headline.Light"
             android:layout_alignParentBottom="true"
             android:paddingBottom="15dp"
             android:layout_marginBottom="40dp"

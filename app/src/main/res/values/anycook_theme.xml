@@ -82,6 +82,23 @@
         <item name="android:textColor">@color/any_white_gray</item>
     </style>
 
+    <style name="TextAppearanceAnycook.Headline" parent="@style/TextAppearanceAnycook">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="TextAppearanceAnycook.Headline.Light" parent="TextAppearanceAnycook.Headline">
+        <item name="android:textColor">@color/any_white_gray</item>
+    </style>
+
+    <style name="TextAppearanceAnycook.Subheading" parent="@style/TextAppearanceAnycook">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="TextAppearanceAnycook.Subheading.Light" parent="TextAppearanceAnycook.Subheading">
+        <item name="android:textColor">@color/any_white_gray</item>
+    </style>
+
     <style name="TextAppearanceGuideText" parent="@style/TextAppearanceAnycook">
         <item name="android:textSize">30sp</item>
     </style>
