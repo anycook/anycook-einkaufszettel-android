@@ -40,7 +40,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
 
     static {
         DB_NAME = "einkaufszettel.db";
-        DB_VERSION = 7;
+        DB_VERSION = 8;
 
         INGREDIENT_NAME_TABLE = "Ingredient";
         GROCERY_TABLE = "GroceryList";
