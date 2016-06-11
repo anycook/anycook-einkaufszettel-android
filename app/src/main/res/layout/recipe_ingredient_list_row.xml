@@ -44,7 +44,7 @@
       android:layout_weight=".7"
       android:layout_height="wrap_content"
       android:textAppearance="@style/TextAppearanceAnycook.Title"
-      android:text="@string/ingredient_name"
+      android:text="@string/ingredient"
       android:layout_marginTop="6dp"/>
 
   <TextView
