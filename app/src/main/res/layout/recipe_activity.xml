@@ -68,9 +68,10 @@
   <ImageButton
       android:layout_width="56dp"
       android:layout_height="56dp"
+      android:padding="10dp"
       android:id="@+id/add_ingredients_button"
       android:onClick="onAddIngredientsClick"
-      android:src="@drawable/ic_action_new"
+      android:src="@drawable/ic_add_white_48dp"
       android:contentDescription="@string/add_ingredients"
       android:layout_alignParentTop="true"
       android:layout_alignParentEnd="true"

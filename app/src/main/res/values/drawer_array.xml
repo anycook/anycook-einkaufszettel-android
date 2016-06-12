@@ -29,11 +29,11 @@
   </string-array>
 
   <array name="menu_icons">
-    <item>@drawable/ic_action_view_as_list</item>
-    <item>@drawable/anycook_transparent_dark</item>
-    <item>@drawable/ic_action_important</item>
-    <item>@drawable/ic_action_favorite</item>
-    <item>@drawable/ic_action_web_site_dark</item>
-    <item>@drawable/ic_action_settings</item>
+    <item>@drawable/ic_receipt_grey_24dp</item>
+    <item>@drawable/anycook_grey_24dp</item>
+    <item>@drawable/ic_star_grey_24dp</item>
+    <item>@drawable/ic_favorite_grey_24dp</item>
+    <item>@drawable/ic_web_grey_24dp</item>
+    <item>@drawable/ic_settings_grey_24dp</item>
   </array>
 </resources>

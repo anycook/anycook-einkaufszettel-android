@@ -64,7 +64,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         setContentView(R.layout.main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.anycook_toolbar);
-        toolbar.setLogo(R.drawable.anycook_transparent);
+        toolbar.setLogo(R.drawable.anycook_white_48dp);
         ViewCompat.setElevation(toolbar, 8);
 
         setSupportActionBar(toolbar);

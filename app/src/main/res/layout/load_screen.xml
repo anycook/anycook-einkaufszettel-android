@@ -33,7 +33,7 @@
       android:layout_gravity="center_horizontal"
       android:layout_margin="15dp"
       android:contentDescription="@string/anycook"
-      android:src="@drawable/anycook_big"/>
+      android:src="@drawable/anycook_white_96dp"/>
 
   <TextView
       android:layout_width="wrap_content"

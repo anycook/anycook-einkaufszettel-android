@@ -22,7 +22,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
   <item
       android:id="@+id/ingredient_menu_open_recipe"
-      android:icon="@drawable/ic_action_web_site"
+      android:icon="@drawable/ic_web_white_48dp"
       android:title="@string/add_ingredients"
       app:showAsAction="ifRoom"/>
 </menu>
