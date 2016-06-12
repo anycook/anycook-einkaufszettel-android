@@ -25,10 +25,10 @@
       android:orientation="vertical"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:paddingTop="30sp"
-      android:paddingEnd="40sp"
-      android:paddingBottom="16sp"
-      android:paddingStart="16sp">
+      android:paddingTop="30dp"
+      android:paddingEnd="40dp"
+      android:paddingBottom="16dp"
+      android:paddingStart="16dp">
 
     <TextView
         style="@style/TextAppearanceAnycook"
@@ -112,5 +112,14 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/number_favorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearanceAnycook"
+        android:drawableStart="@drawable/ic_favorite_red_24dp"
+        android:drawablePadding="5dp"
+        android:layout_marginTop="5dp"/>
   </LinearLayout>
 </ScrollView>

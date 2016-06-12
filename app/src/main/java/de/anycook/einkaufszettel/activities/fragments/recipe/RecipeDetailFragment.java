@@ -35,32 +35,36 @@ import de.anycook.einkaufszettel.model.RecipeResponse;
 public class RecipeDetailFragment extends Fragment {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.recipe_details, container, false);
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.recipe_details, container, false);
 
-        RecipeResponse recipeResponse = ((RecipeActivity) getActivity()).getRecipe();
+        final RecipeResponse recipeResponse = ((RecipeActivity) getActivity()).getRecipe();
 
-        TextView recipeDescriptionView = (TextView) view.findViewById(R.id.recipe_description_text);
+        final TextView recipeDescriptionView =
+                (TextView) view.findViewById(R.id.recipe_description_text);
         recipeDescriptionView.setText(recipeResponse.getDescription());
 
-        TextView recipeTimeView = (TextView) view.findViewById(R.id.recipe_time_text);
+        final TextView recipeTimeView = (TextView) view.findViewById(R.id.recipe_time_text);
         RecipeResponse.Time time = recipeResponse.getTime();
         recipeTimeView.setText(String.format("%d:%02d h", time.getStd(), time.getMin()));
 
-        TextView categoryView = (TextView) view.findViewById(R.id.recipe_category);
+        final TextView categoryView = (TextView) view.findViewById(R.id.recipe_category);
         categoryView.setText(recipeResponse.getCategory());
 
-        TextView skillView = (TextView) view.findViewById(R.id.recipe_skill);
-        skillView.setText(Integer.toString(recipeResponse.getSkill()) + "/5");
+        final TextView skillView = (TextView) view.findViewById(R.id.recipe_skill);
+        skillView.setText(getString(R.string.ofFive, recipeResponse.getSkill()));
 
-        TextView calorieView = (TextView) view.findViewById(R.id.recipe_calorie);
-        calorieView.setText(Integer.toString(recipeResponse.getCalorie()) + "/5");
+        final TextView calorieView = (TextView) view.findViewById(R.id.recipe_calorie);
+        calorieView.setText(getString(R.string.ofFive, recipeResponse.getCalorie()));
+
+        final TextView numFavoritesView = (TextView) view.findViewById(R.id.number_favorites);
+        numFavoritesView.setText(String.format("%d", recipeResponse.getTasteNum()));
 
         return view;
     }

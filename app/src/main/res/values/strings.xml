@@ -60,5 +60,7 @@
   <string name="category">Kategorie</string>
   <string name="difficulty">Schwierigkeit</string>
   <string name="calories">Kalorien</string>
+  <string name="favorites">Favoriten</string>
+  <string name="ofFive">%s/5</string>
 </resources>
 

@@ -46,6 +46,7 @@ public class RecipeResponse implements Parcelable {
     private int skill;
     private int calorie;
     private long lastChange;
+    private int tasteNum;
 
     public RecipeResponse() {
 
@@ -70,6 +71,7 @@ public class RecipeResponse implements Parcelable {
         this.calorie = parcel.readInt();
 
         this.lastChange = parcel.readLong();
+        this.tasteNum = parcel.readInt();
     }
 
 
@@ -145,6 +147,14 @@ public class RecipeResponse implements Parcelable {
         this.lastChange = lastChange;
     }
 
+    public int getTasteNum() {
+        return tasteNum;
+    }
+
+    public void setTasteNum(int tasteNum) {
+        this.tasteNum = tasteNum;
+    }
+
     @Override
     public String toString() {
         return name;
@@ -168,6 +178,7 @@ public class RecipeResponse implements Parcelable {
         parcel.writeInt(skill);
         parcel.writeInt(calorie);
         parcel.writeLong(lastChange);
+        parcel.writeInt(tasteNum);
     }
 
     public static class Image {
