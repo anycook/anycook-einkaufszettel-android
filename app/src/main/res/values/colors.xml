@@ -32,6 +32,6 @@
   <color name="any_green">#a1bd4f</color>
   <color name="any_green_dark">#4d6605</color>
 
-  <color name="transparent_background_dark">#A0000000</color>
+  <color name="transparent_background_dark">#70000000</color>
   <color name="dark_headline">#C0000000</color>
 </resources>

@@ -41,5 +41,5 @@
       android:paddingBottom="40dp"
       android:textAppearance="@style/TextAppearanceAnycook.Headline.Light"
       android:layout_alignParentBottom="true"
-      android:background="#70000000"/>
+      android:background="@color/transparent_background_dark"/>
 </RelativeLayout>

@@ -41,5 +41,5 @@
       android:layout_alignParentBottom="true"
       android:paddingBottom="15dp"
       android:layout_marginBottom="40dp"
-      android:background="@drawable/typo_gradient_background"/>
+      android:background="@color/transparent_background_dark"/>
 </RelativeLayout>

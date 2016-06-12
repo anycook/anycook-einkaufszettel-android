@@ -42,5 +42,5 @@
       android:layout_alignParentBottom="true"
       android:paddingBottom="10dp"
       android:layout_marginBottom="40dp"
-      android:background="#70000000"/>
+      android:background="@color/transparent_background_dark"/>
 </RelativeLayout>
