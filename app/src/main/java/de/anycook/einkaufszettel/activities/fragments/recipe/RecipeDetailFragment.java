@@ -57,10 +57,10 @@ public class RecipeDetailFragment extends Fragment {
         categoryView.setText(recipeResponse.getCategory());
 
         TextView skillView = (TextView) view.findViewById(R.id.recipe_skill);
-        skillView.setText(Integer.toString(recipeResponse.getSkill()) + "/5");
+        skillView.setText(getString(R.string.ofFive, recipeResponse.getSkill()));
 
         TextView calorieView = (TextView) view.findViewById(R.id.recipe_calorie);
-        calorieView.setText(Integer.toString(recipeResponse.getCalorie()) + "/5");
+        calorieView.setText(getString(R.string.ofFive, recipeResponse.getCalorie()));
 
         return view;
     }
