@@ -25,7 +25,6 @@
 
   <color name="any_gray_shaddow">#878787</color>
   <color name="any_gray_dark">#5a5a5a</color>
-  <color name="any_gray_dark_font_color">#404040</color>
 
   <color name="any_green_light">@color/any_green_active_button_background</color>
   <color name="any_green_active_button_background">#d7e8b5</color>

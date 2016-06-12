@@ -27,7 +27,8 @@
   <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="@string/ingredient"/>
+      android:text="@string/ingredient"
+      android:labelFor="@+id/edittext_name"/>
 
   <EditText
       android:id="@+id/edittext_name"
@@ -39,7 +40,8 @@
   <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="@string/ingredient_amount"/>
+      android:text="@string/ingredient_amount"
+      android:labelFor="@+id/edittext_amount"/>
 
   <EditText
       android:id="@+id/edittext_amount"
