@@ -63,6 +63,9 @@ public class RecipeDetailFragment extends Fragment {
         final TextView calorieView = (TextView) view.findViewById(R.id.recipe_calorie);
         calorieView.setText(getString(R.string.ofFive, recipeResponse.getCalorie()));
 
+        final TextView numFavoritesView = (TextView) view.findViewById(R.id.number_favorites);
+        numFavoritesView.setText(String.format("%d", recipeResponse.getTasteNum()));
+
         return view;
     }
 }
