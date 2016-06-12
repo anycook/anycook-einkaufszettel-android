@@ -76,10 +76,12 @@ public class RecipeIngredientListFragment extends Fragment
         EditText personsEditText = (EditText) view.findViewById(R.id.edittext_persons);
         personsEditText.setText(Integer.toString(recipe.getPersons()));
 
-        LoadRecipeIngredientsTask loadRecipeIngredientsTask =
-                new LoadRecipeIngredientsTask(recipeActivity.getIngredientRowAdapter(), view,
-                                              recipeActivity);
-        loadRecipeIngredientsTask.execute(recipe.getName());
+        if (recipeActivity.getIngredientRowAdapter().isEmpty()) {
+            LoadRecipeIngredientsTask loadRecipeIngredientsTask =
+                    new LoadRecipeIngredientsTask(recipeActivity.getIngredientRowAdapter(), view,
+                                                  recipeActivity);
+            loadRecipeIngredientsTask.execute(recipe.getName());
+        }
 
         view.findViewById(R.id.edittext_persons).setOnClickListener(this);
 
