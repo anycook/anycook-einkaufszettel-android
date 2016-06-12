@@ -83,6 +83,7 @@ public class RecipeRowArrayAdapter
 
         private final TextView textViewName;
         private final TextView textViewDescription;
+        private final TextView textViewNumFavorites;
         private final ImageView imageView;
 
         private RecipeResponse recipeResponse;
@@ -93,6 +94,7 @@ public class RecipeRowArrayAdapter
 
             this.textViewName = (TextView) view.findViewById(R.id.textview_title);
             this.textViewDescription = (TextView) view.findViewById(R.id.description);
+            this.textViewNumFavorites = (TextView) view.findViewById(R.id.number_favorites);
             this.imageView = (ImageView) view.findViewById(R.id.imageview);
 
             this.activity = activity;
@@ -102,7 +104,8 @@ public class RecipeRowArrayAdapter
             this.recipeResponse = recipeResponse;
 
             textViewName.setText(recipeResponse.getName());
-            textViewDescription.setText(recipeResponse.getDescription());
+            textViewDescription.setText(recipeResponse.getDescription().trim());
+            textViewNumFavorites.setText(String.format("%d", recipeResponse.getTasteNum()));
             new DownloadImageViewTask(imageView).execute(recipeResponse.getImage().getBig());
         }
 

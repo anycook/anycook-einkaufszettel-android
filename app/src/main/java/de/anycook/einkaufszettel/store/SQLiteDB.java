@@ -40,7 +40,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
 
     static {
         DB_NAME = "einkaufszettel.db";
-        DB_VERSION = 8;
+        DB_VERSION = 9;
 
         INGREDIENT_NAME_TABLE = "Ingredient";
         GROCERY_TABLE = "GroceryList";
@@ -90,8 +90,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
         createRecipeIngredientsTable(db);
         createRecipeStepsTable(db);
 
-        SharedPreferences
-                sharedPrefs =
+        SharedPreferences sharedPrefs =
                 context.getSharedPreferences("update_data", Context.MODE_PRIVATE);
         sharedPrefs.edit().putLong("last_update", 0).putString("last-modified-recipes", null)
                 .commit();
@@ -123,6 +122,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
                                  + "category VARCHAR(45),"
                                  + "skill INTEGER,"
                                  + "calorie INTEGER,"
+                                 + "tasteNum INTEGER,"
                                  + "vibrantColor INTEGER DEFAULT -1,"
                                  + "lastChange INTEGER);", RECIPE_TABLE));
     }
@@ -161,8 +161,9 @@ public class SQLiteDB extends SQLiteOpenHelper {
                 RECIPE_CATEGORY = 7,
                 RECIPE_SKILL = 8,
                 RECIPE_CALORIE = 9,
-                RECIPE_LAST_CHANGE = 10,
-                RECIPE_VIBRANT_COLOR = 11;
+                RECIPE_TASTE_NUM = 10,
+                RECIPE_LAST_CHANGE = 11,
+                RECIPE_VIBRANT_COLOR = 12;
         public static final int RECIPE_INGREDIENTS_RECIPE_NAME = 0,
                 RECIPE_INGREDIENTS_NAME = 1,
                 RECIPE_INGREDIENTS_AMOUNT = 2;

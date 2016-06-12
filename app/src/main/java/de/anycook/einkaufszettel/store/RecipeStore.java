@@ -85,14 +85,13 @@ public class RecipeStore implements Closeable {
         }
     }
 
-    public RecipeResponse getRecipe(String name) throws ItemNotFoundException {
-        RecipeResponse recipe = new RecipeResponse();
-        final String query =
-                String.format(
-                        "SELECT name AS _id, description, smallImage, bigImage, persons, timeStd, "
-                        + "timeMin, category, skill, calorie, lastChange FROM %s WHERE _id = ?",
-                        SQLiteDB.RECIPE_TABLE);
-        Cursor cursor = database.rawQuery(query, new String[]{name});
+    public RecipeResponse getRecipe(final String name) throws ItemNotFoundException {
+        final RecipeResponse recipe = new RecipeResponse();
+        final String query = String.format(
+                "SELECT name AS _id, description, smallImage, bigImage, persons, timeStd, "
+                + "timeMin, category, skill, calorie, tasteNum, lastChange FROM %s WHERE _id = ?",
+                SQLiteDB.RECIPE_TABLE);
+        final Cursor cursor = database.rawQuery(query, new String[]{name});
 
         try {
             if (!cursor.moveToNext()) {
@@ -103,12 +102,12 @@ public class RecipeStore implements Closeable {
             recipe.setDescription(cursor.getString(SQLiteDB.TableFields.RECIPE_DESCRIPTION));
             recipe.setPersons(cursor.getInt(SQLiteDB.TableFields.RECIPE_PERSONS));
 
-            RecipeResponse.Image image = new RecipeResponse.Image();
+            final RecipeResponse.Image image = new RecipeResponse.Image();
             image.setSmall(cursor.getString(SQLiteDB.TableFields.RECIPE_IMAGE_SMALL));
             image.setBig(cursor.getString(SQLiteDB.TableFields.RECIPE_IMAGE_BIG));
             recipe.setImage(image);
 
-            RecipeResponse.Time time = new RecipeResponse.Time();
+            final RecipeResponse.Time time = new RecipeResponse.Time();
             time.setStd(cursor.getInt(SQLiteDB.TableFields.RECIPE_TIME_STD));
             time.setMin(cursor.getInt(SQLiteDB.TableFields.RECIPE_TIME_MIN));
             recipe.setTime(time);
@@ -116,6 +115,7 @@ public class RecipeStore implements Closeable {
             recipe.setCategory(cursor.getString(SQLiteDB.TableFields.RECIPE_CATEGORY));
             recipe.setSkill(cursor.getInt(SQLiteDB.TableFields.RECIPE_SKILL));
             recipe.setCalorie(cursor.getInt(SQLiteDB.TableFields.RECIPE_CALORIE));
+            recipe.setTasteNum(cursor.getInt(SQLiteDB.TableFields.RECIPE_TASTE_NUM));
 
             recipe.setLastChange(cursor.getLong(SQLiteDB.TableFields.RECIPE_LAST_CHANGE));
 
@@ -167,6 +167,7 @@ public class RecipeStore implements Closeable {
                 values.put("category", recipeResponse.getCategory());
                 values.put("skill", recipeResponse.getSkill());
                 values.put("calorie", recipeResponse.getCalorie());
+                values.put("tasteNum", recipeResponse.getTasteNum());
                 values.put("lastChange", recipeResponse.getLastChange());
 
                 if (!checkRecipe(recipeResponse.getName())) {
