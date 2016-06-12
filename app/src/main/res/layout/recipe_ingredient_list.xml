@@ -23,34 +23,40 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
 
-    <include
-            android:id="@+id/ingredient_list_include"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/recipe_ingredient_list_add_people" />
+  <include
+      android:id="@+id/ingredient_list_include"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      layout="@layout/recipe_ingredient_list_add_people"/>
 
-    <RelativeLayout android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Theme.AnycookTheme">
-        <LinearLayout
-                android:id="@+id/progress"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone">
+  <RelativeLayout
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      style="@style/Theme.AnycookTheme">
 
-            <ProgressBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-            </ProgressBar>
-        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/progress"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <ListView
-                android:id="@+id/ingredient_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+      <ProgressBar
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content">
+      </ProgressBar>
+    </LinearLayout>
 
-    </RelativeLayout>
+    <ListView
+        android:id="@+id/ingredient_list"
+        android:layout_marginLeft="@dimen/list_side_margin"
+        android:layout_marginStart="@dimen/list_side_margin"
+        android:layout_marginRight="@dimen/list_side_margin"
+        android:layout_marginEnd="@dimen/list_side_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+  </RelativeLayout>
 </LinearLayout>

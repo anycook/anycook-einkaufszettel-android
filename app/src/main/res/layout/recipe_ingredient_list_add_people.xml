@@ -19,48 +19,44 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="6dp"
-        android:paddingLeft="6dp"
-        android:paddingEnd="0dp"
-        android:paddingRight="0dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="6dp"
+                android:paddingEnd="0dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
 
-    <TextView
-            android:id="@+id/textview_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
-            android:paddingTop="10dp"
-            android:text="@string/ingredients_for"
-            style="@style/GuideTextAnycook"/>
+  <TextView
+      android:id="@+id/textview_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="4dp"
+      android:paddingTop="10dp"
+      android:text="@string/ingredients_for"
+      android:labelFor="@+id/edittext_persons"
+      style="@style/GuideTextAnycook"/>
 
-    <EditText
-            android:id="@+id/edittext_persons"
-            android:layout_width="44dp"
-            android:maxLength="2"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/textview_label"
-            android:layout_toRightOf="@id/textview_label"
-            android:focusable="false"
-            android:inputType="number"/>
+  <EditText
+      android:id="@+id/edittext_persons"
+      android:layout_width="44dp"
+      android:maxLength="2"
+      android:gravity="end"
+      android:layout_height="wrap_content"
+      android:layout_toEndOf="@id/textview_label"
+      android:focusable="false"
+      android:inputType="number"/>
 
-    <TextView
-            android:id="@+id/textview_persons_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/edittext_persons"
-            android:layout_toRightOf="@id/edittext_persons"
-            android:layout_alignBottom="@+id/textview_label"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
-            android:paddingTop="4dp"
-            android:text="@string/persons"
-            style="@style/GuideTextAnycook"
-            />
+  <TextView
+      android:id="@+id/textview_persons_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_toEndOf="@id/edittext_persons"
+      android:layout_alignBottom="@+id/textview_label"
+      android:layout_marginStart="4dp"
+      android:paddingTop="4dp"
+      android:text="@string/persons"
+      style="@style/GuideTextAnycook"
+      />
 
 </RelativeLayout>

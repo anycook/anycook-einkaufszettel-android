@@ -21,18 +21,21 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:paddingTop="5sp"
-              android:paddingLeft="8sp"
-              android:paddingRight="8sp"
+              android:paddingLeft="2sp"
+              android:paddingRight="2sp"
               android:paddingBottom="5sp">
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/step_id"
-            style="@style/TextAppearanceAnycook.Title2"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/step_text"
-            android:paddingLeft="10sp"
-            style="@style/TextAppearanceAnycook.Title"/>
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:id="@+id/step_id"
+      style="@style/TextAppearanceAnycook.Strong"/>
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:id="@+id/step_text"
+      android:paddingStart="10dp"
+      android:paddingEnd="0dp"
+      style="@style/TextAppearanceAnycook"/>
 </LinearLayout>

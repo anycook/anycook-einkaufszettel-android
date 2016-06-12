@@ -64,11 +64,14 @@ public class RecipeIngredientNameStore implements Closeable {
     }
 
     public boolean ingredientExists(String name) {
-        Cursor
-                cursor =
-                database.query(SQLiteDB.INGREDIENT_NAME_TABLE, new String[]{"name"}, "name=?",
-                               new String[]{name}, null, null, null);
-        return cursor.getCount() > 0;
+        Cursor cursor = database.query(SQLiteDB.INGREDIENT_NAME_TABLE,
+                                       new String[]{"name"}, "name=?", new String[]{name},
+                                       null, null, null);
+        try {
+            return cursor.getCount() > 0;
+        } finally {
+            cursor.close();
+        }
     }
 
     public Cursor autocompleteIngredients(CharSequence constraint) {

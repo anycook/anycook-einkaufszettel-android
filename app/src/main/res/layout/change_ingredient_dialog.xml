@@ -24,26 +24,31 @@
               android:longClickable="true"
               android:padding="25dp">
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ingredient_name"/>
-    <EditText
-            android:id="@+id/edittext_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:gravity="start"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ingredient_amount"/>
-    <EditText
-            android:id="@+id/edittext_amount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:gravity="start"
-            />
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/ingredient"
+      android:labelFor="@+id/edittext_name"/>
+
+  <EditText
+      android:id="@+id/edittext_name"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:inputType="text"
+      android:gravity="start"/>
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/ingredient_amount"
+      android:labelFor="@+id/edittext_amount"/>
+
+  <EditText
+      android:id="@+id/edittext_amount"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:inputType="text"
+      android:gravity="start"
+      />
 
 </LinearLayout>

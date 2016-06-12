@@ -55,7 +55,7 @@ public class RecipeIngredientRowAdapter extends ArrayAdapter<Ingredient> {
             holder = new IngredientHolder();
             holder.nameTextView = (TextView) convertView.findViewById(R.id.textview_name);
             holder.amountTextView = (TextView) convertView.findViewById(R.id.textview_amount);
-            holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
+            holder.checkBox = (CheckBox) convertView.findViewById(R.id.ingredient_checkbox);
             convertView.setTag(holder);
         } else {
             holder = (IngredientHolder) convertView.getTag();

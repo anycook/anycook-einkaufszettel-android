@@ -20,11 +20,13 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/recipe_menu_search"
-          android:title="@string/search"
-          android:icon="@drawable/ic_action_search"
-          app:actionViewClass="android.support.v7.widget.SearchView"
-          app:showAsAction="ifRoom" />
-    <item android:id="@+id/recipe_menu_reload_db"
-          android:title="@string/reload_database"/>
+  <item
+      android:id="@+id/recipe_menu_search"
+      android:title="@string/search"
+      android:icon="@drawable/ic_search_white_48dp"
+      app:actionViewClass="android.support.v7.widget.SearchView"
+      app:showAsAction="ifRoom"/>
+  <item
+      android:id="@+id/recipe_menu_reload_db"
+      android:title="@string/reload_database"/>
 </menu>

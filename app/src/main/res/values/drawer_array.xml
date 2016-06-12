@@ -19,21 +19,21 @@
 
 <resources>
 
-    <string-array name="menu_names">
-        <item>Einkaufszettel</item>
-        <item>Rezepte</item>
-        <item>neueste Rezepte</item>
-        <item>leckerste Rezepte</item>
-        <item>Website</item>
-        <item>Einstellungen</item>
-    </string-array>
+  <string-array name="menu_names">
+    <item>Einkaufszettel</item>
+    <item>Rezepte</item>
+    <item>neueste Rezepte</item>
+    <item>leckerste Rezepte</item>
+    <item>Website</item>
+    <item>Einstellungen</item>
+  </string-array>
 
-    <array name="menu_icons">
-        <item>@drawable/ic_action_view_as_list</item>
-        <item>@drawable/anycook_transparent_dark</item>
-        <item>@drawable/ic_action_important</item>
-        <item>@drawable/ic_action_favorite</item>
-        <item>@drawable/ic_action_web_site_dark</item>
-        <item>@drawable/ic_action_settings</item>
-    </array>
+  <array name="menu_icons">
+    <item>@drawable/ic_receipt_grey_24dp</item>
+    <item>@drawable/anycook_grey_24dp</item>
+    <item>@drawable/ic_star_grey_24dp</item>
+    <item>@drawable/ic_favorite_grey_24dp</item>
+    <item>@drawable/ic_web_grey_24dp</item>
+    <item>@drawable/ic_settings_grey_24dp</item>
+  </array>
 </resources>

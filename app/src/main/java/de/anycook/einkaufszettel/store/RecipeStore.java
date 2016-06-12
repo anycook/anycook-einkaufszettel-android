@@ -58,10 +58,13 @@ public class RecipeStore implements Closeable {
     }
 
     public boolean empty() {
-        final Cursor cursor =
-                database.query(SQLiteDB.RECIPE_TABLE, new String[]{"name"}, null, null, null, null,
-                               null, "1");
-        return !cursor.moveToNext();
+        final Cursor cursor = database.query(SQLiteDB.RECIPE_TABLE, new String[]{"name"}, null,
+                                             null, null, null, null, "1");
+        try {
+            return !cursor.moveToNext();
+        } finally {
+            cursor.close();
+        }
     }
 
     public Cursor getRecipesForQuery(String like) {
@@ -72,10 +75,14 @@ public class RecipeStore implements Closeable {
         return database.rawQuery(query, new String[]{"%" + like + "%"});
     }
 
-    public boolean checkRecipe(String name) {
+    private boolean checkRecipe(String name) {
         Cursor cursor = database.query(SQLiteDB.RECIPE_TABLE, new String[]{"name"}, "name = ?",
                                        new String[]{name}, null, null, null, "1");
-        return cursor.getCount() == 1;
+        try {
+            return cursor.getCount() == 1;
+        } finally {
+            cursor.close();
+        }
     }
 
     public RecipeResponse getRecipe(String name) throws ItemNotFoundException {
@@ -86,41 +93,50 @@ public class RecipeStore implements Closeable {
                         + "timeMin, category, skill, calorie, lastChange FROM %s WHERE _id = ?",
                         SQLiteDB.RECIPE_TABLE);
         Cursor cursor = database.rawQuery(query, new String[]{name});
-        if (!cursor.moveToNext()) {
-            throw new ItemNotFoundException(name);
+
+        try {
+            if (!cursor.moveToNext()) {
+                throw new ItemNotFoundException(name);
+            }
+
+            recipe.setName(cursor.getString(SQLiteDB.TableFields.RECIPE_NAME));
+            recipe.setDescription(cursor.getString(SQLiteDB.TableFields.RECIPE_DESCRIPTION));
+            recipe.setPersons(cursor.getInt(SQLiteDB.TableFields.RECIPE_PERSONS));
+
+            RecipeResponse.Image image = new RecipeResponse.Image();
+            image.setSmall(cursor.getString(SQLiteDB.TableFields.RECIPE_IMAGE_SMALL));
+            image.setBig(cursor.getString(SQLiteDB.TableFields.RECIPE_IMAGE_BIG));
+            recipe.setImage(image);
+
+            RecipeResponse.Time time = new RecipeResponse.Time();
+            time.setStd(cursor.getInt(SQLiteDB.TableFields.RECIPE_TIME_STD));
+            time.setMin(cursor.getInt(SQLiteDB.TableFields.RECIPE_TIME_MIN));
+            recipe.setTime(time);
+
+            recipe.setCategory(cursor.getString(SQLiteDB.TableFields.RECIPE_CATEGORY));
+            recipe.setSkill(cursor.getInt(SQLiteDB.TableFields.RECIPE_SKILL));
+            recipe.setCalorie(cursor.getInt(SQLiteDB.TableFields.RECIPE_CALORIE));
+
+            recipe.setLastChange(cursor.getLong(SQLiteDB.TableFields.RECIPE_LAST_CHANGE));
+
+            return recipe;
+        } finally {
+            cursor.close();
         }
-
-        recipe.setName(cursor.getString(SQLiteDB.TableFields.RECIPE_NAME));
-        recipe.setDescription(cursor.getString(SQLiteDB.TableFields.RECIPE_DESCRIPTION));
-        recipe.setPersons(cursor.getInt(SQLiteDB.TableFields.RECIPE_PERSONS));
-
-        RecipeResponse.Image image = new RecipeResponse.Image();
-        image.setSmall(cursor.getString(SQLiteDB.TableFields.RECIPE_IMAGE_SMALL));
-        image.setBig(cursor.getString(SQLiteDB.TableFields.RECIPE_IMAGE_BIG));
-        recipe.setImage(image);
-
-        RecipeResponse.Time time = new RecipeResponse.Time();
-        time.setStd(cursor.getInt(SQLiteDB.TableFields.RECIPE_TIME_STD));
-        time.setMin(cursor.getInt(SQLiteDB.TableFields.RECIPE_TIME_MIN));
-        recipe.setTime(time);
-
-        recipe.setCategory(cursor.getString(SQLiteDB.TableFields.RECIPE_CATEGORY));
-        recipe.setSkill(cursor.getInt(SQLiteDB.TableFields.RECIPE_SKILL));
-        recipe.setCalorie(cursor.getInt(SQLiteDB.TableFields.RECIPE_CALORIE));
-
-        recipe.setLastChange(cursor.getLong(SQLiteDB.TableFields.RECIPE_LAST_CHANGE));
-
-        return recipe;
     }
 
     public int getVibrantColor(String name) {
         Cursor cursor = database.query(SQLiteDB.RECIPE_TABLE, new String[]{"vibrantColor"},
                                        "name = ?", new String[]{name}, null, null, null);
-        if (cursor.moveToNext()) {
-            return cursor.getInt(0);
-        }
+        try {
+            if (cursor.moveToNext()) {
+                return cursor.getInt(0);
+            }
 
-        return -1;
+            return -1;
+        } finally {
+            cursor.close();
+        }
     }
 
     public void putVibrantColor(String name, int color) {

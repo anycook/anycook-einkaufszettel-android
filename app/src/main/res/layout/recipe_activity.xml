@@ -18,74 +18,60 @@
   -->
 
 <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/sample_main_layout">
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/head_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/recipe_header_height"
+        android:orientation="vertical">
+
+      <include layout="@layout/recipe_activity_header"/>
+
+      <android.support.v7.widget.Toolbar
+          xmlns:app="http://schemas.android.com/apk/res-auto"
+          android:id="@+id/anycook_toolbar"
+          android:layout_height="wrap_content"
+          android:layout_width="match_parent"
+          android:minHeight="?attr/actionBarSize"
+          app:theme="@style/ActionBarAnycook.Translucent"
+          android:layout_alignParentTop="true"/>
+
+      <de.anycook.einkaufszettel.view.SlidingTabLayout
+          android:id="@+id/sliding_tabs"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignParentBottom="true"
+          android:layout_marginEnd="80dp"/>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/recipe_content_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/sample_main_layout">
+        android:layout_height="0px"
+        android:layout_weight="2"/>
+  </LinearLayout>
 
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-        <RelativeLayout
-                android:id="@+id/head_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="220dp"
-                android:orientation="vertical">
-
-            <include layout="@layout/recipe_activity_header"/>
-
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/toolbar_gradient_background"/>
-
-            <android.support.v7.widget.Toolbar
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/anycook_toolbar"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:minHeight="?attr/actionBarSize"
-                    app:theme="@style/ActionBarAnycook.Translucent"
-                    android:layout_alignParentTop="true"/>
-
-            <de.anycook.einkaufszettel.view.SlidingTabLayout
-                    android:id="@+id/sliding_tabs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginRight="88dp"
-                    android:layout_marginEnd="88dp"/>
-
-
-
-            <!--<include
-                    android:id="@+id/ingredient_list_include"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    layout="@layout/ingredient_list_add_people" />  -->
-        </RelativeLayout>
-
-        <FrameLayout
-                android:id="@+id/recipe_content_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="0px"
-                android:layout_weight="2"/>
-    </LinearLayout>
-
-    <ImageButton android:layout_width="56dp"
-                 android:layout_height="56dp"
-                 android:id="@+id/add_ingredients_button"
-                 android:onClick="onAddIngredientsClick"
-                 android:src="@drawable/ic_action_new"
-                 android:contentDescription="@string/add_ingredients"
-                 android:layout_alignParentTop="true"
-                 android:layout_alignParentEnd="true"
-                 android:layout_alignParentRight="true"
-                 android:layout_marginRight="16dp"
-                 android:layout_marginEnd="16dp"
-                 android:layout_marginTop="192dp"
-                 android:visibility="invisible"/>
+  <ImageButton
+      android:layout_width="56dp"
+      android:layout_height="56dp"
+      android:padding="10dp"
+      android:id="@+id/add_ingredients_button"
+      android:onClick="onAddIngredientsClick"
+      android:src="@drawable/ic_add_white_48dp"
+      android:contentDescription="@string/add_ingredients"
+      android:layout_alignParentTop="true"
+      android:layout_alignParentEnd="true"
+      android:layout_marginEnd="16dp"
+      android:layout_marginTop="172dp"
+      android:visibility="invisible"/>
 
 </RelativeLayout>

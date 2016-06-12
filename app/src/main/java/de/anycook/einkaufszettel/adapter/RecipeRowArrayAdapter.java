@@ -93,6 +93,7 @@ public class RecipeRowArrayAdapter
             implements View.OnClickListener {
 
         private TextView textViewName;
+        private TextView textViewDescription;
         private ImageView imageView;
 
         private RecipeResponse recipeResponse;
@@ -103,6 +104,8 @@ public class RecipeRowArrayAdapter
             view.setOnClickListener(this);
 
             textViewName = (TextView) view.findViewById(R.id.textview_title);
+            textViewDescription = (TextView) view.findViewById(R.id.description);
+
             imageView = (ImageView) view.findViewById(R.id.imageview);
 
             this.activity = activity;
@@ -112,7 +115,7 @@ public class RecipeRowArrayAdapter
             this.recipeResponse = recipeResponse;
 
             textViewName.setText(recipeResponse.getName());
-            //textViewDescription.setText(recipeResponse.getDescription());
+            textViewDescription.setText(recipeResponse.getDescription());
             new DownloadImageViewTask(imageView).execute(recipeResponse.getImage().getBig());
         }
 

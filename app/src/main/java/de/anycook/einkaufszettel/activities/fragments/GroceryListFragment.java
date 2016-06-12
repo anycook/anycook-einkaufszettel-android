@@ -146,7 +146,7 @@ public class GroceryListFragment extends ListFragment
         menuInflater.inflate(R.menu.grocery_menu, menu);
 
         if (!isGroceryItemStroked()) {
-            menu.getItem(0).setIcon(R.drawable.ic_action_discard);
+            menu.getItem(0).setIcon(R.drawable.ic_delete_white_48dp);
         }
 
         super.onCreateOptionsMenu(menu, menuInflater);

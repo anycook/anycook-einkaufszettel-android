@@ -18,31 +18,35 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Theme.AnycookTheme">
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              style="@style/Theme.AnycookTheme">
 
-    <LinearLayout
-            android:id="@id/android:empty"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:orientation="vertical">
+  <LinearLayout
+      android:id="@id/android:empty"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:gravity="center"
+      android:orientation="vertical">
 
-        <ProgressBar
-                android:id="@+id/pbHeaderProgress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-        </ProgressBar>
-    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/pbHeaderProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </ProgressBar>
+  </LinearLayout>
 
-    <ListView
-            android:id="@id/android:list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:listSelector="@android:color/transparent"
-            android:paddingTop="25sp"/>
+  <ListView
+      android:id="@id/android:list"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:listSelector="@android:color/transparent"
+      android:layout_marginLeft="@dimen/list_side_margin"
+      android:layout_marginStart="@dimen/list_side_margin"
+      android:layout_marginRight="@dimen/list_side_margin"
+      android:layout_marginEnd="@dimen/list_side_margin"
+      android:paddingTop="25sp"/>
 
 
 </LinearLayout>

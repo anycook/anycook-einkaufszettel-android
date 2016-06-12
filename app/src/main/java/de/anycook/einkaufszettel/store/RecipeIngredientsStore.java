@@ -65,15 +65,20 @@ public class RecipeIngredientsStore implements Closeable {
                                        "recipeName = ?", new String[]{recipeName}, null, null,
                                        "orderId");
 
-        List<Ingredient> ingredients = new LinkedList<>();
-        while (cursor.moveToNext()) {
-            Ingredient ingredient = new Ingredient();
-            ingredient.setName(cursor.getString(SQLiteDB.TableFields.RECIPE_INGREDIENTS_NAME));
-            ingredient.setAmount(cursor.getString(SQLiteDB.TableFields.RECIPE_INGREDIENTS_AMOUNT));
-            ingredients.add(ingredient);
-        }
+        try {
+            List<Ingredient> ingredients = new LinkedList<>();
+            while (cursor.moveToNext()) {
+                Ingredient ingredient = new Ingredient();
+                ingredient.setName(cursor.getString(SQLiteDB.TableFields.RECIPE_INGREDIENTS_NAME));
+                ingredient.setAmount(
+                        cursor.getString(SQLiteDB.TableFields.RECIPE_INGREDIENTS_AMOUNT));
+                ingredients.add(ingredient);
+            }
 
-        return ingredients;
+            return ingredients;
+        } finally {
+            cursor.close();
+        }
     }
 
     public void removeIngredients(String recipeName) {

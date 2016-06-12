@@ -22,36 +22,37 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp">
-    <TextView
-            android:id="@+id/textview_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:gravity="end"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textStyle="italic"
-            style="@style/TextAppearanceAnycook.Title"/>
-    <TextView
-            android:id="@+id/textview_grocery"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:layout_toStartOf="@id/textview_amount"
-            android:layout_toLeftOf="@id/textview_amount"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textStyle="italic"
-            style="@style/TextAppearanceAnycook.Title"/>
-    <View
-            android:id="@+id/view_stroke"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@color/any_gray_dark"
-            android:layout_marginTop="16dp"/>
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
+
+  <TextView
+      android:id="@+id/textview_amount"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentEnd="true"
+      android:gravity="end"
+      android:maxLines="1"
+      android:singleLine="true"
+      android:textStyle="italic"
+      style="@style/TextAppearanceAnycook"/>
+
+  <TextView
+      android:id="@+id/textview_grocery"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:gravity="start"
+      android:layout_toStartOf="@id/textview_amount"
+      android:maxLines="1"
+      android:singleLine="true"
+      android:textStyle="italic"
+      style="@style/TextAppearanceAnycook"/>
+
+  <View
+      android:id="@+id/view_stroke"
+      android:layout_width="fill_parent"
+      android:layout_height="1dp"
+      android:background="@color/any_gray_dark"
+      android:layout_marginTop="12dp"/>
 </RelativeLayout>

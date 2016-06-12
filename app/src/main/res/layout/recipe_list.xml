@@ -19,42 +19,42 @@
   -->
 
 <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".RecipeSearch">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RecipeSearch">
 
-    <LinearLayout
-            android:id="@android:id/empty"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
+  <LinearLayout
+      android:id="@android:id/empty"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:visibility="gone">
 
-        <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-        </ProgressBar>
-    </LinearLayout>
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </ProgressBar>
+  </LinearLayout>
 
-    <ListView
-            android:id="@android:id/list"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:divider="@drawable/list_divider"
-            android:dividerHeight="1px"
-            android:scrollbars="vertical">
-    </ListView>
+  <ListView
+      android:id="@android:id/list"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:divider="@drawable/list_divider"
+      android:dividerHeight="1px"
+      android:scrollbars="vertical">
+  </ListView>
 
-    <TextView
-            android:id="@+id/recipe_list_textview_nothing_found"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/nothing_found"
-            android:layout_centerHorizontal="true"
-            android:padding="16dp"
-            android:visibility="gone"/>
+  <TextView
+      android:id="@+id/recipe_list_textview_nothing_found"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/nothing_found"
+      android:layout_centerHorizontal="true"
+      android:padding="16dp"
+      android:visibility="gone"/>
 
 </RelativeLayout>

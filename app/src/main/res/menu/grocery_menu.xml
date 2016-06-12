@@ -20,12 +20,14 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/grocery_menu_action_clear"
-          android:icon="@drawable/ic_action_accept"
-          android:title="@string/clear"
-          app:showAsAction="ifRoom" />
-    <item android:id="@+id/grocery_menu_action_share"
-          android:icon="@drawable/ic_action_share"
-          android:title="@string/share"
-          app:showAsAction="ifRoom" />
+  <item
+      android:id="@+id/grocery_menu_action_clear"
+      android:icon="@drawable/ic_done_white_48dp"
+      android:title="@string/clear"
+      app:showAsAction="ifRoom"/>
+  <item
+      android:id="@+id/grocery_menu_action_share"
+      android:icon="@drawable/ic_share_white_48dp"
+      android:title="@string/share"
+      app:showAsAction="ifRoom"/>
 </menu>
