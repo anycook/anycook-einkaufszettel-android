@@ -104,7 +104,7 @@ public class RecipeRowArrayAdapter
             this.recipeResponse = recipeResponse;
 
             textViewName.setText(recipeResponse.getName());
-            textViewDescription.setText(recipeResponse.getDescription().trim());
+            textViewDescription.setText(recipeResponse.getDescription());
             textViewNumFavorites.setText(String.format("%d", recipeResponse.getTasteNum()));
             new DownloadImageViewTask(imageView).execute(recipeResponse.getImage().getBig());
         }

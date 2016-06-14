@@ -84,7 +84,11 @@ public class RecipeResponse implements Parcelable {
     }
 
     public String getDescription() {
-        return description;
+        if (description != null) {
+            return description.trim();
+        }
+
+        return null;
     }
 
     public Image getImage() {
