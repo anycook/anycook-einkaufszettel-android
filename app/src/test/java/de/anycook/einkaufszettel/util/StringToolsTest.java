@@ -25,13 +25,13 @@ import de.anycook.einkaufszettel.BuildConfig;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(RobolectricGradleTestRunner.class)
-@Config(sdk = Build.VERSION_CODES.LOLLIPOP, constants = BuildConfig.class,
+@RunWith(RobolectricTestRunner.class)
+@Config(sdk = Build.VERSION_CODES.M, constants = BuildConfig.class,
         manifest = "src/main/AndroidManifest.xml", packageName = "de.anycook.einkaufszettel")
 public class StringToolsTest {
 

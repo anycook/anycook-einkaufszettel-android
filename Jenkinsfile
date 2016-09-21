@@ -17,22 +17,31 @@
  */
 
 node {
-    stage 'Setup Environment'
-    env.ANDROID_HOME = '/opt/android-sdk'
+    stage ('Setup Environment') {
+        def workspace = pwd()
+        sh 'rm -rf android-sdk-linux'
+        sh 'wget -qO- https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz | tar xz'
+        sh 'echo y |android-sdk-linux/tools/android update sdk -u --filter tools,platform-tools,build-tools-24.0.2,android-24,extra-android-m2repository'
+        env.ANDROID_HOME = "${workspace}/android-sdk-linux"
+    }
 
-    stage 'Checkout'
-    checkout scm
+    stage ('Checkout') {
+        checkout scm
+    }
 
-    stage 'Test'
-    sh './gradlew clean test'
+    stage ('Test') {
+        sh './gradlew clean test'
+    }
 
-    stage 'Build'
-    try {
-        sh './gradlew build'
-    } finally {
-        step([$class: 'LintPublisher'])
-        step([$class: 'CheckStylePublisher', pattern: 'app/build/reports/checkstyle/checkstyle.xml',
-              usePreviousBuildAsReference: true])
+    stage ('Build') {
+        try {
+            sh './gradlew build'
+        } finally {
+            step([$class: 'LintPublisher'])
+            step(
+                    [$class                     : 'CheckStylePublisher', pattern: 'app/build/reports/checkstyle/checkstyle.xml',
+                     usePreviousBuildAsReference: true])
+        }
     }
 }
 
