@@ -26,6 +26,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 
+import de.anycook.einkaufszettel.model.Ingredient;
 import de.anycook.einkaufszettel.model.Step;
 
 import java.io.Closeable;
@@ -39,6 +40,7 @@ public class RecipeStepsStore implements Closeable {
 
     private static final Logger LOGGER = LoggerManager.getLogger();
     private static final String[] STEP_COLUMNS = new String[]{"recipeName", "id", "text"};
+    private static final String[] STEP_INGREDIENT_COLUMNS = new String[]{"name", "amount"};
 
     private final Context context;
     private SQLiteDatabase database;
@@ -60,9 +62,9 @@ public class RecipeStepsStore implements Closeable {
     }
 
     public List<Step> getSteps(final String recipeName) {
-        final Cursor cursor = database
-                .query(SQLiteDB.RECIPE_STEPS_TABLE, STEP_COLUMNS, "recipeName = ?",
-                       new String[]{recipeName}, null, null, "id");
+        final Cursor cursor =
+                database.query(SQLiteDB.RECIPE_STEPS_TABLE, STEP_COLUMNS, "recipeName = ?",
+                               new String[]{recipeName}, null, null, "id");
 
         try {
             final List<Step> steps = new LinkedList<>();
@@ -70,6 +72,22 @@ public class RecipeStepsStore implements Closeable {
                 final Step step = new Step();
                 step.setId(cursor.getInt(SQLiteDB.TableFields.RECIPE_STEPS_ID));
                 step.setText(cursor.getString(SQLiteDB.TableFields.RECIPE_STEPS_TEXT));
+
+                final Cursor ingredientCursor =
+                        database.query(SQLiteDB.RECIPE_STEPS_INGREDIENTS_TABLE,
+                                       STEP_INGREDIENT_COLUMNS, "recipeName = ? AND stepId = ?",
+                                       new String[]{recipeName, Integer.toString(step.getId())},
+                                       null, null, "name");
+                try {
+                    while (ingredientCursor.moveToNext()) {
+                        final Ingredient ingredient = new Ingredient();
+                        ingredient.setName(ingredientCursor.getString(0));
+                        ingredient.setAmount(ingredientCursor.getString(1));
+                        step.addIngredient(ingredient);
+                    }
+                } finally {
+                    ingredientCursor.close();
+                }
                 steps.add(step);
             }
 
@@ -80,7 +98,9 @@ public class RecipeStepsStore implements Closeable {
     }
 
     private void removeSteps(final String recipeName) {
-        database.delete(SQLiteDB.RECIPE_STEPS_TABLE, "recipeName = ?", new String[]{recipeName});
+        final String[] args = new String[]{recipeName};
+        database.delete(SQLiteDB.RECIPE_STEPS_TABLE, "recipeName = ?", args);
+        database.delete(SQLiteDB.RECIPE_STEPS_INGREDIENTS_TABLE, "recipeName = ?", args);
     }
 
     public void addSteps(final String recipeName, final List<Step> steps) {
@@ -91,8 +111,17 @@ public class RecipeStepsStore implements Closeable {
         values.put("recipeName", recipeName);
         for (final Step step : steps) {
             values.put("id", step.getId());
-            values.put("text", step.getText());
+            values.put("text", step.getText().trim());
             database.insert(SQLiteDB.RECIPE_STEPS_TABLE, null, values);
+
+            final ContentValues ingredientValues = new ContentValues();
+            ingredientValues.put("recipeName", recipeName);
+            ingredientValues.put("stepId", step.getId());
+            for (final Ingredient ingredient : step.getIngredients()) {
+                ingredientValues.put("name", ingredient.getName());
+                ingredientValues.put("amount", ingredient.getAmount());
+                database.insert(SQLiteDB.RECIPE_STEPS_INGREDIENTS_TABLE, null, ingredientValues);
+            }
         }
     }
 

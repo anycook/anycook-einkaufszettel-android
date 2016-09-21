@@ -36,17 +36,19 @@ public class SQLiteDB extends SQLiteOpenHelper {
             GROCERY_TABLE,
             RECIPE_TABLE,
             RECIPE_INGREDIENTS_TABLE,
-            RECIPE_STEPS_TABLE;
+            RECIPE_STEPS_TABLE,
+            RECIPE_STEPS_INGREDIENTS_TABLE;
 
     static {
         DB_NAME = "einkaufszettel.db";
-        DB_VERSION = 9;
+        DB_VERSION = 10;
 
         INGREDIENT_NAME_TABLE = "Ingredient";
         GROCERY_TABLE = "GroceryList";
         RECIPE_TABLE = "Recipe";
         RECIPE_INGREDIENTS_TABLE = "RecipeIngredients";
         RECIPE_STEPS_TABLE = "RecipeSteps";
+        RECIPE_STEPS_INGREDIENTS_TABLE = "RecipeStepsIngredients";
     }
 
     public Context context;
@@ -70,6 +72,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
         createRecipeTable(db);
         createRecipeIngredientsTable(db);
         createRecipeStepsTable(db);
+        createRecipeStepsIngredientsTable(db);
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -86,9 +89,11 @@ public class SQLiteDB extends SQLiteOpenHelper {
         db.execSQL(String.format(dropTablePattern, RECIPE_TABLE));
         db.execSQL(String.format(dropTablePattern, RECIPE_INGREDIENTS_TABLE));
         db.execSQL(String.format(dropTablePattern, RECIPE_STEPS_TABLE));
+        db.execSQL(String.format(dropTablePattern, RECIPE_STEPS_INGREDIENTS_TABLE));
         createRecipeTable(db);
         createRecipeIngredientsTable(db);
         createRecipeStepsTable(db);
+        createRecipeStepsIngredientsTable(db);
 
         SharedPreferences sharedPrefs =
                 context.getSharedPreferences("update_data", Context.MODE_PRIVATE);
@@ -144,6 +149,18 @@ public class SQLiteDB extends SQLiteOpenHelper {
                                  + "FOREIGN KEY(recipeName) REFERENCES %s(name),"
                                  + "PRIMARY KEY(recipeName, id));",
                                  RECIPE_STEPS_TABLE, RECIPE_TABLE));
+    }
+
+    private void createRecipeStepsIngredientsTable(final SQLiteDatabase db) {
+        db.execSQL(String.format("CREATE TABLE %s(recipeName VARCHAR(45),"
+                                 + "stepId INTEGER,"
+                                 + "name VARCHAR(45),"
+                                 + "amount VARCHAR(45),"
+                                 + "FOREIGN KEY(recipeName, stepId) REFERENCES %s(recipeName, id),"
+                                 + "FOREIGN KEY(name) REFERENCES %s(name),"
+                                 + "PRIMARY KEY(recipeName, stepId, name));",
+                                 RECIPE_STEPS_INGREDIENTS_TABLE, RECIPE_STEPS_TABLE,
+                                 INGREDIENT_NAME_TABLE));
     }
 
     public static class TableFields {

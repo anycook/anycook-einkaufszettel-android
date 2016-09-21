@@ -18,6 +18,8 @@
 
 package de.anycook.einkaufszettel.adapter;
 
+import com.google.common.base.Joiner;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +51,7 @@ public class StepRowAdapter extends ArrayAdapter<Step> {
             holder = new StepHolder();
             holder.idTextView = (TextView) convertView.findViewById(R.id.step_id);
             holder.textTextView = (TextView) convertView.findViewById(R.id.step_text);
+            holder.ingredientTextView = (TextView) convertView.findViewById(R.id.step_ingredients);
             convertView.setTag(holder);
         } else {
             holder = (StepHolder) convertView.getTag();
@@ -58,6 +61,11 @@ public class StepRowAdapter extends ArrayAdapter<Step> {
         holder.idTextView.setText(Integer.toString(step.getId()) + ".");
         holder.textTextView.setText(step.getText());
 
+        if (!step.getIngredients().isEmpty()) {
+            holder.ingredientTextView.setVisibility(View.VISIBLE);
+            holder.ingredientTextView.setText(Joiner.on(", ").join(step.getIngredients()));
+        }
+
         return convertView;
     }
 
@@ -66,5 +74,6 @@ public class StepRowAdapter extends ArrayAdapter<Step> {
 
         TextView idTextView;
         TextView textTextView;
+        TextView ingredientTextView;
     }
 }
