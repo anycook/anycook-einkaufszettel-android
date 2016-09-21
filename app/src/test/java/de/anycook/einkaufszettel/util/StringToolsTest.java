@@ -19,20 +19,10 @@
 package de.anycook.einkaufszettel.util;
 
 
-import android.os.Build;
-
-import de.anycook.einkaufszettel.BuildConfig;
-
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(RobolectricTestRunner.class)
-@Config(sdk = Build.VERSION_CODES.M, constants = BuildConfig.class,
-        manifest = "src/main/AndroidManifest.xml", packageName = "de.anycook.einkaufszettel")
 public class StringToolsTest {
 
     @Test
