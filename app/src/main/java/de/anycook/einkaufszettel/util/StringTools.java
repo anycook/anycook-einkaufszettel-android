@@ -18,9 +18,6 @@
 
 package de.anycook.einkaufszettel.util;
 
-import com.noveogroup.android.log.Logger;
-import com.noveogroup.android.log.LoggerManager;
-
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -32,13 +29,11 @@ import java.util.regex.Pattern;
  */
 public final class StringTools {
 
-    private static final Logger LOGGER;
     private static final Pattern HAS_UNIT_PATTERN;
     private static final Pattern NUMBER_PATTERN;
     private static final NumberFormat NUMBER_FORMAT;
 
     static {
-        LOGGER = LoggerManager.getLogger();
         NUMBER_PATTERN = Pattern.compile("(\\d+/\\d+)|(\\d+)|(\\d+\\.\\d+)");
         HAS_UNIT_PATTERN = Pattern.compile("(\\d+/\\d+|\\d+|\\d+\\.\\d+) ([a-zA-ZÄÜÖäüöß]+)");
 
@@ -67,8 +62,6 @@ public final class StringTools {
                 output.append(input.charAt(i + 1));
             }
         }
-
-        LOGGER.v("Input: '%s' Output: '%s", input, output);
 
         return output.toString().trim();
     }
