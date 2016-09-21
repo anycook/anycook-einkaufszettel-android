@@ -24,7 +24,7 @@ With the anycook Einkaufszettel (anycook shopping list) you can add ingredients 
 ## Required dependencies
 - [Java7 JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
 - [Android SDK](https://developer.android.com/sdk/index.html)
-  - Android 6.0 (API 23)
+  - Android 7.0 (API 24)
   - Extras: Android Support Repository
   - Extras: Android Support Library
 
@@ -34,14 +34,10 @@ With the anycook Einkaufszettel (anycook shopping list) you can add ingredients 
 - [Android-Logger](http://noveogroup.github.io/android-logger/)
 
 ### Test Libraries
-- [Robolectric](https://github.com/robolectric/robolectric)
 - [JUnit](http://junit.org)
 
 ## Development environment
 - [IntelliJ](https://www.jetbrains.com/idea/)
-
-## Running Unit Tests in IntelliJ
-You have to [enable](https://www.bignerdranch.com/blog/triumph-android-studio-1-2-sneaks-in-full-testing-support/) unit testing in IntelliJ.
 
 ## Issues
 We are using GitHub issues for issue tracking. Feel free to add any observed issues [here](https://github.com/anycook/anycook-einkaufszettel-android/issues)
