@@ -86,6 +86,11 @@ public class Ingredient {
 
     @Override
     public String toString() {
-        return name + "\t" + amount;
+        StringBuilder builder = new StringBuilder();
+        if  (!amount.isEmpty()) {
+            builder.append(amount).append(' ');
+        }
+        builder.append(name);
+        return builder.toString();
     }
 }

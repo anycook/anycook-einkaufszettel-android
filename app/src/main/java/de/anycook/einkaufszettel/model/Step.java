@@ -18,6 +18,9 @@
 
 package de.anycook.einkaufszettel.model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
@@ -25,6 +28,7 @@ public class Step {
 
     private int id;
     private String text;
+    private List<Ingredient> ingredients = new LinkedList<>();
 
     public int getId() {
         return id;
@@ -40,5 +44,17 @@ public class Step {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public void addIngredient(final Ingredient ingredient) {
+        ingredients.add(ingredient);
     }
 }
