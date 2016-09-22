@@ -28,8 +28,8 @@ import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,7 +50,7 @@ import de.anycook.einkaufszettel.adapter.DrawerRowAdapter;
  * @author Jan Graßegger <jan@anycook.de>
  * @author Claudia Sichting
  */
-public class MainActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -64,7 +64,6 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         setContentView(R.layout.main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.anycook_toolbar);
-        toolbar.setLogo(R.drawable.anycook_white_48dp);
         ViewCompat.setElevation(toolbar, 8);
 
         setSupportActionBar(toolbar);
@@ -79,7 +78,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         drawerList.setOnItemClickListener(this);
 
         this.drawerToggle = getDrawerToggle(toolbar);
-        drawerLayout.setDrawerListener(drawerToggle);
+        drawerLayout.addDrawerListener(drawerToggle);
 
         if (savedInstanceState == null) {
             selectMenuItem(0);
