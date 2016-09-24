@@ -81,7 +81,7 @@ public class DownloadImageViewTask extends DownloadImageTask {
                     }
 
                     GradientDrawable drawable = new GradientDrawable();
-                    drawable.setCornerRadius(56);
+                    drawable.setCornerRadius(buttonView.getMeasuredWidth() / 2);
                     drawable.setColor(buttonBackgroundColor);
                     buttonView.setBackground(drawable);
                     buttonView.setVisibility(View.VISIBLE);
