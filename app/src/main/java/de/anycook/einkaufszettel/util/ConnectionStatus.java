@@ -35,17 +35,13 @@ public final class ConnectionStatus {
     }
 
     public static boolean isConnected(Context context) {
-        Properties properties = new Properties(context);
-        ConnectivityManager cm =
+        final ConnectivityManager cm =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
+        final NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        if (networkInfo != null) {
             return true;
         }
-        if (properties.isMobileDataAllowed()) {
-            networkInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-            return networkInfo != null && networkInfo.isConnectedOrConnecting();
-        }
+
         return false;
     }
 

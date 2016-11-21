@@ -35,12 +35,6 @@ nicht markiert."
       android:defaultValue="86400"
       android:entries="@array/update_interval"
       android:entryValues="@array/update_interval_values"/>
-  <CheckBoxPreference
-      android:key="load_mobile"
-      android:layout="@layout/preference_layout"
-      android:title="Mobile Datenverbindung"
-      android:summary="Datenbanken auch über mobile Datenverbindung aktualisieren."
-      android:defaultValue="true"/>
   <Preference
       android:key="delete_cache"
       android:layout="@layout/preference_layout"
