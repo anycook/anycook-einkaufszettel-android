@@ -22,11 +22,7 @@ node {
     }
 
     stage ('Setup Environment') {
-        def workspace = pwd()
-        sh 'rm -rf android-sdk-linux'
-        sh 'wget -qO- https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz | tar xz'
-        sh 'echo y |android-sdk-linux/tools/android update sdk -u --filter tools,platform-tools,build-tools-24.0.2,android-24,extra-android-m2repository'
-        env.ANDROID_HOME = "${workspace}/android-sdk-linux"
+        env.ANDROID_HOME = "${env.HOME}/android-sdk-linux"
     }
 
     stage ('Test') {
