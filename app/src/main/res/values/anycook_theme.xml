@@ -20,8 +20,15 @@
 <resources>
 
   <style name="Theme.AnycookTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+    <!-- colors -->
     <item name="colorPrimary">@color/any_white_gray</item>
     <item name="colorPrimaryDark">@color/any_green_dark</item>
+    <item name="android:textColorPrimary">@color/any_gray_dark</item>
+    <item name="android:textColorSecondary">@color/any_gray_shadow</item>
+    <item name="colorAccent">@color/accent_color</item>
+
+    <!-- text styles -->
     <item name="android:actionBarStyle">@style/ActionBarAnycook</item>
     <item name="android:listPreferredItemHeight">25sp</item>
     <item name="android:dropDownListViewStyle">@style/DropDownListViewAnycook</item>
@@ -167,5 +174,4 @@
     <item name="android:windowEnterAnimation">@anim/slide_in</item>
     <item name="android:windowExitAnimation">@anim/slide_out</item>
   </style>
-
 </resources>

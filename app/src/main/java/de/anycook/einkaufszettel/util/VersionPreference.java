@@ -31,10 +31,15 @@ public class VersionPreference extends Preference {
     public VersionPreference(final Context context, final AttributeSet attrs)
             throws PackageManager.NameNotFoundException {
         super(context, attrs);
-        final PackageManager packageManager = context.getPackageManager();
-        final PackageInfo packageInfo =
-                packageManager.getPackageInfo(context.getPackageName(), 0);
-        setSummary(String.format(Locale.getDefault(), "v %s (build %d)", packageInfo.versionName,
-                                 packageInfo.versionCode));
+        if (context != null) {
+            final PackageManager packageManager = context.getPackageManager();
+            if (packageManager != null) {
+                final PackageInfo packageInfo =
+                        packageManager.getPackageInfo(context.getPackageName(), 0);
+                setSummary(String.format(Locale.getDefault(), "v%s (build %d)",
+                                         packageInfo.versionName,
+                                         packageInfo.versionCode));
+            }
+        }
     }
 }
