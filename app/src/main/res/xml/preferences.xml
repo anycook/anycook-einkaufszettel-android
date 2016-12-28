@@ -19,25 +19,30 @@
   -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-  <EditTextPreference
-      android:key="blacklisted_ingredients"
-      android:title="Standardzutaten"
-      android:layout="@layout/preference_layout"
-      android:summary="Diese Zutaten sind standardmäßig nicht markiert"
-      android:dialogMessage="Zutaten, die man normalerweise nicht einkaufen muss. Diese Zutaten sind standartmäßig
+  <PreferenceCategory android:title="@string/ingredients">
+    <EditTextPreference
+        android:key="blacklisted_ingredients"
+        android:title="Standardzutaten"
+        android:layout="@layout/preference_layout"
+        android:summary="Diese Zutaten sind standardmäßig nicht markiert"
+        android:dialogMessage="Zutaten, die man normalerweise nicht einkaufen muss. Diese Zutaten sind standartmäßig
 nicht markiert."
-      android:defaultValue="Salz,Pfeffer,Öl,Wasser"/>
-  <ListPreference
-      android:key="update_interval"
-      android:layout="@layout/preference_layout"
-      android:title="Updateintervall"
-      android:summary="Gibt an, wie oft die Rezepte- und Zutatendatenbank aktualisiert werden soll"
-      android:defaultValue="86400"
-      android:entries="@array/update_interval"
-      android:entryValues="@array/update_interval_values"/>
-  <Preference
-      android:key="delete_cache"
-      android:layout="@layout/preference_layout"
-      android:title="Lokale Daten löschen"
-      android:summary="Löscht alle lokalen Daten und lädt sie erneut vom Server."/>
+        android:defaultValue="Salz,Pfeffer,Öl,Wasser"/>
+    <ListPreference
+        android:key="update_interval"
+        android:layout="@layout/preference_layout"
+        android:title="Updateintervall"
+        android:summary="Gibt an, wie oft die Rezepte- und Zutatendatenbank aktualisiert werden soll"
+        android:defaultValue="86400"
+        android:entries="@array/update_interval"
+        android:entryValues="@array/update_interval_values"/>
+  </PreferenceCategory>
+  <PreferenceCategory android:title="Verschiedenes">
+    <Preference
+        android:key="delete_cache"
+        android:layout="@layout/preference_layout"
+        android:title="Lokale Daten löschen"
+        android:summary="Löscht alle lokalen Daten und lädt sie erneut vom Server."/>
+    <de.anycook.einkaufszettel.util.VersionPreference android:title="Version"/>
+  </PreferenceCategory>
 </PreferenceScreen>
