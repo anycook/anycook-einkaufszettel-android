@@ -18,8 +18,8 @@
   ~ along with this program. If not, see [http://www.gnu.org/licenses/].
   -->
 
-<PreferenceScreen xmlns:tools="http://schemas.android.com/tools"
-                  xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
   <PreferenceCategory android:title="@string/ingredients">
     <EditTextPreference
         android:key="blacklisted_ingredients"
@@ -43,5 +43,26 @@
         android:title="Lokale Daten löschen"
         android:summary="Löscht alle lokalen Daten und lädt sie erneut vom Server."/>
     <de.anycook.einkaufszettel.util.VersionPreference android:title="Version"/>
+  </PreferenceCategory>
+  <PreferenceCategory android:title="Kontakt">
+    <Preference
+        android:key="send_mail"
+        android:title="kontakt@anycook.de"
+        android:summary="Bitte sende uns deine Anmerkungen, Ideen und Fehlerberichte.">
+      <intent
+          android:action="android.intent.action.VIEW"
+          android:data="mailto:kontakt@anycook.de">
+        <extra
+            android:name="android.intent.extra.SUBJECT"
+            android:value="Feedback zu Anycook Einkaufszettel App"/>
+      </intent>
+    </Preference>
+    <Preference
+        android:title="\@anycookde"
+        android:summary="Folge uns auf Twitter.">
+      <intent
+          android:action="android.intent.action.VIEW"
+          android:data="https://twitter.com/anycookde"/>
+    </Preference>
   </PreferenceCategory>
 </PreferenceScreen>
