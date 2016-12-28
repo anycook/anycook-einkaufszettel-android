@@ -21,8 +21,6 @@ package de.anycook.einkaufszettel.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -118,13 +116,7 @@ public class RecipeRowArrayAdapter
             b.putString("item", recipeResponse.getName());
             intent.putExtras(b);
 
-            final ActivityOptionsCompat options = ActivityOptionsCompat
-                    .makeSceneTransitionAnimation(activity, v.findViewById(R.id.imageview),
-                                                  // The view which starts the transition
-                                                  activity.getString(R.string.recipe_transition)
-                    );
-
-            ActivityCompat.startActivity(activity, intent, options.toBundle());
+            activity.startActivity(intent);
         }
 
     }
