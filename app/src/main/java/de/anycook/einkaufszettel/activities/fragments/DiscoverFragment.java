@@ -21,6 +21,7 @@ package de.anycook.einkaufszettel.activities.fragments;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -56,10 +57,27 @@ public class DiscoverFragment extends Fragment {
                 new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        final LoadDiscoverRecipesTask loadDiscoverRecipesTask =
-                new LoadDiscoverRecipesTask(adapter, this.getActivity());
-        loadDiscoverRecipesTask.execute(url);
+        final SwipeRefreshLayout refreshLayout =
+                (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadRecipes(adapter, url);
+                refreshLayout.setRefreshing(false);
+            }
+        });
+
+        refreshLayout.setColorSchemeResources(R.color.any_green, R.color.accent_color);
+
+        loadRecipes(adapter, url);
 
         return view;
+    }
+
+    private void loadRecipes(RecipeRowArrayAdapter adapter, String url) {
+        final LoadDiscoverRecipesTask loadDiscoverRecipesTask =
+                new LoadDiscoverRecipesTask(adapter, getActivity());
+        loadDiscoverRecipesTask.execute(url);
     }
 }
