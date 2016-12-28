@@ -22,6 +22,6 @@
   <style name="GuideTextAnycook"
          parent="@android:style/TextAppearance.Medium">
     <item name="android:typeface">sans</item>
-    <item name="android:textColor">@color/any_gray_shaddow</item>
+    <item name="android:textColor">@color/any_gray_shadow</item>
   </style>
 </resources>

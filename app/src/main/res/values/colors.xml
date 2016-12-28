@@ -23,13 +23,15 @@
   <color name="any_white_gray">#f7f4f1</color>
   <color name="any_white_background_right">#ece9e3</color>
 
-  <color name="any_gray_shaddow">#878787</color>
+  <color name="any_gray_shadow">#878787</color>
   <color name="any_gray_dark">#5a5a5a</color>
 
   <color name="any_green_light">@color/any_green_active_button_background</color>
   <color name="any_green_active_button_background">#d7e8b5</color>
   <color name="any_green">#a1bd4f</color>
   <color name="any_green_dark">#4d6605</color>
+
+  <color name="accent_color">#afa59b</color>
 
   <color name="transparent_background_dark">#70000000</color>
   <color name="dark_headline">#C0000000</color>

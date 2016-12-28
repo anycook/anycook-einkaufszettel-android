@@ -18,26 +18,51 @@
   ~ along with this program. If not, see [http://www.gnu.org/licenses/].
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-  <EditTextPreference
-      android:key="blacklisted_ingredients"
-      android:title="Standardzutaten"
-      android:layout="@layout/preference_layout"
-      android:summary="Diese Zutaten sind standardmäßig nicht markiert"
-      android:dialogMessage="Zutaten, die man normalerweise nicht einkaufen muss. Diese Zutaten sind standartmäßig
-nicht markiert."
-      android:defaultValue="Salz,Pfeffer,Öl,Wasser"/>
-  <ListPreference
-      android:key="update_interval"
-      android:layout="@layout/preference_layout"
-      android:title="Updateintervall"
-      android:summary="Gibt an, wie oft die Rezepte- und Zutatendatenbank aktualisiert werden soll"
-      android:defaultValue="86400"
-      android:entries="@array/update_interval"
-      android:entryValues="@array/update_interval_values"/>
-  <Preference
-      android:key="delete_cache"
-      android:layout="@layout/preference_layout"
-      android:title="Lokale Daten löschen"
-      android:summary="Löscht alle lokalen Daten und lädt sie erneut vom Server."/>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+  <PreferenceCategory android:title="@string/ingredients">
+    <EditTextPreference
+        android:key="blacklisted_ingredients"
+        android:title="Standardzutaten"
+        android:summary="Diese Zutaten sind standardmäßig nicht markiert"
+        android:dialogMessage="Zutaten, die man normalerweise nicht einkaufen muss.
+        Diese Zutaten sind standardmäßig nicht markiert."
+        android:defaultValue="Salz,Pfeffer,Öl,Wasser"
+        android:singleLine="false"/>
+    <ListPreference
+        android:key="update_interval"
+        android:title="Updateintervall"
+        android:summary="Gibt an, wie oft die Rezepte- und Zutatendatenbank aktualisiert werden soll"
+        android:defaultValue="86400"
+        android:entries="@array/update_interval"
+        android:entryValues="@array/update_interval_values"/>
+  </PreferenceCategory>
+  <PreferenceCategory android:title="Verschiedenes">
+    <Preference
+        android:key="delete_cache"
+        android:title="Lokale Daten löschen"
+        android:summary="Löscht alle lokalen Daten und lädt sie erneut vom Server."/>
+    <de.anycook.einkaufszettel.util.VersionPreference android:title="Version"/>
+  </PreferenceCategory>
+  <PreferenceCategory android:title="Kontakt">
+    <Preference
+        android:key="send_mail"
+        android:title="kontakt@anycook.de"
+        android:summary="Bitte sende uns deine Anmerkungen, Ideen und Fehlerberichte.">
+      <intent
+          android:action="android.intent.action.VIEW"
+          android:data="mailto:kontakt@anycook.de">
+        <extra
+            android:name="android.intent.extra.SUBJECT"
+            android:value="Feedback zu Anycook Einkaufszettel App"/>
+      </intent>
+    </Preference>
+    <Preference
+        android:title="\@anycookde"
+        android:summary="Folge uns auf Twitter.">
+      <intent
+          android:action="android.intent.action.VIEW"
+          android:data="https://twitter.com/anycookde"/>
+    </Preference>
+  </PreferenceCategory>
 </PreferenceScreen>
