@@ -37,6 +37,7 @@ import de.anycook.einkaufszettel.tasks.DownloadImageViewTask;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Jan Graßegger<jan@anycook.de>
@@ -82,7 +83,6 @@ public class RecipeRowArrayAdapter
         private final Activity activity;
 
         private final TextView textViewName;
-        private final TextView textViewDescription;
         private final TextView textViewNumFavorites;
         private final ImageView imageView;
 
@@ -93,7 +93,6 @@ public class RecipeRowArrayAdapter
             view.setOnClickListener(this);
 
             this.textViewName = (TextView) view.findViewById(R.id.textview_title);
-            this.textViewDescription = (TextView) view.findViewById(R.id.description);
             this.textViewNumFavorites = (TextView) view.findViewById(R.id.number_favorites);
             this.imageView = (ImageView) view.findViewById(R.id.imageview);
 
@@ -104,8 +103,11 @@ public class RecipeRowArrayAdapter
             this.recipeResponse = recipeResponse;
 
             textViewName.setText(recipeResponse.getName());
-            textViewDescription.setText(recipeResponse.getDescription());
-            textViewNumFavorites.setText(String.format("%d", recipeResponse.getTasteNum()));
+            int tasteNum = recipeResponse.getTasteNum();
+            if (tasteNum > 0) {
+                textViewNumFavorites.setText(String.format(Locale.getDefault(), "%d", tasteNum));
+                textViewNumFavorites.setVisibility(View.VISIBLE);
+            }
             new DownloadImageViewTask(imageView).execute(recipeResponse.getImage().getBig());
         }
 

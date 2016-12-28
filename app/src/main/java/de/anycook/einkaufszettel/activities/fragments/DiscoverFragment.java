@@ -21,6 +21,7 @@ package de.anycook.einkaufszettel.activities.fragments;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -51,7 +52,8 @@ public class DiscoverFragment extends Fragment {
         final RecipeRowArrayAdapter adapter = new RecipeRowArrayAdapter(getActivity());
         recyclerView.setAdapter(adapter);
 
-        final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        final RecyclerView.LayoutManager layoutManager =
+                new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
         final LoadDiscoverRecipesTask loadDiscoverRecipesTask =
