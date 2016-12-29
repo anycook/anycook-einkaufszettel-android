@@ -30,7 +30,7 @@ import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 
 import de.anycook.einkaufszettel.R;
-import de.anycook.einkaufszettel.adapter.RecipeRowArrayAdapter;
+import de.anycook.einkaufszettel.adapter.RecipeArrayAdapter;
 import de.anycook.einkaufszettel.model.RecipeResponse;
 import de.anycook.einkaufszettel.util.ConnectionStatus;
 
@@ -50,10 +50,10 @@ public class LoadDiscoverRecipesTask extends AsyncTask<String, Void, List<Recipe
 
     private static final Logger LOGGER = LoggerManager.getLogger();
 
-    private final RecipeRowArrayAdapter adapter;
+    private final RecipeArrayAdapter adapter;
     private final Activity activity;
 
-    public LoadDiscoverRecipesTask(RecipeRowArrayAdapter adapter,
+    public LoadDiscoverRecipesTask(RecipeArrayAdapter adapter,
                                    Activity activity) {
         this.adapter = adapter;
         this.activity = activity;

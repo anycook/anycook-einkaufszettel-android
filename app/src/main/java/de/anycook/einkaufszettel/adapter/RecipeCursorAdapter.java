@@ -34,13 +34,13 @@ import de.anycook.einkaufszettel.tasks.DownloadImageViewTask;
  *
  * @author Jan Grassegger <jan@anycook.de>
  */
-public class RecipeRowCursorAdapter extends ResourceCursorAdapter {
+public class RecipeCursorAdapter extends ResourceCursorAdapter {
 
-    public RecipeRowCursorAdapter(Context context) {
+    public RecipeCursorAdapter(Context context) {
         this(context, null);
     }
 
-    public RecipeRowCursorAdapter(Context context, Cursor cursor) {
+    public RecipeCursorAdapter(Context context, Cursor cursor) {
         super(context, R.layout.recipe_row, cursor, false);
     }
 

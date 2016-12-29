@@ -36,7 +36,7 @@ import com.noveogroup.android.log.Log;
 
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.activities.RecipeActivity;
-import de.anycook.einkaufszettel.adapter.RecipeRowCursorAdapter;
+import de.anycook.einkaufszettel.adapter.RecipeCursorAdapter;
 import de.anycook.einkaufszettel.store.RecipeStore;
 
 /**
@@ -62,8 +62,8 @@ public class RecipesFragment extends ListFragment implements SearchView.OnQueryT
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recipe_list, container, false);
         setHasOptionsMenu(true);
-        RecipeRowCursorAdapter recipeRowCursorAdapter = new RecipeRowCursorAdapter(getActivity());
-        setListAdapter(recipeRowCursorAdapter);
+        RecipeCursorAdapter recipeCursorAdapter = new RecipeCursorAdapter(getActivity());
+        setListAdapter(recipeCursorAdapter);
 
         return view;
     }
@@ -129,7 +129,7 @@ public class RecipesFragment extends ListFragment implements SearchView.OnQueryT
     @Override
     public boolean onQueryTextChange(String query) {
         Log.v(RecipesFragment.class.getSimpleName(), "Searching for " + query);
-        RecipeRowCursorAdapter adapter = (RecipeRowCursorAdapter) getListAdapter();
+        RecipeCursorAdapter adapter = (RecipeCursorAdapter) getListAdapter();
         adapter.changeCursor(recipeDatabase.getRecipesForQuery(query));
         return false;
     }
