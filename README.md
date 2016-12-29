@@ -24,7 +24,7 @@ With the anycook Einkaufszettel (anycook shopping list) you can add ingredients 
 ## Required dependencies
 - [Java7 JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
 - [Android SDK](https://developer.android.com/sdk/index.html)
-  - Android 7.0 (API 24)
+  - Android 7.1 (API 25)
   - Extras: Android Support Repository
   - Extras: Android Support Library
 
