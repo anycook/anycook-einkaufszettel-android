@@ -70,12 +70,13 @@ public class RecipeStore implements Closeable {
     public Cursor getRecipesForQuery(String like) {
         final String query =
                 String.format("SELECT name AS _id, description, smallImage, bigImage, persons, "
-                              + "timeStd, timeMin, lastChange FROM %s WHERE _id LIKE ?",
+                              + "timeStd, timeMin, lastChange FROM %s "
+                              + "WHERE _id LIKE ? ORDER BY name",
                               SQLiteDB.RECIPE_TABLE);
         return database.rawQuery(query, new String[]{"%" + like + "%"});
     }
 
-    private boolean exists(String name) {
+    public boolean exists(String name) {
         Cursor cursor = database.query(SQLiteDB.RECIPE_TABLE, new String[]{"name"}, "name = ?",
                                        new String[]{name}, null, null, null, "1");
         try {
@@ -146,41 +147,53 @@ public class RecipeStore implements Closeable {
         database.update(SQLiteDB.RECIPE_TABLE, contentValues, "name = ?", new String[]{name});
     }
 
-
     public void replaceAll(List<RecipeResponse> recipeResponses) {
         LOGGER.d("Replacing recipes in DB");
-
         RecipeIngredientsStore recipeIngredientsStore = new RecipeIngredientsStore(context);
-        recipeIngredientsStore.open();
-
         try {
+            recipeIngredientsStore.open();
             for (RecipeResponse recipeResponse : recipeResponses) {
-                recipeIngredientsStore.removeIngredients(recipeResponse.getName());
-
-                ContentValues values = new ContentValues();
-                values.put("description", recipeResponse.getDescription());
-                values.put("smallImage", recipeResponse.getImage().getSmall());
-                values.put("bigImage", recipeResponse.getImage().getBig());
-                values.put("persons", recipeResponse.getPersons());
-                values.put("timeStd", recipeResponse.getTime().getStd());
-                values.put("timeMin", recipeResponse.getTime().getMin());
-                values.put("category", recipeResponse.getCategory());
-                values.put("skill", recipeResponse.getSkill());
-                values.put("calorie", recipeResponse.getCalorie());
-                values.put("tasteNum", recipeResponse.getTasteNum());
-                values.put("lastChange", recipeResponse.getLastChange());
-
-                if (!exists(recipeResponse.getName())) {
-                    values.put("name", recipeResponse.getName());
-                    database.insert(SQLiteDB.RECIPE_TABLE, null, values);
-                } else {
-                    database.update(SQLiteDB.RECIPE_TABLE, values, "name = ?",
-                                    new String[]{recipeResponse.getName()});
-                }
+                replace(recipeIngredientsStore, recipeResponse);
             }
         } finally {
             recipeIngredientsStore.close();
         }
+    }
 
+    public void replace(final RecipeResponse recipeResponse) {
+        RecipeIngredientsStore recipeIngredientsStore = new RecipeIngredientsStore(context);
+
+        try {
+            recipeIngredientsStore.open();
+            replace(recipeIngredientsStore, recipeResponse);
+        } finally {
+            recipeIngredientsStore.close();
+        }
+    }
+
+    private void replace(final RecipeIngredientsStore recipeIngredientsStore,
+                         final RecipeResponse recipeResponse) {
+        recipeIngredientsStore.removeIngredients(recipeResponse.getName());
+
+        ContentValues values = new ContentValues();
+        values.put("description", recipeResponse.getDescription());
+        values.put("smallImage", recipeResponse.getImage().getSmall());
+        values.put("bigImage", recipeResponse.getImage().getBig());
+        values.put("persons", recipeResponse.getPersons());
+        values.put("timeStd", recipeResponse.getTime().getStd());
+        values.put("timeMin", recipeResponse.getTime().getMin());
+        values.put("category", recipeResponse.getCategory());
+        values.put("skill", recipeResponse.getSkill());
+        values.put("calorie", recipeResponse.getCalorie());
+        values.put("tasteNum", recipeResponse.getTasteNum());
+        values.put("lastChange", recipeResponse.getLastChange());
+
+        if (!exists(recipeResponse.getName())) {
+            values.put("name", recipeResponse.getName());
+            database.insert(SQLiteDB.RECIPE_TABLE, null, values);
+        } else {
+            database.update(SQLiteDB.RECIPE_TABLE, values, "name = ?",
+                            new String[]{recipeResponse.getName()});
+        }
     }
 }
