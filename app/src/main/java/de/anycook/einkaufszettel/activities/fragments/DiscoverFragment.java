@@ -31,7 +31,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import de.anycook.einkaufszettel.R;
-import de.anycook.einkaufszettel.adapter.RecipeRowArrayAdapter;
+import de.anycook.einkaufszettel.adapter.RecipeArrayAdapter;
 import de.anycook.einkaufszettel.tasks.LoadDiscoverRecipesTask;
 
 import java.util.Locale;
@@ -52,7 +52,7 @@ public class DiscoverFragment extends Fragment {
 
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
-        final RecipeRowArrayAdapter adapter = new RecipeRowArrayAdapter(getActivity());
+        final RecipeArrayAdapter adapter = new RecipeArrayAdapter(getActivity());
         recyclerView.setAdapter(adapter);
 
         RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
@@ -87,7 +87,7 @@ public class DiscoverFragment extends Fragment {
         return view;
     }
 
-    private void loadRecipes(final RecipeRowArrayAdapter adapter) {
+    private void loadRecipes(final RecipeArrayAdapter adapter) {
         final int offset = adapter.getItemCount();
         final String url = String.format(Locale.getDefault(), URL_PATTERN,
                                          getArguments().getString("type"), offset);
@@ -98,14 +98,14 @@ public class DiscoverFragment extends Fragment {
 
     private class EndlessScrollListener extends RecyclerView.OnScrollListener {
         private final int visibleThreshold = 2;
-        private final RecipeRowArrayAdapter adapter;
+        private final RecipeArrayAdapter adapter;
         private final GridLayoutManager layoutManager;
         private SwipeRefreshLayout refreshLayout;
 
         private boolean loading = false;
         private int previousTotal = 0;
 
-        EndlessScrollListener(final RecipeRowArrayAdapter adapter,
+        EndlessScrollListener(final RecipeArrayAdapter adapter,
                               final GridLayoutManager layoutManager,
                               final SwipeRefreshLayout refreshLayout) {
             this.adapter = adapter;

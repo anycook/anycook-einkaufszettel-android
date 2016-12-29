@@ -40,14 +40,14 @@ import java.util.Locale;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class RecipeRowArrayAdapter
-        extends RecyclerView.Adapter<RecipeRowArrayAdapter.RecipeViewHolder> {
+public class RecipeArrayAdapter
+        extends RecyclerView.Adapter<RecipeArrayAdapter.RecipeViewHolder> {
 
     private final Activity activity;
 
     private List<RecipeResponse> recipes;
 
-    public RecipeRowArrayAdapter(final Activity activity) {
+    public RecipeArrayAdapter(final Activity activity) {
         this.activity = activity;
         this.clear();
     }
@@ -64,7 +64,7 @@ public class RecipeRowArrayAdapter
     @Override
     public RecipeViewHolder onCreateViewHolder(final ViewGroup viewGroup, final int i) {
         final View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.discover_row, viewGroup, false);
+                .inflate(R.layout.discover_element, viewGroup, false);
 
         return new RecipeViewHolder(view, activity);
     }
