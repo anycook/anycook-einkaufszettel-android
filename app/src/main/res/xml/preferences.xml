@@ -37,13 +37,6 @@
         android:entries="@array/update_interval"
         android:entryValues="@array/update_interval_values"/>
   </PreferenceCategory>
-  <PreferenceCategory android:title="Verschiedenes">
-    <Preference
-        android:key="delete_cache"
-        android:title="Lokale Daten löschen"
-        android:summary="Löscht alle lokalen Daten und lädt sie erneut vom Server."/>
-    <de.anycook.einkaufszettel.util.VersionPreference android:title="Version"/>
-  </PreferenceCategory>
   <PreferenceCategory android:title="Kontakt">
     <Preference
         android:key="send_mail"
@@ -64,5 +57,12 @@
           android:action="android.intent.action.VIEW"
           android:data="https://twitter.com/anycookde"/>
     </Preference>
+  </PreferenceCategory>
+  <PreferenceCategory android:title="Verschiedenes">
+    <Preference
+        android:key="delete_cache"
+        android:title="Lokale Daten löschen"
+        android:summary="Löscht alle lokalen Daten und lädt sie erneut vom Server."/>
+    <de.anycook.einkaufszettel.util.VersionPreference android:title="Version"/>
   </PreferenceCategory>
 </PreferenceScreen>
