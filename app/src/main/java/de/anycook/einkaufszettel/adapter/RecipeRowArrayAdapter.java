@@ -33,7 +33,7 @@ import de.anycook.einkaufszettel.activities.RecipeActivity;
 import de.anycook.einkaufszettel.model.RecipeResponse;
 import de.anycook.einkaufszettel.tasks.DownloadImageViewTask;
 
-import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
@@ -49,12 +49,16 @@ public class RecipeRowArrayAdapter
 
     public RecipeRowArrayAdapter(final Activity activity) {
         this.activity = activity;
-        this.recipes = Collections.emptyList();
+        this.clear();
     }
 
-    public void setRecipes(final List<RecipeResponse> recipes) {
-        this.recipes = recipes;
+    public void addRecipes(final List<RecipeResponse> recipes) {
+        this.recipes.addAll(recipes);
         notifyDataSetChanged();
+    }
+
+    public void clear() {
+        this.recipes = new LinkedList<>();
     }
 
     @Override
