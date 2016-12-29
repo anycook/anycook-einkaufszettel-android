@@ -67,7 +67,8 @@
         android:padding="8dp"
         android:paddingBottom="15dp"
         android:background="@color/transparent_background_dark"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:ellipsize="end"/>
   </RelativeLayout>
 
 </android.support.v7.widget.CardView>
