@@ -121,7 +121,7 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
             RecipeStore recipeStore = new RecipeStore(context);
             try {
                 recipeStore.open();
-                recipeStore.replaceRecipes(recipeResponses);
+                recipeStore.replaceAll(recipeResponses);
             } finally {
                 recipeStore.close();
                 callback.call(getStatus());

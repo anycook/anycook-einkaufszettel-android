@@ -75,7 +75,7 @@ public class RecipeStore implements Closeable {
         return database.rawQuery(query, new String[]{"%" + like + "%"});
     }
 
-    private boolean checkRecipe(String name) {
+    private boolean exists(String name) {
         Cursor cursor = database.query(SQLiteDB.RECIPE_TABLE, new String[]{"name"}, "name = ?",
                                        new String[]{name}, null, null, null, "1");
         try {
@@ -85,7 +85,7 @@ public class RecipeStore implements Closeable {
         }
     }
 
-    public RecipeResponse getRecipe(final String name) throws ItemNotFoundException {
+    public RecipeResponse get(final String name) throws ItemNotFoundException {
         final RecipeResponse recipe = new RecipeResponse();
         final String query = String.format(
                 "SELECT name AS _id, description, smallImage, bigImage, persons, timeStd, "
@@ -147,7 +147,7 @@ public class RecipeStore implements Closeable {
     }
 
 
-    public void replaceRecipes(List<RecipeResponse> recipeResponses) {
+    public void replaceAll(List<RecipeResponse> recipeResponses) {
         LOGGER.d("Replacing recipes in DB");
 
         RecipeIngredientsStore recipeIngredientsStore = new RecipeIngredientsStore(context);
@@ -170,7 +170,7 @@ public class RecipeStore implements Closeable {
                 values.put("tasteNum", recipeResponse.getTasteNum());
                 values.put("lastChange", recipeResponse.getLastChange());
 
-                if (!checkRecipe(recipeResponse.getName())) {
+                if (!exists(recipeResponse.getName())) {
                     values.put("name", recipeResponse.getName());
                     database.insert(SQLiteDB.RECIPE_TABLE, null, values);
                 } else {

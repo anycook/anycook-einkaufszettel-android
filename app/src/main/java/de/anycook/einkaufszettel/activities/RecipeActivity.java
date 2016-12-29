@@ -72,7 +72,7 @@ public class RecipeActivity extends ActionBarActivity {
             final String item = b.getString("item");
             recipe = getRecipe(this, item);
         } catch (ItemNotFoundException e) {
-            LOGGER.e("Failed load recipe", e);
+            LOGGER.e("Failed to load recipe", e);
             return;
         }
 
@@ -201,7 +201,7 @@ public class RecipeActivity extends ActionBarActivity {
         final RecipeStore recipeStore = new RecipeStore(context);
         try {
             recipeStore.open();
-            return recipeStore.getRecipe(recipeName);
+            return recipeStore.get(recipeName);
         } finally {
             recipeStore.close();
         }
