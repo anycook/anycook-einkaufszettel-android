@@ -114,6 +114,7 @@
 
   <style name="TextAppearanceAnycook.Subheading.Light" parent="TextAppearanceAnycook.Subheading">
     <item name="android:textColor">@color/any_white_gray</item>
+    <item name="android:fontFamily">sans-serif-light</item>
   </style>
 
   <style name="TextAppearanceGuideText" parent="@style/TextAppearanceAnycook">

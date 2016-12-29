@@ -96,7 +96,7 @@ public class LoadDiscoverRecipesTask extends AsyncTask<String, Void, List<Recipe
             activity.findViewById(android.R.id.empty).setVisibility(View.GONE);
         } else {
             LOGGER.d(String.format("Found %d different recipes", recipeResponses.size()));
-            adapter.setRecipes(recipeResponses);
+            adapter.addRecipes(recipeResponses);
         }
 
     }

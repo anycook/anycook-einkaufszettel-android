@@ -21,8 +21,6 @@ package de.anycook.einkaufszettel.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,8 +33,9 @@ import de.anycook.einkaufszettel.activities.RecipeActivity;
 import de.anycook.einkaufszettel.model.RecipeResponse;
 import de.anycook.einkaufszettel.tasks.DownloadImageViewTask;
 
-import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Jan Graßegger<jan@anycook.de>
@@ -50,12 +49,16 @@ public class RecipeRowArrayAdapter
 
     public RecipeRowArrayAdapter(final Activity activity) {
         this.activity = activity;
-        this.recipes = Collections.emptyList();
+        this.clear();
     }
 
-    public void setRecipes(final List<RecipeResponse> recipes) {
-        this.recipes = recipes;
+    public void addRecipes(final List<RecipeResponse> recipes) {
+        this.recipes.addAll(recipes);
         notifyDataSetChanged();
+    }
+
+    public void clear() {
+        this.recipes = new LinkedList<>();
     }
 
     @Override
@@ -82,7 +85,6 @@ public class RecipeRowArrayAdapter
         private final Activity activity;
 
         private final TextView textViewName;
-        private final TextView textViewDescription;
         private final TextView textViewNumFavorites;
         private final ImageView imageView;
 
@@ -93,7 +95,6 @@ public class RecipeRowArrayAdapter
             view.setOnClickListener(this);
 
             this.textViewName = (TextView) view.findViewById(R.id.textview_title);
-            this.textViewDescription = (TextView) view.findViewById(R.id.description);
             this.textViewNumFavorites = (TextView) view.findViewById(R.id.number_favorites);
             this.imageView = (ImageView) view.findViewById(R.id.imageview);
 
@@ -104,8 +105,11 @@ public class RecipeRowArrayAdapter
             this.recipeResponse = recipeResponse;
 
             textViewName.setText(recipeResponse.getName());
-            textViewDescription.setText(recipeResponse.getDescription());
-            textViewNumFavorites.setText(String.format("%d", recipeResponse.getTasteNum()));
+            int tasteNum = recipeResponse.getTasteNum();
+            if (tasteNum > 0) {
+                textViewNumFavorites.setText(String.format(Locale.getDefault(), "%d", tasteNum));
+                textViewNumFavorites.setVisibility(View.VISIBLE);
+            }
             new DownloadImageViewTask(imageView).execute(recipeResponse.getImage().getBig());
         }
 
@@ -116,13 +120,7 @@ public class RecipeRowArrayAdapter
             b.putString("item", recipeResponse.getName());
             intent.putExtras(b);
 
-            final ActivityOptionsCompat options = ActivityOptionsCompat
-                    .makeSceneTransitionAnimation(activity, v.findViewById(R.id.imageview),
-                                                  // The view which starts the transition
-                                                  activity.getString(R.string.recipe_transition)
-                    );
-
-            ActivityCompat.startActivity(activity, intent, options.toBundle());
+            activity.startActivity(intent);
         }
 
     }
