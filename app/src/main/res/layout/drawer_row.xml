@@ -21,7 +21,8 @@
                 android:id="@+id/grocery_item_row_relativelayout_front"
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="10dp">
 
   <ImageView
       android:id="@+id/drawer_row_imageview"
@@ -40,7 +41,7 @@
       android:text="@string/drawer_text"
       android:maxLines="1"
       android:ellipsize="end"
-      android:textAppearance="@style/TextAppearanceAnycook.Body2"/>
+      android:textAppearance="@style/TextAppearanceAnycook.Subheading"/>
 
 </RelativeLayout>
 
