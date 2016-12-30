@@ -28,9 +28,9 @@ import android.os.AsyncTask;
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 
-import de.anycook.einkaufszettel.activities.StartupActivity;
 import de.anycook.einkaufszettel.model.RecipeResponse;
 import de.anycook.einkaufszettel.store.RecipeStore;
+import de.anycook.einkaufszettel.util.Callback;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -61,11 +61,11 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
 
     private final Context context;
     private final SharedPreferences sharedPreferences;
-    private final StartupActivity.Callback callback;
+    private final Callback callback;
     private final boolean emptyRecipes;
 
     public LoadRecipesTask(Context context, SharedPreferences sharedPreferences,
-                           StartupActivity.Callback callback, boolean emptyRecipes) {
+                           Callback callback, boolean emptyRecipes) {
         this.context = context;
         this.sharedPreferences = sharedPreferences;
         this.callback = callback;
@@ -85,8 +85,9 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
                 httpURLConnection.setRequestProperty("If-Modified-Since", lastModifiedRecipes);
             }
 
-            if (httpURLConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                throw new IOException(httpURLConnection.getResponseMessage());
+            if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_NOT_MODIFIED) {
+                LOGGER.i("Recipes not modified.");
+                return Collections.emptyList();
             }
 
             String newLastModified = httpURLConnection.getHeaderField("last-modified");
@@ -114,17 +115,16 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
         }
 
         if (recipeResponses == null || recipeResponses.size() == 0) {
-            LOGGER.v("Didn't find any nearby recipes");
-            callback.call(getStatus());
+            callback.call(Callback.Status.NOT_MODIFIED);
         } else {
             LOGGER.d(String.format("Found %d different recipes", recipeResponses.size()));
             RecipeStore recipeStore = new RecipeStore(context);
             try {
                 recipeStore.open();
-                recipeStore.replaceRecipes(recipeResponses);
+                recipeStore.replaceAll(recipeResponses);
             } finally {
                 recipeStore.close();
-                callback.call(getStatus());
+                callback.call(Callback.Status.FINISHED);
             }
         }
     }

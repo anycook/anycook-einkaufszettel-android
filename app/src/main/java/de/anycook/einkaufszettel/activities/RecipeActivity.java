@@ -18,7 +18,6 @@
 
 package de.anycook.einkaufszettel.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -35,19 +34,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.noveogroup.android.log.Logger;
-import com.noveogroup.android.log.LoggerManager;
-
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.activities.fragments.SlidingTabsColorsFragment;
 import de.anycook.einkaufszettel.adapter.RecipeIngredientRowAdapter;
 import de.anycook.einkaufszettel.model.Ingredient;
 import de.anycook.einkaufszettel.model.RecipeResponse;
 import de.anycook.einkaufszettel.store.GroceryStore;
-import de.anycook.einkaufszettel.store.ItemNotFoundException;
-import de.anycook.einkaufszettel.store.RecipeStore;
 import de.anycook.einkaufszettel.tasks.DownloadImageTask;
 import de.anycook.einkaufszettel.tasks.DownloadImageViewTask;
+import de.anycook.einkaufszettel.tasks.LoadRecipeTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,39 +52,26 @@ import java.util.List;
  */
 public class RecipeActivity extends ActionBarActivity {
 
-    private static final Logger LOGGER = LoggerManager.getLogger();
-
     private RecipeResponse recipe;
     private RecipeIngredientRowAdapter ingredientRowAdapter;
-    private ImageView recipeImageView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_activity);
 
-        Bundle b = getIntent().getExtras();
-        String item = b.getString("item");
-        try {
-            recipe = getRecipe(this, item);
-        } catch (ItemNotFoundException e) {
-            LOGGER.e("Failed load recipe", e);
-            return;
-        }
+        final Bundle b = getIntent().getExtras();
+        final String recipeName = b.getString("item");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.anycook_toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.anycook_toolbar);
         setSupportActionBar(toolbar);
         ViewCompat.setElevation(toolbar, 8);
 
-        ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
         }
-
-        ingredientRowAdapter = new RecipeIngredientRowAdapter(this, recipe.getPersons());
-
-        fillViews();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             int statusBarHeight = getStatusBarHeight();
@@ -97,10 +79,11 @@ public class RecipeActivity extends ActionBarActivity {
         }
 
         if (savedInstanceState == null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            SlidingTabsColorsFragment fragment = new SlidingTabsColorsFragment();
-            transaction.replace(R.id.recipe_content_fragment, fragment);
-            transaction.commit();
+            final LoadRecipeTask recipeTask = new LoadRecipeTask(this, recipeName);
+            recipeTask.execute();
+        } else {
+            recipe = savedInstanceState.getParcelable("recipe");
+            showRecipe(savedInstanceState);
         }
     }
 
@@ -110,15 +93,15 @@ public class RecipeActivity extends ActionBarActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.ingredient_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -128,10 +111,10 @@ public class RecipeActivity extends ActionBarActivity {
                 }
                 return true;
             case R.id.ingredient_menu_open_recipe:
-                Uri uri = Uri.parse("http://anycook.de#/recipe/" + recipe.getName());
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                final Uri uri = Uri.parse("http://anycook.de#/recipe/" + recipe.getName());
+                final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 // Create and start the chooser
-                Intent chooser = Intent.createChooser(intent, "Open with");
+                final Intent chooser = Intent.createChooser(intent, "Open with");
                 startActivity(chooser);
                 return true;
 
@@ -140,16 +123,17 @@ public class RecipeActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public RecipeResponse getRecipe() {
-        return recipe;
-    }
+    private void showRecipe(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            SlidingTabsColorsFragment fragment = new SlidingTabsColorsFragment();
+            transaction.replace(R.id.recipe_content_fragment, fragment);
+            transaction.commit();
+        }
 
-    public RecipeIngredientRowAdapter getIngredientRowAdapter() {
-        return ingredientRowAdapter;
-    }
+        ingredientRowAdapter = new RecipeIngredientRowAdapter(this, recipe.getPersons());
 
-    private void fillViews() {
-        this.recipeImageView = (ImageView) findViewById(R.id.recipe_image);
+        final ImageView recipeImageView = (ImageView) findViewById(R.id.recipe_image);
         final DownloadImageTask downloadImageTask = new DownloadImageViewTask(
                 recipeImageView, findViewById(R.id.add_ingredients_button),
                 recipe.getName());
@@ -157,13 +141,30 @@ public class RecipeActivity extends ActionBarActivity {
 
         ViewCompat.setElevation(findViewById(R.id.add_ingredients_button), 12);
 
-        TextView titleView = (TextView) findViewById(R.id.recipe_title_text);
+        final TextView titleView = (TextView) findViewById(R.id.recipe_title_text);
         titleView.setText(recipe.getName());
+
+        findViewById(R.id.empty).setVisibility(View.GONE);
+        findViewById(R.id.recipe_wrapper).setVisibility(View.VISIBLE);
     }
 
-    public int getStatusBarHeight() {
+    public RecipeResponse getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(final RecipeResponse recipe) {
+        this.recipe = recipe;
+        showRecipe(null);
+    }
+
+    public RecipeIngredientRowAdapter getIngredientRowAdapter() {
+        return ingredientRowAdapter;
+    }
+
+    private int getStatusBarHeight() {
         int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        final int resourceId =
+                getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
             result = getResources().getDimensionPixelSize(resourceId);
         }
@@ -172,19 +173,27 @@ public class RecipeActivity extends ActionBarActivity {
 
     public void onAddIngredientsClick(View view) {
         includeCheckedIngredientsToGroceryList();
-        Intent intent = new Intent(this, MainActivity.class);
+        final Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if (recipe != null) {
+            outState.putParcelable("recipe", recipe);
+        }
+        super.onSaveInstanceState(outState);
+    }
+
     private void includeCheckedIngredientsToGroceryList() {
-        GroceryStore groceryItemStore = new GroceryStore(this);
+        final GroceryStore groceryItemStore = new GroceryStore(this);
         try {
             groceryItemStore.open();
-            int ingredientsCount = ingredientRowAdapter.getCount();
-            List<Ingredient> ingredients = new ArrayList<>(ingredientsCount);
+            final int ingredientsCount = ingredientRowAdapter.getCount();
+            final List<Ingredient> ingredients = new ArrayList<>(ingredientsCount * 2);
             for (int i = 0; i < ingredientsCount; i++) {
-                Ingredient ingredient = ingredientRowAdapter.getMultipliedItem(i);
+                final Ingredient ingredient = ingredientRowAdapter.getMultipliedItem(i);
                 if (!ingredient.isChecked()) {
                     continue;
                 }
@@ -193,17 +202,6 @@ public class RecipeActivity extends ActionBarActivity {
             groceryItemStore.addIngredientsToGroceryList(ingredients);
         } finally {
             groceryItemStore.close();
-        }
-    }
-
-    public static RecipeResponse getRecipe(Context context, String recipeName)
-            throws ItemNotFoundException {
-        RecipeStore recipeStore = new RecipeStore(context);
-        try {
-            recipeStore.open();
-            return recipeStore.getRecipe(recipeName);
-        } finally {
-            recipeStore.close();
         }
     }
 }

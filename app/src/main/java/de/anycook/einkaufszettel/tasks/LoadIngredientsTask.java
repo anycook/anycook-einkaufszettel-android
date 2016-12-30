@@ -27,9 +27,9 @@ import android.os.AsyncTask;
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 
-import de.anycook.einkaufszettel.activities.StartupActivity;
 import de.anycook.einkaufszettel.model.Ingredient;
 import de.anycook.einkaufszettel.store.RecipeIngredientNameStore;
+import de.anycook.einkaufszettel.util.Callback;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -59,9 +59,9 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<Ingredient>>
     }
 
     private final Context context;
-    private final StartupActivity.Callback callback;
+    private final Callback callback;
 
-    public LoadIngredientsTask(Context context, StartupActivity.Callback callback) {
+    public LoadIngredientsTask(Context context, Callback callback) {
         this.context = context;
         this.callback = callback;
     }
@@ -98,7 +98,9 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<Ingredient>>
             }
         } finally {
             ingredientDatabase.close();
-            callback.call(getStatus());
+            if (callback != null) {
+                callback.call(Callback.Status.FINISHED);
+            }
         }
     }
 

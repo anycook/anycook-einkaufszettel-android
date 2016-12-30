@@ -18,10 +18,13 @@
 
 package de.anycook.einkaufszettel.activities.fragments;
 
+import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,6 +41,13 @@ import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.activities.RecipeActivity;
 import de.anycook.einkaufszettel.adapter.RecipeCursorAdapter;
 import de.anycook.einkaufszettel.store.RecipeStore;
+import de.anycook.einkaufszettel.tasks.LoadIngredientsTask;
+import de.anycook.einkaufszettel.tasks.LoadRecipesTask;
+import de.anycook.einkaufszettel.util.Callback;
+import de.anycook.einkaufszettel.util.ConnectionStatus;
+import de.anycook.einkaufszettel.util.Properties;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * this searchable activity is responsible for returning recipe search results
@@ -49,6 +59,8 @@ public class RecipesFragment extends ListFragment implements SearchView.OnQueryT
 
     private RecipeStore recipeDatabase;
     private SearchView searchView;
+    private SwipeRefreshLayout refreshLayout;
+    private String query;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,6 +88,17 @@ public class RecipesFragment extends ListFragment implements SearchView.OnQueryT
         } else {
             onQueryTextChange("");
         }
+
+        refreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.refresh);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadRecipes(true);
+            }
+        });
+        refreshLayout.setColorSchemeResources(R.color.any_green, R.color.accent_color);
+
+        loadRecipes(false);
     }
 
     @Override
@@ -96,21 +119,16 @@ public class RecipesFragment extends ListFragment implements SearchView.OnQueryT
         switch (item.getItemId()) {
             case R.id.recipe_menu_search:
                 return super.onOptionsItemSelected(item);
-            case R.id.recipe_menu_reload_db:
-                Intent intent = new Intent("de.anycook.einkaufszettel.action.LOAD_DATA");
-                startActivity(intent);
         }
         return true;
     }
 
     @Override
     public void onListItemClick(ListView l, View view, int position, long id) {
-//        Intent intent = new Intent(getActivity(), AddIngredientsActivity.class);
         Intent intent = new Intent(getActivity(), RecipeActivity.class);
 
         Bundle bundle = new Bundle();
-        String
-                item =
+        String item =
                 ((TextView) view.findViewById(R.id.textview_recipe_name)).getText().toString();
 
         bundle.putString("item", item); //Your id
@@ -128,6 +146,7 @@ public class RecipesFragment extends ListFragment implements SearchView.OnQueryT
 
     @Override
     public boolean onQueryTextChange(String query) {
+        this.query = query;
         Log.v(RecipesFragment.class.getSimpleName(), "Searching for " + query);
         RecipeCursorAdapter adapter = (RecipeCursorAdapter) getListAdapter();
         adapter.changeCursor(recipeDatabase.getRecipesForQuery(query));
@@ -144,5 +163,55 @@ public class RecipesFragment extends ListFragment implements SearchView.OnQueryT
     public void onPause() {
         super.onPause();
         recipeDatabase.close();
+    }
+
+    private void loadRecipes(boolean reload) {
+        final SharedPreferences sharedPrefs =
+                getActivity().getSharedPreferences("update_data", MODE_PRIVATE);
+        final long lastUpdate = sharedPrefs.getLong("last-update", 0);
+
+        boolean emptyRecipes = recipeDatabase.empty();
+
+        Properties properties = new Properties(getActivity());
+        int updateInterval = properties.getUpdateInterval();
+
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastUpdate > updateInterval * 1000 || emptyRecipes || reload) {
+            if (ConnectionStatus.isConnected(getActivity())) {
+                if (!emptyRecipes) {
+                    refreshLayout.setRefreshing(true);
+                }
+                updateData(sharedPrefs, emptyRecipes);
+            }
+        }
+    }
+
+    private void updateData(SharedPreferences sharedPrefs, boolean emptyRecipes) {
+        final Activity activity = getActivity();
+
+        final Callback callback = new TaskCallback();
+
+        final LoadIngredientsTask loadIngredientsTask =
+                new LoadIngredientsTask(activity, null);
+        loadIngredientsTask.execute();
+        final LoadRecipesTask loadRecipesTask =
+                new LoadRecipesTask(activity, sharedPrefs, callback, emptyRecipes);
+        loadRecipesTask.execute();
+
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.putLong("last-update", System.currentTimeMillis());
+        editor.apply();
+    }
+
+    private final class TaskCallback implements Callback {
+
+        @Override
+        public void call(Status status) {
+            refreshLayout.setRefreshing(false);
+            if (status == Status.FINISHED) {
+                RecipeCursorAdapter adapter = (RecipeCursorAdapter) getListAdapter();
+                adapter.changeCursor(recipeDatabase.getRecipesForQuery(query));
+            }
+        }
     }
 }

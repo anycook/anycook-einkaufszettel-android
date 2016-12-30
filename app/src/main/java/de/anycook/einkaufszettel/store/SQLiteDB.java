@@ -97,7 +97,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
 
         SharedPreferences sharedPrefs =
                 context.getSharedPreferences("update_data", Context.MODE_PRIVATE);
-        sharedPrefs.edit().putLong("last_update", 0).putString("last-modified-recipes", null)
+        sharedPrefs.edit().putLong("last-update", 0).putString("last-modified-recipes", null)
                 .commit();
 
     }
