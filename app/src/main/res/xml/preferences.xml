@@ -62,7 +62,7 @@
     <Preference
         android:key="delete_cache"
         android:title="Lokale Daten löschen"
-        android:summary="Löscht alle lokalen Daten und lädt sie erneut vom Server."/>
+        android:summary="Löscht Rezepte, Zutaten und die Einkaufsliste aus der Datenbank."/>
     <de.anycook.einkaufszettel.util.VersionPreference android:title="Version"/>
   </PreferenceCategory>
 </PreferenceScreen>
