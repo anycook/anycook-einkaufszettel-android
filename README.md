@@ -32,12 +32,17 @@ With the anycook Einkaufszettel (anycook shopping list) you can add ingredients 
 - [Google GSON](https://github.com/google/gson)
 - [Google Guava](https://github.com/google/guava)
 - [Android-Logger](http://noveogroup.github.io/android-logger/)
+- [Google Analytics](https://developers.google.com/analytics/devguides/collection/android/v4/)
 
 ### Test Libraries
 - [JUnit](http://junit.org)
 
 ## Development environment
 - [IntelliJ](https://www.jetbrains.com/idea/)
+
+## Build 
+1. Copy `google-services.json` from `app/src/ci/google-services.json`to `app/` (or add your own).
+2. Run `./gradlew build`
 
 ## Issues
 We are using GitHub issues for issue tracking. Feel free to add any observed issues [here](https://github.com/anycook/anycook-einkaufszettel-android/issues)
