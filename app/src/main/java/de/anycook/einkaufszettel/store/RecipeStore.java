@@ -54,7 +54,10 @@ public class RecipeStore implements Closeable {
     @Override
     public void close() {
         LOGGER.d("Open Database");
-        database.close();
+
+        if (database != null) {
+            database.close();
+        }
     }
 
     public boolean empty() {

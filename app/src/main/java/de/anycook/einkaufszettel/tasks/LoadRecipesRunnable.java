@@ -23,14 +23,14 @@ import com.google.gson.reflect.TypeToken;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 
 import de.anycook.einkaufszettel.model.RecipeResponse;
 import de.anycook.einkaufszettel.store.RecipeStore;
-import de.anycook.einkaufszettel.util.Callback;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -45,11 +45,12 @@ import java.util.List;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>> {
+public class LoadRecipesRunnable implements Runnable {
 
     private static final Logger LOGGER = LoggerManager.getLogger();
+    public static final int TASK_COMPLETE = 0, NOT_MODIFIED = 1;
 
-    public static URL url;
+    private static URL url;
 
     static {
         try {
@@ -61,19 +62,18 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
 
     private final Context context;
     private final SharedPreferences sharedPreferences;
-    private final Callback callback;
+    private final Handler handler;
     private final boolean emptyRecipes;
 
-    public LoadRecipesTask(Context context, SharedPreferences sharedPreferences,
-                           Callback callback, boolean emptyRecipes) {
+    public LoadRecipesRunnable(Context context, SharedPreferences sharedPreferences,
+                               Handler handler, boolean emptyRecipes) {
         this.context = context;
         this.sharedPreferences = sharedPreferences;
-        this.callback = callback;
+        this.handler = handler;
         this.emptyRecipes = emptyRecipes;
     }
 
-    @Override
-    protected List<RecipeResponse> doInBackground(Void... b) {
+    private List<RecipeResponse> loadRecipes() {
         try {
             LOGGER.d("Trying to load recipes from %s", url);
 
@@ -109,13 +109,12 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
     }
 
     @Override
-    protected void onPostExecute(final List<RecipeResponse> recipeResponses) {
-        if (isCancelled()) {
-            return;
-        }
+    public void run() {
+        final Message completeMessage;
+        final List<RecipeResponse> recipeResponses = loadRecipes();
 
         if (recipeResponses == null || recipeResponses.size() == 0) {
-            callback.call(Callback.Status.NOT_MODIFIED);
+            completeMessage = handler.obtainMessage(NOT_MODIFIED);
         } else {
             LOGGER.d(String.format("Found %d different recipes", recipeResponses.size()));
             RecipeStore recipeStore = new RecipeStore(context);
@@ -124,9 +123,11 @@ public class LoadRecipesTask extends AsyncTask<Void, Void, List<RecipeResponse>>
                 recipeStore.replaceAll(recipeResponses);
             } finally {
                 recipeStore.close();
-                callback.call(Callback.Status.FINISHED);
+                completeMessage = handler.obtainMessage(TASK_COMPLETE);
             }
         }
+
+        completeMessage.sendToTarget();
     }
 
 }

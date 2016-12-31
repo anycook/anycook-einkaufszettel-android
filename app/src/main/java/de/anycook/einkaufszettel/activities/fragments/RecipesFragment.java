@@ -26,6 +26,9 @@ import android.app.ListFragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
@@ -39,17 +42,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.noveogroup.android.log.Log;
+import com.noveogroup.android.log.Logger;
+import com.noveogroup.android.log.LoggerManager;
 
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.activities.RecipeActivity;
 import de.anycook.einkaufszettel.adapter.RecipeCursorAdapter;
 import de.anycook.einkaufszettel.store.RecipeStore;
-import de.anycook.einkaufszettel.tasks.LoadIngredientsTask;
-import de.anycook.einkaufszettel.tasks.LoadRecipesTask;
+import de.anycook.einkaufszettel.tasks.LoadIngredientsRunnable;
+import de.anycook.einkaufszettel.tasks.LoadRecipesRunnable;
 import de.anycook.einkaufszettel.util.AnalyticsApplication;
-import de.anycook.einkaufszettel.util.Callback;
 import de.anycook.einkaufszettel.util.ConnectionStatus;
 import de.anycook.einkaufszettel.util.Properties;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -60,6 +67,9 @@ import static android.content.Context.MODE_PRIVATE;
  * @author Claudia Sichting <claudia.sichting@uni-weimar.de>
  */
 public class RecipesFragment extends ListFragment implements SearchView.OnQueryTextListener {
+
+    private static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(2);
+    private static final Logger LOGGER = LoggerManager.getLogger(RecipesFragment.class);
 
     private RecipeStore recipeDatabase;
     private SearchView searchView;
@@ -217,29 +227,28 @@ public class RecipesFragment extends ListFragment implements SearchView.OnQueryT
 
         final Activity activity = getActivity();
 
-        final Callback callback = new TaskCallback();
+        final Handler handler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message inputMessage) {
+                switch (inputMessage.what) {
+                    case LoadRecipesRunnable.TASK_COMPLETE:
+                        RecipeCursorAdapter adapter = (RecipeCursorAdapter) getListAdapter();
+                        adapter.changeCursor(recipeDatabase.getRecipesForQuery(query));
+                    default:
+                        refreshLayout.setRefreshing(false);
+                }
+            }
+        };
 
-        final LoadIngredientsTask loadIngredientsTask =
-                new LoadIngredientsTask(activity, null);
-        loadIngredientsTask.execute();
-        final LoadRecipesTask loadRecipesTask =
-                new LoadRecipesTask(activity, sharedPrefs, callback, emptyRecipes);
-        loadRecipesTask.execute();
+        final LoadIngredientsRunnable loadIngredientsRunnable =
+                new LoadIngredientsRunnable(activity);
+        EXECUTOR.execute(loadIngredientsRunnable);
+        final LoadRecipesRunnable loadRecipesRunnable =
+                new LoadRecipesRunnable(activity, sharedPrefs, handler, emptyRecipes);
+        EXECUTOR.execute(loadRecipesRunnable);
 
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putLong("last-update", System.currentTimeMillis());
         editor.apply();
-    }
-
-    private final class TaskCallback implements Callback {
-
-        @Override
-        public void call(Status status) {
-            refreshLayout.setRefreshing(false);
-            if (status == Status.FINISHED) {
-                RecipeCursorAdapter adapter = (RecipeCursorAdapter) getListAdapter();
-                adapter.changeCursor(recipeDatabase.getRecipesForQuery(query));
-            }
-        }
     }
 }
