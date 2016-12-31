@@ -22,14 +22,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
 import com.noveogroup.android.log.Logger;
 import com.noveogroup.android.log.LoggerManager;
 
 import de.anycook.einkaufszettel.model.Ingredient;
 import de.anycook.einkaufszettel.store.RecipeIngredientNameStore;
-import de.anycook.einkaufszettel.util.Callback;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -44,11 +42,11 @@ import java.util.List;
 /**
  * @author Jan Graßegger<jan@anycook.de>
  */
-public class LoadIngredientsTask extends AsyncTask<Void, Void, List<Ingredient>> {
+public class LoadIngredientsRunnable implements Runnable {
 
     private static final Logger LOGGER = LoggerManager.getLogger();
 
-    public static URL url;
+    private static URL url;
 
     static {
         try {
@@ -59,15 +57,12 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<Ingredient>>
     }
 
     private final Context context;
-    private final Callback callback;
 
-    public LoadIngredientsTask(Context context, Callback callback) {
+    public LoadIngredientsRunnable(Context context) {
         this.context = context;
-        this.callback = callback;
     }
 
-    @Override
-    protected List<Ingredient> doInBackground(Void... params) {
+    private List<Ingredient> loadIngredients() {
         try {
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             if (httpURLConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
@@ -85,10 +80,8 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<Ingredient>>
     }
 
     @Override
-    protected void onPostExecute(List<Ingredient> ingredients) {
-        if (isCancelled()) {
-            return;
-        }
+    public void run() {
+        final List<Ingredient> ingredients = loadIngredients();
 
         RecipeIngredientNameStore ingredientDatabase = new RecipeIngredientNameStore(context);
         try {
@@ -98,10 +91,6 @@ public class LoadIngredientsTask extends AsyncTask<Void, Void, List<Ingredient>>
             }
         } finally {
             ingredientDatabase.close();
-            if (callback != null) {
-                callback.call(Callback.Status.FINISHED);
-            }
         }
     }
-
 }
