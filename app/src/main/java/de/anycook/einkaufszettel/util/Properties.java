@@ -51,4 +51,8 @@ public class Properties {
         String intervalString = preferences.getString("update_interval", "86400");
         return Integer.parseInt(intervalString);
     }
+
+    public boolean getAnalyticsEnabled() {
+        return preferences.getBoolean("enable_analytics", true);
+    }
 }

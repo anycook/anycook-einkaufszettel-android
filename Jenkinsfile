@@ -26,12 +26,12 @@ node {
     }
 
     stage ('Test') {
-        sh './gradlew clean test'
+        sh './gradlew clean testCiUnitTest'
     }
 
     stage ('Build') {
         try {
-            sh './gradlew build'
+            sh './gradlew checkstyle lintCi'
         } finally {
             step([$class: 'LintPublisher'])
             step(
