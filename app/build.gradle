@@ -27,8 +27,8 @@ android {
         applicationId 'de.anycook.einkaufszettel'
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 22
-        versionName '0.6.1'
+        versionCode 23
+        versionName '0.6.2'
 
     }
 
