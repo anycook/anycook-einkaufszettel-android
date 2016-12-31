@@ -18,6 +18,9 @@
 
 package de.anycook.einkaufszettel.adapter;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -44,11 +47,13 @@ public class RecipeArrayAdapter
         extends RecyclerView.Adapter<RecipeArrayAdapter.RecipeViewHolder> {
 
     private final Activity activity;
+    private final Tracker tracker;
 
     private List<RecipeResponse> recipes;
 
-    public RecipeArrayAdapter(final Activity activity) {
+    public RecipeArrayAdapter(final Activity activity, final Tracker tracker) {
         this.activity = activity;
+        this.tracker = tracker;
         this.clear();
     }
 
@@ -79,7 +84,7 @@ public class RecipeArrayAdapter
         return recipes.size();
     }
 
-    static class RecipeViewHolder extends RecyclerView.ViewHolder
+    class RecipeViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
         private final Activity activity;
@@ -117,8 +122,15 @@ public class RecipeArrayAdapter
         public void onClick(final View v) {
             final Intent intent = new Intent(v.getContext(), RecipeActivity.class);
             final Bundle b = new Bundle();
-            b.putString("item", recipeResponse.getName());
+            final String recipeName = recipeResponse.getName();
+            b.putString("item", recipeName);
             intent.putExtras(b);
+
+            tracker.send(new HitBuilders.EventBuilder()
+                                 .setCategory("Action")
+                                 .setAction("ClickOnRecipe")
+                                 .setLabel(recipeName)
+                                 .build());
 
             activity.startActivity(intent);
         }

@@ -18,6 +18,9 @@
 
 package de.anycook.einkaufszettel.activities.fragments;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,6 +36,7 @@ import android.view.ViewGroup;
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.adapter.RecipeArrayAdapter;
 import de.anycook.einkaufszettel.tasks.LoadDiscoverRecipesTask;
+import de.anycook.einkaufszettel.util.AnalyticsApplication;
 
 import java.util.Locale;
 
@@ -44,6 +48,15 @@ public class DiscoverFragment extends Fragment {
 
     private static final String URL_PATTERN =
             "https://api.anycook.de/discover/%s?recipeNumber=20&offset=%d";
+    private Tracker tracker;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        final AnalyticsApplication application =
+                (AnalyticsApplication) getActivity().getApplication();
+        tracker = application.getDefaultTracker();
+    }
 
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
@@ -52,7 +65,7 @@ public class DiscoverFragment extends Fragment {
 
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
-        final RecipeArrayAdapter adapter = new RecipeArrayAdapter(getActivity());
+        final RecipeArrayAdapter adapter = new RecipeArrayAdapter(getActivity(), tracker);
         recyclerView.setAdapter(adapter);
 
         RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
@@ -85,6 +98,14 @@ public class DiscoverFragment extends Fragment {
         recyclerView.addOnScrollListener(scrollListener);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        final String discoverType = getArguments().getString("type");
+        tracker.setScreenName("Discover~" + discoverType);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void loadRecipes(final RecipeArrayAdapter adapter) {

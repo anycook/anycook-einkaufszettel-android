@@ -18,6 +18,9 @@
 
 package de.anycook.einkaufszettel.activities.fragments;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Intent;
@@ -43,6 +46,7 @@ import de.anycook.einkaufszettel.adapter.RecipeCursorAdapter;
 import de.anycook.einkaufszettel.store.RecipeStore;
 import de.anycook.einkaufszettel.tasks.LoadIngredientsTask;
 import de.anycook.einkaufszettel.tasks.LoadRecipesTask;
+import de.anycook.einkaufszettel.util.AnalyticsApplication;
 import de.anycook.einkaufszettel.util.Callback;
 import de.anycook.einkaufszettel.util.ConnectionStatus;
 import de.anycook.einkaufszettel.util.Properties;
@@ -61,12 +65,16 @@ public class RecipesFragment extends ListFragment implements SearchView.OnQueryT
     private SearchView searchView;
     private SwipeRefreshLayout refreshLayout;
     private String query;
+    private Tracker tracker;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         recipeDatabase = new RecipeStore(getActivity());
         recipeDatabase.open();
+        final AnalyticsApplication application =
+                (AnalyticsApplication) getActivity().getApplication();
+        tracker = application.getDefaultTracker();
     }
 
     @Override
@@ -118,6 +126,7 @@ public class RecipesFragment extends ListFragment implements SearchView.OnQueryT
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.recipe_menu_search:
+
                 return super.onOptionsItemSelected(item);
         }
         return true;
@@ -134,6 +143,11 @@ public class RecipesFragment extends ListFragment implements SearchView.OnQueryT
         bundle.putString("item", item); //Your id
         intent.putExtras(bundle); //Put your id to your next Intent
 
+        tracker.send(new HitBuilders.EventBuilder()
+                             .setCategory("Action")
+                             .setAction("ClickOnRecipe")
+                             .setLabel(item)
+                             .build());
         startActivity(intent);
     }
 
@@ -146,6 +160,12 @@ public class RecipesFragment extends ListFragment implements SearchView.OnQueryT
 
     @Override
     public boolean onQueryTextChange(String query) {
+        tracker.send(new HitBuilders.EventBuilder()
+                             .setCategory("Action")
+                             .setAction("Search")
+                             .setLabel(query)
+                             .build());
+
         this.query = query;
         Log.v(RecipesFragment.class.getSimpleName(), "Searching for " + query);
         RecipeCursorAdapter adapter = (RecipeCursorAdapter) getListAdapter();
@@ -157,6 +177,8 @@ public class RecipesFragment extends ListFragment implements SearchView.OnQueryT
     public void onResume() {
         super.onResume();
         recipeDatabase.open();
+        tracker.setScreenName("Recipelist");
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
@@ -187,6 +209,12 @@ public class RecipesFragment extends ListFragment implements SearchView.OnQueryT
     }
 
     private void updateData(SharedPreferences sharedPrefs, boolean emptyRecipes) {
+
+        tracker.send(new HitBuilders.EventBuilder()
+                             .setCategory("Action")
+                             .setAction("RefreshRecipes")
+                             .build());
+
         final Activity activity = getActivity();
 
         final Callback callback = new TaskCallback();
