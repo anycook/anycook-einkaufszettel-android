@@ -18,6 +18,9 @@
 
 package de.anycook.einkaufszettel.activities.fragments;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.content.DialogInterface;
@@ -51,6 +54,7 @@ import de.anycook.einkaufszettel.adapter.RecipeIngredientAutocompleteAdapter;
 import de.anycook.einkaufszettel.model.Ingredient;
 import de.anycook.einkaufszettel.store.GroceryStore;
 import de.anycook.einkaufszettel.store.SQLiteDB;
+import de.anycook.einkaufszettel.util.AnalyticsApplication;
 import de.anycook.einkaufszettel.util.StringTools;
 
 
@@ -67,11 +71,15 @@ public class GroceryListFragment extends ListFragment
     private EditText groceryAmountTextView;
 
     private GroceryStore groceryItemStore;
+    private Tracker tracker;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        final AnalyticsApplication application =
+                (AnalyticsApplication) getActivity().getApplication();
+        tracker = application.getDefaultTracker();
     }
 
     @Override
@@ -108,7 +116,13 @@ public class GroceryListFragment extends ListFragment
         getListView().setOnItemLongClickListener(this);
     }
 
+
     private void addItem(String name, String amount) {
+        tracker.send(new HitBuilders.EventBuilder()
+                             .setCategory("Action")
+                             .setAction("AddItemToGroceryList")
+                             .build());
+
         if (name.equals("")) {
             Toast.makeText(getActivity().getBaseContext(), "Wunschlos glücklich! ;-)",
                            Toast.LENGTH_SHORT).show();
@@ -169,6 +183,11 @@ public class GroceryListFragment extends ListFragment
 
     @Override
     public void onListItemClick(ListView l, View view, int position, long id) {
+        tracker.send(new HitBuilders.EventBuilder()
+                             .setCategory("Action")
+                             .setAction("StrokeItem")
+                             .build());
+
         TextView groceryName = (TextView) view.findViewById(R.id.textview_grocery);
         groceryItemStore.changeStrokeVisibilityOfGroceryItem(groceryName.getText());
         GroceryRowAdapter listAdapter = (GroceryRowAdapter) getListAdapter();
@@ -178,6 +197,11 @@ public class GroceryListFragment extends ListFragment
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        tracker.send(new HitBuilders.EventBuilder()
+                             .setCategory("Action")
+                             .setAction("EditGroceryListItem")
+                             .build());
+
         TextView groceryName = (TextView) view.findViewById(R.id.textview_grocery);
         TextView groceryAmount = (TextView) view.findViewById(R.id.textview_amount);
         final Ingredient ingredient = new Ingredient(groceryName.getText().toString(),
@@ -212,6 +236,9 @@ public class GroceryListFragment extends ListFragment
         super.onResume();
         LOGGER.v("Resume: Open database");
         groceryItemStore.open();
+
+        tracker.setScreenName("GroceryList");
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void clickedClearButton() {
@@ -220,29 +247,7 @@ public class GroceryListFragment extends ListFragment
             return;
         }
         if (strokedItemCursor.getCount() == 0) {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-            alertDialogBuilder.setMessage(R.string.clear_ingredients);
-            alertDialogBuilder
-                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-
-            alertDialogBuilder
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            groceryItemStore.deleteAllGroceryItems();
-                            GroceryRowAdapter listAdapter = (GroceryRowAdapter) getListAdapter();
-                            listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
-                            dialog.dismiss();
-                        }
-                    });
-
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
+           showClearDialog();
         } else {
             while (strokedItemCursor.moveToNext()) {
                 groceryItemStore.removeGroceryItem(
@@ -250,10 +255,49 @@ public class GroceryListFragment extends ListFragment
             }
             GroceryRowAdapter listAdapter = (GroceryRowAdapter) getListAdapter();
             listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
+            tracker.send(new HitBuilders.EventBuilder()
+                                 .setCategory("Action")
+                                 .setAction("ClearStrokedItems")
+                                 .build());
         }
     }
 
+    private void showClearDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        alertDialogBuilder.setMessage(R.string.clear_ingredients);
+        alertDialogBuilder
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialogBuilder
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        groceryItemStore.deleteAllGroceryItems();
+                        GroceryRowAdapter listAdapter = (GroceryRowAdapter) getListAdapter();
+                        listAdapter.changeCursor(groceryItemStore.getAllGroceryItemsCursor());
+                        dialog.dismiss();
+                        tracker.send(new HitBuilders.EventBuilder()
+                                             .setCategory("Action")
+                                             .setAction("ClearGroceryList")
+                                             .build());
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
     private void clickedShareButton() {
+        tracker.send(new HitBuilders.EventBuilder()
+                             .setCategory("Action")
+                             .setAction("ShareGroceryList")
+                             .build());
+
         Cursor cursor = groceryItemStore.getNonStrokedGroceryItems();
         StringBuilder builder = new StringBuilder();
 
@@ -285,8 +329,7 @@ public class GroceryListFragment extends ListFragment
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 String name = groceryNameTextView.getText().toString();
-                String
-                        amount =
+                final String amount =
                         StringTools.formatAmount(groceryAmountTextView.getText().toString());
                 addItem(name, amount);
                 groceryNameTextView.setText("");

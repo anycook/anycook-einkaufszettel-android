@@ -63,6 +63,11 @@
         android:key="delete_cache"
         android:title="Lokale Daten löschen"
         android:summary="Löscht Rezepte, Zutaten und die Einkaufsliste aus der Datenbank."/>
+    <CheckBoxPreference
+        android:key="enable_analytics"
+        android:title="Google Analytics aktivieren"
+        android:summary="Erlaube das Sammeln anonymisierter Nutzungsdaten."
+        android:defaultValue="true"/>
     <de.anycook.einkaufszettel.util.VersionPreference android:title="Version"/>
   </PreferenceCategory>
 </PreferenceScreen>

@@ -18,6 +18,9 @@
 
 package de.anycook.einkaufszettel.activities.fragments;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -26,6 +29,7 @@ import android.widget.Toast;
 
 import de.anycook.einkaufszettel.R;
 import de.anycook.einkaufszettel.store.SQLiteDB;
+import de.anycook.einkaufszettel.util.AnalyticsApplication;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -34,9 +38,15 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class SettingsFragment extends PreferenceFragment {
 
+    private Tracker tracker;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final AnalyticsApplication application =
+                (AnalyticsApplication) getActivity().getApplication();
+        tracker = application.getDefaultTracker();
 
         addPreferencesFromResource(R.xml.preferences);
 
@@ -62,5 +72,12 @@ public class SettingsFragment extends PreferenceFragment {
                         return true;
                     }
                 });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        tracker.setScreenName("Preferences");
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 }

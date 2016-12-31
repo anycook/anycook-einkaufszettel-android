@@ -18,6 +18,9 @@
 
 package de.anycook.einkaufszettel.activities;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -43,6 +46,7 @@ import de.anycook.einkaufszettel.store.GroceryStore;
 import de.anycook.einkaufszettel.tasks.DownloadImageTask;
 import de.anycook.einkaufszettel.tasks.DownloadImageViewTask;
 import de.anycook.einkaufszettel.tasks.LoadRecipeTask;
+import de.anycook.einkaufszettel.util.AnalyticsApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,16 +56,21 @@ import java.util.List;
  */
 public class RecipeActivity extends ActionBarActivity {
 
+    private String recipeName;
     private RecipeResponse recipe;
     private RecipeIngredientRowAdapter ingredientRowAdapter;
+    private Tracker tracker;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_activity);
 
+        final AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        tracker = application.getDefaultTracker();
+
         final Bundle b = getIntent().getExtras();
-        final String recipeName = b.getString("item");
+        recipeName = b.getString("item");
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.anycook_toolbar);
         setSupportActionBar(toolbar);
@@ -101,6 +110,13 @@ public class RecipeActivity extends ActionBarActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        tracker.setScreenName("Recipe~" + recipeName);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
+
+    @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -111,6 +127,11 @@ public class RecipeActivity extends ActionBarActivity {
                 }
                 return true;
             case R.id.ingredient_menu_open_recipe:
+                tracker.send(new HitBuilders.EventBuilder()
+                                     .setCategory("Action")
+                                     .setAction("OpenRecipeOnWebsite")
+                                     .setLabel(recipeName)
+                                     .build());
                 final Uri uri = Uri.parse("http://anycook.de#/recipe/" + recipe.getName());
                 final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 // Create and start the chooser
@@ -172,9 +193,16 @@ public class RecipeActivity extends ActionBarActivity {
     }
 
     public void onAddIngredientsClick(View view) {
+        tracker.send(new HitBuilders.EventBuilder()
+                             .setCategory("Action")
+                             .setAction("AddRecipeToGroceryList")
+                             .setLabel(recipeName)
+                             .build());
+
         includeCheckedIngredientsToGroceryList();
         final Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
         startActivity(intent);
     }
 

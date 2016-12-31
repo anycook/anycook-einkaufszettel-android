@@ -18,6 +18,9 @@
 
 package de.anycook.einkaufszettel.activities;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -44,6 +47,7 @@ import de.anycook.einkaufszettel.activities.fragments.GroceryListFragment;
 import de.anycook.einkaufszettel.activities.fragments.RecipesFragment;
 import de.anycook.einkaufszettel.activities.fragments.SettingsFragment;
 import de.anycook.einkaufszettel.adapter.DrawerRowAdapter;
+import de.anycook.einkaufszettel.util.AnalyticsApplication;
 
 
 /**
@@ -57,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ListView drawerList;
     private String title;
     private String[] menuTitles;
+    private Tracker tracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +84,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         this.drawerToggle = getDrawerToggle(toolbar);
         drawerLayout.addDrawerListener(drawerToggle);
+
+        final AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        tracker = application.getDefaultTracker();
 
         if (savedInstanceState == null) {
             selectMenuItem(0);
@@ -175,6 +183,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void startBrowser() {
+        tracker.send(new HitBuilders.EventBuilder()
+                             .setCategory("Action")
+                             .setAction("AnycookWebsite")
+                             .build());
+
         Uri uri = Uri.parse("http://anycook.de/");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         // Create and start the chooser
